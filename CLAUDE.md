@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a collection of AI agent skills, distributed via the [skills.sh](https://skills.sh/) ecosystem. Skills are installed by users with:
 
 ```
-npx skills add kaotypr/kao-skills
+npx skills add kaotypr/skills
 ```
 
 ## Skill Structure

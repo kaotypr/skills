@@ -1,11 +1,11 @@
-# kao-skills
+# kaotypr/skills
 
-A collection of AI agent skills.
+A collection of kaotypr AI agent skills.
 
 ## Installation
 
 ```bash
-npx skills add kaotypr/kao-skills
+npx skills add kaotypr/skills
 ```
 
 ## Available Skills
@@ -17,7 +17,7 @@ npx skills add kaotypr/kao-skills
 ## Project Structure
 
 ```
-kao-skills/
+skills/
 ├── skills/
 │   └── <skill-name>/
 │       ├── SKILL.md          # Skill instructions (required)
