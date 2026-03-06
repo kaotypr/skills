@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "skill_name": "kao-base-ui",
+    "skill_path": "/Users/kao/workspace/kaotypr/kao-skills/skills/base-ui-react",
+    "executor_model": "claude-opus-4-6",
+    "timestamp": "2026-03-06T03:30:00Z",
+    "description": "Lean skill (v1.1.0) — references condensed from 2,424 to 905 lines. With-skill only (baselines unchanged from iteration-1).",
+    "evals_run": ["form-validation", "context-menu", "toast-system", "custom-utilities"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_name": "form-validation",
+      "configurations": {
+        "with_skill": {
+          "pass_rate": 1.0,
+          "passed": 7,
+          "total": 7,
+          "time_seconds": 35.7,
+          "total_tokens": 11148
+        }
+      }
+    },
+    {
+      "eval_name": "context-menu",
+      "configurations": {
+        "with_skill": {
+          "pass_rate": 1.0,
+          "passed": 6,
+          "total": 6,
+          "time_seconds": 39.7,
+          "total_tokens": 12006
+        }
+      }
+    },
+    {
+      "eval_name": "toast-system",
+      "configurations": {
+        "with_skill": {
+          "pass_rate": 1.0,
+          "passed": 5,
+          "total": 5,
+          "time_seconds": 62.2,
+          "total_tokens": 13400
+        }
+      }
+    },
+    {
+      "eval_name": "custom-utilities",
+      "configurations": {
+        "with_skill": {
+          "pass_rate": 1.0,
+          "passed": 5,
+          "total": 5,
+          "time_seconds": 33.0,
+          "total_tokens": 9409
+        }
+      }
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": { "mean": 1.0, "stddev": 0.0 },
+      "time": { "mean": 42.7, "stddev": 13.3 },
+      "tokens": { "mean": 11491, "stddev": 1649 }
+    },
+    "comparison_to_iteration_1": {
+      "pass_rate_change": "0% (maintained 100%)",
+      "token_change": "-28% (15,974 → 11,491 avg)",
+      "time_change": "-17% (51.7s → 42.7s avg)"
+    }
+  },
+  "notes": [
+    "100% pass rate maintained across all 23 assertions after condensing references by 63%",
+    "Average token usage dropped 28% (15,974 → 11,491)",
+    "Average time dropped 17% (51.7s → 42.7s)",
+    "Baselines not re-run — skill changes don't affect without-skill results"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "eval_id": 3,
+  "eval_name": "toast-system",
+  "prompt": "Set up a toast notification system in my React app. I need success, error, and loading toasts. The loading toast should convert to success/error when an API call resolves. Also add swipe-to-dismiss.",
+  "assertions": [
+    "uses-toast-provider: Wraps in Toast.Provider",
+    "uses-toast-manager: Uses Toast.useToastManager() hook",
+    "uses-promise-toast: Uses toastManager.promise() for async loading/success/error",
+    "has-swipe-dismiss: Configures swipeDirection on Toast.Root",
+    "correct-imports: Imports from @base-ui/react/toast"
+  ]
+}

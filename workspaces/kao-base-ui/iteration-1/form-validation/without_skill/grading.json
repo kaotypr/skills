@@ -1,0 +1,14 @@
+{
+  "eval_id": 1,
+  "eval_name": "form-validation",
+  "configuration": "without_skill",
+  "expectations": [
+    { "text": "uses-field-root", "passed": true, "evidence": "Uses Field.Root for email, password, and terms fields" },
+    { "text": "email-validates-on-blur", "passed": false, "evidence": "Manual onBlur handler instead of validationMode=\"onBlur\" — reimplements validation logic" },
+    { "text": "password-onchange-debounced", "passed": false, "evidence": "Custom useDebounce hook instead of validationMode=\"onChange\" + validationDebounceTime" },
+    { "text": "uses-form-component", "passed": false, "evidence": "Uses plain <form> element, not Base UI Form component with errors/onClearErrors" },
+    { "text": "uses-checkbox", "passed": true, "evidence": "Checkbox.Root + Checkbox.Indicator used" },
+    { "text": "correct-imports", "passed": false, "evidence": "Imports from @base-ui-components/react (wrong package name, should be @base-ui/react)" },
+    { "text": "no-asChild", "passed": true, "evidence": "No asChild usage" }
+  ]
+}

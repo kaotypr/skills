@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "context-menu",
+  "prompt": "Build me a context menu for a file manager app — it should have Cut, Copy, Paste items, a separator, then a 'Sort by' submenu with radio options for Name/Date/Size, and a 'Show hidden files' checkbox item. I'm using base-ui.",
+  "assertions": [
+    "portal-positioner-popup: Uses Menu.Portal > Menu.Positioner > Menu.Popup pattern",
+    "uses-submenu: Uses Menu.SubmenuRoot + Menu.SubmenuTrigger for Sort By",
+    "uses-radio-group: Uses Menu.RadioGroup with Menu.RadioItem for sort options",
+    "uses-checkbox-item: Uses Menu.CheckboxItem for Show Hidden Files",
+    "uses-separator: Uses Menu.Separator between groups",
+    "correct-imports: Imports from @base-ui/react/menu"
+  ]
+}

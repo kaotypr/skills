@@ -1,0 +1,12 @@
+{
+  "eval_id": 4,
+  "eval_name": "custom-utilities",
+  "configuration": "with_skill",
+  "expectations": [
+    { "text": "uses-useRender", "passed": true, "evidence": "useRender from @base-ui/react/use-render on lines 2, 51, 90" },
+    { "text": "uses-mergeProps", "passed": true, "evidence": "mergeProps from @base-ui/react/merge-props on lines 3, 55, 94" },
+    { "text": "has-state-mapping", "passed": true, "evidence": "stateAttributesMapping with variant->data-variant and removable->data-removable on lines 95-98" },
+    { "text": "supports-render-prop", "passed": true, "evidence": "Accepts render prop via useRender.ComponentProps type on line 10" },
+    { "text": "correct-imports", "passed": true, "evidence": "Imports from @base-ui/react/use-render and @base-ui/react/merge-props" }
+  ]
+}

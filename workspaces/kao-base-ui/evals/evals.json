@@ -1,0 +1,25 @@
+{
+  "skill_name": "kao-base-ui",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need a signup form with email, password, and a terms checkbox. Email should validate on blur, password needs to be at least 8 chars with onChange validation (debounced), and the form should show server-side errors too. Use @base-ui/react.",
+      "expected_output": "A React component using Field, Form, Checkbox, Input from @base-ui/react with correct validation modes and server error handling"
+    },
+    {
+      "id": 2,
+      "prompt": "Build me a context menu for a file manager app — it should have Cut, Copy, Paste items, a separator, then a 'Sort by' submenu with radio options for Name/Date/Size, and a 'Show hidden files' checkbox item. I'm using base-ui.",
+      "expected_output": "A React component using Menu with submenu, RadioGroup, CheckboxItem from @base-ui/react with correct Portal > Positioner > Popup pattern"
+    },
+    {
+      "id": 3,
+      "prompt": "Set up a toast notification system in my React app. I need success, error, and loading toasts. The loading toast should convert to success/error when an API call resolves. Also add swipe-to-dismiss.",
+      "expected_output": "A React toast system using Toast.Provider, Toast.useToastManager, and toastManager.promise from @base-ui/react"
+    },
+    {
+      "id": 4,
+      "prompt": "I'm building a custom Chip component that needs to support Base UI's render prop pattern. It should have a 'variant' state (filled/outlined) and a 'removable' state. When removable, it shows a close button. I also need to merge props from multiple sources — the component's internal handlers and the consumer's props. Using @base-ui/react utilities.",
+      "expected_output": "A custom Chip component using useRender, mergeProps, and stateAttributesMapping from @base-ui/react"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "context-menu",
+  "configuration": "with_skill",
+  "expectations": [
+    { "text": "portal-positioner-popup", "passed": true, "evidence": "Menu.Portal > Menu.Positioner > Menu.Popup on lines 67-69 and nested on 101-103" },
+    { "text": "uses-submenu", "passed": true, "evidence": "Menu.SubmenuRoot + Menu.SubmenuTrigger on lines 94-100" },
+    { "text": "uses-radio-group", "passed": true, "evidence": "Menu.RadioGroup with Menu.RadioItem for Name/Date/Size on lines 114-136" },
+    { "text": "uses-checkbox-item", "passed": true, "evidence": "Menu.CheckboxItem with closeOnClick={false} on line 143" },
+    { "text": "uses-separator", "passed": true, "evidence": "Menu.Separator on line 91" },
+    { "text": "correct-imports", "passed": true, "evidence": "Imports from @base-ui/react/menu" }
+  ]
+}

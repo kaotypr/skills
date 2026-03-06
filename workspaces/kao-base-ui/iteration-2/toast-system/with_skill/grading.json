@@ -1,0 +1,12 @@
+{
+  "eval_id": 3,
+  "eval_name": "toast-system",
+  "configuration": "with_skill",
+  "expectations": [
+    { "text": "uses-toast-provider", "passed": true, "evidence": "Toast.Provider on line 438" },
+    { "text": "uses-toast-manager", "passed": true, "evidence": "Toast.useToastManager() on lines 291, 330 and Toast.createToastManager() on line 18" },
+    { "text": "uses-promise-toast", "passed": true, "evidence": "toastManager.promise() on line 46 and manager.promise() on line 355" },
+    { "text": "has-swipe-dismiss", "passed": true, "evidence": "swipeDirection={[\"right\", \"down\"]} on Toast.Root line 300" },
+    { "text": "correct-imports", "passed": true, "evidence": "@base-ui/react/toast on line 4" }
+  ]
+}

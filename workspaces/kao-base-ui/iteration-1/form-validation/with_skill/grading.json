@@ -1,0 +1,14 @@
+{
+  "eval_id": 1,
+  "eval_name": "form-validation",
+  "configuration": "with_skill",
+  "expectations": [
+    { "text": "uses-field-root", "passed": true, "evidence": "Uses Field.Root for email (line 40), password (line 67), and terms (line 99)" },
+    { "text": "email-validates-on-blur", "passed": true, "evidence": "Field.Root has validationMode=\"onBlur\" on line 40" },
+    { "text": "password-onchange-debounced", "passed": true, "evidence": "validationMode=\"onChange\" and validationDebounceTime={500} on lines 69-70" },
+    { "text": "uses-form-component", "passed": true, "evidence": "Uses Form component with errors/onClearErrors props on lines 33-36" },
+    { "text": "uses-checkbox", "passed": true, "evidence": "Checkbox.Root + Checkbox.Indicator on lines 108-128" },
+    { "text": "correct-imports", "passed": true, "evidence": "Imports from @base-ui/react/field, @base-ui/react/form, @base-ui/react/checkbox" },
+    { "text": "no-asChild", "passed": true, "evidence": "No asChild usage anywhere in the file" }
+  ]
+}

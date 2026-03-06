@@ -1,0 +1,12 @@
+{
+  "eval_id": 4,
+  "eval_name": "custom-utilities",
+  "configuration": "without_skill",
+  "expectations": [
+    { "text": "uses-useRender", "passed": false, "evidence": "Uses useRenderElement (non-existent API) from @base-ui-components/react/use-render-element and useComponentRenderer (also non-existent)" },
+    { "text": "uses-mergeProps", "passed": true, "evidence": "Uses mergeProps (though from wrong package @base-ui-components/react/merge-props)" },
+    { "text": "has-state-mapping", "passed": false, "evidence": "Manually sets data-variant and data-removable attributes, no stateAttributesMapping" },
+    { "text": "supports-render-prop", "passed": true, "evidence": "Accepts render prop on ChipRootProps interface" },
+    { "text": "correct-imports", "passed": false, "evidence": "Imports from @base-ui-components/react (wrong package), uses non-existent useRenderElement and useComponentRenderer" }
+  ]
+}

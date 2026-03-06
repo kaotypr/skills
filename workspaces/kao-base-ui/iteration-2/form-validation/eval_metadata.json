@@ -1,0 +1,14 @@
+{
+  "eval_id": 1,
+  "eval_name": "form-validation",
+  "prompt": "I need a signup form with email, password, and a terms checkbox. Email should validate on blur, password needs to be at least 8 chars with onChange validation (debounced), and the form should show server-side errors too. Use @base-ui/react.",
+  "assertions": [
+    "uses-field-root: Uses Field.Root for each form control",
+    "email-validates-on-blur: Email field uses validationMode=\"onBlur\"",
+    "password-onchange-debounced: Password uses validationMode=\"onChange\" + validationDebounceTime",
+    "uses-form-component: Uses Form component with errors/onClearErrors for server errors",
+    "uses-checkbox: Terms checkbox uses Checkbox.Root + Checkbox.Indicator",
+    "correct-imports: Imports from sub-paths (@base-ui/react/field, etc.)",
+    "no-asChild: Does NOT use asChild (Radix pattern)"
+  ]
+}

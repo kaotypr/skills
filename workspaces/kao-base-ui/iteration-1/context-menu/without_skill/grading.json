@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "context-menu",
+  "configuration": "without_skill",
+  "expectations": [
+    { "text": "portal-positioner-popup", "passed": true, "evidence": "Menu.Portal > Menu.Positioner > Menu.Popup pattern used" },
+    { "text": "uses-submenu", "passed": false, "evidence": "Uses Menu.Root instead of Menu.SubmenuRoot for the nested submenu (line 73)" },
+    { "text": "uses-radio-group", "passed": true, "evidence": "Menu.RadioGroup with Menu.RadioItem for Name/Date/Size" },
+    { "text": "uses-checkbox-item", "passed": true, "evidence": "Menu.CheckboxItem on line 130" },
+    { "text": "uses-separator", "passed": true, "evidence": "Menu.Separator on line 64" },
+    { "text": "correct-imports", "passed": false, "evidence": "Imports from @base-ui-components/react/menu (wrong package name)" }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "eval_id": 4,
+  "eval_name": "custom-utilities",
+  "prompt": "I'm building a custom Chip component that needs to support Base UI's render prop pattern. It should have a 'variant' state (filled/outlined) and a 'removable' state. When removable, it shows a close button. I also need to merge props from multiple sources — the component's internal handlers and the consumer's props. Using @base-ui/react utilities.",
+  "assertions": [
+    "uses-useRender: Uses useRender hook from @base-ui/react/use-render",
+    "uses-mergeProps: Uses mergeProps from @base-ui/react/merge-props",
+    "has-state-mapping: Defines stateAttributesMapping for variant/removable",
+    "supports-render-prop: Component accepts render prop",
+    "correct-imports: Imports from sub-paths"
+  ]
+}

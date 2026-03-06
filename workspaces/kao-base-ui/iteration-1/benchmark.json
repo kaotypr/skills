@@ -1,0 +1,169 @@
+{
+  "metadata": {
+    "skill_name": "kao-base-ui",
+    "skill_path": "/Users/kao/workspace/kaotypr/kao-skills/skills/base-ui-react",
+    "executor_model": "claude-opus-4-6",
+    "analyzer_model": "claude-opus-4-6",
+    "timestamp": "2026-03-06T03:07:31Z",
+    "evals_run": ["form-validation", "context-menu", "toast-system", "custom-utilities"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_name": "form-validation",
+      "configurations": {
+        "with_skill": {
+          "pass_rate": 1.0,
+          "passed": 7,
+          "total": 7,
+          "time_seconds": 41.0,
+          "total_tokens": 15853,
+          "expectations": [
+            { "text": "uses-field-root", "passed": true, "evidence": "Uses Field.Root for email, password, and terms" },
+            { "text": "email-validates-on-blur", "passed": true, "evidence": "validationMode=\"onBlur\" on Field.Root" },
+            { "text": "password-onchange-debounced", "passed": true, "evidence": "validationMode=\"onChange\" + validationDebounceTime={500}" },
+            { "text": "uses-form-component", "passed": true, "evidence": "Form with errors/onClearErrors" },
+            { "text": "uses-checkbox", "passed": true, "evidence": "Checkbox.Root + Checkbox.Indicator" },
+            { "text": "correct-imports", "passed": true, "evidence": "@base-ui/react sub-paths" },
+            { "text": "no-asChild", "passed": true, "evidence": "No asChild usage" }
+          ]
+        },
+        "without_skill": {
+          "pass_rate": 0.429,
+          "passed": 3,
+          "total": 7,
+          "time_seconds": 43.6,
+          "total_tokens": 6948,
+          "expectations": [
+            { "text": "uses-field-root", "passed": true, "evidence": "Uses Field.Root" },
+            { "text": "email-validates-on-blur", "passed": false, "evidence": "Manual onBlur handler, not validationMode" },
+            { "text": "password-onchange-debounced", "passed": false, "evidence": "Custom useDebounce hook, not validationMode+debounceTime" },
+            { "text": "uses-form-component", "passed": false, "evidence": "Plain <form>, not Form component" },
+            { "text": "uses-checkbox", "passed": true, "evidence": "Checkbox.Root + Checkbox.Indicator" },
+            { "text": "correct-imports", "passed": false, "evidence": "@base-ui-components/react (wrong package)" },
+            { "text": "no-asChild", "passed": true, "evidence": "No asChild usage" }
+          ]
+        }
+      }
+    },
+    {
+      "eval_name": "context-menu",
+      "configurations": {
+        "with_skill": {
+          "pass_rate": 1.0,
+          "passed": 6,
+          "total": 6,
+          "time_seconds": 65.8,
+          "total_tokens": 18885,
+          "expectations": [
+            { "text": "portal-positioner-popup", "passed": true, "evidence": "Correct 3-layer pattern" },
+            { "text": "uses-submenu", "passed": true, "evidence": "Menu.SubmenuRoot + Menu.SubmenuTrigger" },
+            { "text": "uses-radio-group", "passed": true, "evidence": "Menu.RadioGroup with RadioItem" },
+            { "text": "uses-checkbox-item", "passed": true, "evidence": "Menu.CheckboxItem with closeOnClick={false}" },
+            { "text": "uses-separator", "passed": true, "evidence": "Menu.Separator" },
+            { "text": "correct-imports", "passed": true, "evidence": "@base-ui/react/menu" }
+          ]
+        },
+        "without_skill": {
+          "pass_rate": 0.667,
+          "passed": 4,
+          "total": 6,
+          "time_seconds": 30.0,
+          "total_tokens": 5587,
+          "expectations": [
+            { "text": "portal-positioner-popup", "passed": true, "evidence": "Correct pattern" },
+            { "text": "uses-submenu", "passed": false, "evidence": "Menu.Root instead of Menu.SubmenuRoot" },
+            { "text": "uses-radio-group", "passed": true, "evidence": "Menu.RadioGroup with RadioItem" },
+            { "text": "uses-checkbox-item", "passed": true, "evidence": "Menu.CheckboxItem" },
+            { "text": "uses-separator", "passed": true, "evidence": "Menu.Separator" },
+            { "text": "correct-imports", "passed": false, "evidence": "@base-ui-components/react/menu (wrong)" }
+          ]
+        }
+      }
+    },
+    {
+      "eval_name": "toast-system",
+      "configurations": {
+        "with_skill": {
+          "pass_rate": 1.0,
+          "passed": 5,
+          "total": 5,
+          "time_seconds": 65.0,
+          "total_tokens": 18124,
+          "expectations": [
+            { "text": "uses-toast-provider", "passed": true, "evidence": "Toast.Provider" },
+            { "text": "uses-toast-manager", "passed": true, "evidence": "Toast.useToastManager()" },
+            { "text": "uses-promise-toast", "passed": true, "evidence": "toastManager.promise()" },
+            { "text": "has-swipe-dismiss", "passed": true, "evidence": "swipeDirection={['right', 'down']}" },
+            { "text": "correct-imports", "passed": true, "evidence": "@base-ui/react/toast" }
+          ]
+        },
+        "without_skill": {
+          "pass_rate": 0.0,
+          "passed": 0,
+          "total": 5,
+          "time_seconds": 65.2,
+          "total_tokens": 11357,
+          "expectations": [
+            { "text": "uses-toast-provider", "passed": false, "evidence": "Custom React context, not Toast.Provider" },
+            { "text": "uses-toast-manager", "passed": false, "evidence": "Custom state, not Toast.useToastManager()" },
+            { "text": "uses-promise-toast", "passed": false, "evidence": "Manual transition, not toastManager.promise()" },
+            { "text": "has-swipe-dismiss", "passed": false, "evidence": "Custom pointer events, not swipeDirection prop" },
+            { "text": "correct-imports", "passed": false, "evidence": "No Base UI imports at all" }
+          ]
+        }
+      }
+    },
+    {
+      "eval_name": "custom-utilities",
+      "configurations": {
+        "with_skill": {
+          "pass_rate": 1.0,
+          "passed": 5,
+          "total": 5,
+          "time_seconds": 35.1,
+          "total_tokens": 11032,
+          "expectations": [
+            { "text": "uses-useRender", "passed": true, "evidence": "useRender from @base-ui/react/use-render" },
+            { "text": "uses-mergeProps", "passed": true, "evidence": "mergeProps from @base-ui/react/merge-props" },
+            { "text": "has-state-mapping", "passed": true, "evidence": "stateAttributesMapping defined" },
+            { "text": "supports-render-prop", "passed": true, "evidence": "render prop via useRender.ComponentProps" },
+            { "text": "correct-imports", "passed": true, "evidence": "Correct sub-path imports" }
+          ]
+        },
+        "without_skill": {
+          "pass_rate": 0.4,
+          "passed": 2,
+          "total": 5,
+          "time_seconds": 40.4,
+          "total_tokens": 6192,
+          "expectations": [
+            { "text": "uses-useRender", "passed": false, "evidence": "Hallucinated useRenderElement API" },
+            { "text": "uses-mergeProps", "passed": true, "evidence": "mergeProps used (wrong package)" },
+            { "text": "has-state-mapping", "passed": false, "evidence": "Manual data attributes, no stateAttributesMapping" },
+            { "text": "supports-render-prop", "passed": true, "evidence": "render prop accepted" },
+            { "text": "correct-imports", "passed": false, "evidence": "@base-ui-components/react (wrong package)" }
+          ]
+        }
+      }
+    }
+  ],
+  "run_summary": {
+    "with_skill": { "pass_rate": { "mean": 1.0, "stddev": 0.0 }, "time": { "mean": 51.7, "stddev": 15.5 }, "tokens": { "mean": 15974, "stddev": 3462 } },
+    "without_skill": { "pass_rate": { "mean": 0.374, "stddev": 0.238 }, "time": { "mean": 44.8, "stddev": 15.1 }, "tokens": { "mean": 7521, "stddev": 2525 } },
+    "delta": {
+      "pass_rate": "+62.6%",
+      "time_seconds": "+6.9s",
+      "tokens": "+8453"
+    }
+  },
+  "notes": [
+    "100% pass rate with skill (23/23 assertions) vs 37.4% without (9/23)",
+    "Biggest gap: toast-system — 0% baseline (built entirely custom, no Base UI Toast at all)",
+    "All baselines used wrong package name: @base-ui-components/react instead of @base-ui/react",
+    "Utilities baseline hallucinated non-existent APIs (useRenderElement, useComponentRenderer)",
+    "Context-menu baseline used Menu.Root instead of Menu.SubmenuRoot for nested menus",
+    "Form baseline reimplemented validation manually instead of using built-in validationMode props",
+    "With-skill runs use ~2x more tokens due to reading reference files, but quality improvement is substantial"
+  ]
+}
