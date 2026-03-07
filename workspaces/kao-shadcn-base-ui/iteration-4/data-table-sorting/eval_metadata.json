@@ -1,0 +1,14 @@
+{
+  "eval_id": 3,
+  "eval_name": "data-table-sorting",
+  "prompt": "Create a data table component in Next.js with shadcn/ui that displays a list of users (name, email, role, status). Add column sorting by clicking headers, and a dropdown menu on each row for actions (Edit, Delete, View Profile). Use TypeScript with proper types. Include some sample data.",
+  "assertions": [
+    "Uses shadcn/ui Table components (Table, TableHeader, TableBody, TableRow, TableHead, TableCell)",
+    "Uses shadcn/ui DropdownMenu for row actions",
+    "Imports from @/components/ui/ paths",
+    "Includes TypeScript interface or type for the user data",
+    "Implements sorting logic for at least one column",
+    "Includes sample user data array",
+    "Has 'use client' directive"
+  ]
+}

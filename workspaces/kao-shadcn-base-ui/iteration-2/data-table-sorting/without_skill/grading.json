@@ -1,0 +1,12 @@
+{
+  "expectations": [
+    {"text": "Uses shadcn/ui Table components (Table, TableHeader, TableBody, TableRow, TableHead, TableCell)", "passed": true, "evidence": "Lines 4-11: Table components from @/components/ui/table"},
+    {"text": "Uses shadcn/ui DropdownMenu for row actions", "passed": true, "evidence": "Lines 12-17: DropdownMenu from @/components/ui/dropdown-menu"},
+    {"text": "Imports from @/components/ui/ paths", "passed": true, "evidence": "All imports from @/components/ui/*"},
+    {"text": "Includes TypeScript interface or type for the user data", "passed": true, "evidence": "Lines 24-33: Role, Status, User, SortKey, SortDirection, SortConfig"},
+    {"text": "Implements sorting logic for at least one column", "passed": true, "evidence": "Lines 74-91: handleSort + useMemo, all columns sortable"},
+    {"text": "Includes sample user data array", "passed": true, "evidence": "Lines 45-54: sampleUsers with 8 users"},
+    {"text": "Has 'use client' directive", "passed": true, "evidence": "Line 1: \"use client\""}
+  ],
+  "summary": {"passed": 7, "failed": 0, "total": 7, "pass_rate": 1.0}
+}

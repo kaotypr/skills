@@ -1,0 +1,13 @@
+{
+  "expectations": [
+    {"text": "Uses shadcn/ui Form, FormField, FormItem, FormLabel, FormControl, FormMessage components", "passed": true, "evidence": "Lines 8-16: imports Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage from @/components/ui/form"},
+    {"text": "Imports from @/components/ui/ paths, not directly from @base-ui/react for form elements", "passed": true, "evidence": "All imports use @/components/ui/* paths (button, form, input, select, switch, checkbox)"},
+    {"text": "Uses zodResolver with a Zod schema for validation", "passed": true, "evidence": "Line 2: import zodResolver, Line 28-42: formSchema with z.object()"},
+    {"text": "Uses useForm from react-hook-form", "passed": true, "evidence": "Line 4: import { useForm } from 'react-hook-form', Line 45: useForm call"},
+    {"text": "Includes Select component from shadcn/ui (not raw Base UI Select)", "passed": true, "evidence": "Lines 19-24: imports Select, SelectContent, SelectItem, SelectTrigger, SelectValue from @/components/ui/select"},
+    {"text": "Includes Switch component from shadcn/ui", "passed": true, "evidence": "Line 25: import { Switch } from '@/components/ui/switch'"},
+    {"text": "Includes Checkbox component from shadcn/ui", "passed": true, "evidence": "Line 26: import { Checkbox } from '@/components/ui/checkbox'"},
+    {"text": "Has 'use client' directive at the top", "passed": true, "evidence": "Line 1: \"use client\""}
+  ],
+  "summary": {"passed": 8, "failed": 0, "total": 8, "pass_rate": 1.0}
+}

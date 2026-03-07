@@ -13,6 +13,7 @@ npx skills add kaotypr/skills
 | Skill | Description |
 |---|---|
 | [kao-base-ui](skills/kao-base-ui) | Guide for building UI with Base UI React (`@base-ui/react`), a headless component library with compound component patterns. |
+| [kao-shadcn-base-ui](skills/kao-shadcn-base-ui) | Provides complete shadcn/ui (with base-ui as its primitives) component library patterns including installation, configuration, and implementation of accessible React components. |
 
 ## Project Structure
 

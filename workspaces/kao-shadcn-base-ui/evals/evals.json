@@ -1,0 +1,50 @@
+{
+  "skill_name": "kao-shadcn-base-ui",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need a settings form for a Next.js app using shadcn/ui. It should have: a text input for display name, an email input, a select dropdown for language (English, Spanish, French, Japanese), a switch for email notifications, and a checkbox for agreeing to terms. Use React Hook Form with Zod validation - name required min 2 chars, email required valid format, language required, terms must be checked. Show validation errors inline. Add a submit button that logs the form data.",
+      "expected_output": "A complete React component using shadcn/ui Form components with React Hook Form, Zod schema, and proper imports from @/components/ui/*. Should NOT use raw @base-ui/react imports for form elements.",
+      "files": [],
+      "expectations": [
+        "Uses shadcn/ui Form, FormField, FormItem, FormLabel, FormControl, FormMessage components",
+        "Imports from @/components/ui/ paths, not directly from @base-ui/react for form elements",
+        "Uses zodResolver with a Zod schema for validation",
+        "Uses useForm from react-hook-form",
+        "Includes Select component from shadcn/ui (not raw Base UI Select)",
+        "Includes Switch component from shadcn/ui",
+        "Includes Checkbox component from shadcn/ui",
+        "Has 'use client' directive at the top"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Build me a confirmation dialog in Next.js with shadcn/ui that opens when a user clicks a 'Delete Account' button. Inside the dialog, there should be a popover that shows additional info when the user hovers over a help icon. The dialog should have a title, description, and Cancel/Confirm buttons. The popover should explain what happens when you delete your account. Use proper accessibility patterns.",
+      "expected_output": "A component using shadcn/ui Dialog and Popover components. Should use shadcn/ui wrappers, understand the Base UI Portal>Positioner>Popup pattern conceptually, but implement through shadcn abstractions.",
+      "files": [],
+      "expectations": [
+        "Uses shadcn/ui Dialog components (DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter)",
+        "Uses shadcn/ui Popover components (Popover, PopoverTrigger, PopoverContent)",
+        "Does NOT import directly from @base-ui/react for Dialog or Popover",
+        "Includes proper accessibility attributes or relies on shadcn's built-in a11y",
+        "Has Cancel and Confirm action buttons in the dialog",
+        "Has 'use client' directive"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Create a data table component in Next.js with shadcn/ui that displays a list of users (name, email, role, status). Add column sorting by clicking headers, and a dropdown menu on each row for actions (Edit, Delete, View Profile). Use TypeScript with proper types. Include some sample data.",
+      "expected_output": "A component using shadcn/ui Table, DropdownMenu components with TypeScript types. Should use shadcn/ui patterns for the table and menus, not raw Base UI.",
+      "files": [],
+      "expectations": [
+        "Uses shadcn/ui Table components (Table, TableHeader, TableBody, TableRow, TableHead, TableCell)",
+        "Uses shadcn/ui DropdownMenu for row actions",
+        "Imports from @/components/ui/ paths",
+        "Includes TypeScript interface or type for the user data",
+        "Implements sorting logic for at least one column",
+        "Includes sample user data array",
+        "Has 'use client' directive"
+      ]
+    }
+  ]
+}

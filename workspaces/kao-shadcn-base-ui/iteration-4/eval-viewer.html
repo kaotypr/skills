@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eval Viewer - kao-shadcn-base-ui - Iteration 4</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --green: #3fb950;
+    --green-bg: #0d2818;
+    --red: #f85149;
+    --red-bg: #3d1117;
+    --blue: #58a6ff;
+    --yellow: #d29922;
+    --purple: #bc8cff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; padding: 2rem; }
+  h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+  .subtitle { color: var(--text2); margin-bottom: 2rem; font-size: 0.9rem; }
+
+  /* Summary cards */
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .summary-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
+  .summary-card .label { color: var(--text2); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+  .summary-card .value { font-size: 1.75rem; font-weight: 700; }
+  .summary-card .delta { font-size: 0.8rem; margin-top: 0.25rem; }
+  .positive { color: var(--green); }
+  .negative { color: var(--red); }
+  .neutral { color: var(--text2); }
+
+  /* Comparison table */
+  .comparison-table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; background: var(--surface); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+  .comparison-table th, .comparison-table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+  .comparison-table th { background: var(--surface2); color: var(--text2); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+
+  /* Eval sections */
+  .eval-section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 1.5rem; overflow: hidden; }
+  .eval-header { padding: 1rem 1.25rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+  .eval-header:hover { background: var(--surface2); }
+  .eval-header h3 { font-size: 1rem; }
+  .eval-body { display: none; border-top: 1px solid var(--border); }
+  .eval-body.open { display: block; }
+
+  .badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; }
+  .badge-pass { background: var(--green-bg); color: var(--green); }
+  .badge-fail { background: var(--red-bg); color: var(--red); }
+
+  .config-tabs { display: flex; border-bottom: 1px solid var(--border); }
+  .config-tab { padding: 0.6rem 1.25rem; cursor: pointer; font-size: 0.85rem; color: var(--text2); border-bottom: 2px solid transparent; }
+  .config-tab:hover { color: var(--text); }
+  .config-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+  .config-panel { display: none; padding: 1.25rem; }
+  .config-panel.active { display: block; }
+
+  /* Expectations */
+  .expectations { margin-bottom: 1rem; }
+  .expectation { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.4rem 0; font-size: 0.85rem; }
+  .expectation .icon { flex-shrink: 0; font-size: 1rem; line-height: 1.3; }
+  .expectation .evidence { color: var(--text2); font-size: 0.8rem; }
+
+  /* Stats row */
+  .stats-row { display: flex; gap: 1.5rem; margin-bottom: 1rem; font-size: 0.8rem; color: var(--text2); }
+  .stats-row .stat-value { color: var(--text); font-weight: 600; }
+
+  /* Code block */
+  .code-block { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 1rem; overflow-x: auto; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 0.8rem; line-height: 1.6; max-height: 500px; overflow-y: auto; white-space: pre; }
+
+  /* Notes */
+  .notes-section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin-top: 2rem; }
+  .notes-section h3 { font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text2); }
+  .notes-section ul { list-style: none; padding: 0; }
+  .notes-section li { padding: 0.3rem 0; font-size: 0.85rem; color: var(--text); }
+  .notes-section li::before { content: "- "; color: var(--text2); }
+
+  .toggle-arrow { transition: transform 0.2s; font-size: 0.8rem; color: var(--text2); }
+  .toggle-arrow.open { transform: rotate(90deg); }
+
+  .highlight-green { color: var(--green); font-weight: 600; }
+  .highlight-blue { color: var(--blue); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>kao-shadcn-base-ui - Iteration 4 Eval Results</h1>
+<p class="subtitle">Trimmed skill (488 lines) vs Iteration 2 (1876 lines) | Executor: claude-opus-4-6 | 2026-03-07</p>
+
+<!-- Summary Cards -->
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="label">Pass Rate (with skill)</div>
+    <div class="value positive">100%</div>
+    <div class="delta neutral">same as iter-2</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Avg Tokens (with skill)</div>
+    <div class="value highlight-blue">15.3K</div>
+    <div class="delta positive">-48% vs iter-2 (29.5K)</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Avg Time (with skill)</div>
+    <div class="value highlight-blue">38.2s</div>
+    <div class="delta positive">-49% vs iter-2 (75.2s)</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Token Overhead vs Baseline</div>
+    <div class="value">+9.8K</div>
+    <div class="delta positive">-57% vs iter-2 (+22.8K)</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Time Overhead vs Baseline</div>
+    <div class="value">+12.4s</div>
+    <div class="delta positive">-74% vs iter-2 (+48.3s)</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Skill Size</div>
+    <div class="value highlight-blue">488</div>
+    <div class="delta positive">lines (was 1876 in iter-2)</div>
+  </div>
+</div>
+
+<!-- Comparison Table -->
+<table class="comparison-table">
+  <thead>
+    <tr>
+      <th>Eval</th>
+      <th>Config</th>
+      <th>Pass Rate</th>
+      <th>Time</th>
+      <th>Tokens</th>
+      <th>Tool Calls</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2">1. Settings Form</td>
+      <td>with_skill</td>
+      <td><span class="badge badge-pass">8/8</span></td>
+      <td>36.2s</td>
+      <td>15,106</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>without_skill</td>
+      <td><span class="badge badge-pass">8/8</span></td>
+      <td>24.1s</td>
+      <td>5,452</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td rowspan="2">2. Delete Dialog + Popover</td>
+      <td>with_skill</td>
+      <td><span class="badge badge-pass">6/6</span></td>
+      <td>31.1s</td>
+      <td>14,536</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>without_skill</td>
+      <td><span class="badge badge-pass">6/6</span></td>
+      <td>24.3s</td>
+      <td>5,139</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td rowspan="2">3. Data Table with Sorting</td>
+      <td>with_skill</td>
+      <td><span class="badge badge-pass">7/7</span></td>
+      <td>47.2s</td>
+      <td>16,339</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>without_skill</td>
+      <td><span class="badge badge-pass">7/7</span></td>
+      <td>28.9s</td>
+      <td>5,906</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Iteration Comparison -->
+<table class="comparison-table">
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Iter-2 (with_skill)</th>
+      <th>Iter-4 (with_skill)</th>
+      <th>Change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Pass Rate</td>
+      <td>100%</td>
+      <td>100%</td>
+      <td class="neutral">same</td>
+    </tr>
+    <tr>
+      <td>Avg Tokens</td>
+      <td>29,490</td>
+      <td>15,327</td>
+      <td class="positive">-48%</td>
+    </tr>
+    <tr>
+      <td>Avg Time</td>
+      <td>75.2s</td>
+      <td>38.2s</td>
+      <td class="positive">-49%</td>
+    </tr>
+    <tr>
+      <td>Token Overhead</td>
+      <td>+22,799</td>
+      <td>+9,828</td>
+      <td class="positive">-57%</td>
+    </tr>
+    <tr>
+      <td>Time Overhead</td>
+      <td>+48.3s</td>
+      <td>+12.4s</td>
+      <td class="positive">-74%</td>
+    </tr>
+    <tr>
+      <td>Avg Tool Calls</td>
+      <td>15.3</td>
+      <td>5.0</td>
+      <td class="positive">-67%</td>
+    </tr>
+    <tr>
+      <td>Skill Size</td>
+      <td>1,876 lines</td>
+      <td>488 lines</td>
+      <td class="positive">-74%</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Eval 1: Settings Form -->
+<div class="eval-section">
+  <div class="eval-header" onclick="toggleEval(this)">
+    <h3>Eval 1: Settings Form <span class="badge badge-pass">8/8</span></h3>
+    <span class="toggle-arrow">&#9654;</span>
+  </div>
+  <div class="eval-body">
+    <div class="config-tabs">
+      <div class="config-tab active" onclick="switchTab(this, 'eval1-with')">with_skill</div>
+      <div class="config-tab" onclick="switchTab(this, 'eval1-without')">without_skill</div>
+    </div>
+    <div id="eval1-with" class="config-panel active">
+      <div class="stats-row">
+        <span>Pass: <span class="stat-value">8/8</span></span>
+        <span>Time: <span class="stat-value">36.2s</span></span>
+        <span>Tokens: <span class="stat-value">15,106</span></span>
+        <span>Tool Calls: <span class="stat-value">5</span></span>
+      </div>
+      <div class="expectations">
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses shadcn/ui Form components <div class="evidence">All from @/components/ui/form</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Imports from @/components/ui/ <div class="evidence">All imports use @/components/ui/*</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses zodResolver <div class="evidence">zodResolver + settingsFormSchema</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses useForm <div class="evidence">useForm imported and used</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Includes shadcn/ui Select <div class="evidence">@/components/ui/select</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Includes shadcn/ui Switch <div class="evidence">@/components/ui/switch</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Includes shadcn/ui Checkbox <div class="evidence">@/components/ui/checkbox</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Has 'use client' <div class="evidence">Line 1</div></div></div>
+      </div>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code</summary>
+<div class="code-block">"use client"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
+import { Checkbox } from "@/components/ui/checkbox"
+
+const settingsFormSchema = z.object({
+  displayName: z
+    .string()
+    .min(2, { message: "Display name must be at least 2 characters." }),
+  email: z
+    .string()
+    .email({ message: "Please enter a valid email address." }),
+  language: z
+    .string({ required_error: "Please select a language." })
+    .min(1, { message: "Please select a language." }),
+  emailNotifications: z.boolean().default(false),
+  agreeToTerms: z.literal(true, {
+    errorMap: () =&gt; ({ message: "You must agree to the terms." }),
+  }),
+})
+
+type SettingsFormValues = z.infer&lt;typeof settingsFormSchema&gt;
+
+export function SettingsForm() {
+  const form = useForm&lt;SettingsFormValues&gt;({
+    resolver: zodResolver(settingsFormSchema),
+    defaultValues: {
+      displayName: "",
+      email: "",
+      language: "",
+      emailNotifications: false,
+      agreeToTerms: undefined as unknown as true,
+    },
+  })
+
+  function onSubmit(data: SettingsFormValues) {
+    console.log("Settings form submitted:", data)
+  }
+
+  return (
+    &lt;Form {...form}&gt;
+      &lt;form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6"&gt;
+        &lt;FormField control={form.control} name="displayName" render={({ field }) =&gt; (
+          &lt;FormItem&gt;
+            &lt;FormLabel&gt;Display Name&lt;/FormLabel&gt;
+            &lt;FormControl&gt;&lt;Input placeholder="Your display name" {...field} /&gt;&lt;/FormControl&gt;
+            &lt;FormMessage /&gt;
+          &lt;/FormItem&gt;
+        )} /&gt;
+        &lt;FormField control={form.control} name="email" render={({ field }) =&gt; (
+          &lt;FormItem&gt;
+            &lt;FormLabel&gt;Email&lt;/FormLabel&gt;
+            &lt;FormControl&gt;&lt;Input type="email" placeholder="you@example.com" {...field} /&gt;&lt;/FormControl&gt;
+            &lt;FormMessage /&gt;
+          &lt;/FormItem&gt;
+        )} /&gt;
+        &lt;FormField control={form.control} name="language" render={({ field }) =&gt; (
+          &lt;FormItem&gt;
+            &lt;FormLabel&gt;Language&lt;/FormLabel&gt;
+            &lt;Select onValueChange={field.onChange} defaultValue={field.value}&gt;
+              &lt;FormControl&gt;&lt;SelectTrigger&gt;&lt;SelectValue placeholder="Select a language" /&gt;&lt;/SelectTrigger&gt;&lt;/FormControl&gt;
+              &lt;SelectContent&gt;
+                &lt;SelectItem value="en"&gt;English&lt;/SelectItem&gt;
+                &lt;SelectItem value="es"&gt;Spanish&lt;/SelectItem&gt;
+                &lt;SelectItem value="fr"&gt;French&lt;/SelectItem&gt;
+                &lt;SelectItem value="ja"&gt;Japanese&lt;/SelectItem&gt;
+              &lt;/SelectContent&gt;
+            &lt;/Select&gt;
+            &lt;FormMessage /&gt;
+          &lt;/FormItem&gt;
+        )} /&gt;
+        &lt;FormField control={form.control} name="emailNotifications" render={({ field }) =&gt; (
+          &lt;FormItem className="flex flex-row items-center justify-between rounded-lg border p-4"&gt;
+            &lt;div className="space-y-0.5"&gt;
+              &lt;FormLabel className="text-base"&gt;Email Notifications&lt;/FormLabel&gt;
+              &lt;FormDescription&gt;Receive emails about account activity.&lt;/FormDescription&gt;
+            &lt;/div&gt;
+            &lt;FormControl&gt;&lt;Switch checked={field.value} onCheckedChange={field.onChange} /&gt;&lt;/FormControl&gt;
+          &lt;/FormItem&gt;
+        )} /&gt;
+        &lt;FormField control={form.control} name="agreeToTerms" render={({ field }) =&gt; (
+          &lt;FormItem className="flex flex-row items-start space-x-3 space-y-0"&gt;
+            &lt;FormControl&gt;&lt;Checkbox checked={field.value} onCheckedChange={field.onChange} /&gt;&lt;/FormControl&gt;
+            &lt;div className="space-y-1 leading-none"&gt;
+              &lt;FormLabel&gt;I agree to the terms and conditions&lt;/FormLabel&gt;
+              &lt;FormMessage /&gt;
+            &lt;/div&gt;
+          &lt;/FormItem&gt;
+        )} /&gt;
+        &lt;Button type="submit"&gt;Save Settings&lt;/Button&gt;
+      &lt;/form&gt;
+    &lt;/Form&gt;
+  )
+}</div>
+      </details>
+    </div>
+    <div id="eval1-without" class="config-panel">
+      <div class="stats-row">
+        <span>Pass: <span class="stat-value">8/8</span></span>
+        <span>Time: <span class="stat-value">24.1s</span></span>
+        <span>Tokens: <span class="stat-value">5,452</span></span>
+        <span>Tool Calls: <span class="stat-value">2</span></span>
+      </div>
+      <div class="expectations">
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses shadcn/ui Form components <div class="evidence">All @/components/ui/form</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Imports from @/components/ui/ <div class="evidence">All @/components/ui/*</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses zodResolver <div class="evidence">zodResolver present</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses useForm <div class="evidence">useForm imported</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Includes shadcn/ui Select <div class="evidence">@/components/ui/select</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Includes shadcn/ui Switch <div class="evidence">@/components/ui/switch</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Includes shadcn/ui Checkbox <div class="evidence">@/components/ui/checkbox</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Has 'use client' <div class="evidence">Line 1</div></div></div>
+      </div>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code</summary>
+<div class="code-block">"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+
+const settingsSchema = z.object({
+  displayName: z.string().min(2, "Display name must be at least 2 characters."),
+  email: z.string().email("Please enter a valid email address."),
+  language: z.string().min(1, "Please select a language."),
+  emailNotifications: z.boolean().default(false),
+  terms: z.literal(true, { errorMap: () =&gt; ({ message: "You must agree to the terms." }) }),
+});
+
+type SettingsFormValues = z.infer&lt;typeof settingsSchema&gt;;
+
+export default function SettingsForm() {
+  const form = useForm&lt;SettingsFormValues&gt;({ resolver: zodResolver(settingsSchema), ... });
+  ...
+}</div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- Eval 2: Delete Dialog + Popover -->
+<div class="eval-section">
+  <div class="eval-header" onclick="toggleEval(this)">
+    <h3>Eval 2: Delete Dialog + Popover <span class="badge badge-pass">6/6</span></h3>
+    <span class="toggle-arrow">&#9654;</span>
+  </div>
+  <div class="eval-body">
+    <div class="config-tabs">
+      <div class="config-tab active" onclick="switchTab(this, 'eval2-with')">with_skill</div>
+      <div class="config-tab" onclick="switchTab(this, 'eval2-without')">without_skill</div>
+    </div>
+    <div id="eval2-with" class="config-panel active">
+      <div class="stats-row">
+        <span>Pass: <span class="stat-value">6/6</span></span>
+        <span>Time: <span class="stat-value">31.1s</span></span>
+        <span>Tokens: <span class="stat-value">14,536</span></span>
+        <span>Tool Calls: <span class="stat-value">5</span></span>
+      </div>
+      <div class="expectations">
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses shadcn/ui Dialog components <div class="evidence">AlertDialog from @/components/ui/alert-dialog</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses shadcn/ui Popover <div class="evidence">Popover from @/components/ui/popover</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>No @base-ui/react imports <div class="evidence">No raw imports in the file</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Proper accessibility <div class="evidence">aria-label on popover trigger</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Cancel and Confirm buttons <div class="evidence">AlertDialogCancel + AlertDialogAction</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Has 'use client' <div class="evidence">Line 1</div></div></div>
+      </div>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code</summary>
+<div class="code-block">"use client"
+
+import {
+  AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader,
+  AlertDialogFooter, AlertDialogTitle, AlertDialogDescription,
+  AlertDialogAction, AlertDialogCancel,
+} from "@/components/ui/alert-dialog"
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
+import { Button } from "@/components/ui/button"
+import { Info } from "@phosphor-icons/react"
+
+export function DeleteAccountDialog() {
+  return (
+    &lt;AlertDialog&gt;
+      &lt;AlertDialogTrigger render={&lt;Button variant="destructive" /&gt;}&gt;
+        Delete Account
+      &lt;/AlertDialogTrigger&gt;
+      &lt;AlertDialogContent&gt;
+        &lt;AlertDialogHeader&gt;
+          &lt;AlertDialogTitle&gt;
+            &lt;span className="flex items-center gap-2"&gt;
+              Delete your account?
+              &lt;Popover&gt;
+                &lt;PopoverTrigger
+                  render={&lt;button type="button"
+                    aria-label="Learn more about account deletion"
+                    className="inline-flex items-center justify-center rounded-full ..." /&gt;}
+                &gt;
+                  &lt;Info size={18} weight="regular" /&gt;
+                &lt;/PopoverTrigger&gt;
+                &lt;PopoverContent side="top" align="center" className="w-72"&gt;
+                  &lt;div className="space-y-2"&gt;
+                    &lt;p&gt;What happens when you delete your account?&lt;/p&gt;
+                    &lt;ul&gt;...&lt;/ul&gt;
+                  &lt;/div&gt;
+                &lt;/PopoverContent&gt;
+              &lt;/Popover&gt;
+            &lt;/span&gt;
+          &lt;/AlertDialogTitle&gt;
+          &lt;AlertDialogDescription&gt;...&lt;/AlertDialogDescription&gt;
+        &lt;/AlertDialogHeader&gt;
+        &lt;AlertDialogFooter&gt;
+          &lt;AlertDialogCancel&gt;Cancel&lt;/AlertDialogCancel&gt;
+          &lt;AlertDialogAction render={&lt;Button variant="destructive" /&gt;}&gt;
+            Confirm Delete
+          &lt;/AlertDialogAction&gt;
+        &lt;/AlertDialogFooter&gt;
+      &lt;/AlertDialogContent&gt;
+    &lt;/AlertDialog&gt;
+  )
+}</div>
+      </details>
+    </div>
+    <div id="eval2-without" class="config-panel">
+      <div class="stats-row">
+        <span>Pass: <span class="stat-value">6/6</span></span>
+        <span>Time: <span class="stat-value">24.3s</span></span>
+        <span>Tokens: <span class="stat-value">5,139</span></span>
+        <span>Tool Calls: <span class="stat-value">2</span></span>
+      </div>
+      <div class="expectations">
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses shadcn/ui Dialog components <div class="evidence">AlertDialog from @/components/ui/alert-dialog</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses shadcn/ui Popover <div class="evidence">Popover from @/components/ui/popover</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>No @base-ui/react imports <div class="evidence">No @base-ui/react imports</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Proper accessibility <div class="evidence">aria-label, focus/blur handlers</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Cancel and Confirm buttons <div class="evidence">AlertDialogCancel + AlertDialogAction</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Has 'use client' <div class="evidence">Line 1</div></div></div>
+      </div>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code</summary>
+<div class="code-block">"use client";
+
+import React, { useState } from "react";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader,
+  AlertDialogTitle, AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { HelpCircle } from "lucide-react";
+
+export default function DeleteAccountDialog() {
+  // Uses asChild (baseline, no skill guidance)
+  // Uses lucide-react (baseline, no skill guidance)
+  ...
+}</div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- Eval 3: Data Table with Sorting -->
+<div class="eval-section">
+  <div class="eval-header" onclick="toggleEval(this)">
+    <h3>Eval 3: Data Table with Sorting <span class="badge badge-pass">7/7</span></h3>
+    <span class="toggle-arrow">&#9654;</span>
+  </div>
+  <div class="eval-body">
+    <div class="config-tabs">
+      <div class="config-tab active" onclick="switchTab(this, 'eval3-with')">with_skill</div>
+      <div class="config-tab" onclick="switchTab(this, 'eval3-without')">without_skill</div>
+    </div>
+    <div id="eval3-with" class="config-panel active">
+      <div class="stats-row">
+        <span>Pass: <span class="stat-value">7/7</span></span>
+        <span>Time: <span class="stat-value">47.2s</span></span>
+        <span>Tokens: <span class="stat-value">16,339</span></span>
+        <span>Tool Calls: <span class="stat-value">5</span></span>
+      </div>
+      <div class="expectations">
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses shadcn/ui Table components <div class="evidence">Table from @/components/ui/table</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses shadcn/ui DropdownMenu <div class="evidence">DropdownMenu from @/components/ui/dropdown-menu</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Imports from @/components/ui/ <div class="evidence">All @/components/ui/*</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>TypeScript types <div class="evidence">UserRecord, UserRole, UserStatus, SortableKey, SortDirection, SortConfig</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Sorting logic <div class="evidence">tri-state sort with useMemo</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Sample user data <div class="evidence">8 users</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Has 'use client' <div class="evidence">Line 1</div></div></div>
+      </div>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code</summary>
+<div class="code-block">"use client"
+
+import { useState, useMemo } from "react"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent,
+  DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel,
+} from "@/components/ui/dropdown-menu"
+import { ArrowUp, ArrowDown, ArrowsDownUp, DotsThree, PencilSimple, Trash, User } from "@phosphor-icons/react"
+
+type UserRole = "Admin" | "Editor" | "Viewer"
+type UserStatus = "Active" | "Inactive" | "Pending"
+interface UserRecord { id: string; name: string; email: string; role: UserRole; status: UserStatus }
+type SortDirection = "asc" | "desc" | null
+type SortableKey = keyof Pick&lt;UserRecord, "name" | "email" | "role" | "status"&gt;
+
+const sampleUsers: UserRecord[] = [
+  { id: "1", name: "Alice Johnson", ... }, // 8 users total
+]
+
+// Uses render prop (not asChild) -- correct Base UI pattern
+// Uses @phosphor-icons/react -- per skill config
+// Uses DropdownMenuItem variant="destructive" -- correct API
+export function UserDataTable() { ... }</div>
+      </details>
+    </div>
+    <div id="eval3-without" class="config-panel">
+      <div class="stats-row">
+        <span>Pass: <span class="stat-value">7/7</span></span>
+        <span>Time: <span class="stat-value">28.9s</span></span>
+        <span>Tokens: <span class="stat-value">5,906</span></span>
+        <span>Tool Calls: <span class="stat-value">2</span></span>
+      </div>
+      <div class="expectations">
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses shadcn/ui Table components <div class="evidence">Table from @/components/ui/table</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses shadcn/ui DropdownMenu <div class="evidence">DropdownMenu from @/components/ui/dropdown-menu</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Imports from @/components/ui/ <div class="evidence">All @/components/ui/*</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>TypeScript types <div class="evidence">User, UserStatus, UserRole</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Sorting logic <div class="evidence">handleSort + useMemo</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Sample user data <div class="evidence">sampleUsers with 8 users</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Has 'use client' <div class="evidence">Line 1</div></div></div>
+      </div>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code</summary>
+<div class="code-block">"use client";
+
+import * as React from "react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+
+// Uses asChild (baseline, no skill guidance)
+// Uses lucide-react (baseline, no skill guidance)
+// Uses className="text-destructive" instead of variant="destructive"
+export default function UserDataTable() { ... }</div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- Key Differences -->
+<div class="eval-section">
+  <div class="eval-header" onclick="toggleEval(this)">
+    <h3>Key Differences: with_skill vs without_skill</h3>
+    <span class="toggle-arrow">&#9654;</span>
+  </div>
+  <div class="eval-body open" style="padding: 1.25rem;">
+    <table class="comparison-table" style="margin-bottom:0">
+      <thead>
+        <tr><th>Aspect</th><th>with_skill (iter-4)</th><th>without_skill (baseline)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Composition pattern</td>
+          <td class="positive">render prop (correct Base UI)</td>
+          <td class="negative">asChild (Radix, incorrect)</td>
+        </tr>
+        <tr>
+          <td>Icon library</td>
+          <td class="positive">@phosphor-icons/react</td>
+          <td class="neutral">lucide-react</td>
+        </tr>
+        <tr>
+          <td>Destructive menu items</td>
+          <td class="positive">variant="destructive"</td>
+          <td class="neutral">className="text-destructive"</td>
+        </tr>
+        <tr>
+          <td>Import paths</td>
+          <td class="positive">@/components/ui/* only</td>
+          <td class="positive">@/components/ui/* only</td>
+        </tr>
+        <tr>
+          <td>Avg tokens</td>
+          <td>15,327</td>
+          <td>5,499</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Notes -->
+<div class="notes-section">
+  <h3>Notes</h3>
+  <ul>
+    <li>100% pass rate maintained across all evals with the trimmed skill (488 lines vs original 1876 lines).</li>
+    <li>Token usage with skill: 15.3K avg (iter-4) vs 29.5K avg (iter-2) -- 48% reduction in token cost.</li>
+    <li>Time with skill: 38.2s avg (iter-4) vs 75.2s avg (iter-2) -- 49% faster.</li>
+    <li>Token overhead vs baseline: +9.8K (iter-4) vs +22.8K (iter-2) -- 57% less overhead.</li>
+    <li>Time overhead vs baseline: +12.4s (iter-4) vs +48.3s (iter-2) -- 74% less time overhead.</li>
+    <li>All with-skill runs correctly use render prop (not asChild), @phosphor-icons/react, and @/components/ui/* imports.</li>
+    <li>Adding Popover section (18 lines) fixed the iter-3 regression where agent fell back to raw @base-ui/react Popover.</li>
+    <li>Tool calls reduced from avg 15.3 (iter-2) to 5.0 (iter-4) -- agent no longer needs to read reference files.</li>
+  </ul>
+</div>
+
+<script>
+function toggleEval(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.toggle-arrow');
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+function switchTab(tab, panelId) {
+  const tabs = tab.parentElement;
+  const body = tabs.parentElement;
+  tabs.querySelectorAll('.config-tab').forEach(t => t.classList.remove('active'));
+  body.querySelectorAll('.config-panel').forEach(p => p.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+</script>
+</body>
+</html>

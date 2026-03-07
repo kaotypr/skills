@@ -1,0 +1,44 @@
+{
+  "metadata": {
+    "skill_name": "kao-shadcn-base-ui",
+    "skill_path": "/Users/kao/workspace/kaotypr/skills/skills/kao-shadcn-base-ui",
+    "executor_model": "claude-opus-4-6",
+    "timestamp": "2026-03-07T00:00:00Z",
+    "evals_run": [1, 2, 3],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {"eval_id":1,"eval_name":"Settings Form","configuration":"with_skill","run_number":1,"result":{"pass_rate":1.0,"passed":8,"failed":0,"total":8,"time_seconds":36.2,"tokens":15106,"tool_calls":5,"errors":0},"expectations":[{"text":"Uses shadcn/ui Form components","passed":true,"evidence":"All from @/components/ui/form"},{"text":"Imports from @/components/ui/","passed":true,"evidence":"No @base-ui/react imports"},{"text":"Uses zodResolver","passed":true,"evidence":"zodResolver + schema"},{"text":"Uses useForm","passed":true,"evidence":"useForm imported"},{"text":"Includes shadcn/ui Select","passed":true,"evidence":"@/components/ui/select"},{"text":"Includes shadcn/ui Switch","passed":true,"evidence":"@/components/ui/switch"},{"text":"Includes shadcn/ui Checkbox","passed":true,"evidence":"@/components/ui/checkbox"},{"text":"Has 'use client'","passed":true,"evidence":"Line 1"}]},
+    {"eval_id":1,"eval_name":"Settings Form","configuration":"without_skill","run_number":1,"result":{"pass_rate":1.0,"passed":8,"failed":0,"total":8,"time_seconds":24.1,"tokens":5452,"tool_calls":2,"errors":0},"expectations":[{"text":"Uses shadcn/ui Form components","passed":true,"evidence":"All from @/components/ui/form"},{"text":"Imports from @/components/ui/","passed":true,"evidence":"All @/components/ui/*"},{"text":"Uses zodResolver","passed":true,"evidence":"zodResolver present"},{"text":"Uses useForm","passed":true,"evidence":"useForm imported"},{"text":"Includes shadcn/ui Select","passed":true,"evidence":"@/components/ui/select"},{"text":"Includes shadcn/ui Switch","passed":true,"evidence":"@/components/ui/switch"},{"text":"Includes shadcn/ui Checkbox","passed":true,"evidence":"@/components/ui/checkbox"},{"text":"Has 'use client'","passed":true,"evidence":"Line 1"}]},
+    {"eval_id":2,"eval_name":"Delete Dialog + Popover","configuration":"with_skill","run_number":1,"result":{"pass_rate":1.0,"passed":6,"failed":0,"total":6,"time_seconds":31.1,"tokens":14536,"tool_calls":5,"errors":0},"expectations":[{"text":"Uses shadcn/ui Dialog components","passed":true,"evidence":"AlertDialog from @/components/ui/alert-dialog"},{"text":"Uses shadcn/ui Popover","passed":true,"evidence":"Popover from @/components/ui/popover"},{"text":"No @base-ui/react imports","passed":true,"evidence":"No raw imports"},{"text":"Proper accessibility","passed":true,"evidence":"aria-label on trigger"},{"text":"Cancel and Confirm buttons","passed":true,"evidence":"AlertDialogCancel + AlertDialogAction"},{"text":"Has 'use client'","passed":true,"evidence":"Line 1"}]},
+    {"eval_id":2,"eval_name":"Delete Dialog + Popover","configuration":"without_skill","run_number":1,"result":{"pass_rate":1.0,"passed":6,"failed":0,"total":6,"time_seconds":24.3,"tokens":5139,"tool_calls":2,"errors":0},"expectations":[{"text":"Uses shadcn/ui Dialog components","passed":true,"evidence":"AlertDialog from @/components/ui/alert-dialog"},{"text":"Uses shadcn/ui Popover","passed":true,"evidence":"Popover from @/components/ui/popover"},{"text":"No @base-ui/react imports","passed":true,"evidence":"No raw imports"},{"text":"Proper accessibility","passed":true,"evidence":"aria-label, focus handlers"},{"text":"Cancel and Confirm buttons","passed":true,"evidence":"AlertDialogCancel + AlertDialogAction"},{"text":"Has 'use client'","passed":true,"evidence":"Line 1"}]},
+    {"eval_id":3,"eval_name":"Data Table with Sorting","configuration":"with_skill","run_number":1,"result":{"pass_rate":1.0,"passed":7,"failed":0,"total":7,"time_seconds":47.2,"tokens":16339,"tool_calls":5,"errors":0},"expectations":[{"text":"Uses shadcn/ui Table components","passed":true,"evidence":"Table from @/components/ui/table"},{"text":"Uses shadcn/ui DropdownMenu","passed":true,"evidence":"DropdownMenu from @/components/ui/dropdown-menu"},{"text":"Imports from @/components/ui/","passed":true,"evidence":"All @/components/ui/*"},{"text":"TypeScript types","passed":true,"evidence":"UserRecord, UserRole, UserStatus, SortableKey"},{"text":"Sorting logic","passed":true,"evidence":"tri-state sort with useMemo"},{"text":"Sample user data","passed":true,"evidence":"8 users"},{"text":"Has 'use client'","passed":true,"evidence":"Line 1"}]},
+    {"eval_id":3,"eval_name":"Data Table with Sorting","configuration":"without_skill","run_number":1,"result":{"pass_rate":1.0,"passed":7,"failed":0,"total":7,"time_seconds":28.9,"tokens":5906,"tool_calls":2,"errors":0},"expectations":[{"text":"Uses shadcn/ui Table components","passed":true,"evidence":"Table from @/components/ui/table"},{"text":"Uses shadcn/ui DropdownMenu","passed":true,"evidence":"DropdownMenu from @/components/ui/dropdown-menu"},{"text":"Imports from @/components/ui/","passed":true,"evidence":"All @/components/ui/*"},{"text":"TypeScript types","passed":true,"evidence":"User, UserStatus, UserRole"},{"text":"Sorting logic","passed":true,"evidence":"handleSort + useMemo"},{"text":"Sample user data","passed":true,"evidence":"8 users"},{"text":"Has 'use client'","passed":true,"evidence":"Line 1"}]}
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 38.2, "stddev": 6.7, "min": 31.1, "max": 47.2},
+      "tokens": {"mean": 15327, "stddev": 741, "min": 14536, "max": 16339}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 25.8, "stddev": 2.1, "min": 24.1, "max": 28.9},
+      "tokens": {"mean": 5499, "stddev": 314, "min": 5139, "max": 5906}
+    },
+    "delta": {
+      "pass_rate": "+0.00",
+      "time_seconds": "+12.4",
+      "tokens": "+9828"
+    }
+  },
+  "notes": [
+    "100% pass rate maintained across all evals with the trimmed skill (488 lines vs original 1876 lines).",
+    "Token usage with skill: 15.3K avg (iter-4) vs 29.5K avg (iter-2) — 48% reduction in token cost.",
+    "Time with skill: 38.2s avg (iter-4) vs 75.2s avg (iter-2) — 49% faster.",
+    "Token overhead vs baseline: +9.8K (iter-4) vs +22.8K (iter-2) — 57% less overhead.",
+    "Time overhead vs baseline: +12.4s (iter-4) vs +48.3s (iter-2) — 74% less time overhead.",
+    "All with-skill runs correctly use render prop (not asChild), @phosphor-icons/react, and @/components/ui/* imports.",
+    "Adding Popover section (18 lines) fixed the iter-3 regression where agent fell back to raw @base-ui/react Popover."
+  ]
+}

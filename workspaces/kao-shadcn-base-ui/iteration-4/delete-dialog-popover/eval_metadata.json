@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "delete-dialog-popover",
+  "prompt": "Build me a confirmation dialog in Next.js with shadcn/ui that opens when a user clicks a 'Delete Account' button. Inside the dialog, there should be a popover that shows additional info when the user hovers over a help icon. The dialog should have a title, description, and Cancel/Confirm buttons. The popover should explain what happens when you delete your account. Use proper accessibility patterns.",
+  "assertions": [
+    "Uses shadcn/ui Dialog components (DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter)",
+    "Uses shadcn/ui Popover components (Popover, PopoverTrigger, PopoverContent)",
+    "Does NOT import directly from @base-ui/react for Dialog or Popover",
+    "Includes proper accessibility attributes or relies on shadcn's built-in a11y",
+    "Has Cancel and Confirm action buttons in the dialog",
+    "Has 'use client' directive"
+  ]
+}

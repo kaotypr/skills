@@ -1,0 +1,15 @@
+{
+  "eval_id": 1,
+  "eval_name": "settings-form",
+  "prompt": "I need a settings form for a Next.js app using shadcn/ui. It should have: a text input for display name, an email input, a select dropdown for language (English, Spanish, French, Japanese), a switch for email notifications, and a checkbox for agreeing to terms. Use React Hook Form with Zod validation - name required min 2 chars, email required valid format, language required, terms must be checked. Show validation errors inline. Add a submit button that logs the form data.",
+  "assertions": [
+    "Uses shadcn/ui Form, FormField, FormItem, FormLabel, FormControl, FormMessage components",
+    "Imports from @/components/ui/ paths, not directly from @base-ui/react for form elements",
+    "Uses zodResolver with a Zod schema for validation",
+    "Uses useForm from react-hook-form",
+    "Includes Select component from shadcn/ui (not raw Base UI Select)",
+    "Includes Switch component from shadcn/ui",
+    "Includes Checkbox component from shadcn/ui",
+    "Has 'use client' directive at the top"
+  ]
+}

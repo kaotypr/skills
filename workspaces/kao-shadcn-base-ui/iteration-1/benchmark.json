@@ -1,0 +1,186 @@
+{
+  "metadata": {
+    "skill_name": "kao-shadcn-base-ui",
+    "skill_path": "/Users/kao/workspace/kaotypr/skills/skills/kao-shadcn-base-ui",
+    "executor_model": "claude-opus-4-6",
+    "timestamp": "2026-03-07T00:00:00Z",
+    "evals_run": [1, 2, 3],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "Settings Form",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "time_seconds": 85.9,
+        "tokens": 42661,
+        "tool_calls": 14,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses shadcn/ui Form, FormField, FormItem, FormLabel, FormControl, FormMessage", "passed": true, "evidence": "All Form components imported from @/components/ui/form"},
+        {"text": "Imports from @/components/ui/ paths", "passed": true, "evidence": "All imports use @/components/ui/*"},
+        {"text": "Uses zodResolver with Zod schema", "passed": true, "evidence": "zodResolver + z.object() schema"},
+        {"text": "Uses useForm from react-hook-form", "passed": true, "evidence": "useForm imported and used"},
+        {"text": "Includes shadcn/ui Select", "passed": true, "evidence": "Select from @/components/ui/select"},
+        {"text": "Includes shadcn/ui Switch", "passed": true, "evidence": "Switch from @/components/ui/switch"},
+        {"text": "Includes shadcn/ui Checkbox", "passed": true, "evidence": "Checkbox from @/components/ui/checkbox"},
+        {"text": "Has 'use client' directive", "passed": true, "evidence": "Line 1"}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "Settings Form",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "time_seconds": 22.2,
+        "tokens": 5474,
+        "tool_calls": 2,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses shadcn/ui Form, FormField, FormItem, FormLabel, FormControl, FormMessage", "passed": true, "evidence": "All Form components imported"},
+        {"text": "Imports from @/components/ui/ paths", "passed": true, "evidence": "All imports use @/components/ui/*"},
+        {"text": "Uses zodResolver with Zod schema", "passed": true, "evidence": "zodResolver + settingsSchema"},
+        {"text": "Uses useForm from react-hook-form", "passed": true, "evidence": "useForm imported and used"},
+        {"text": "Includes shadcn/ui Select", "passed": true, "evidence": "Select from @/components/ui/select"},
+        {"text": "Includes shadcn/ui Switch", "passed": true, "evidence": "Switch from @/components/ui/switch"},
+        {"text": "Includes shadcn/ui Checkbox", "passed": true, "evidence": "Checkbox from @/components/ui/checkbox"},
+        {"text": "Has 'use client' directive", "passed": true, "evidence": "Line 1"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "Delete Dialog + Popover",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.67,
+        "passed": 4,
+        "failed": 2,
+        "total": 6,
+        "time_seconds": 84.4,
+        "tokens": 27994,
+        "tool_calls": 19,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses shadcn/ui Dialog components", "passed": true, "evidence": "Uses AlertDialog from @/components/ui/alert-dialog"},
+        {"text": "Uses shadcn/ui Popover (PopoverTrigger, PopoverContent)", "passed": false, "evidence": "IMPORTED FROM @base-ui/react/popover instead of @/components/ui/popover"},
+        {"text": "Does NOT import directly from @base-ui/react", "passed": false, "evidence": "Line 15: import { Popover } from '@base-ui/react/popover'"},
+        {"text": "Proper accessibility", "passed": true, "evidence": "aria-label, Popover.Title/Description"},
+        {"text": "Cancel and Confirm buttons", "passed": true, "evidence": "AlertDialogCancel + AlertDialogAction present"},
+        {"text": "Has 'use client' directive", "passed": true, "evidence": "Line 1"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "Delete Dialog + Popover",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 24.6,
+        "tokens": 5202,
+        "tool_calls": 2,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses shadcn/ui Dialog components", "passed": true, "evidence": "AlertDialog from @/components/ui/alert-dialog"},
+        {"text": "Uses shadcn/ui Popover (PopoverTrigger, PopoverContent)", "passed": true, "evidence": "Popover, PopoverContent, PopoverTrigger from @/components/ui/popover"},
+        {"text": "Does NOT import directly from @base-ui/react", "passed": true, "evidence": "No @base-ui/react imports"},
+        {"text": "Proper accessibility", "passed": true, "evidence": "aria-label, focus/blur handlers"},
+        {"text": "Cancel and Confirm buttons", "passed": true, "evidence": "AlertDialogCancel + AlertDialogAction"},
+        {"text": "Has 'use client' directive", "passed": true, "evidence": "Line 1"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "Data Table with Sorting",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 82.9,
+        "tokens": 21654,
+        "tool_calls": 14,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses shadcn/ui Table components", "passed": true, "evidence": "All Table components from @/components/ui/table"},
+        {"text": "Uses shadcn/ui DropdownMenu", "passed": true, "evidence": "DropdownMenu from @/components/ui/dropdown-menu"},
+        {"text": "Imports from @/components/ui/ paths", "passed": true, "evidence": "All imports from @/components/ui/*"},
+        {"text": "TypeScript types for user data", "passed": true, "evidence": "User interface, UserRole, UserStatus, SortField, SortDirection types"},
+        {"text": "Implements sorting logic", "passed": true, "evidence": "handleSort + useMemo with localeCompare, all 4 columns sortable"},
+        {"text": "Includes sample user data", "passed": true, "evidence": "sampleUsers array with 8 users"},
+        {"text": "Has 'use client' directive", "passed": true, "evidence": "Line 1"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "Data Table with Sorting",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 27.9,
+        "tokens": 5826,
+        "tool_calls": 2,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses shadcn/ui Table components", "passed": true, "evidence": "Table components from @/components/ui/table"},
+        {"text": "Uses shadcn/ui DropdownMenu", "passed": true, "evidence": "DropdownMenu from @/components/ui/dropdown-menu"},
+        {"text": "Imports from @/components/ui/ paths", "passed": true, "evidence": "All imports from @/components/ui/*"},
+        {"text": "TypeScript types for user data", "passed": true, "evidence": "User interface, UserStatus, UserRole types"},
+        {"text": "Implements sorting logic", "passed": true, "evidence": "handleSort + useMemo, all columns sortable"},
+        {"text": "Includes sample user data", "passed": true, "evidence": "sampleUsers with 8 users"},
+        {"text": "Has 'use client' directive", "passed": true, "evidence": "Line 1"}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 0.89, "stddev": 0.16, "min": 0.67, "max": 1.0},
+      "time_seconds": {"mean": 84.4, "stddev": 1.5, "min": 82.9, "max": 85.9},
+      "tokens": {"mean": 30770, "stddev": 8700, "min": 21654, "max": 42661}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 24.9, "stddev": 2.3, "min": 22.2, "max": 27.9},
+      "tokens": {"mean": 5501, "stddev": 253, "min": 5202, "max": 5826}
+    },
+    "delta": {
+      "pass_rate": "-0.11",
+      "time_seconds": "+59.5",
+      "tokens": "+25269"
+    }
+  },
+  "notes": [
+    "CRITICAL: Eval 2 (Dialog+Popover) — the with_skill version imported Popover directly from @base-ui/react instead of using shadcn/ui wrapper. The kao-base-ui skill's emphasis on Portal>Positioner>Popup pattern pulled the agent toward raw Base UI APIs, breaking the shadcn abstraction layer.",
+    "Eval 1 (Settings Form) — both versions are nearly identical. The skill adds ~64s and ~37K tokens but produces equivalent output. The baseline already knows shadcn/ui well enough for standard form patterns.",
+    "Eval 3 (Data Table) — both pass all assertions. However, the with-skill version correctly uses 'render' prop (Base UI) instead of 'asChild' (Radix), and uses 'onSelect'/'variant=destructive' which are correct current APIs. The baseline uses outdated Radix patterns (asChild, onClick, className for destructive).",
+    "The with-skill runs use 5-8x more tokens due to reading both SKILL.md files and reference documents.",
+    "The baseline uses 'asChild' in Evals 2 and 3 — this is the old Radix pattern. shadcn/ui now uses Base UI which requires 'render' prop instead. The skill correctly teaches this but at the cost of sometimes pulling toward raw Base UI imports."
+  ]
+}

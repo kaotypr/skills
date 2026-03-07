@@ -1,0 +1,11 @@
+{
+  "expectations": [
+    {"text": "Uses shadcn/ui Dialog components (DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter)", "passed": true, "evidence": "Lines 3-13: imports AlertDialog variants from @/components/ui/alert-dialog. AlertDialog is a shadcn/ui dialog component appropriate for confirmations."},
+    {"text": "Uses shadcn/ui Popover components (Popover, PopoverTrigger, PopoverContent)", "passed": false, "evidence": "Line 15: imports Popover from '@base-ui/react/popover' — uses RAW Base UI Popover instead of shadcn/ui wrapper. Uses Popover.Root, Popover.Trigger, Popover.Portal, Popover.Positioner, Popover.Popup pattern directly."},
+    {"text": "Does NOT import directly from @base-ui/react for Dialog or Popover", "passed": false, "evidence": "Line 15: import { Popover } from '@base-ui/react/popover' — direct Base UI import"},
+    {"text": "Includes proper accessibility attributes or relies on shadcn's built-in a11y", "passed": true, "evidence": "Line 37: aria-label on popover trigger, Popover.Title/Popover.Description for semantic structure, AlertDialog provides built-in a11y"},
+    {"text": "Has Cancel and Confirm action buttons in the dialog", "passed": true, "evidence": "Line 63: AlertDialogCancel, Line 65: AlertDialogAction"},
+    {"text": "Has 'use client' directive", "passed": true, "evidence": "Line 1: \"use client\""}
+  ],
+  "summary": {"passed": 4, "failed": 2, "total": 6, "pass_rate": 0.67}
+}

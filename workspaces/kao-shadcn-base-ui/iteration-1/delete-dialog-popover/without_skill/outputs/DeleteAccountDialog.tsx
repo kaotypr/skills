@@ -1,0 +1,89 @@
+"use client";
+
+import React, { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { HelpCircle } from "lucide-react";
+
+export default function DeleteAccountDialog() {
+  const [popoverOpen, setPopoverOpen] = useState(false);
+
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="destructive">Delete Account</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            Are you sure you want to delete your account?
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete your
+            account and remove all of your data from our servers.
+            <span className="inline-flex items-center ml-1 align-middle">
+              <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+                <PopoverTrigger asChild>
+                  <button
+                    type="button"
+                    aria-label="More information about account deletion"
+                    className="inline-flex items-center justify-center rounded-full p-0.5 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    onMouseEnter={() => setPopoverOpen(true)}
+                    onMouseLeave={() => setPopoverOpen(false)}
+                    onFocus={() => setPopoverOpen(true)}
+                    onBlur={() => setPopoverOpen(false)}
+                  >
+                    <HelpCircle className="h-4 w-4" />
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent
+                  side="top"
+                  align="center"
+                  className="w-72 text-sm"
+                  onMouseEnter={() => setPopoverOpen(true)}
+                  onMouseLeave={() => setPopoverOpen(false)}
+                >
+                  <div className="space-y-2">
+                    <p className="font-medium">What happens when you delete your account:</p>
+                    <ul className="list-disc pl-4 space-y-1 text-muted-foreground">
+                      <li>All personal data is permanently erased.</li>
+                      <li>Your username will become available to others.</li>
+                      <li>Active subscriptions will be cancelled immediately.</li>
+                      <li>Content you have shared may still be visible but will be disassociated from your identity.</li>
+                    </ul>
+                    <p className="text-muted-foreground">
+                      This process is irreversible. Please export any data you wish to keep before confirming.
+                    </p>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </span>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction
+            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+          >
+            Confirm Delete
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
