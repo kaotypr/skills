@@ -38,6 +38,7 @@ Complete shadcn/ui component library patterns using `@base-ui/react` as its prim
 | Metric | With Skill | Without Skill |
 |---|---|---|
 | Pass Rate | 100% (18/18) | 87% (16/18) |
+| Avg Tokens | 15,327 | 5,499 |
 
 Tested across: settings form, warning button + dialog, drawer with toast. The skill's primary value is enforcing Base UI patterns (`render` prop vs `asChild`, `@phosphor-icons/react`, oklch CSS variables).
 
