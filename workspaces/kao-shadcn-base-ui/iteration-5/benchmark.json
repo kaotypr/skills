@@ -1,0 +1,121 @@
+{
+  "metadata": {
+    "skill_name": "kao-shadcn-base-ui",
+    "skill_path": "skills/kao-shadcn-base-ui",
+    "executor_model": "claude-opus-4-6",
+    "timestamp": "2026-03-14T14:44:45Z",
+    "evals_run": ["settings-form", "warning-button-dialog", "drawer-with-toast"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_name": "settings-form",
+      "configuration": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 8,
+      "total": 8,
+      "assertions": [
+        { "text": "Component includes 'use client' directive", "passed": true },
+        { "text": "All shadcn imports are from @/components/ui/", "passed": true },
+        { "text": "Zod schema validates name with min(2)", "passed": true },
+        { "text": "Zod schema validates email with .email()", "passed": true },
+        { "text": "Uses useForm with zodResolver", "passed": true },
+        { "text": "Uses FormField component wrappers for inputs", "passed": true },
+        { "text": "Select uses onValueChange and defaultValue for form integration", "passed": true },
+        { "text": "Switch uses checked and onCheckedChange for form integration", "passed": true }
+      ]
+    },
+    {
+      "eval_name": "settings-form",
+      "configuration": "without_skill",
+      "pass_rate": 1.0,
+      "passed": 8,
+      "total": 8,
+      "assertions": [
+        { "text": "Component includes 'use client' directive", "passed": true },
+        { "text": "All shadcn imports are from @/components/ui/", "passed": true },
+        { "text": "Zod schema validates name with min(2)", "passed": true },
+        { "text": "Zod schema validates email with .email()", "passed": true },
+        { "text": "Uses useForm with zodResolver", "passed": true },
+        { "text": "Uses FormField component wrappers for inputs", "passed": true },
+        { "text": "Select uses onValueChange and defaultValue for form integration", "passed": true },
+        { "text": "Switch uses checked and onCheckedChange for form integration", "passed": true }
+      ]
+    },
+    {
+      "eval_name": "warning-button-dialog",
+      "configuration": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 5,
+      "total": 5,
+      "assertions": [
+        { "text": "Button uses CVA with a 'warning' variant defined", "passed": true },
+        { "text": "Warning variant uses yellow or amber Tailwind CSS classes", "passed": true },
+        { "text": "Uses cn() utility for class merging", "passed": true },
+        { "text": "Dialog uses AlertDialog or Dialog components from @/components/ui/", "passed": true },
+        { "text": "Uses render prop instead of asChild (Base UI pattern)", "passed": true }
+      ]
+    },
+    {
+      "eval_name": "warning-button-dialog",
+      "configuration": "without_skill",
+      "pass_rate": 0.8,
+      "passed": 4,
+      "total": 5,
+      "assertions": [
+        { "text": "Button uses CVA with a 'warning' variant defined", "passed": true },
+        { "text": "Warning variant uses yellow or amber Tailwind CSS classes", "passed": true },
+        { "text": "Uses cn() utility for class merging", "passed": true },
+        { "text": "Dialog uses AlertDialog or Dialog components from @/components/ui/", "passed": true },
+        { "text": "Uses render prop instead of asChild (Base UI pattern)", "passed": false }
+      ]
+    },
+    {
+      "eval_name": "drawer-with-toast",
+      "configuration": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 5,
+      "total": 5,
+      "assertions": [
+        { "text": "Uses Drawer component from @/components/ui/drawer", "passed": true },
+        { "text": "Uses toast() from sonner for notifications", "passed": true },
+        { "text": "Toast is called when a menu item/action is selected", "passed": true },
+        { "text": "Component includes 'use client' directive", "passed": true },
+        { "text": "All shadcn imports are from @/components/ui/", "passed": true }
+      ]
+    },
+    {
+      "eval_name": "drawer-with-toast",
+      "configuration": "without_skill",
+      "pass_rate": 0.8,
+      "passed": 4,
+      "total": 5,
+      "assertions": [
+        { "text": "Uses Drawer component from @/components/ui/drawer", "passed": true },
+        { "text": "Uses toast() from sonner for notifications", "passed": true },
+        { "text": "Toast is called when a menu item/action is selected", "passed": true },
+        { "text": "Component includes 'use client' directive", "passed": true },
+        { "text": "All shadcn imports are from @/components/ui/ (uses render prop, correct icons)", "passed": false }
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "mean_pass_rate": 1.0,
+      "stddev_pass_rate": 0.0
+    },
+    "without_skill": {
+      "mean_pass_rate": 0.87,
+      "stddev_pass_rate": 0.09
+    },
+    "delta": {
+      "pass_rate": "+0.13"
+    }
+  },
+  "notes": [
+    "Test 1 (settings-form): Both with and without skill produced nearly identical, high-quality output. The form pattern is well-known enough that the skill provides minimal incremental value for this common case.",
+    "Test 2 (warning-button-dialog): The skill correctly guided use of @base-ui/react Button primitive, render prop, data-slot attributes, ButtonGroup, and new button sizes (xs, icon-xs, etc.). Without the skill, the output used Radix patterns (asChild, Slot, forwardRef) and only had 4 size variants.",
+    "Test 3 (drawer-with-toast): The skill guided correct use of render prop on DrawerTrigger/DrawerClose and @phosphor-icons/react. Without skill, output used asChild (Radix) and lucide-react icons.",
+    "Key differentiator: The skill's primary value is enforcing Base UI patterns (render prop vs asChild) and project-specific conventions (@phosphor-icons, data-slot, oklch-based CSS variables). For standard React/shadcn patterns like forms, the baseline already performs well."
+  ]
+}

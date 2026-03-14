@@ -1,0 +1,15 @@
+{
+  "eval_id": 1,
+  "eval_name": "settings-form",
+  "prompt": "I need a settings page with a form that has name, email, a role select dropdown, and a notifications toggle switch. Use React Hook Form with Zod validation. The name should be required and at least 2 chars, email must be valid.",
+  "assertions": [
+    { "id": "use-client", "text": "Component includes 'use client' directive", "type": "contains" },
+    { "id": "imports-from-ui", "text": "All shadcn imports are from @/components/ui/ (not from @base-ui/react directly)", "type": "pattern" },
+    { "id": "zod-name-validation", "text": "Zod schema validates name with min(2)", "type": "contains" },
+    { "id": "zod-email-validation", "text": "Zod schema validates email with .email()", "type": "contains" },
+    { "id": "use-form-zod-resolver", "text": "Uses useForm with zodResolver", "type": "contains" },
+    { "id": "form-field-wrappers", "text": "Uses FormField component wrappers for inputs", "type": "contains" },
+    { "id": "select-pattern", "text": "Select uses onValueChange and defaultValue for form integration", "type": "pattern" },
+    { "id": "switch-pattern", "text": "Switch uses checked and onCheckedChange for form integration", "type": "pattern" }
+  ]
+}

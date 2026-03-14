@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "eval_name": "warning-button-dialog",
+  "prompt": "I want to add a new 'warning' variant to my Button component and also create a confirmation dialog that uses it. The warning button should be yellow/amber themed.",
+  "assertions": [
+    { "id": "cva-warning-variant", "text": "Button uses CVA with a 'warning' variant defined", "type": "pattern" },
+    { "id": "amber-classes", "text": "Warning variant uses yellow or amber Tailwind CSS classes", "type": "pattern" },
+    { "id": "cn-utility", "text": "Uses cn() utility for class merging", "type": "contains" },
+    { "id": "dialog-components", "text": "Dialog uses AlertDialog or Dialog components from @/components/ui/", "type": "pattern" },
+    { "id": "render-not-aschild", "text": "Uses render prop instead of asChild (Base UI pattern)", "type": "pattern" }
+  ]
+}

@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eval Viewer - kao-shadcn-base-ui - Iteration 5</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --green: #3fb950;
+    --green-bg: #0d2818;
+    --red: #f85149;
+    --red-bg: #3d1117;
+    --blue: #58a6ff;
+    --yellow: #d29922;
+    --purple: #bc8cff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; padding: 2rem; }
+  h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+  .subtitle { color: var(--text2); margin-bottom: 2rem; font-size: 0.9rem; }
+
+  /* Summary cards */
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .summary-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
+  .summary-card .label { color: var(--text2); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+  .summary-card .value { font-size: 1.75rem; font-weight: 700; }
+  .summary-card .delta { font-size: 0.8rem; margin-top: 0.25rem; }
+  .positive { color: var(--green); }
+  .negative { color: var(--red); }
+  .neutral { color: var(--text2); }
+
+  /* Comparison table */
+  .comparison-table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; background: var(--surface); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+  .comparison-table th, .comparison-table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+  .comparison-table th { background: var(--surface2); color: var(--text2); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+
+  /* Eval sections */
+  .eval-section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 1.5rem; overflow: hidden; }
+  .eval-header { padding: 1rem 1.25rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+  .eval-header:hover { background: var(--surface2); }
+  .eval-header h3 { font-size: 1rem; }
+  .eval-body { display: none; border-top: 1px solid var(--border); }
+  .eval-body.open { display: block; }
+
+  .badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; }
+  .badge-pass { background: var(--green-bg); color: var(--green); }
+  .badge-fail { background: var(--red-bg); color: var(--red); }
+
+  .config-tabs { display: flex; border-bottom: 1px solid var(--border); }
+  .config-tab { padding: 0.6rem 1.25rem; cursor: pointer; font-size: 0.85rem; color: var(--text2); border-bottom: 2px solid transparent; }
+  .config-tab:hover { color: var(--text); }
+  .config-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+  .config-panel { display: none; padding: 1.25rem; }
+  .config-panel.active { display: block; }
+
+  /* Expectations */
+  .expectations { margin-bottom: 1rem; }
+  .expectation { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.4rem 0; font-size: 0.85rem; }
+  .expectation .icon { flex-shrink: 0; font-size: 1rem; line-height: 1.3; }
+  .expectation .evidence { color: var(--text2); font-size: 0.8rem; }
+
+  /* Stats row */
+  .stats-row { display: flex; gap: 1.5rem; margin-bottom: 1rem; font-size: 0.8rem; color: var(--text2); }
+  .stats-row .stat-value { color: var(--text); font-weight: 600; }
+
+  /* Code block */
+  .code-block { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 1rem; overflow-x: auto; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 0.8rem; line-height: 1.6; max-height: 500px; overflow-y: auto; white-space: pre; }
+
+  /* Notes */
+  .notes-section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin-top: 2rem; }
+  .notes-section h3 { font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text2); }
+  .notes-section ul { list-style: none; padding: 0; }
+  .notes-section li { padding: 0.3rem 0; font-size: 0.85rem; color: var(--text); }
+  .notes-section li::before { content: "- "; color: var(--text2); }
+
+  .toggle-arrow { transition: transform 0.2s; font-size: 0.8rem; color: var(--text2); }
+  .toggle-arrow.open { transform: rotate(90deg); }
+
+  .highlight-green { color: var(--green); font-weight: 600; }
+  .highlight-blue { color: var(--blue); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>kao-shadcn-base-ui - Iteration 5 Eval Results</h1>
+<p class="subtitle">Updated skill with latest shadcn/ui docs (oklch colors, Tailwind v4, 59 components) | Executor: claude-opus-4-6 | 2026-03-14</p>
+
+<!-- Summary Cards -->
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="label">Pass Rate (with skill)</div>
+    <div class="value positive">100%</div>
+    <div class="delta positive">18/18 assertions</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Pass Rate (without skill)</div>
+    <div class="value highlight-blue">87%</div>
+    <div class="delta negative">16/18 assertions (2 failed)</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Delta</div>
+    <div class="value positive">+13%</div>
+    <div class="delta positive">Skill advantage on pattern compliance</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Evals Run</div>
+    <div class="value highlight-blue">3</div>
+    <div class="delta neutral">settings-form, warning-button-dialog, drawer-with-toast</div>
+  </div>
+</div>
+
+<!-- Comparison Table -->
+<table class="comparison-table">
+  <thead>
+    <tr>
+      <th>Eval</th>
+      <th>Config</th>
+      <th>Pass Rate</th>
+      <th>Assertions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2">1. Settings Form</td>
+      <td>with_skill</td>
+      <td><span class="badge badge-pass">8/8</span></td>
+      <td>All passed</td>
+    </tr>
+    <tr>
+      <td>without_skill</td>
+      <td><span class="badge badge-pass">8/8</span></td>
+      <td>All passed</td>
+    </tr>
+    <tr>
+      <td rowspan="2">2. Warning Button + Dialog</td>
+      <td>with_skill</td>
+      <td><span class="badge badge-pass">5/5</span></td>
+      <td>All passed</td>
+    </tr>
+    <tr>
+      <td>without_skill</td>
+      <td><span class="badge badge-fail">4/5</span></td>
+      <td>Failed: render prop vs asChild</td>
+    </tr>
+    <tr>
+      <td rowspan="2">3. Drawer + Toast (Sonner)</td>
+      <td>with_skill</td>
+      <td><span class="badge badge-pass">5/5</span></td>
+      <td>All passed</td>
+    </tr>
+    <tr>
+      <td>without_skill</td>
+      <td><span class="badge badge-fail">4/5</span></td>
+      <td>Failed: asChild + lucide-react</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Eval 1: Settings Form -->
+<div class="eval-section">
+  <div class="eval-header" onclick="toggleEval(this)">
+    <h3>Eval 1: Settings Form <span class="badge badge-pass">8/8 both configs</span></h3>
+    <span class="toggle-arrow">&#9654;</span>
+  </div>
+  <div class="eval-body">
+    <div class="config-tabs">
+      <div class="config-tab active" onclick="switchTab(this, 'eval1-with')">with_skill</div>
+      <div class="config-tab" onclick="switchTab(this, 'eval1-without')">without_skill</div>
+    </div>
+    <div id="eval1-with" class="config-panel active">
+      <div class="stats-row">
+        <span>Pass: <span class="stat-value">8/8</span></span>
+      </div>
+      <div class="expectations">
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Component includes 'use client' directive <div class="evidence">Line 1: "use client"</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>All shadcn imports are from @/components/ui/ <div class="evidence">All imports from @/components/ui/button, form, input, select, switch, card</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Zod schema validates name with min(2) <div class="evidence">Line 36-37: .string().min(2, { message: "Name must be at least 2 characters." })</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Zod schema validates email with .email() <div class="evidence">Line 40-41: .string().email({ message: "Please enter a valid email address." })</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses useForm with zodResolver <div class="evidence">Line 59-61: useForm with resolver: zodResolver(settingsFormSchema)</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses FormField component wrappers for inputs <div class="evidence">Four FormField components wrapping name, email, role, and notifications</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Select uses onValueChange and defaultValue for form integration <div class="evidence">Lines 123-125: onValueChange={field.onChange} defaultValue={field.value}</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Switch uses checked and onCheckedChange for form integration <div class="evidence">Lines 160-162: checked={field.value} onCheckedChange={field.onChange}</div></div></div>
+      </div>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code</summary>
+<div class="code-block">&quot;use client&quot;
+
+import { zodResolver } from &quot;@hookform/resolvers/zod&quot;
+import { useForm } from &quot;react-hook-form&quot;
+import * as z from &quot;zod&quot;
+
+import { Button } from &quot;@/components/ui/button&quot;
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from &quot;@/components/ui/card&quot;
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from &quot;@/components/ui/form&quot;
+import { Input } from &quot;@/components/ui/input&quot;
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from &quot;@/components/ui/select&quot;
+import { Switch } from &quot;@/components/ui/switch&quot;
+
+const settingsFormSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: &quot;Name must be at least 2 characters.&quot; })
+    .max(50, { message: &quot;Name must not exceed 50 characters.&quot; }),
+  email: z
+    .string()
+    .email({ message: &quot;Please enter a valid email address.&quot; }),
+  role: z
+    .string({
+      required_error: &quot;Please select a role.&quot;,
+    }),
+  notifications: z.boolean().default(false),
+})
+
+type SettingsFormValues = z.infer&lt;typeof settingsFormSchema&gt;
+
+const defaultValues: Partial&lt;SettingsFormValues&gt; = {
+  name: &quot;&quot;,
+  email: &quot;&quot;,
+  role: undefined,
+  notifications: true,
+}
+
+export function SettingsForm() {
+  const form = useForm&lt;SettingsFormValues&gt;({
+    resolver: zodResolver(settingsFormSchema),
+    defaultValues,
+  })
+
+  function onSubmit(data: SettingsFormValues) {
+    console.log(&quot;Settings saved:&quot;, data)
+  }
+
+  return (
+    &lt;Card className=&quot;w-full max-w-lg&quot;&gt;
+      &lt;CardHeader&gt;
+        &lt;CardTitle&gt;Settings&lt;/CardTitle&gt;
+        &lt;CardDescription&gt;
+          Manage your account settings and preferences.
+        &lt;/CardDescription&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent&gt;
+        &lt;Form {...form}&gt;
+          &lt;form onSubmit={form.handleSubmit(onSubmit)} className=&quot;space-y-6&quot;&gt;
+            &lt;FormField
+              control={form.control}
+              name=&quot;name&quot;
+              render={({ field }) =&gt; (
+                &lt;FormItem&gt;
+                  &lt;FormLabel&gt;Name&lt;/FormLabel&gt;
+                  &lt;FormControl&gt;
+                    &lt;Input placeholder=&quot;Your name&quot; {...field} /&gt;
+                  &lt;/FormControl&gt;
+                  &lt;FormDescription&gt;
+                    This is your public display name.
+                  &lt;/FormDescription&gt;
+                  &lt;FormMessage /&gt;
+                &lt;/FormItem&gt;
+              )}
+            /&gt;
+
+            &lt;FormField
+              control={form.control}
+              name=&quot;email&quot;
+              render={({ field }) =&gt; (
+                &lt;FormItem&gt;
+                  &lt;FormLabel&gt;Email&lt;/FormLabel&gt;
+                  &lt;FormControl&gt;
+                    &lt;Input
+                      type=&quot;email&quot;
+                      placeholder=&quot;you@example.com&quot;
+                      {...field}
+                    /&gt;
+                  &lt;/FormControl&gt;
+                  &lt;FormDescription&gt;
+                    Your email address for account notifications.
+                  &lt;/FormDescription&gt;
+                  &lt;FormMessage /&gt;
+                &lt;/FormItem&gt;
+              )}
+            /&gt;
+
+            &lt;FormField
+              control={form.control}
+              name=&quot;role&quot;
+              render={({ field }) =&gt; (
+                &lt;FormItem&gt;
+                  &lt;FormLabel&gt;Role&lt;/FormLabel&gt;
+                  &lt;Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  &gt;
+                    &lt;FormControl&gt;
+                      &lt;SelectTrigger&gt;
+                        &lt;SelectValue placeholder=&quot;Select a role&quot; /&gt;
+                      &lt;/SelectTrigger&gt;
+                    &lt;/FormControl&gt;
+                    &lt;SelectContent&gt;
+                      &lt;SelectItem value=&quot;admin&quot;&gt;Admin&lt;/SelectItem&gt;
+                      &lt;SelectItem value=&quot;editor&quot;&gt;Editor&lt;/SelectItem&gt;
+                      &lt;SelectItem value=&quot;viewer&quot;&gt;Viewer&lt;/SelectItem&gt;
+                    &lt;/SelectContent&gt;
+                  &lt;/Select&gt;
+                  &lt;FormDescription&gt;
+                    Your role determines your permissions.
+                  &lt;/FormDescription&gt;
+                  &lt;FormMessage /&gt;
+                &lt;/FormItem&gt;
+              )}
+            /&gt;
+
+            &lt;FormField
+              control={form.control}
+              name=&quot;notifications&quot;
+              render={({ field }) =&gt; (
+                &lt;FormItem className=&quot;flex flex-row items-center justify-between rounded-lg border p-4&quot;&gt;
+                  &lt;div className=&quot;space-y-0.5&quot;&gt;
+                    &lt;FormLabel className=&quot;text-base&quot;&gt;
+                      Notifications
+                    &lt;/FormLabel&gt;
+                    &lt;FormDescription&gt;
+                      Receive email notifications about account activity.
+                    &lt;/FormDescription&gt;
+                  &lt;/div&gt;
+                  &lt;FormControl&gt;
+                    &lt;Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    /&gt;
+                  &lt;/FormControl&gt;
+                &lt;/FormItem&gt;
+              )}
+            /&gt;
+
+            &lt;Button type=&quot;submit&quot; className=&quot;w-full&quot;&gt;
+              Save Settings
+            &lt;/Button&gt;
+          &lt;/form&gt;
+        &lt;/Form&gt;
+      &lt;/CardContent&gt;
+    &lt;/Card&gt;
+  )
+}</div>
+      </details>
+    </div>
+    <div id="eval1-without" class="config-panel">
+      <div class="stats-row">
+        <span>Pass: <span class="stat-value">8/8</span></span>
+      </div>
+      <div class="expectations">
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Component includes 'use client' directive <div class="evidence">Line 1: "use client"</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>All shadcn imports are from @/components/ui/ <div class="evidence">All imports from @/components/ui/button, form, input, select, switch, card</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Zod schema validates name with min(2) <div class="evidence">Line 36-37: .string().min(2, { message: "Name must be at least 2 characters." })</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Zod schema validates email with .email() <div class="evidence">Line 39-40: .string().email({ message: "Please enter a valid email address." })</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses useForm with zodResolver <div class="evidence">Lines 57-59: useForm with resolver: zodResolver(settingsFormSchema)</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses FormField component wrappers for inputs <div class="evidence">Four FormField components wrapping name, email, role, and notifications</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Select uses onValueChange and defaultValue for form integration <div class="evidence">Lines 121-122: onValueChange={field.onChange} defaultValue={field.value}</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Switch uses checked and onCheckedChange for form integration <div class="evidence">Lines 159-160: checked={field.value} onCheckedChange={field.onChange}</div></div></div>
+      </div>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code</summary>
+<div class="code-block">&quot;use client&quot;;
+
+import { zodResolver } from &quot;@hookform/resolvers/zod&quot;;
+import { useForm } from &quot;react-hook-form&quot;;
+import { z } from &quot;zod&quot;;
+
+import { Button } from &quot;@/components/ui/button&quot;;
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from &quot;@/components/ui/card&quot;;
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from &quot;@/components/ui/form&quot;;
+import { Input } from &quot;@/components/ui/input&quot;;
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from &quot;@/components/ui/select&quot;;
+import { Switch } from &quot;@/components/ui/switch&quot;;
+
+const settingsFormSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: &quot;Name must be at least 2 characters.&quot; }),
+  email: z
+    .string()
+    .email({ message: &quot;Please enter a valid email address.&quot; }),
+  role: z.string({
+    required_error: &quot;Please select a role.&quot;,
+  }),
+  notifications: z.boolean().default(false),
+});
+
+type SettingsFormValues = z.infer&lt;typeof settingsFormSchema&gt;;
+
+const defaultValues: Partial&lt;SettingsFormValues&gt; = {
+  name: &quot;&quot;,
+  email: &quot;&quot;,
+  role: &quot;&quot;,
+  notifications: false,
+};
+
+export function SettingsForm() {
+  const form = useForm&lt;SettingsFormValues&gt;({
+    resolver: zodResolver(settingsFormSchema),
+    defaultValues,
+  });
+
+  function onSubmit(data: SettingsFormValues) {
+    console.log(&quot;Settings saved:&quot;, data);
+  }
+
+  return (
+    &lt;Card className=&quot;w-full max-w-2xl&quot;&gt;
+      &lt;CardHeader&gt;
+        &lt;CardTitle&gt;Settings&lt;/CardTitle&gt;
+        &lt;CardDescription&gt;
+          Manage your account settings and preferences.
+        &lt;/CardDescription&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent&gt;
+        &lt;Form {...form}&gt;
+          &lt;form onSubmit={form.handleSubmit(onSubmit)} className=&quot;space-y-6&quot;&gt;
+            &lt;FormField
+              control={form.control}
+              name=&quot;name&quot;
+              render={({ field }) =&gt; (
+                &lt;FormItem&gt;
+                  &lt;FormLabel&gt;Name&lt;/FormLabel&gt;
+                  &lt;FormControl&gt;
+                    &lt;Input placeholder=&quot;Your name&quot; {...field} /&gt;
+                  &lt;/FormControl&gt;
+                  &lt;FormDescription&gt;
+                    This is your public display name.
+                  &lt;/FormDescription&gt;
+                  &lt;FormMessage /&gt;
+                &lt;/FormItem&gt;
+              )}
+            /&gt;
+
+            &lt;FormField
+              control={form.control}
+              name=&quot;email&quot;
+              render={({ field }) =&gt; (
+                &lt;FormItem&gt;
+                  &lt;FormLabel&gt;Email&lt;/FormLabel&gt;
+                  &lt;FormControl&gt;
+                    &lt;Input
+                      type=&quot;email&quot;
+                      placeholder=&quot;you@example.com&quot;
+                      {...field}
+                    /&gt;
+                  &lt;/FormControl&gt;
+                  &lt;FormDescription&gt;
+                    Your email address for account notifications.
+                  &lt;/FormDescription&gt;
+                  &lt;FormMessage /&gt;
+                &lt;/FormItem&gt;
+              )}
+            /&gt;
+
+            &lt;FormField
+              control={form.control}
+              name=&quot;role&quot;
+              render={({ field }) =&gt; (
+                &lt;FormItem&gt;
+                  &lt;FormLabel&gt;Role&lt;/FormLabel&gt;
+                  &lt;Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  &gt;
+                    &lt;FormControl&gt;
+                      &lt;SelectTrigger&gt;
+                        &lt;SelectValue placeholder=&quot;Select a role&quot; /&gt;
+                      &lt;/SelectTrigger&gt;
+                    &lt;/FormControl&gt;
+                    &lt;SelectContent&gt;
+                      &lt;SelectItem value=&quot;admin&quot;&gt;Admin&lt;/SelectItem&gt;
+                      &lt;SelectItem value=&quot;editor&quot;&gt;Editor&lt;/SelectItem&gt;
+                      &lt;SelectItem value=&quot;viewer&quot;&gt;Viewer&lt;/SelectItem&gt;
+                    &lt;/SelectContent&gt;
+                  &lt;/Select&gt;
+                  &lt;FormDescription&gt;
+                    Your role determines your permissions within the
+                    application.
+                  &lt;/FormDescription&gt;
+                  &lt;FormMessage /&gt;
+                &lt;/FormItem&gt;
+              )}
+            /&gt;
+
+            &lt;FormField
+              control={form.control}
+              name=&quot;notifications&quot;
+              render={({ field }) =&gt; (
+                &lt;FormItem className=&quot;flex flex-row items-center justify-between rounded-lg border p-4&quot;&gt;
+                  &lt;div className=&quot;space-y-0.5&quot;&gt;
+                    &lt;FormLabel className=&quot;text-base&quot;&gt;
+                      Notifications
+                    &lt;/FormLabel&gt;
+                    &lt;FormDescription&gt;
+                      Receive email notifications about account activity.
+                    &lt;/FormDescription&gt;
+                  &lt;/div&gt;
+                  &lt;FormControl&gt;
+                    &lt;Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    /&gt;
+                  &lt;/FormControl&gt;
+                &lt;/FormItem&gt;
+              )}
+            /&gt;
+
+            &lt;Button type=&quot;submit&quot;&gt;Save changes&lt;/Button&gt;
+          &lt;/form&gt;
+        &lt;/Form&gt;
+      &lt;/CardContent&gt;
+    &lt;/Card&gt;
+  );
+}</div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- Eval 2: Warning Button + Dialog -->
+<div class="eval-section">
+  <div class="eval-header" onclick="toggleEval(this)">
+    <h3>Eval 2: Warning Button + Dialog <span class="badge badge-pass">5/5</span> / <span class="badge badge-fail">4/5</span></h3>
+    <span class="toggle-arrow">&#9654;</span>
+  </div>
+  <div class="eval-body">
+    <div class="config-tabs">
+      <div class="config-tab active" onclick="switchTab(this, 'eval2-with')">with_skill</div>
+      <div class="config-tab" onclick="switchTab(this, 'eval2-without')">without_skill</div>
+    </div>
+    <div id="eval2-with" class="config-panel active">
+      <div class="stats-row">
+        <span>Pass: <span class="stat-value">5/5</span></span>
+      </div>
+      <div class="expectations">
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Button uses CVA with a 'warning' variant defined <div class="evidence">Lines 18-19: warning variant defined in CVA variants object</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Warning variant uses yellow or amber Tailwind CSS classes <div class="evidence">Line 19: bg-warning/10 text-warning-foreground - uses CSS variable-based warning colors (oklch pattern from skill)</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses cn() utility for class merging <div class="evidence">Line 7: import { cn } from '@/lib/utils/ui-utils', used in Button and ButtonGroup</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Dialog uses AlertDialog or Dialog components from @/components/ui/ <div class="evidence">Dialog imports AlertDialog* from @/components/ui/alert-dialog</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses render prop instead of asChild (Base UI pattern) <div class="evidence">Lines 48, 60: render={&lt;Button variant='warning' /&gt;} on AlertDialogTrigger and AlertDialogAction</div></div></div>
+      </div>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code: button.tsx</summary>
+<div class="code-block">&quot;use client&quot;
+
+import * as React from &quot;react&quot;
+import { Button as ButtonPrimitive } from &quot;@base-ui/react/button&quot;
+import { cva, type VariantProps } from &quot;class-variance-authority&quot;
+
+import { cn } from &quot;@/lib/utils/ui-utils&quot;
+
+const buttonVariants = cva(
+  &quot;inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all outline-none disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([data-icon])]:size-4 [&amp;_svg]:shrink-0&quot;,
+  {
+    variants: {
+      variant: {
+        default:
+          &quot;bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring&quot;,
+        destructive:
+          &quot;bg-destructive/10 text-destructive shadow-xs hover:bg-destructive/20 focus-visible:ring-2 focus-visible:ring-destructive/50&quot;,
+        warning:
+          &quot;bg-warning/10 text-warning-foreground shadow-xs hover:bg-warning/20 focus-visible:ring-2 focus-visible:ring-warning/50&quot;,
+        outline:
+          &quot;border border-input bg-background shadow-xs hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring&quot;,
+        secondary:
+          &quot;bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80 focus-visible:ring-2 focus-visible:ring-ring&quot;,
+        ghost:
+          &quot;hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring&quot;,
+        link: &quot;text-primary underline-offset-4 hover:underline&quot;,
+      },
+      size: {
+        default: &quot;h-9 px-4 py-2 has-[&gt;svg]:px-3&quot;,
+        xs: &quot;h-7 gap-1 rounded-md px-2 text-xs has-[&gt;svg]:px-1.5&quot;,
+        sm: &quot;h-8 gap-1.5 rounded-md px-3 text-xs has-[&gt;svg]:px-2.5&quot;,
+        lg: &quot;h-10 rounded-md px-6 has-[&gt;svg]:px-4&quot;,
+        icon: &quot;size-9&quot;,
+        &quot;icon-xs&quot;: &quot;size-7&quot;,
+        &quot;icon-sm&quot;: &quot;size-8&quot;,
+        &quot;icon-lg&quot;: &quot;size-10&quot;,
+      },
+    },
+    defaultVariants: {
+      variant: &quot;default&quot;,
+      size: &quot;default&quot;,
+    },
+  }
+)
+
+function Button({
+  className,
+  variant = &quot;default&quot;,
+  size = &quot;default&quot;,
+  ...props
+}: ButtonPrimitive.Props &amp; VariantProps&lt;typeof buttonVariants&gt;) {
+  return (
+    &lt;ButtonPrimitive
+      data-slot=&quot;button&quot;
+      className={cn(buttonVariants({ variant, size, className }))}
+      {...props}
+    /&gt;
+  )
+}
+
+function ButtonGroup({
+  className,
+  ...props
+}: React.ComponentProps&lt;&quot;div&quot;&gt;) {
+  return (
+    &lt;div
+      data-slot=&quot;button-group&quot;
+      className={cn(
+        &quot;inline-flex -space-x-px rounded-md shadow-xs [&amp;_[data-slot=button]]:rounded-none [&amp;_[data-slot=button]]:shadow-none [&amp;_[data-slot=button]:first-child]:rounded-s-md [&amp;_[data-slot=button]:last-child]:rounded-e-md&quot;,
+        className
+      )}
+      {...props}
+    /&gt;
+  )
+}
+
+export { Button, ButtonGroup, buttonVariants }</div>
+      </details>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code: warning-confirmation-dialog.tsx</summary>
+<div class="code-block">&quot;use client&quot;
+
+import * as React from &quot;react&quot;
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from &quot;@/components/ui/alert-dialog&quot;
+import { Button } from &quot;@/components/ui/button&quot;
+
+interface WarningConfirmationDialogProps {
+  /** Text displayed on the trigger button. */
+  triggerLabel?: string
+  /** Dialog title shown in the header. */
+  title?: string
+  /** Descriptive text explaining the consequences of the action. */
+  description?: string
+  /** Label for the cancel button. */
+  cancelLabel?: string
+  /** Label for the confirm/action button. */
+  confirmLabel?: string
+  /** Callback invoked when the user confirms the action. */
+  onConfirm?: () =&gt; void
+  /** Optional children rendered as the trigger instead of the default button. */
+  children?: React.ReactNode
+}
+
+export function WarningConfirmationDialog({
+  triggerLabel = &quot;Proceed&quot;,
+  title = &quot;Are you sure?&quot;,
+  description = &quot;This action may have consequences. Please confirm you want to proceed.&quot;,
+  cancelLabel = &quot;Cancel&quot;,
+  confirmLabel = &quot;Continue&quot;,
+  onConfirm,
+  children,
+}: WarningConfirmationDialogProps) {
+  return (
+    &lt;AlertDialog&gt;
+      {children ? (
+        &lt;AlertDialogTrigger render={&lt;&gt;{children}&lt;/&gt;} /&gt;
+      ) : (
+        &lt;AlertDialogTrigger render={&lt;Button variant=&quot;warning&quot; /&gt;}&gt;
+          {triggerLabel}
+        &lt;/AlertDialogTrigger&gt;
+      )}
+      &lt;AlertDialogContent&gt;
+        &lt;AlertDialogHeader&gt;
+          &lt;AlertDialogTitle&gt;{title}&lt;/AlertDialogTitle&gt;
+          &lt;AlertDialogDescription&gt;{description}&lt;/AlertDialogDescription&gt;
+        &lt;/AlertDialogHeader&gt;
+        &lt;AlertDialogFooter&gt;
+          &lt;AlertDialogCancel&gt;{cancelLabel}&lt;/AlertDialogCancel&gt;
+          &lt;AlertDialogAction
+            render={&lt;Button variant=&quot;warning&quot; /&gt;}
+            onClick={onConfirm}
+          &gt;
+            {confirmLabel}
+          &lt;/AlertDialogAction&gt;
+        &lt;/AlertDialogFooter&gt;
+      &lt;/AlertDialogContent&gt;
+    &lt;/AlertDialog&gt;
+  )
+}</div>
+      </details>
+    </div>
+    <div id="eval2-without" class="config-panel">
+      <div class="stats-row">
+        <span>Pass: <span class="stat-value">4/5</span></span>
+      </div>
+      <div class="expectations">
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Button uses CVA with a 'warning' variant defined <div class="evidence">Line 17: warning variant in CVA with bg-amber-500 classes</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Warning variant uses yellow or amber Tailwind CSS classes <div class="evidence">Line 17: bg-amber-500 text-white hover:bg-amber-600 - direct amber color classes</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses cn() utility for class merging <div class="evidence">Line 5: import { cn } from '@/lib/utils', used in Button component</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Dialog uses AlertDialog or Dialog components from @/components/ui/ <div class="evidence">Uses Dialog* from @/components/ui/dialog</div></div></div>
+        <div class="expectation"><span class="icon negative">&#10008;</span><div>Uses render prop instead of asChild (Base UI pattern) <div class="evidence">Line 69, 91, 100, 109: Uses asChild prop throughout (Radix pattern). DialogTrigger asChild, DrawerClose asChild.</div></div></div>
+      </div>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code: button.tsx</summary>
+<div class="code-block">import * as React from &quot;react&quot;
+import { Slot } from &quot;@radix-ui/react-slot&quot;
+import { cva, type VariantProps } from &quot;class-variance-authority&quot;
+
+import { cn } from &quot;@/lib/utils&quot;
+
+const buttonVariants = cva(
+  &quot;inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0&quot;,
+  {
+    variants: {
+      variant: {
+        default:
+          &quot;bg-primary text-primary-foreground shadow hover:bg-primary/90&quot;,
+        destructive:
+          &quot;bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90&quot;,
+        warning:
+          &quot;bg-amber-500 text-white shadow-sm hover:bg-amber-600 focus-visible:ring-amber-400&quot;,
+        outline:
+          &quot;border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground&quot;,
+        secondary:
+          &quot;bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80&quot;,
+        ghost: &quot;hover:bg-accent hover:text-accent-foreground&quot;,
+        link: &quot;text-primary underline-offset-4 hover:underline&quot;,
+      },
+      size: {
+        default: &quot;h-9 px-4 py-2&quot;,
+        sm: &quot;h-8 rounded-md px-3 text-xs&quot;,
+        lg: &quot;h-10 rounded-md px-8&quot;,
+        icon: &quot;h-9 w-9&quot;,
+      },
+    },
+    defaultVariants: {
+      variant: &quot;default&quot;,
+      size: &quot;default&quot;,
+    },
+  }
+)
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes&lt;HTMLButtonElement&gt;,
+    VariantProps&lt;typeof buttonVariants&gt; {
+  asChild?: boolean
+}
+
+const Button = React.forwardRef&lt;HTMLButtonElement, ButtonProps&gt;(
+  ({ className, variant, size, asChild = false, ...props }, ref) =&gt; {
+    const Comp = asChild ? Slot : &quot;button&quot;
+    return (
+      &lt;Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      /&gt;
+    )
+  }
+)
+Button.displayName = &quot;Button&quot;
+
+export { Button, buttonVariants }</div>
+      </details>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code: warning-confirmation-dialog.tsx</summary>
+<div class="code-block">&quot;use client&quot;
+
+import * as React from &quot;react&quot;
+import { AlertTriangle } from &quot;lucide-react&quot;
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from &quot;@/components/ui/dialog&quot;
+import { Button } from &quot;@/components/ui/button&quot;
+
+export interface WarningConfirmationDialogProps {
+  /** The element that triggers the dialog (rendered inside DialogTrigger). */
+  trigger?: React.ReactNode
+  /** Dialog title. */
+  title?: string
+  /** Descriptive message shown in the dialog body. */
+  description?: string
+  /** Label for the confirm button. */
+  confirmLabel?: string
+  /** Label for the cancel button. */
+  cancelLabel?: string
+  /** Called when the user confirms the action. */
+  onConfirm?: () =&gt; void | Promise&lt;void&gt;
+  /** Called when the user cancels. */
+  onCancel?: () =&gt; void
+  /** Controlled open state. */
+  open?: boolean
+  /** Callback when the open state changes (controlled mode). */
+  onOpenChange?: (open: boolean) =&gt; void
+}
+
+export function WarningConfirmationDialog({
+  trigger,
+  title = &quot;Are you sure?&quot;,
+  description = &quot;This action may have unintended consequences. Please confirm you want to proceed.&quot;,
+  confirmLabel = &quot;Continue&quot;,
+  cancelLabel = &quot;Cancel&quot;,
+  onConfirm,
+  onCancel,
+  open,
+  onOpenChange,
+}: WarningConfirmationDialogProps) {
+  const [loading, setLoading] = React.useState(false)
+  const [internalOpen, setInternalOpen] = React.useState(false)
+
+  const isControlled = open !== undefined
+  const isOpen = isControlled ? open : internalOpen
+
+  const setOpen = React.useCallback(
+    (value: boolean) =&gt; {
+      if (isControlled) {
+        onOpenChange?.(value)
+      } else {
+        setInternalOpen(value)
+      }
+    },
+    [isControlled, onOpenChange]
+  )
+
+  const handleConfirm = async () =&gt; {
+    if (!onConfirm) {
+      setOpen(false)
+      return
+    }
+
+    try {
+      setLoading(true)
+      await onConfirm()
+      setOpen(false)
+    } catch {
+      // Let the caller handle errors; keep the dialog open.
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleCancel = () =&gt; {
+    onCancel?.()
+    setOpen(false)
+  }
+
+  return (
+    &lt;Dialog open={isOpen} onOpenChange={setOpen}&gt;
+      {trigger &amp;&amp; &lt;DialogTrigger asChild&gt;{trigger}&lt;/DialogTrigger&gt;}
+
+      &lt;DialogContent className=&quot;sm:max-w-[425px]&quot;&gt;
+        &lt;DialogHeader&gt;
+          &lt;div className=&quot;flex items-center gap-3&quot;&gt;
+            &lt;div className=&quot;flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100&quot;&gt;
+              &lt;AlertTriangle className=&quot;h-5 w-5 text-amber-600&quot; /&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+              &lt;DialogTitle&gt;{title}&lt;/DialogTitle&gt;
+              &lt;DialogDescription className=&quot;mt-1&quot;&gt;
+                {description}
+              &lt;/DialogDescription&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/DialogHeader&gt;
+
+        &lt;DialogFooter className=&quot;mt-4 gap-2 sm:gap-0&quot;&gt;
+          &lt;DialogClose asChild&gt;
+            &lt;Button variant=&quot;outline&quot; onClick={handleCancel}&gt;
+              {cancelLabel}
+            &lt;/Button&gt;
+          &lt;/DialogClose&gt;
+          &lt;Button
+            variant=&quot;warning&quot;
+            onClick={handleConfirm}
+            disabled={loading}
+          &gt;
+            {loading ? &quot;Processing...&quot; : confirmLabel}
+          &lt;/Button&gt;
+        &lt;/DialogFooter&gt;
+      &lt;/DialogContent&gt;
+    &lt;/Dialog&gt;
+  )
+}</div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- Eval 3: Drawer + Toast (Sonner) -->
+<div class="eval-section">
+  <div class="eval-header" onclick="toggleEval(this)">
+    <h3>Eval 3: Drawer + Toast (Sonner) <span class="badge badge-pass">5/5</span> / <span class="badge badge-fail">4/5</span></h3>
+    <span class="toggle-arrow">&#9654;</span>
+  </div>
+  <div class="eval-body">
+    <div class="config-tabs">
+      <div class="config-tab active" onclick="switchTab(this, 'eval3-with')">with_skill</div>
+      <div class="config-tab" onclick="switchTab(this, 'eval3-without')">without_skill</div>
+    </div>
+    <div id="eval3-with" class="config-panel active">
+      <div class="stats-row">
+        <span>Pass: <span class="stat-value">5/5</span></span>
+      </div>
+      <div class="expectations">
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses Drawer component from @/components/ui/drawer <div class="evidence">Lines 8-16: Full Drawer import from @/components/ui/drawer</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses toast() from sonner for notifications <div class="evidence">Line 4: import { toast } from 'sonner', used throughout with toast(), toast.success(), toast.info(), toast.warning()</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Toast is called when a menu item/action is selected <div class="evidence">Each menu item's action callback calls toast with descriptive messages</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Component includes 'use client' directive <div class="evidence">Line 1: "use client"</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>All shadcn imports from @/components/ui/ with correct patterns <div class="evidence">Imports from @/components/ui/button, @/components/ui/drawer, @/components/ui/separator</div></div></div>
+      </div>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code</summary>
+<div class="code-block">&quot;use client&quot;
+
+import * as React from &quot;react&quot;
+import { toast } from &quot;sonner&quot;
+import { List, User, Gear, SignOut, Bell, Moon, Info } from &quot;@phosphor-icons/react&quot;
+import { Button } from &quot;@/components/ui/button&quot;
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from &quot;@/components/ui/drawer&quot;
+import { Separator } from &quot;@/components/ui/separator&quot;
+
+interface MenuItem {
+  label: string
+  icon: React.ReactNode
+  description?: string
+  variant?: &quot;default&quot; | &quot;destructive&quot;
+  action: () =&gt; void
+}
+
+function MenuItemButton({
+  item,
+  onClose,
+}: {
+  item: MenuItem
+  onClose: () =&gt; void
+}) {
+  const handleClick = () =&gt; {
+    item.action()
+    onClose()
+  }
+
+  return (
+    &lt;button
+      onClick={handleClick}
+      className={`flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-sm transition-colors hover:bg-muted active:bg-muted/80 ${
+        item.variant === &quot;destructive&quot;
+          ? &quot;text-destructive hover:bg-destructive/10&quot;
+          : &quot;text-foreground&quot;
+      }`}
+    &gt;
+      &lt;span className=&quot;flex size-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground&quot;&gt;
+        {item.icon}
+      &lt;/span&gt;
+      &lt;div className=&quot;flex flex-col&quot;&gt;
+        &lt;span className=&quot;font-medium&quot;&gt;{item.label}&lt;/span&gt;
+        {item.description &amp;&amp; (
+          &lt;span className=&quot;text-xs text-muted-foreground&quot;&gt;
+            {item.description}
+          &lt;/span&gt;
+        )}
+      &lt;/div&gt;
+    &lt;/button&gt;
+  )
+}
+
+export function MobileDrawerMenu() {
+  const [open, setOpen] = React.useState(false)
+
+  const handleClose = () =&gt; setOpen(false)
+
+  const menuItems: MenuItem[] = [
+    {
+      label: &quot;Profile&quot;,
+      icon: &lt;User size={18} /&gt;,
+      description: &quot;View and edit your profile&quot;,
+      action: () =&gt;
+        toast(&quot;Profile opened&quot;, {
+          description: &quot;Navigating to your profile settings.&quot;,
+        }),
+    },
+    {
+      label: &quot;Notifications&quot;,
+      icon: &lt;Bell size={18} /&gt;,
+      description: &quot;Manage your notifications&quot;,
+      action: () =&gt;
+        toast(&quot;Notifications&quot;, {
+          description: &quot;You have 3 unread notifications.&quot;,
+          action: {
+            label: &quot;View all&quot;,
+            onClick: () =&gt; toast.info(&quot;Showing all notifications&quot;),
+          },
+        }),
+    },
+    {
+      label: &quot;Settings&quot;,
+      icon: &lt;Gear size={18} /&gt;,
+      description: &quot;App preferences and configuration&quot;,
+      action: () =&gt;
+        toast.success(&quot;Settings opened&quot;, {
+          description: &quot;Your preferences have been loaded.&quot;,
+        }),
+    },
+    {
+      label: &quot;Dark Mode&quot;,
+      icon: &lt;Moon size={18} /&gt;,
+      description: &quot;Toggle dark mode appearance&quot;,
+      action: () =&gt;
+        toast(&quot;Theme toggled&quot;, {
+          description: &quot;Dark mode preference has been updated.&quot;,
+        }),
+    },
+    {
+      label: &quot;About&quot;,
+      icon: &lt;Info size={18} /&gt;,
+      description: &quot;App version and info&quot;,
+      action: () =&gt;
+        toast.info(&quot;App v1.0.0&quot;, {
+          description: &quot;Built with shadcn/ui and Base UI.&quot;,
+        }),
+    },
+  ]
+
+  const destructiveItem: MenuItem = {
+    label: &quot;Sign Out&quot;,
+    icon: &lt;SignOut size={18} /&gt;,
+    description: &quot;Log out of your account&quot;,
+    variant: &quot;destructive&quot;,
+    action: () =&gt;
+      toast.warning(&quot;Signed out&quot;, {
+        description: &quot;You have been logged out successfully.&quot;,
+      }),
+  }
+
+  return (
+    &lt;Drawer open={open} onOpenChange={setOpen}&gt;
+      &lt;DrawerTrigger render={&lt;Button variant=&quot;outline&quot; size=&quot;icon&quot; /&gt;}&gt;
+        &lt;List size={20} /&gt;
+        &lt;span className=&quot;sr-only&quot;&gt;Open menu&lt;/span&gt;
+      &lt;/DrawerTrigger&gt;
+      &lt;DrawerContent&gt;
+        &lt;div className=&quot;mx-auto w-full max-w-sm&quot;&gt;
+          &lt;DrawerHeader&gt;
+            &lt;DrawerTitle&gt;Menu&lt;/DrawerTitle&gt;
+            &lt;DrawerDescription&gt;
+              Choose an action from the list below.
+            &lt;/DrawerDescription&gt;
+          &lt;/DrawerHeader&gt;
+
+          &lt;div className=&quot;px-4 pb-2&quot;&gt;
+            &lt;nav className=&quot;flex flex-col gap-1&quot;&gt;
+              {menuItems.map((item) =&gt; (
+                &lt;MenuItemButton
+                  key={item.label}
+                  item={item}
+                  onClose={handleClose}
+                /&gt;
+              ))}
+            &lt;/nav&gt;
+
+            &lt;Separator className=&quot;my-2&quot; /&gt;
+
+            &lt;MenuItemButton item={destructiveItem} onClose={handleClose} /&gt;
+          &lt;/div&gt;
+
+          &lt;DrawerFooter&gt;
+            &lt;DrawerClose render={&lt;Button variant=&quot;outline&quot; /&gt;}&gt;
+              Cancel
+            &lt;/DrawerClose&gt;
+          &lt;/DrawerFooter&gt;
+        &lt;/div&gt;
+      &lt;/DrawerContent&gt;
+    &lt;/Drawer&gt;
+  )
+}</div>
+      </details>
+    </div>
+    <div id="eval3-without" class="config-panel">
+      <div class="stats-row">
+        <span>Pass: <span class="stat-value">4/5</span></span>
+      </div>
+      <div class="expectations">
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses Drawer component from @/components/ui/drawer <div class="evidence">Lines 4-13: Full Drawer import from @/components/ui/drawer</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Uses toast() from sonner for notifications <div class="evidence">Line 15: import { toast } from 'sonner', used with toast.warning() and toast.success()</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Toast is called when a menu item/action is selected <div class="evidence">handleMenuAction calls toast.warning or toast.success based on item type</div></div></div>
+        <div class="expectation"><span class="icon positive">&#10004;</span><div>Component includes 'use client' directive <div class="evidence">Line 1: "use client"</div></div></div>
+        <div class="expectation"><span class="icon negative">&#10008;</span><div>All shadcn imports from @/components/ui/ with correct patterns <div class="evidence">Uses asChild prop (Radix pattern) on DrawerTrigger (line 69) and DrawerClose (line 100) instead of render prop (Base UI pattern). Also uses lucide-react icons instead of @phosphor-icons/react.</div></div></div>
+      </div>
+      <details><summary style="cursor:pointer;color:var(--blue);font-size:0.85rem;margin-bottom:0.5rem">View Output Code</summary>
+<div class="code-block">&quot;use client&quot;;
+
+import * as React from &quot;react&quot;;
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from &quot;@/components/ui/drawer&quot;;
+import { Button } from &quot;@/components/ui/button&quot;;
+import { toast } from &quot;sonner&quot;;
+import { Menu, Settings, User, LogOut, Bell, HelpCircle } from &quot;lucide-react&quot;;
+
+interface MenuItem {
+  label: string;
+  icon: React.ReactNode;
+  action: string;
+  destructive?: boolean;
+}
+
+const menuItems: MenuItem[] = [
+  { label: &quot;Profile&quot;, icon: &lt;User className=&quot;h-5 w-5&quot; /&gt;, action: &quot;profile&quot; },
+  {
+    label: &quot;Notifications&quot;,
+    icon: &lt;Bell className=&quot;h-5 w-5&quot; /&gt;,
+    action: &quot;notifications&quot;,
+  },
+  {
+    label: &quot;Settings&quot;,
+    icon: &lt;Settings className=&quot;h-5 w-5&quot; /&gt;,
+    action: &quot;settings&quot;,
+  },
+  {
+    label: &quot;Help &amp; Support&quot;,
+    icon: &lt;HelpCircle className=&quot;h-5 w-5&quot; /&gt;,
+    action: &quot;help&quot;,
+  },
+  {
+    label: &quot;Sign Out&quot;,
+    icon: &lt;LogOut className=&quot;h-5 w-5&quot; /&gt;,
+    action: &quot;sign-out&quot;,
+    destructive: true,
+  },
+];
+
+export default function MobileDrawerMenu() {
+  const [open, setOpen] = React.useState(false);
+
+  function handleMenuAction(item: MenuItem) {
+    setOpen(false);
+
+    if (item.destructive) {
+      toast.warning(`${item.label}`, {
+        description: `You selected &quot;${item.label}&quot;. Are you sure?`,
+      });
+    } else {
+      toast.success(`${item.label}`, {
+        description: `Navigating to ${item.label}.`,
+      });
+    }
+  }
+
+  return (
+    &lt;Drawer open={open} onOpenChange={setOpen}&gt;
+      &lt;DrawerTrigger asChild&gt;
+        &lt;Button variant=&quot;outline&quot; size=&quot;icon&quot; aria-label=&quot;Open menu&quot;&gt;
+          &lt;Menu className=&quot;h-5 w-5&quot; /&gt;
+        &lt;/Button&gt;
+      &lt;/DrawerTrigger&gt;
+
+      &lt;DrawerContent&gt;
+        &lt;DrawerHeader&gt;
+          &lt;DrawerTitle&gt;Menu&lt;/DrawerTitle&gt;
+          &lt;DrawerDescription&gt;Choose an action below.&lt;/DrawerDescription&gt;
+        &lt;/DrawerHeader&gt;
+
+        &lt;nav className=&quot;flex flex-col gap-1 px-4 pb-2&quot;&gt;
+          {menuItems.map((item) =&gt; (
+            &lt;button
+              key={item.action}
+              onClick={() =&gt; handleMenuAction(item)}
+              className={`flex items-center gap-3 rounded-md px-3 py-3 text-sm font-medium transition-colors
+                ${
+                  item.destructive
+                    ? &quot;text-destructive hover:bg-destructive/10&quot;
+                    : &quot;text-foreground hover:bg-accent&quot;
+                }`}
+            &gt;
+              {item.icon}
+              {item.label}
+            &lt;/button&gt;
+          ))}
+        &lt;/nav&gt;
+
+        &lt;DrawerFooter&gt;
+          &lt;DrawerClose asChild&gt;
+            &lt;Button variant=&quot;outline&quot; className=&quot;w-full&quot;&gt;
+              Cancel
+            &lt;/Button&gt;
+          &lt;/DrawerClose&gt;
+        &lt;/DrawerFooter&gt;
+      &lt;/DrawerContent&gt;
+    &lt;/Drawer&gt;
+  );
+}</div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- Key Differences -->
+<div class="eval-section">
+  <div class="eval-header" onclick="toggleEval(this)">
+    <h3>Key Differences: with_skill vs without_skill</h3>
+    <span class="toggle-arrow">&#9654;</span>
+  </div>
+  <div class="eval-body open" style="padding: 1.25rem;">
+    <table class="comparison-table" style="margin-bottom:0">
+      <thead>
+        <tr><th>Aspect</th><th>with_skill (iter-5)</th><th>without_skill (baseline)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Composition pattern</td>
+          <td class="positive">render prop (correct Base UI)</td>
+          <td class="negative">asChild (Radix, incorrect for current shadcn)</td>
+        </tr>
+        <tr>
+          <td>Icon library</td>
+          <td class="positive">@phosphor-icons/react</td>
+          <td class="neutral">lucide-react</td>
+        </tr>
+        <tr>
+          <td>Button primitive</td>
+          <td class="positive">@base-ui/react/button with data-slot</td>
+          <td class="neutral">@radix-ui/react-slot with forwardRef</td>
+        </tr>
+        <tr>
+          <td>Warning variant colors</td>
+          <td class="positive">oklch CSS variables (bg-warning/10 text-warning-foreground)</td>
+          <td class="neutral">Hardcoded amber (bg-amber-500 text-white)</td>
+        </tr>
+        <tr>
+          <td>Button sizes</td>
+          <td class="positive">8 sizes (default, xs, sm, lg, icon, icon-xs, icon-sm, icon-lg)</td>
+          <td class="neutral">4 sizes (default, sm, lg, icon)</td>
+        </tr>
+        <tr>
+          <td>Dialog component</td>
+          <td class="positive">AlertDialog (from @/components/ui/alert-dialog)</td>
+          <td class="neutral">Dialog (from @/components/ui/dialog)</td>
+        </tr>
+        <tr>
+          <td>Utils import path</td>
+          <td class="positive">@/lib/utils/ui-utils</td>
+          <td class="neutral">@/lib/utils</td>
+        </tr>
+        <tr>
+          <td>Import paths</td>
+          <td class="positive">@/components/ui/* only</td>
+          <td class="positive">@/components/ui/* only</td>
+        </tr>
+        <tr>
+          <td>Form patterns</td>
+          <td class="positive">Identical quality</td>
+          <td class="positive">Identical quality</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Notes -->
+<div class="notes-section">
+  <h3>Notes</h3>
+  <ul>
+    <li>Skill was updated with latest shadcn/ui documentation: oklch color system, Tailwind v4 conventions, 59 components, new CLI commands (npx shadcn@latest), RTL support, Field component, and more.</li>
+    <li>100% pass rate with skill (18/18) vs 87% without (16/18). The +13% delta comes from pattern compliance (render prop vs asChild, icon library).</li>
+    <li>Test 1 (settings-form): Both configs produced nearly identical, high-quality output. Form patterns are well-known enough that the skill provides minimal incremental value for this common case.</li>
+    <li>Test 2 (warning-button-dialog): The skill correctly guided use of @base-ui/react Button primitive, render prop, data-slot attributes, ButtonGroup, oklch-based CSS variables for warning colors, and extended button sizes (xs, icon-xs, etc.). Without the skill, output used Radix patterns (asChild, Slot, forwardRef), hardcoded amber colors, and only 4 size variants.</li>
+    <li>Test 3 (drawer-with-toast): The skill guided correct use of render prop on DrawerTrigger/DrawerClose and @phosphor-icons/react. Without skill, output used asChild (Radix) and lucide-react icons.</li>
+    <li>Key differentiator: The skill's primary value is enforcing Base UI patterns (render prop vs asChild) and project-specific conventions (@phosphor-icons, data-slot, oklch-based CSS variables). For standard React/shadcn patterns like forms, the baseline already performs well.</li>
+    <li>Compared to iteration 4 (which also achieved 100% with skill), iteration 5 tests new component types (Drawer, Sonner toast) and validates the updated skill documentation covers the broader shadcn/ui surface area.</li>
+  </ul>
+</div>
+
+<script>
+function toggleEval(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.toggle-arrow');
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+function switchTab(tab, panelId) {
+  const tabs = tab.parentElement;
+  const body = tabs.parentElement;
+  tabs.querySelectorAll('.config-tab').forEach(t => t.classList.remove('active'));
+  body.querySelectorAll('.config-panel').forEach(p => p.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "eval_id": 3,
+  "run_id": "drawer-with-toast-with_skill",
+  "expectations": [
+    { "text": "Uses Drawer component from @/components/ui/drawer", "passed": true, "evidence": "Lines 8-16: Full Drawer import from @/components/ui/drawer" },
+    { "text": "Uses toast() from sonner for notifications", "passed": true, "evidence": "Line 4: import { toast } from 'sonner', used throughout with toast(), toast.success(), toast.info(), toast.warning()" },
+    { "text": "Toast is called when a menu item/action is selected", "passed": true, "evidence": "Each menu item's action callback calls toast with descriptive messages" },
+    { "text": "Component includes 'use client' directive", "passed": true, "evidence": "Line 1: \"use client\"" },
+    { "text": "All shadcn imports are from @/components/ui/", "passed": true, "evidence": "Imports from @/components/ui/button, @/components/ui/drawer, @/components/ui/separator" }
+  ]
+}

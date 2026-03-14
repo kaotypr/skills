@@ -1,0 +1,12 @@
+{
+  "eval_id": 3,
+  "eval_name": "drawer-with-toast",
+  "prompt": "I need a mobile-friendly menu using a Drawer component, and when the user selects an action from the drawer, show a toast notification using Sonner confirming what they did.",
+  "assertions": [
+    { "id": "drawer-component", "text": "Uses Drawer component from @/components/ui/drawer", "type": "contains" },
+    { "id": "sonner-toast", "text": "Uses toast() from sonner for notifications", "type": "contains" },
+    { "id": "toast-on-action", "text": "Toast is called when a menu item/action is selected", "type": "pattern" },
+    { "id": "use-client", "text": "Component includes 'use client' directive", "type": "contains" },
+    { "id": "imports-from-ui", "text": "All shadcn imports are from @/components/ui/ (not from @base-ui/react directly)", "type": "pattern" }
+  ]
+}

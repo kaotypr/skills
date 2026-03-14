@@ -548,35 +548,23 @@ npx shadcn@latest add use-boolean use-counter use-local-storage
 Configure your project to work with shadcn.io components using TypeScript and Tailwind CSS.
 
 ```typescript
-// tailwind.config.ts
-import type { Config } from "tailwindcss"
-
-const config: Config = {
-darkMode: ["class"],
-content: [
-"./pages/**/*.{ts,tsx}",
-"./components/**/*.{ts,tsx}",
-"./app/**/*.{ts,tsx}",
-],
-theme: {
-extend: {
-colors: {
-border: "hsl(var(--border))",
-input: "hsl(var(--input))",
-ring: "hsl(var(--ring))",
-background: "hsl(var(--background))",
-foreground: "hsl(var(--foreground))",
-primary: {
-DEFAULT: "hsl(var(--primary))",
-foreground: "hsl(var(--primary-foreground))",
-},
-},
-},
-},
-plugins: [require("tailwindcss-animate")],
-}
-
-export default config
+// Note: Tailwind CSS v4 uses CSS-based configuration with @theme inline
+// CSS variables use oklch format and are registered via @theme inline in globals.css
+// Example globals.css:
+//
+// @theme inline {
+//   --color-background: var(--background);
+//   --color-foreground: var(--foreground);
+//   --color-primary: var(--primary);
+//   --color-primary-foreground: var(--primary-foreground);
+// }
+//
+// :root {
+//   --background: oklch(1 0 0);
+//   --foreground: oklch(0.145 0 0);
+//   --primary: oklch(0.205 0 0);
+//   --primary-foreground: oklch(0.985 0 0);
+// }
 ```
 
 ## Summary

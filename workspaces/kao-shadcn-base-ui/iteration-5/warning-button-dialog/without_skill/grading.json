@@ -1,0 +1,11 @@
+{
+  "eval_id": 2,
+  "run_id": "warning-button-dialog-without_skill",
+  "expectations": [
+    { "text": "Button uses CVA with a 'warning' variant defined", "passed": true, "evidence": "Line 17: warning variant in CVA with bg-amber-500 classes" },
+    { "text": "Warning variant uses yellow or amber Tailwind CSS classes", "passed": true, "evidence": "Line 17: bg-amber-500 text-white hover:bg-amber-600 - direct amber color classes" },
+    { "text": "Uses cn() utility for class merging", "passed": true, "evidence": "Line 5: import { cn } from '@/lib/utils', used in Button component" },
+    { "text": "Dialog uses AlertDialog or Dialog components from @/components/ui/", "passed": true, "evidence": "Uses Dialog* from @/components/ui/dialog" },
+    { "text": "Uses render prop instead of asChild (Base UI pattern)", "passed": false, "evidence": "Line 69, 91, 100, 109: Uses asChild prop throughout (Radix pattern). DialogTrigger asChild, DrawerClose asChild." }
+  ]
+}

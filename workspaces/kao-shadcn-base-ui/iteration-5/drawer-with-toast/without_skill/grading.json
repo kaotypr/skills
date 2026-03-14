@@ -1,0 +1,11 @@
+{
+  "eval_id": 3,
+  "run_id": "drawer-with-toast-without_skill",
+  "expectations": [
+    { "text": "Uses Drawer component from @/components/ui/drawer", "passed": true, "evidence": "Lines 4-13: Full Drawer import from @/components/ui/drawer" },
+    { "text": "Uses toast() from sonner for notifications", "passed": true, "evidence": "Line 15: import { toast } from 'sonner', used with toast.warning() and toast.success()" },
+    { "text": "Toast is called when a menu item/action is selected", "passed": true, "evidence": "handleMenuAction calls toast.warning or toast.success based on item type" },
+    { "text": "Component includes 'use client' directive", "passed": true, "evidence": "Line 1: \"use client\"" },
+    { "text": "All shadcn imports are from @/components/ui/", "passed": false, "evidence": "Uses asChild prop (Radix pattern) on DrawerTrigger (line 69) and DrawerClose (line 100) instead of render prop (Base UI pattern). Also uses lucide-react icons instead of @phosphor-icons/react." }
+  ]
+}

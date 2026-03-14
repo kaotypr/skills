@@ -1,0 +1,11 @@
+{
+  "eval_id": 2,
+  "run_id": "warning-button-dialog-with_skill",
+  "expectations": [
+    { "text": "Button uses CVA with a 'warning' variant defined", "passed": true, "evidence": "Lines 18-19: warning variant defined in CVA variants object" },
+    { "text": "Warning variant uses yellow or amber Tailwind CSS classes", "passed": true, "evidence": "Line 19: bg-warning/10 text-warning-foreground - uses CSS variable-based warning colors (oklch pattern from skill)" },
+    { "text": "Uses cn() utility for class merging", "passed": true, "evidence": "Line 7: import { cn } from '@/lib/utils/ui-utils', used in Button and ButtonGroup" },
+    { "text": "Dialog uses AlertDialog or Dialog components from @/components/ui/", "passed": true, "evidence": "Dialog imports AlertDialog* from @/components/ui/alert-dialog" },
+    { "text": "Uses render prop instead of asChild (Base UI pattern)", "passed": true, "evidence": "Lines 48, 60: render={<Button variant='warning' />} on AlertDialogTrigger and AlertDialogAction" }
+  ]
+}

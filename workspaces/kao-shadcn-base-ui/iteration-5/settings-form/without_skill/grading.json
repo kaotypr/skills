@@ -1,0 +1,14 @@
+{
+  "eval_id": 1,
+  "run_id": "settings-form-without_skill",
+  "expectations": [
+    { "text": "Component includes 'use client' directive", "passed": true, "evidence": "Line 1: \"use client\"" },
+    { "text": "All shadcn imports are from @/components/ui/", "passed": true, "evidence": "All imports from @/components/ui/button, form, input, select, switch, card" },
+    { "text": "Zod schema validates name with min(2)", "passed": true, "evidence": "Line 36-37: .string().min(2, { message: \"Name must be at least 2 characters.\" })" },
+    { "text": "Zod schema validates email with .email()", "passed": true, "evidence": "Line 39-40: .string().email({ message: \"Please enter a valid email address.\" })" },
+    { "text": "Uses useForm with zodResolver", "passed": true, "evidence": "Lines 57-59: useForm with resolver: zodResolver(settingsFormSchema)" },
+    { "text": "Uses FormField component wrappers for inputs", "passed": true, "evidence": "Four FormField components wrapping name, email, role, and notifications" },
+    { "text": "Select uses onValueChange and defaultValue for form integration", "passed": true, "evidence": "Lines 121-122: onValueChange={field.onChange} defaultValue={field.value}" },
+    { "text": "Switch uses checked and onCheckedChange for form integration", "passed": true, "evidence": "Lines 159-160: checked={field.value} onCheckedChange={field.onChange}" }
+  ]
+}
