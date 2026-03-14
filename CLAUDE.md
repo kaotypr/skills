@@ -61,3 +61,17 @@ The skills CLI searches these paths in order:
 - Root `SKILL.md` (if present)
 
 Place all skills in `skills/<skill-name>/` for consistency.
+
+## README Maintenance
+
+**Always update `README.md`** when:
+- A new skill is created — add a new section under "Available Skills" with the skill name, description, version, links to the skill and workspace, and an eval summary table
+- A skill is updated (version bump, description change, new eval iteration) — update the corresponding section with the latest version, pass rates, and eval counts
+- A skill is removed — remove its section from the README
+
+Each skill section in the README should include:
+- Skill name as an `###` heading
+- One-line description
+- Version, skill path link, and workspace path link
+- Eval summary table (pass rate with/without skill, and any other key metrics)
+- Brief note on what was tested
