@@ -1,0 +1,16 @@
+{
+  "eval_id": 3,
+  "eval_name": "query-now-tasks-past-week",
+  "prompt": "Add an advanced Datalog query to a Logseq page called 'Dashboards/Active Tasks' that finds all NOW and LATER tasks from the past 7 days, sorted by priority. Also add a simple query below it that finds all tasks tagged with #urgent.",
+  "assertions": [
+    "correct-filename: Creates pages/Dashboards___Active Tasks.md with triple-underscore namespace",
+    "datalog-begin-end: Uses #+BEGIN_QUERY and #+END_QUERY delimiters for advanced query",
+    "block-marker-filter: Datalog query filters on :block/marker for NOW and LATER",
+    "date-inputs-bounded: Query uses :inputs with both a start bound (e.g. :7d-before, :14d) AND an end bound (e.g. :today) to properly scope the date range",
+    "sort-by-priority: Includes result-transform with sort-by on :block/priority",
+    "simple-query: Has a {{query ...}} simple inline query",
+    "urgent-reference: Simple query references #urgent or [[urgent]]",
+    "outliner-syntax: All content lines start with '- ' bullet prefix",
+    "two-space-indent: Uses 2-space indentation for nesting, not tabs"
+  ]
+}

@@ -1,0 +1,4 @@
+- # Projects/WebApp/Tasks
+- TODO [#A] Set up project scaffolding with React frontend and Node.js backend
+- TODO [#B] Design and implement the database schema for user management
+- TODO [#C] Write unit tests for API endpoints

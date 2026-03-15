@@ -1,0 +1,19 @@
+{
+  "eval_id": 2,
+  "eval_name": "project-namespace-with-properties",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "main-page-file", "passed": true, "evidence": "Projects___WebApp.md exists"},
+    {"text": "arch-page-file", "passed": true, "evidence": "Projects___WebApp___Architecture.md exists"},
+    {"text": "tasks-page-file", "passed": true, "evidence": "Projects___WebApp___Tasks.md exists"},
+    {"text": "page-tags-property", "passed": true, "evidence": "Line 1: 'tags:: [[project]], [[active]]'"},
+    {"text": "page-status-property", "passed": true, "evidence": "Line 2: 'status:: in-progress'"},
+    {"text": "double-colon-props", "passed": true, "evidence": "All properties use ::"},
+    {"text": "page-props-no-bullet", "passed": true, "evidence": "Lines 1-2 have no '- ' prefix"},
+    {"text": "subpage-links", "passed": true, "evidence": "Lines 8-9: [[Projects/WebApp/Architecture]] and [[Projects/WebApp/Tasks]]"},
+    {"text": "outliner-syntax", "passed": true, "evidence": "All content uses '- ' prefix"},
+    {"text": "tasks-with-priorities", "passed": true, "evidence": "NOW [#A], LATER [#B], LATER [#C] in Tasks page"},
+    {"text": "two-space-indent", "passed": true, "evidence": "All nesting uses 2-space indentation"}
+  ],
+  "summary": {"passed": 11, "failed": 0, "total": 11, "pass_rate": 1.0}
+}

@@ -1,0 +1,18 @@
+{
+  "eval_id": 1,
+  "eval_name": "journal-entry-with-tasks",
+  "prompt": "Create a Logseq journal entry for March 15, 2026 with 3 tasks: a NOW high-priority task to fix the login bug in Project Alpha (deadline today), a LATER medium-priority task to write API tests (scheduled for March 16), and a LATER low-priority task to update documentation. Include a morning standup notes section.",
+  "assertions": [
+    "correct-filename: Journal file created at journals/2026_03_15.md with yyyy_MM_dd format",
+    "now-priority-a: Has a NOW [#A] task for the login bug",
+    "later-priority-b: Has a LATER [#B] task for API tests",
+    "later-priority-c: Has a LATER [#C] task for documentation",
+    "deadline-syntax: Uses DEADLINE: <2026-03-15 ...> with angle bracket date format",
+    "scheduled-syntax: Uses SCHEDULED: <2026-03-16 ...> with angle bracket date format",
+    "outliner-syntax: Every content line starts with '- ' bullet prefix (no bare text lines)",
+    "no-yaml-frontmatter: Does not include YAML frontmatter (--- delimiters) at top of journal file",
+    "page-links: Uses [[Project Alpha]] page link syntax",
+    "standup-section: Includes a standup or morning notes section",
+    "two-space-indent: Uses 2-space indentation for nesting, not tabs"
+  ]
+}

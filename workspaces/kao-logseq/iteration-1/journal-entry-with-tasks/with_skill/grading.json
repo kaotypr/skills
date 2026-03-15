@@ -1,0 +1,18 @@
+{
+  "eval_id": 1,
+  "eval_name": "journal-entry-with-tasks",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "correct-filename: Journal file created at journals/2026_03_15.md with yyyy_MM_dd format", "passed": true, "evidence": "File exists at outputs/journals/2026_03_15.md"},
+    {"text": "now-priority-a: Has a NOW [#A] task for the login bug", "passed": true, "evidence": "Line 5: 'NOW [#A] Fix the login bug in [[Project Alpha]]'"},
+    {"text": "later-priority-b: Has a LATER [#B] task for API tests", "passed": true, "evidence": "Line 7: 'LATER [#B] Write API tests'"},
+    {"text": "later-priority-c: Has a LATER [#C] task for documentation", "passed": true, "evidence": "Line 9: 'LATER [#C] Update documentation'"},
+    {"text": "deadline-syntax: Uses DEADLINE: <2026-03-15 ...> with angle bracket date format", "passed": true, "evidence": "Line 6: 'DEADLINE: <2026-03-15 Sun>'"},
+    {"text": "scheduled-syntax: Uses SCHEDULED: <2026-03-16 ...> with angle bracket date format", "passed": true, "evidence": "Line 8: 'SCHEDULED: <2026-03-16 Mon>'"},
+    {"text": "outliner-syntax: Every content line starts with '- ' bullet prefix (no bare text lines)", "passed": true, "evidence": "All lines start with '- ' or are indented continuation lines (DEADLINE/SCHEDULED under their parent block). No bare text."},
+    {"text": "no-yaml-frontmatter: Does not include YAML frontmatter (--- delimiters) at top of journal file", "passed": true, "evidence": "File starts with '- ## Morning Standup Notes', no --- delimiters present."},
+    {"text": "page-links: Uses [[Project Alpha]] page link syntax", "passed": true, "evidence": "Lines 3 and 5 use [[Project Alpha]] syntax"},
+    {"text": "standup-section: Includes a standup or morning notes section", "passed": true, "evidence": "Line 1: '- ## Morning Standup Notes' with yesterday/today/blockers sub-blocks"}
+  ],
+  "summary": {"passed": 10, "failed": 0, "total": 10, "pass_rate": 1.0}
+}

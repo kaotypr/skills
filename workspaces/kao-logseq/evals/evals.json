@@ -1,0 +1,60 @@
+{
+  "skill_name": "kao-logseq",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a Logseq journal entry for March 15, 2026 with 3 tasks: a NOW high-priority task to fix the login bug in Project Alpha (deadline today), a LATER medium-priority task to write API tests (scheduled for March 16), and a LATER low-priority task to update documentation. Include a morning standup notes section.",
+      "expected_output": "A journal file at journals/2026_03_15.md with correct outliner syntax (all content lines starting with '- '), NOW/LATER task markers with priorities [#A]/[#B]/[#C], DEADLINE and SCHEDULED dates in angle-bracket format, and no YAML frontmatter.",
+      "files": [],
+      "expectations": [
+        "correct-filename: Journal file created at journals/2026_03_15.md with yyyy_MM_dd format",
+        "now-priority-a: Has a NOW [#A] task for the login bug",
+        "later-priority-b: Has a LATER [#B] task for API tests",
+        "later-priority-c: Has a LATER [#C] task for documentation",
+        "deadline-syntax: Uses DEADLINE: <2026-03-15 ...> with angle bracket date format",
+        "scheduled-syntax: Uses SCHEDULED: <2026-03-16 ...> with angle bracket date format",
+        "outliner-syntax: Every content line starts with '- ' bullet prefix (no bare text lines)",
+        "no-yaml-frontmatter: Does not include YAML frontmatter (--- delimiters) at top of journal file",
+        "page-links: Uses [[Project Alpha]] page link syntax",
+        "standup-section: Includes a standup or morning notes section",
+        "two-space-indent: Uses 2-space indentation for nesting, not tabs"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Create a Logseq project page for 'Projects/WebApp' with sub-pages 'Projects/WebApp/Architecture' and 'Projects/WebApp/Tasks'. The main project page should have tags (project, active), a status property set to 'in-progress', and link to its sub-pages. The Architecture page should describe a React + Node.js stack. The Tasks page should have 3 tasks with different priorities.",
+      "expected_output": "Three markdown files using triple-underscore namespace escaping: Projects___WebApp.md, Projects___WebApp___Architecture.md, Projects___WebApp___Tasks.md. Main page has page-level properties (tags::, status::) without '- ' prefix. All content blocks use '- ' prefix. Sub-pages are linked with [[Projects/WebApp/...]] syntax.",
+      "files": [],
+      "expectations": [
+        "main-page-file: Creates pages/Projects___WebApp.md with triple-underscore namespace",
+        "arch-page-file: Creates pages/Projects___WebApp___Architecture.md",
+        "tasks-page-file: Creates pages/Projects___WebApp___Tasks.md",
+        "page-tags-property: Main page has tags:: property with project and active",
+        "page-status-property: Main page has status:: in-progress property",
+        "double-colon-props: Properties use double-colon syntax (key:: value), not single colon",
+        "page-props-no-bullet: Page-level properties at file top are NOT prefixed with '- '",
+        "subpage-links: Main page links to sub-pages using [[Projects/WebApp/Architecture]] syntax",
+        "outliner-syntax: All content blocks (non-property lines) start with '- ' bullet prefix",
+        "tasks-with-priorities: Tasks page has tasks with different priority levels [#A], [#B], [#C]",
+        "two-space-indent: Uses 2-space indentation for nesting, not tabs"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Add an advanced Datalog query to a Logseq page called 'Dashboards/Active Tasks' that finds all NOW and LATER tasks from the past 7 days, sorted by priority. Also add a simple query below it that finds all tasks tagged with #urgent.",
+      "expected_output": "A page at pages/Dashboards___Active Tasks.md containing a #+BEGIN_QUERY/#+END_QUERY advanced Datalog query with :block/marker filtering for NOW/LATER, date range inputs, sort-by priority result-transform, and a separate {{query ...}} simple inline query for #urgent tasks.",
+      "files": [],
+      "expectations": [
+        "correct-filename: Creates pages/Dashboards___Active Tasks.md with triple-underscore namespace",
+        "datalog-begin-end: Uses #+BEGIN_QUERY and #+END_QUERY delimiters for advanced query",
+        "block-marker-filter: Datalog query filters on :block/marker for NOW and LATER",
+        "date-inputs-bounded: Query uses :inputs with both a start bound (e.g. :7d-before, :14d) AND an end bound (e.g. :today) to properly scope the date range",
+        "sort-by-priority: Includes result-transform with sort-by on :block/priority",
+        "simple-query: Has a {{query ...}} simple inline query",
+        "urgent-reference: Simple query references #urgent or [[urgent]]",
+        "outliner-syntax: All content lines start with '- ' bullet prefix",
+        "two-space-indent: Uses 2-space indentation for nesting, not tabs"
+      ]
+    }
+  ]
+}

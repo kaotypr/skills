@@ -1,0 +1,201 @@
+{
+  "metadata": {
+    "skill_name": "kao-logseq",
+    "skill_path": "skills/kao-logseq",
+    "executor_model": "claude-opus-4-6",
+    "analyzer_model": "claude-opus-4-6",
+    "timestamp": "2026-03-15T02:45:00Z",
+    "evals_run": ["journal-entry-with-tasks", "project-namespace-with-properties", "query-now-tasks-past-week"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "journal-entry-with-tasks",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 11,
+        "failed": 0,
+        "total": 11,
+        "time_seconds": 20.0,
+        "tokens": 14669,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "correct-filename", "passed": true, "evidence": "journals/2026_03_15.md exists"},
+        {"text": "now-priority-a", "passed": true, "evidence": "NOW [#A] with [[Project Alpha]]"},
+        {"text": "later-priority-b", "passed": true, "evidence": "LATER [#B] Write API tests"},
+        {"text": "later-priority-c", "passed": true, "evidence": "LATER [#C] Update documentation"},
+        {"text": "deadline-syntax", "passed": true, "evidence": "DEADLINE: <2026-03-15 Sun>"},
+        {"text": "scheduled-syntax", "passed": true, "evidence": "SCHEDULED: <2026-03-16 Mon>"},
+        {"text": "outliner-syntax", "passed": true, "evidence": "All lines use '- ' prefix"},
+        {"text": "no-yaml-frontmatter", "passed": true, "evidence": "No --- delimiters"},
+        {"text": "page-links", "passed": true, "evidence": "[[Project Alpha]] used"},
+        {"text": "standup-section", "passed": true, "evidence": "Morning Standup Notes present"},
+        {"text": "two-space-indent", "passed": true, "evidence": "Consistent 2-space nesting"}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "journal-entry-with-tasks",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.82,
+        "passed": 9,
+        "failed": 2,
+        "total": 11,
+        "time_seconds": 9.4,
+        "tokens": 9989,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "correct-filename", "passed": true, "evidence": "journals/2026_03_15.md exists"},
+        {"text": "now-priority-a", "passed": true, "evidence": "NOW [#A] present"},
+        {"text": "later-priority-b", "passed": true, "evidence": "LATER [#B] present"},
+        {"text": "later-priority-c", "passed": true, "evidence": "LATER [#C] present"},
+        {"text": "deadline-syntax", "passed": true, "evidence": "DEADLINE: <2026-03-15 Sun>"},
+        {"text": "scheduled-syntax", "passed": true, "evidence": "SCHEDULED: <2026-03-16 Mon>"},
+        {"text": "outliner-syntax", "passed": true, "evidence": "Top-level lines use '- '"},
+        {"text": "no-yaml-frontmatter", "passed": true, "evidence": "No --- delimiters"},
+        {"text": "page-links", "passed": false, "evidence": "Bare 'Project Alpha' without [[ ]]"},
+        {"text": "standup-section", "passed": true, "evidence": "Morning Standup Notes present"},
+        {"text": "two-space-indent", "passed": false, "evidence": "Tab indentation for standup sub-items"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "project-namespace-with-properties",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 11,
+        "failed": 0,
+        "total": 11,
+        "time_seconds": 24.3,
+        "tokens": 15209,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "main-page-file", "passed": true, "evidence": "Projects___WebApp.md exists"},
+        {"text": "arch-page-file", "passed": true, "evidence": "Architecture file exists"},
+        {"text": "tasks-page-file", "passed": true, "evidence": "Tasks file exists"},
+        {"text": "page-tags-property", "passed": true, "evidence": "tags:: [[project]], [[active]]"},
+        {"text": "page-status-property", "passed": true, "evidence": "status:: in-progress"},
+        {"text": "double-colon-props", "passed": true, "evidence": "All :: syntax"},
+        {"text": "page-props-no-bullet", "passed": true, "evidence": "No '- ' on properties"},
+        {"text": "subpage-links", "passed": true, "evidence": "[[Projects/WebApp/Architecture]] links"},
+        {"text": "outliner-syntax", "passed": true, "evidence": "All content uses '- '"},
+        {"text": "tasks-with-priorities", "passed": true, "evidence": "NOW [#A], LATER [#B], LATER [#C]"},
+        {"text": "two-space-indent", "passed": true, "evidence": "Consistent 2-space nesting"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "project-namespace-with-properties",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.82,
+        "passed": 9,
+        "failed": 2,
+        "total": 11,
+        "time_seconds": 18.0,
+        "tokens": 10629,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "main-page-file", "passed": true, "evidence": "Projects___WebApp.md exists"},
+        {"text": "arch-page-file", "passed": true, "evidence": "Architecture file exists"},
+        {"text": "tasks-page-file", "passed": true, "evidence": "Tasks file exists"},
+        {"text": "page-tags-property", "passed": true, "evidence": "tags:: project, active"},
+        {"text": "page-status-property", "passed": true, "evidence": "status:: in-progress"},
+        {"text": "double-colon-props", "passed": true, "evidence": "All :: syntax"},
+        {"text": "page-props-no-bullet", "passed": true, "evidence": "No '- ' on properties"},
+        {"text": "subpage-links", "passed": true, "evidence": "[[Projects/WebApp/Architecture]] links"},
+        {"text": "outliner-syntax", "passed": true, "evidence": "Top-level lines use '- '"},
+        {"text": "tasks-with-priorities", "passed": false, "evidence": "Uses TODO instead of NOW/LATER"},
+        {"text": "two-space-indent", "passed": false, "evidence": "Tab indentation in Architecture page"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "query-now-tasks-past-week",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 23.2,
+        "tokens": 18237,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "correct-filename", "passed": true, "evidence": "Dashboards___Active Tasks.md exists"},
+        {"text": "datalog-begin-end", "passed": true, "evidence": "#+BEGIN_QUERY / #+END_QUERY"},
+        {"text": "block-marker-filter", "passed": true, "evidence": ":block/marker with NOW/LATER"},
+        {"text": "date-inputs-bounded", "passed": true, "evidence": ":inputs [:7d-before :today]"},
+        {"text": "sort-by-priority", "passed": true, "evidence": "sort-by :block/priority"},
+        {"text": "simple-query", "passed": true, "evidence": "{{query (and (task NOW LATER) #urgent)}}"},
+        {"text": "urgent-reference", "passed": true, "evidence": "#urgent referenced"},
+        {"text": "outliner-syntax", "passed": true, "evidence": "All lines use '- '"},
+        {"text": "two-space-indent", "passed": true, "evidence": "Consistent 2-space nesting"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "query-now-tasks-past-week",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.89,
+        "passed": 8,
+        "failed": 1,
+        "total": 9,
+        "time_seconds": 14.7,
+        "tokens": 10157,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "correct-filename", "passed": true, "evidence": "Dashboards___Active Tasks.md exists"},
+        {"text": "datalog-begin-end", "passed": true, "evidence": "#+BEGIN_QUERY / #+END_QUERY"},
+        {"text": "block-marker-filter", "passed": true, "evidence": ":block/marker with NOW/LATER"},
+        {"text": "date-inputs-bounded", "passed": false, "evidence": ":inputs [:7d-before] — missing :today upper bound"},
+        {"text": "sort-by-priority", "passed": true, "evidence": "sort-by with case on :block/priority"},
+        {"text": "simple-query", "passed": true, "evidence": "{{query ...}} present"},
+        {"text": "urgent-reference", "passed": true, "evidence": "[[urgent]] referenced"},
+        {"text": "outliner-syntax", "passed": true, "evidence": "All lines use '- '"},
+        {"text": "two-space-indent", "passed": true, "evidence": "2-space indentation used"}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 22.5, "stddev": 2.2, "min": 20.0, "max": 24.3},
+      "tokens": {"mean": 16038, "stddev": 1834, "min": 14669, "max": 18237}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.84, "stddev": 0.04, "min": 0.82, "max": 0.89},
+      "time_seconds": {"mean": 14.0, "stddev": 4.3, "min": 9.4, "max": 18.0},
+      "tokens": {"mean": 10258, "stddev": 334, "min": 9989, "max": 10629}
+    },
+    "delta": {
+      "pass_rate": "+16.0%",
+      "time_seconds": "+8.5s",
+      "tokens": "+5780"
+    }
+  },
+  "notes": [
+    "With-skill achieves 100% (31/31) vs without-skill 84% (26/31) — improved from iteration 1's 87% gap to 16% gap with tighter assertions",
+    "New assertions caught real issues: (1) two-space-indent catches tabs in without-skill runs consistently, (2) date-inputs-bounded catches missing :today in without-skill Datalog query",
+    "Without-skill failures are consistent across both iterations: tab indentation, missing [[page links]], TODO instead of NOW/LATER, incomplete query :inputs",
+    "The skill's value is clearest in convention enforcement — areas where Claude's built-in knowledge is close but not quite right for this specific graph's configuration",
+    "Eval 3 now properly discriminates: with-skill 100% vs without-skill 89% (was 100%/100% in iteration 1 before the bounded-inputs assertion)"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "eval_id": 3,
+  "eval_name": "query-now-tasks-past-week",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "correct-filename", "passed": true, "evidence": "Dashboards___Active Tasks.md exists"},
+    {"text": "datalog-begin-end", "passed": true, "evidence": "Lines 2 and 24: #+BEGIN_QUERY / #+END_QUERY"},
+    {"text": "block-marker-filter", "passed": true, "evidence": "Lines 7-8: :block/marker with NOW/LATER filter"},
+    {"text": "date-inputs-bounded", "passed": false, "evidence": "Line 14: ':inputs [:7d-before]' — only start bound, missing :today end bound. Query has no upper date constraint."},
+    {"text": "sort-by-priority", "passed": true, "evidence": "Lines 15-22: sort-by with case on :block/priority"},
+    {"text": "simple-query", "passed": true, "evidence": "Line 26: '{{query (and (task NOW LATER DOING TODO) [[urgent]])}}'"},
+    {"text": "urgent-reference", "passed": true, "evidence": "Line 26 references [[urgent]]"},
+    {"text": "outliner-syntax", "passed": true, "evidence": "All content lines start with '- '"},
+    {"text": "two-space-indent", "passed": true, "evidence": "Uses 2-space indentation for nesting"}
+  ],
+  "summary": {"passed": 8, "failed": 1, "total": 9, "pass_rate": 0.89}
+}
