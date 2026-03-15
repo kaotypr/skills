@@ -1,0 +1,16 @@
+{
+  "eval_id": 3,
+  "eval_name": "query-now-tasks-past-week",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "correct-filename: Creates pages/Dashboards___Active Tasks.md with triple-underscore namespace", "passed": true, "evidence": "File exists at outputs/pages/Dashboards___Active Tasks.md"},
+    {"text": "datalog-begin-end: Uses #+BEGIN_QUERY and #+END_QUERY delimiters for advanced query", "passed": true, "evidence": "Lines 2 and 24: '#+BEGIN_QUERY' and '#+END_QUERY'"},
+    {"text": "block-marker-filter: Datalog query filters on :block/marker for NOW and LATER", "passed": true, "evidence": "Lines 7-8: '[?b :block/marker ?marker]' and '[(contains? #{\"NOW\" \"LATER\"} ?marker)]'"},
+    {"text": "date-inputs: Query uses :inputs with date-related values (e.g. :7d-before, :today, :14d)", "passed": true, "evidence": "Line 14: ':inputs [:7d-before]' — has :7d-before but missing :today upper bound, which means the query has no end date constraint"},
+    {"text": "sort-by-priority: Includes result-transform with sort-by on :block/priority", "passed": true, "evidence": "Lines 15-21 contain sort-by with case statement on :block/priority"},
+    {"text": "simple-query: Has a {{query ...}} simple inline query", "passed": true, "evidence": "Line 26: '{{query (and (task NOW LATER DOING TODO) [[urgent]])}}'"},
+    {"text": "urgent-reference: Simple query references #urgent or [[urgent]]", "passed": true, "evidence": "Line 26 references [[urgent]]"},
+    {"text": "outliner-syntax: All content lines start with '- ' bullet prefix", "passed": true, "evidence": "All content lines start with '- '"}
+  ],
+  "summary": {"passed": 8, "failed": 0, "total": 8, "pass_rate": 1.0}
+}

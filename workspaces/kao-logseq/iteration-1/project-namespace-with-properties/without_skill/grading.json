@@ -1,0 +1,18 @@
+{
+  "eval_id": 2,
+  "eval_name": "project-namespace-with-properties",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "main-page-file: Creates pages/Projects___WebApp.md with triple-underscore namespace", "passed": true, "evidence": "File exists at outputs/pages/Projects___WebApp.md"},
+    {"text": "arch-page-file: Creates pages/Projects___WebApp___Architecture.md", "passed": true, "evidence": "File exists at outputs/pages/Projects___WebApp___Architecture.md"},
+    {"text": "tasks-page-file: Creates pages/Projects___WebApp___Tasks.md", "passed": true, "evidence": "File exists at outputs/pages/Projects___WebApp___Tasks.md"},
+    {"text": "page-tags-property: Main page has tags:: property with project and active", "passed": true, "evidence": "Line 1: 'tags:: project, active' — has both tags, though not wrapped in [[ ]]"},
+    {"text": "page-status-property: Main page has status:: in-progress property", "passed": true, "evidence": "Line 2: 'status:: in-progress'"},
+    {"text": "double-colon-props: Properties use double-colon syntax (key:: value), not single colon", "passed": true, "evidence": "All properties use :: syntax"},
+    {"text": "page-props-no-bullet: Page-level properties at file top are NOT prefixed with '- '", "passed": true, "evidence": "Lines 1-2 are 'tags:: ...' and 'status:: ...' without '- ' prefix"},
+    {"text": "subpage-links: Main page links to sub-pages using [[Projects/WebApp/Architecture]] syntax", "passed": true, "evidence": "Lines 7-8: '[[Projects/WebApp/Architecture]]' and '[[Projects/WebApp/Tasks]]'"},
+    {"text": "outliner-syntax: All content blocks (non-property lines) start with '- ' bullet prefix", "passed": false, "evidence": "Lines 7-8 use tab indentation ('\\t- ') instead of 2-space indentation. Architecture page lines 4-17 all use tab indentation."},
+    {"text": "tasks-with-priorities: Tasks page has tasks with different priority levels [#A], [#B], [#C]", "passed": false, "evidence": "Tasks page uses TODO markers ('TODO [#A]', 'TODO [#B]', 'TODO [#C]') instead of NOW/LATER markers. This graph uses :now workflow, not :todo workflow."}
+  ],
+  "summary": {"passed": 8, "failed": 2, "total": 10, "pass_rate": 0.8}
+}

@@ -1,0 +1,18 @@
+{
+  "eval_id": 2,
+  "eval_name": "project-namespace-with-properties",
+  "prompt": "Create a Logseq project page for 'Projects/WebApp' with sub-pages 'Projects/WebApp/Architecture' and 'Projects/WebApp/Tasks'. The main project page should have tags (project, active), a status property set to 'in-progress', and link to its sub-pages. The Architecture page should describe a React + Node.js stack. The Tasks page should have 3 tasks with different priorities.",
+  "assertions": [
+    "main-page-file: Creates pages/Projects___WebApp.md with triple-underscore namespace",
+    "arch-page-file: Creates pages/Projects___WebApp___Architecture.md",
+    "tasks-page-file: Creates pages/Projects___WebApp___Tasks.md",
+    "page-tags-property: Main page has tags:: property with project and active",
+    "page-status-property: Main page has status:: in-progress property",
+    "double-colon-props: Properties use double-colon syntax (key:: value), not single colon",
+    "page-props-no-bullet: Page-level properties at file top are NOT prefixed with '- '",
+    "subpage-links: Main page links to sub-pages using [[Projects/WebApp/Architecture]] syntax",
+    "outliner-syntax: All content blocks (non-property lines) start with '- ' bullet prefix",
+    "tasks-with-priorities: Tasks page has tasks with different priority levels [#A], [#B], [#C]",
+    "two-space-indent: Uses 2-space indentation for nesting, not tabs"
+  ]
+}

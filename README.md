@@ -44,6 +44,23 @@ Tested across: settings form, warning button + dialog, drawer with toast. The sk
 
 ---
 
+### kao-logseq
+
+File-level operations guide for Logseq knowledge graphs — covers outliner markdown syntax, NOW/LATER task workflows, journal entries, page/namespace management, templates, simple and advanced Datalog queries, and `logseq/config.edn` configuration.
+
+- **Version**: 1.0.0
+- **Skill**: [`skills/kao-logseq`](skills/kao-logseq)
+- **Evals**: [`workspaces/kao-logseq`](workspaces/kao-logseq) (3 scenarios, 2 iterations)
+
+| Metric | With Skill | Without Skill |
+|---|---|---|
+| Pass Rate | 100% (31/31) | 84% (26/31) |
+| Avg Tokens | 16,038 | 10,258 |
+
+Tested across: journal entry with tasks, project namespace with properties, Datalog query page. The skill's primary value is enforcing Logseq-specific conventions: 2-space indentation, `[[page link]]` syntax, NOW/LATER workflow markers, and bounded query `:inputs`.
+
+---
+
 ## Project Structure
 
 ```

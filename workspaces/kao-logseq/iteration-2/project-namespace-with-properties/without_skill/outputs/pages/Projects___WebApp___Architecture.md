@@ -1,0 +1,19 @@
+- # Projects/WebApp/Architecture
+- ## Tech Stack
+	- **Frontend**: React
+		- React with functional components and hooks
+		- State management via Redux Toolkit
+		- Styling with Tailwind CSS
+	- **Backend**: Node.js
+		- Express.js REST API server
+		- Authentication with JWT
+		- Input validation with Zod
+	- **Database**
+		- PostgreSQL for persistent storage
+		- Redis for caching and session management
+	- **Infrastructure**
+		- Docker for containerization
+		- Nginx as reverse proxy
+- ## Architecture Diagram
+	- Client (React SPA) -> Nginx -> Node.js/Express API -> PostgreSQL
+	-                                                    -> Redis (cache)
