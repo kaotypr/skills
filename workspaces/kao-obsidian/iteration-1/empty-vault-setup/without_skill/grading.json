@@ -1,0 +1,50 @@
+{
+  "expectations": [
+    {
+      "text": "Presents organization system options to the user (mentions PARA, MOC, flat+tags, or Johnny Decimal)",
+      "passed": false,
+      "evidence": "The agent did not present multiple organization system options. It simply stated it would use the PARA method and proceeded without discussing alternatives like MOC, flat+tags, or Johnny Decimal. The final summary only mentions PARA as the chosen system."
+    },
+    {
+      "text": "Recommends PARA as the default for the described use case",
+      "passed": true,
+      "evidence": "The agent used PARA (Projects, Areas, Resources, Archive) and explicitly stated in the summary: 'Organization system: PARA method (Projects, Areas, Resources, Archive) with numbered prefixes for sort order... This is a well-established system that works particularly well for software engineers.'"
+    },
+    {
+      "text": "Creates folder structure with at minimum: Projects, Areas/Resources, Archive, templates, daily-notes, and attachments directories",
+      "passed": false,
+      "evidence": "Created 01-Projects, 02-Areas, 03-Resources, 04-Archive, Templates, and Daily Notes directories. However, no attachments directory was created. The vault listing confirms no attachments folder exists."
+    },
+    {
+      "text": "Creates an index/home note with wikilinks ([[...]]) linking to key areas",
+      "passed": true,
+      "evidence": "00-Index.md contains wikilinks such as [[Templates/Daily Note Template|Daily Note Template]], [[Templates/Meeting Notes Template|Meeting Notes Template]], [[01-Projects/Project Name]], and [[Meetings/2026-03-16 - Standup]]."
+    },
+    {
+      "text": "Creates a daily note template with YAML frontmatter (--- fenced) including at least tags and date fields",
+      "passed": true,
+      "evidence": "Daily Note Template.md has proper YAML frontmatter fenced with --- containing 'date: \"{{date}}\"' and 'tags: [daily]'."
+    },
+    {
+      "text": "Creates a meeting notes template with YAML frontmatter including at least tags, date, and attendees fields",
+      "passed": true,
+      "evidence": "Meeting Notes Template.md has YAML frontmatter with 'date: \"{{date}}\"', 'tags: [meeting]', and 'attendees: []'."
+    },
+    {
+      "text": "All internal links use wikilink syntax [[...]] not markdown link syntax []()",
+      "passed": true,
+      "evidence": "All links in 00-Index.md use wikilink syntax: [[Templates/Daily Note Template|Daily Note Template]], [[01-Projects/Project Name]], [[Meetings/2026-03-16 - Standup]]. No markdown-style links [text](url) are present in any output files."
+    },
+    {
+      "text": "Templates use proper Obsidian template variables like {{date}} or {{title}}",
+      "passed": true,
+      "evidence": "Daily Note Template uses {{date}}, {{date:YYYY-MM-DD}}, and {{date:dddd}}. Meeting Notes Template uses {{date}}, {{date:YYYY-MM-DD}}, and {{title}}."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 2,
+    "total": 8,
+    "pass_rate": 0.75
+  }
+}

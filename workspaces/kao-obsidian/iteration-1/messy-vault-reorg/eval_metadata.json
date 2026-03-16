@@ -1,0 +1,16 @@
+{
+  "eval_id": 2,
+  "eval_name": "messy-vault-reorg",
+  "prompt": "I have an existing Obsidian vault at /tmp/test-vault-messy/. It's a mess — notes are scattered everywhere with no folder structure. Can you analyze it and reorganize it? Here are the files:\n- project-alpha-notes.md (has tags: #project, #active)\n- meeting-2026-03-10.md (has tags: #meeting)\n- python-cheatsheet.md (has tags: #reference, #python)\n- weekly-review.md (has tags: #review, #recurring)\n- old-project-beta.md (has tags: #project, #completed)\n- recipe-pasta.md (has tags: #personal, #recipe)\n- book-notes-atomic-habits.md (has tags: #reference)\n- random-ideas.md (no tags)\n- 2026-03-15.md (daily note, no tags)\n- onboarding-guide.md (has tags: #work, #reference)",
+  "assertions": [
+    "Proposes an organizational system (PARA as default) before reorganizing",
+    "Categorizes project-alpha-notes.md as an active project (e.g., Projects folder in PARA)",
+    "Categorizes old-project-beta.md as archived/completed (e.g., Archive folder in PARA)",
+    "Categorizes python-cheatsheet.md and book-notes-atomic-habits.md as resources/references",
+    "Categorizes recipe-pasta.md as personal (separate from work content)",
+    "Places or identifies 2026-03-15.md as a daily note in a daily-notes folder",
+    "Uses or recommends obsidian move commands (not mv or cp) to preserve wikilinks",
+    "Produces a clear before/after folder structure showing where each file goes",
+    "Does not break existing wikilinks between notes"
+  ]
+}

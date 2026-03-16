@@ -1,0 +1,16 @@
+{
+  "eval_id": 3,
+  "eval_name": "moc-add-project",
+  "prompt": "I use the MOC (Maps of Content) system in my Obsidian vault at /tmp/test-vault-moc/. I need you to create a new project note for 'Website Redesign' and connect it properly to my existing MOC structure. My vault has:\n- +Index.md (master index linking to MOCs)\n- MOCs/Projects MOC.md (links to all project notes)\n- MOCs/Work MOC.md (links to work-related notes)\n- notes/project-api-migration.md (existing project note)\n- templates/project-template.md (template with frontmatter: title, status, priority, tags, related)\n- daily-notes/ (daily notes folder)\n- attachments/ (attachments folder)\n\nThe project is high priority, due April 15, involves the marketing team, and should link to the existing API migration project since they're related.",
+  "assertions": [
+    "Creates a new project note in the notes/ directory (following existing vault convention)",
+    "New note has YAML frontmatter with title, status, priority (high/1), tags, due date (2026-04-15), and related fields",
+    "Frontmatter related field includes a wikilink to project-api-migration",
+    "Note body mentions marketing team involvement",
+    "Uses wikilinks [[...]] for all internal references, not markdown links",
+    "Updates MOCs/Projects MOC.md to include the new Website Redesign project",
+    "Updates MOCs/Work MOC.md to include the new project",
+    "Respects the existing MOC structure rather than imposing a different organization system",
+    "New note contains bidirectional link — links to API migration AND is listed in the MOCs that API migration is in"
+  ]
+}

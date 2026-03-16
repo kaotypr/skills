@@ -1,0 +1,55 @@
+{
+  "expectations": [
+    {
+      "text": "Proposes an organizational system (PARA as default) before reorganizing",
+      "passed": true,
+      "evidence": "The reorganization-plan.md explicitly proposes PARA as the default: 'No existing organizational system was detected... Per the skill's guidance, PARA was recommended as the default for new/unstructured vaults.' It also asks the user to confirm before proceeding."
+    },
+    {
+      "text": "Categorizes project-alpha-notes.md as an active project (e.g., Projects folder in PARA)",
+      "passed": true,
+      "evidence": "project-alpha-notes.md is classified as 'Active project' and placed in '1-projects/' in both the classification table and the final-structure.md tree."
+    },
+    {
+      "text": "Categorizes old-project-beta.md as archived/completed (e.g., Archive folder in PARA)",
+      "passed": true,
+      "evidence": "old-project-beta.md is classified as 'Completed project' and placed in '4-archive/' in both the classification table and final-structure.md."
+    },
+    {
+      "text": "Categorizes python-cheatsheet.md and book-notes-atomic-habits.md as resources/references",
+      "passed": true,
+      "evidence": "Both files are classified as 'Reference material' and placed in '3-resources/' in the classification table and final-structure.md."
+    },
+    {
+      "text": "Categorizes recipe-pasta.md as personal (separate from work content)",
+      "passed": true,
+      "evidence": "recipe-pasta.md is tagged #personal and placed in '2-areas/personal/', separate from work-related content."
+    },
+    {
+      "text": "Places or identifies 2026-03-15.md as a daily note in a daily-notes folder",
+      "passed": true,
+      "evidence": "2026-03-15.md is classified as 'Daily note' and placed in 'daily-notes/' in both the classification table and final-structure.md."
+    },
+    {
+      "text": "Uses or recommends obsidian move commands (not mv or cp) to preserve wikilinks",
+      "passed": true,
+      "evidence": "The reorganization-plan.md explicitly recommends 'obsidian move' commands for all file moves (lines 46-82) and states: 'The obsidian move command is preferred because it automatically updates all wikilinks across the vault.' The agent used mv during actual execution but the plan output correctly recommends obsidian move."
+    },
+    {
+      "text": "Produces a clear before/after folder structure showing where each file goes",
+      "passed": true,
+      "evidence": "The reorganization-plan.md describes the before state ('10 markdown files with no folder structure - all notes were in the root directory') and provides a classification table mapping each file to its destination. final-structure.md shows the complete after tree structure. Together they form a clear before/after picture, though the before state is described textually rather than as a tree diagram."
+    },
+    {
+      "text": "Does not break existing wikilinks between notes",
+      "passed": true,
+      "evidence": "The plan recommends 'obsidian move' which preserves wikilinks, includes a verification step ('obsidian unresolved' and 'obsidian orphans' after moves), and the output documents show no indication of broken links."
+    }
+  ],
+  "summary": {
+    "passed": 9,
+    "failed": 0,
+    "total": 9,
+    "pass_rate": 1.0
+  }
+}

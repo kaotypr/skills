@@ -1,0 +1,15 @@
+{
+  "eval_id": 1,
+  "eval_name": "empty-vault-setup",
+  "prompt": "I just created a brand new empty Obsidian vault at /tmp/test-vault/. I want you to set it up with a good folder structure and create a few starter notes — an index note, a daily note template, and a meeting notes template. I'm not sure what organization system to use, just pick something good for a software engineer who takes lots of meeting notes and tracks projects.",
+  "assertions": [
+    "Presents organization system options to the user (mentions PARA, MOC, flat+tags, or Johnny Decimal)",
+    "Recommends PARA as the default for the described use case",
+    "Creates folder structure with at minimum: Projects, Areas/Resources, Archive, templates, daily-notes, and attachments directories",
+    "Creates an index/home note with wikilinks ([[...]]) linking to key areas",
+    "Creates a daily note template with YAML frontmatter (--- fenced) including at least tags and date fields",
+    "Creates a meeting notes template with YAML frontmatter including at least tags, date, and attendees fields",
+    "All internal links use wikilink syntax [[...]] not markdown link syntax []()",
+    "Templates use proper Obsidian template variables like {{date}} or {{title}}"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "skill_name": "kao-obsidian",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I just created a brand new empty Obsidian vault at /tmp/test-vault/. I want you to set it up with a good folder structure and create a few starter notes — an index note, a daily note template, and a meeting notes template. I'm not sure what organization system to use, just pick something good for a software engineer who takes lots of meeting notes and tracks projects.",
+      "expected_output": "Should ask the user which organization system they want (PARA, MOC, flat+tags, Johnny Decimal) with PARA as the default suggestion. Then create the folder structure, an index note with wikilinks, a daily note template with proper frontmatter, and a meeting notes template. All files should use correct Obsidian markdown conventions.",
+      "files": [],
+      "assertions": [
+        "Presents organization system options to the user (mentions PARA, MOC, flat+tags, or Johnny Decimal)",
+        "Recommends PARA as the default for the described use case",
+        "Creates folder structure with at minimum: Projects, Areas/Resources, Archive, templates, daily-notes, and attachments directories",
+        "Creates an index/home note with wikilinks ([[...]]) linking to key areas",
+        "Creates a daily note template with YAML frontmatter (--- fenced) including at least tags and date fields",
+        "Creates a meeting notes template with YAML frontmatter including at least tags, date, and attendees fields",
+        "All internal links use wikilink syntax [[...]] not markdown link syntax []()",
+        "Templates use proper Obsidian template variables like {{date}} or {{title}}"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I have an existing Obsidian vault at /tmp/test-vault-messy/. It's a mess — notes are scattered everywhere with no folder structure. Can you analyze it and reorganize it? Here are the files:\n- project-alpha-notes.md (has tags: #project, #active)\n- meeting-2026-03-10.md (has tags: #meeting)\n- python-cheatsheet.md (has tags: #reference, #python)\n- weekly-review.md (has tags: #review, #recurring)\n- old-project-beta.md (has tags: #project, #completed)\n- recipe-pasta.md (has tags: #personal, #recipe)\n- book-notes-atomic-habits.md (has tags: #reference)\n- random-ideas.md (no tags)\n- 2026-03-15.md (daily note, no tags)\n- onboarding-guide.md (has tags: #work, #reference)",
+      "expected_output": "Should detect the vault has no organizational structure and propose reorganizing using one of the systems (with PARA as default). Should create a plan showing where each file would go. Should use obsidian move commands (not mv) to preserve wikilinks. Should categorize files logically based on their tags and content.",
+      "files": [],
+      "assertions": [
+        "Proposes an organizational system (PARA as default) before reorganizing",
+        "Categorizes project-alpha-notes.md as an active project (e.g., Projects folder in PARA)",
+        "Categorizes old-project-beta.md as archived/completed (e.g., Archive folder in PARA)",
+        "Categorizes python-cheatsheet.md and book-notes-atomic-habits.md as resources/references",
+        "Categorizes recipe-pasta.md as personal (separate from work content)",
+        "Places or identifies 2026-03-15.md as a daily note in a daily-notes folder",
+        "Uses or recommends obsidian move commands (not mv or cp) to preserve wikilinks",
+        "Produces a clear before/after folder structure showing where each file goes",
+        "Does not break existing wikilinks between notes"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I use the MOC (Maps of Content) system in my Obsidian vault at /tmp/test-vault-moc/. I need you to create a new project note for 'Website Redesign' and connect it properly to my existing MOC structure. My vault has:\n- +Index.md (master index linking to MOCs)\n- MOCs/Projects MOC.md (links to all project notes)\n- MOCs/Work MOC.md (links to work-related notes)\n- notes/project-api-migration.md (existing project note)\n- templates/project-template.md (template with frontmatter: title, status, priority, tags, related)\n- daily-notes/ (daily notes folder)\n- attachments/ (attachments folder)\n\nThe project is high priority, due April 15, involves the marketing team, and should link to the existing API migration project since they're related.",
+      "expected_output": "Should create a new note at notes/website-redesign.md using proper frontmatter (title, status, priority, due date, tags). Should use wikilinks to link to the API migration project. Should update the Projects MOC and Work MOC to include the new project. Should update the +Index.md if needed. All markdown should follow Obsidian conventions (wikilinks, not markdown links for internal references).",
+      "files": [],
+      "assertions": [
+        "Creates a new project note in the notes/ directory (following existing vault convention)",
+        "New note has YAML frontmatter with title, status, priority (high/1), tags, due date (2026-04-15), and related fields",
+        "Frontmatter related field includes a wikilink to project-api-migration",
+        "Note body mentions marketing team involvement",
+        "Uses wikilinks [[...]] for all internal references, not markdown links",
+        "Updates MOCs/Projects MOC.md to include the new Website Redesign project",
+        "Updates MOCs/Work MOC.md to include the new project",
+        "Respects the existing MOC structure rather than imposing a different organization system",
+        "New note contains bidirectional link — links to API migration AND is listed in the MOCs that API migration is in"
+      ]
+    }
+  ]
+}
