@@ -61,6 +61,23 @@ Tested across: journal entry with tasks, project namespace with properties, Data
 
 ---
 
+### kao-obsidian
+
+Obsidian vault editing, CLI commands, and organization guide — covers Obsidian Flavored Markdown (wikilinks, callouts, embeds, properties), the official Obsidian CLI (v1.12+), vault organization philosophies (PARA, MOC, flat+tags, Johnny Decimal), and best practices for structuring knowledge bases.
+
+- **Version**: 1.0.0
+- **Skill**: [`skills/kao-obsidian`](skills/kao-obsidian)
+- **Evals**: [`workspaces/kao-obsidian`](workspaces/kao-obsidian) (3 scenarios, 1 iteration)
+
+| Metric | With Skill | Without Skill |
+|---|---|---|
+| Pass Rate | 100% (26/26) | 88% (23/26) |
+| Avg Tokens | 21,538 | 18,006 |
+
+Tested across: empty vault setup with org system selection, messy vault reorganization with CLI commands, MOC-structured vault project creation. The skill's primary value is presenting organization options (PARA as default), using `obsidian move` over shell `mv` for link preservation, and creating complete folder structures with attachments.
+
+---
+
 ## Project Structure
 
 ```

@@ -1,0 +1,55 @@
+{
+  "expectations": [
+    {
+      "text": "Proposes an organizational system (PARA as default) before reorganizing",
+      "passed": true,
+      "evidence": "The reorganization-plan.md includes a 'Decision Points' section asking about PARA vs topic-based layout, and chooses a 'hybrid approach' inspired by PARA with numbered folders (1-projects, 2-areas, 3-resources, 4-archive). The agent mentions PARA by name and proposes the system before moving files."
+    },
+    {
+      "text": "Categorizes project-alpha-notes.md as an active project (e.g., Projects folder in PARA)",
+      "passed": true,
+      "evidence": "project-alpha-notes.md is placed in 1-projects/ with rationale: 'Tagged #active, has open tasks, clearly an ongoing project.'"
+    },
+    {
+      "text": "Categorizes old-project-beta.md as archived/completed (e.g., Archive folder in PARA)",
+      "passed": true,
+      "evidence": "old-project-beta.md is placed in 4-archive/ with rationale: 'Tagged #completed with status: completed. No open work remains.'"
+    },
+    {
+      "text": "Categorizes python-cheatsheet.md and book-notes-atomic-habits.md as resources/references",
+      "passed": true,
+      "evidence": "Both files are placed in 3-resources/. python-cheatsheet.md: 'Tagged #reference, serves as a lookup resource.' book-notes-atomic-habits.md: 'Tagged #reference and #book, permanent reference material.'"
+    },
+    {
+      "text": "Categorizes recipe-pasta.md as personal (separate from work content)",
+      "passed": true,
+      "evidence": "recipe-pasta.md is placed in 2-areas/personal/ with rationale: 'Tagged #personal, not work-related.' It is separated from work content in its own personal subfolder."
+    },
+    {
+      "text": "Places or identifies 2026-03-15.md as a daily note in a daily-notes folder",
+      "passed": true,
+      "evidence": "2026-03-15.md is placed in daily-notes/ with rationale: 'Date-named file with daily tasks and notes. Follows Obsidian daily notes convention.'"
+    },
+    {
+      "text": "Uses or recommends obsidian move commands (not mv or cp) to preserve wikilinks",
+      "passed": false,
+      "evidence": "The agent used shell 'mv' commands to move files (e.g., 'mv project-alpha-notes.md Projects/Active/'). No Obsidian-specific move commands or recommendations to use Obsidian's built-in file move functionality were provided. The agent only noted that Obsidian resolves wikilinks by filename regardless of folder, but did not recommend using Obsidian's move commands."
+    },
+    {
+      "text": "Produces a clear before/after folder structure showing where each file goes",
+      "passed": true,
+      "evidence": "The reorganization-plan.md describes the before state (10 files scattered at root) and the after folder structure. The final-structure.md provides a clear tree view of the final structure with all files placed. The File Placement Rationale section shows each file's destination with '->' notation."
+    },
+    {
+      "text": "Does not break existing wikilinks between notes",
+      "passed": true,
+      "evidence": "The agent noted in the Wikilink Preservation section: 'Obsidian resolves wikilinks by filename regardless of folder location, so moving files into subdirectories does not break any existing links.' The wikilinks in the files (e.g., [[python-cheatsheet]]) were left unchanged, and since Obsidian uses filename-based resolution, they remain valid after the move."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 1,
+    "total": 9,
+    "pass_rate": 0.89
+  }
+}

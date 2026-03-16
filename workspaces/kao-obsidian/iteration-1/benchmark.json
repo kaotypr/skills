@@ -1,0 +1,196 @@
+{
+  "metadata": {
+    "skill_name": "kao-obsidian",
+    "skill_path": "/Users/kao/workspace/kaotypr/skills/skills/kao-obsidian",
+    "executor_model": "claude-opus-4-6",
+    "analyzer_model": "claude-opus-4-6",
+    "timestamp": "2026-03-16T12:35:00Z",
+    "evals_run": ["empty-vault-setup", "messy-vault-reorg", "moc-add-project"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "empty-vault-setup",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "time_seconds": 70.3,
+        "tokens": 17371,
+        "tool_calls": 12,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Presents organization system options (PARA, MOC, flat+tags, Johnny Decimal)", "passed": true, "evidence": "Agent presented all four options in its output"},
+        {"text": "Recommends PARA as the default", "passed": true, "evidence": "Agent chose PARA with clear rationale for software engineer use case"},
+        {"text": "Creates folder structure with Projects, Areas/Resources, Archive, templates, daily-notes, attachments", "passed": true, "evidence": "Full PARA structure created with all required directories"},
+        {"text": "Creates index/home note with wikilinks", "passed": true, "evidence": "Home.md created with [[wikilinks]] to all key areas"},
+        {"text": "Daily note template with YAML frontmatter (tags, date)", "passed": true, "evidence": "Template has proper --- fenced YAML with tags and date fields"},
+        {"text": "Meeting notes template with YAML frontmatter (tags, date, attendees)", "passed": true, "evidence": "Template has frontmatter with tags, date, and attendees fields"},
+        {"text": "All internal links use wikilink syntax", "passed": true, "evidence": "No markdown-style internal links found; all use [[...]] syntax"},
+        {"text": "Templates use Obsidian template variables ({{date}}, {{title}})", "passed": true, "evidence": "Uses {{date:YYYY-MM-DD}} and {{date:dddd}} variables"}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "empty-vault-setup",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 6,
+        "failed": 2,
+        "total": 8,
+        "time_seconds": 69.0,
+        "tokens": 13447,
+        "tool_calls": 18,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Presents organization system options (PARA, MOC, flat+tags, Johnny Decimal)", "passed": false, "evidence": "Agent jumped straight to PARA without presenting alternatives"},
+        {"text": "Recommends PARA as the default", "passed": true, "evidence": "Used PARA-inspired structure"},
+        {"text": "Creates folder structure with Projects, Areas/Resources, Archive, templates, daily-notes, attachments", "passed": false, "evidence": "No attachments directory created"},
+        {"text": "Creates index/home note with wikilinks", "passed": true, "evidence": "00-Index.md created with wikilinks"},
+        {"text": "Daily note template with YAML frontmatter (tags, date)", "passed": true, "evidence": "Template has proper frontmatter"},
+        {"text": "Meeting notes template with YAML frontmatter (tags, date, attendees)", "passed": true, "evidence": "Template has required frontmatter fields"},
+        {"text": "All internal links use wikilink syntax", "passed": true, "evidence": "Consistent wikilink usage"},
+        {"text": "Templates use Obsidian template variables ({{date}}, {{title}})", "passed": true, "evidence": "Uses proper template variables"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "messy-vault-reorg",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 214.4,
+        "tokens": 29265,
+        "tool_calls": 47,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Proposes PARA as default before reorganizing", "passed": true, "evidence": "Explicitly proposed PARA and mentioned asking the user"},
+        {"text": "Categorizes project-alpha-notes.md as active project", "passed": true, "evidence": "Placed in 1-projects/"},
+        {"text": "Categorizes old-project-beta.md as archived", "passed": true, "evidence": "Placed in 4-archive/"},
+        {"text": "Categorizes python-cheatsheet.md and book-notes as resources", "passed": true, "evidence": "Both placed in 3-resources/"},
+        {"text": "Categorizes recipe-pasta.md as personal", "passed": true, "evidence": "Placed in 2-areas/personal/"},
+        {"text": "Places 2026-03-15.md as daily note", "passed": true, "evidence": "Placed in daily-notes/"},
+        {"text": "Uses/recommends obsidian move commands", "passed": true, "evidence": "Reorganization plan recommends obsidian move commands"},
+        {"text": "Clear before/after folder structure", "passed": true, "evidence": "Both reorganization-plan.md and final-structure.md show clear mapping"},
+        {"text": "Does not break existing wikilinks", "passed": true, "evidence": "Wikilink preservation addressed through obsidian move recommendations"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "messy-vault-reorg",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.89,
+        "passed": 8,
+        "failed": 1,
+        "total": 9,
+        "time_seconds": 248.3,
+        "tokens": 27665,
+        "tool_calls": 65,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Proposes PARA as default before reorganizing", "passed": true, "evidence": "Used PARA-inspired structure"},
+        {"text": "Categorizes project-alpha-notes.md as active project", "passed": true, "evidence": "Placed in 1-projects/"},
+        {"text": "Categorizes old-project-beta.md as archived", "passed": true, "evidence": "Placed in 4-archive/"},
+        {"text": "Categorizes python-cheatsheet.md and book-notes as resources", "passed": true, "evidence": "Both placed in 3-resources/"},
+        {"text": "Categorizes recipe-pasta.md as personal", "passed": true, "evidence": "Placed in 2-areas/personal/"},
+        {"text": "Places 2026-03-15.md as daily note", "passed": true, "evidence": "Placed in daily-notes/"},
+        {"text": "Uses/recommends obsidian move commands", "passed": false, "evidence": "Used shell mv commands instead of obsidian move"},
+        {"text": "Clear before/after folder structure", "passed": true, "evidence": "Both output files show clear structure"},
+        {"text": "Does not break existing wikilinks", "passed": true, "evidence": "Noted that Obsidian resolves by filename regardless of path"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "moc-add-project",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 49.6,
+        "tokens": 17977,
+        "tool_calls": 13,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Creates project note in notes/ directory", "passed": true, "evidence": "Created notes/project-website-redesign.md"},
+        {"text": "Frontmatter has title, status, priority, tags, due, related", "passed": true, "evidence": "Complete frontmatter with all fields present"},
+        {"text": "Related field includes wikilink to project-api-migration", "passed": true, "evidence": "related field contains [[project-api-migration]]"},
+        {"text": "Body mentions marketing team", "passed": true, "evidence": "Multiple mentions of marketing team in body"},
+        {"text": "Uses wikilinks for all internal references", "passed": true, "evidence": "All links use [[...]] format"},
+        {"text": "Updates Projects MOC.md", "passed": true, "evidence": "Website Redesign added to Active Projects section"},
+        {"text": "Updates Work MOC.md", "passed": true, "evidence": "Website Redesign added to Projects section"},
+        {"text": "Respects existing MOC structure", "passed": true, "evidence": "Preserved existing sections and formatting"},
+        {"text": "Bidirectional linking established", "passed": true, "evidence": "New note links to API migration; API migration updated to link back"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "moc-add-project",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 49.8,
+        "tokens": 12907,
+        "tool_calls": 13,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Creates project note in notes/ directory", "passed": true, "evidence": "Created notes/project-website-redesign.md"},
+        {"text": "Frontmatter has title, status, priority, tags, due, related", "passed": true, "evidence": "Complete frontmatter with all fields"},
+        {"text": "Related field includes wikilink to project-api-migration", "passed": true, "evidence": "related field contains [[project-api-migration]]"},
+        {"text": "Body mentions marketing team", "passed": true, "evidence": "Marketing team mentioned in body"},
+        {"text": "Uses wikilinks for all internal references", "passed": true, "evidence": "All wikilinks"},
+        {"text": "Updates Projects MOC.md", "passed": true, "evidence": "Added to Active Projects"},
+        {"text": "Updates Work MOC.md", "passed": true, "evidence": "Added to Projects section"},
+        {"text": "Respects existing MOC structure", "passed": true, "evidence": "Preserved section structure"},
+        {"text": "Bidirectional linking established", "passed": true, "evidence": "Bidirectional links created"}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 111.4, "stddev": 74.5, "min": 49.6, "max": 214.4},
+      "tokens": {"mean": 21538, "stddev": 5366, "min": 17371, "max": 29265}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.88, "stddev": 0.10, "min": 0.75, "max": 1.0},
+      "time_seconds": {"mean": 122.4, "stddev": 91.2, "min": 49.8, "max": 248.3},
+      "tokens": {"mean": 18006, "stddev": 6757, "min": 12907, "max": 27665}
+    },
+    "delta": {
+      "pass_rate": "+0.12",
+      "time_seconds": "-11.0",
+      "tokens": "+3532"
+    }
+  },
+  "notes": [
+    "Eval 3 (moc-add-project) passes 100% in both configurations — Claude handles structured MOC tasks well without the skill. This eval is non-discriminating.",
+    "The skill's primary value shows in evals 1 and 2: presenting organization options (PARA/MOC/flat+tags/Johnny Decimal) and recommending obsidian move commands over shell mv.",
+    "With-skill runs use ~20% more tokens but achieve 100% pass rate across all evals vs 88% without.",
+    "Without-skill runs failed on: (1) not presenting org system alternatives, (2) missing attachments directory, (3) using mv instead of obsidian move."
+  ]
+}

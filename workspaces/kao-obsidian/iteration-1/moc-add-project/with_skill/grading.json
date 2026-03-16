@@ -1,0 +1,55 @@
+{
+  "expectations": [
+    {
+      "text": "Creates a new project note in the notes/ directory (following existing vault convention)",
+      "passed": true,
+      "evidence": "The file project-website-redesign.md was created (present in outputs). The transcript shows the task involved creating in /tmp/test-vault-moc/ which has a notes/ directory convention. The file was created as notes/project-website-redesign.md following the same pattern as the existing notes/project-api-migration.md."
+    },
+    {
+      "text": "New note has YAML frontmatter with title, status, priority (high/1), tags, due date (2026-04-15), and related fields",
+      "passed": true,
+      "evidence": "Frontmatter contains: title: Website Redesign, status: planning, priority: 1, tags: [project, active, marketing], due: 2026-04-15, related: [[[Projects MOC]], [[project-api-migration]]]. All required fields present with correct values."
+    },
+    {
+      "text": "Frontmatter related field includes a wikilink to project-api-migration",
+      "passed": true,
+      "evidence": "The related field in frontmatter includes '[[project-api-migration]]' as the second item."
+    },
+    {
+      "text": "Note body mentions marketing team involvement",
+      "passed": true,
+      "evidence": "Multiple mentions: 'Full website redesign project involving the marketing team', 'Define design requirements with marketing team', 'Team: Marketing'."
+    },
+    {
+      "text": "Uses wikilinks [[...]] for all internal references, not markdown links",
+      "passed": true,
+      "evidence": "All internal references use wikilink format: [[project-api-migration]], [[Projects MOC]], [[Work MOC]]. No markdown-style links [text](url) are used for internal references."
+    },
+    {
+      "text": "Updates MOCs/Projects MOC.md to include the new Website Redesign project",
+      "passed": true,
+      "evidence": "Projects MOC.md contains '- [[project-website-redesign]] — Website redesign with marketing team (due April 15)' under Active Projects."
+    },
+    {
+      "text": "Updates MOCs/Work MOC.md to include the new project",
+      "passed": true,
+      "evidence": "Work MOC.md contains '- [[project-website-redesign]] — Website redesign (high priority, marketing)' under Projects."
+    },
+    {
+      "text": "Respects the existing MOC structure rather than imposing a different organization system",
+      "passed": true,
+      "evidence": "Projects MOC.md retains its original structure with 'Active Projects' and 'Completed Projects' sections, simply adding the new entry. Work MOC.md retains its 'Projects' and 'References' sections. No new sections or reorganization imposed."
+    },
+    {
+      "text": "New note contains bidirectional link — links to API migration AND is listed in the MOCs that API migration is in",
+      "passed": true,
+      "evidence": "project-website-redesign.md links to [[project-api-migration]] multiple times. project-api-migration.md was updated to include '[[project-website-redesign]]' in its related frontmatter field. Both notes appear in Projects MOC.md and Work MOC.md, the same MOCs that API migration is listed in."
+    }
+  ],
+  "summary": {
+    "passed": 9,
+    "failed": 0,
+    "total": 9,
+    "pass_rate": 1.0
+  }
+}
