@@ -1,0 +1,83 @@
+{
+  "expectations": [
+    {
+      "text": "Output is primarily written in Bahasa Indonesia",
+      "passed": true,
+      "evidence": "The entire output is written in Bahasa Indonesia across all three platform sections, with only minor English loanwords (e.g., 'frozen food', 'carousel', 'CTA') which are standard in Indonesian marketing context."
+    },
+    {
+      "text": "Contains copy for all 3 requested platforms (Instagram, WhatsApp, Shopee)",
+      "passed": true,
+      "evidence": "Three clearly labeled sections present: '1) Instagram Carousel Post', '2) WhatsApp Broadcast', '3) Banner Promo Shopee', each with substantive copy."
+    },
+    {
+      "text": "References Ramadan theme (Ramadan/buka puasa/sahur/iftar/puasa)",
+      "passed": true,
+      "evidence": "'Ramadan' appears in all three sections (e.g., 'Paket Ramadan MakanYuk'), 'buka puasa' appears multiple times (e.g., 'menu buka puasa keluarga', 'buka puasa keluarga langsung istimewa'), and 'puasa' appears independently as well."
+    },
+    {
+      "text": "Mentions the brand name 'MakanYuk'",
+      "passed": true,
+      "evidence": "'MakanYuk' appears repeatedly across all three platforms — in headlines ('MakanYuk Paket Ramadan'), body copy ('MakanYuk hadir untuk Bunda'), and sign-offs ('Tim MakanYuk')."
+    },
+    {
+      "text": "Includes family/keluarga emotional appeal appropriate for the target audience",
+      "passed": true,
+      "evidence": "Strong family emotional appeals throughout: 'keluarga tersenyum di meja makan', 'lebih banyak momen bersama keluarga', 'suami dan anak-anak ketagihan', 'buka puasa keluarga tetap spesial'. Uses 'Bunda' as the direct address form targeting mothers."
+    },
+    {
+      "text": "Shows distinct formatting or tone differences between at least 2 of the 3 platforms",
+      "passed": true,
+      "evidence": "Instagram uses carousel slide structure with hashtags (#MakanYuk #PaketRamadan etc.) and a separate caption. WhatsApp opens with 'Assalamualaikum Bunda!' in a conversational, personal tone with a sign-off from 'Tim MakanYuk'. Shopee uses a commercial banner structure with Headline/Sub-headline/Body/Badge/CTA Button format. All three have distinctly different structures and tones."
+    },
+    {
+      "text": "Mentions the price (150 ribu or 150.000 or 150rb or equivalent)",
+      "passed": true,
+      "evidence": "Price mentioned in all sections: Instagram Slide 1 '5 Menu Cuma 150 Ribu!', Instagram Slide 5 'Rp 150.000', WhatsApp '5 menu lengkap cuma Rp 150.000!', Shopee 'Rp 150.000'."
+    },
+    {
+      "text": "Includes a CTA for each platform",
+      "passed": true,
+      "evidence": "Instagram CTA: 'Pesan sekarang sebelum kehabisan! Link di bio atau WA kami langsung.' WhatsApp CTA: 'Klik link berikut untuk order' and 'balas chat ini langsung'. Shopee CTA: 'Beli Sekarang' button and 'Pesan sekarang, stok terbatas selama bulan Ramadan!'"
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  },
+  "claims": [
+    {
+      "claim": "Frozen food is ready in 15 minutes",
+      "type": "factual",
+      "verified": false,
+      "evidence": "The output repeatedly claims '15 menit' preparation time, but this detail was not in the original prompt. It appears to be fabricated by the model."
+    },
+    {
+      "claim": "Product is free from harmful preservatives (tanpa pengawet berbahaya)",
+      "type": "factual",
+      "verified": false,
+      "evidence": "This claim appears in Instagram Slide 4 and Shopee description, but was not stated in the prompt. The model added this product claim without source data."
+    },
+    {
+      "claim": "Suitable for 4-5 family portions",
+      "type": "factual",
+      "verified": false,
+      "evidence": "Shopee description states 'Cocok untuk 4-5 porsi keluarga' but this was not in the prompt. Unverifiable claim added by the model."
+    }
+  ],
+  "user_notes_summary": null,
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "reason": "No assertion checks whether the output avoids fabricating product claims not present in the brief (e.g., '15 minutes prep time', 'no harmful preservatives', '4-5 portions'). The model invented several product facts. An assertion like 'Does not make specific product claims beyond what was provided in the brief' would catch this."
+      },
+      {
+        "assertion": "Shows distinct formatting or tone differences between at least 2 of the 3 platforms",
+        "reason": "This assertion is relatively easy to pass since even minimal structural differences (e.g., adding hashtags vs not) would satisfy it. Consider requiring platform-specific best practices such as character limits, emoji usage patterns, or Shopee-specific formatting conventions."
+      }
+    ],
+    "overall": "Assertions cover the basics well but miss content accuracy — the model fabricated multiple product claims (prep time, preservative-free, portion size) that no assertion catches. Adding a 'sticks to the brief' assertion would strengthen the eval."
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "expectations": [
+    {
+      "text": "Output is primarily written in Bahasa Indonesia",
+      "passed": true,
+      "evidence": "The entire output is written in Bahasa Indonesia — all headings, descriptions, copy, and notes use Indonesian language throughout (e.g., 'Undangan Nikah Sebagus Impianmu, Tanpa Drama Cetaknya', 'Semua yang kamu butuhkan untuk undangan digital yang elegan')."
+    },
+    {
+      "text": "Contains copy for all 4 requested deliverables (landing page hero, pricing packages, Instagram ad, WhatsApp template)",
+      "passed": true,
+      "evidence": "All four deliverables are present as clearly labeled sections: '1. Landing Page Hero Section' (3 variations), '2. Paket Pricing' (2 variations), '3. Instagram Ad Caption — Campaign \"Musim Nikah 2026\"' (3 variations), '4. WhatsApp Message Template — Untuk Wedding Organizer Partner' (3 variations)."
+    },
+    {
+      "text": "Mentions the brand name 'NikahYuk'",
+      "passed": true,
+      "evidence": "Brand name 'NikahYuk' appears throughout the output — in the title, hero section variasi 2 subheadline, pricing notes, all Instagram captions, all WhatsApp templates, and hashtags (#NikahYuk)."
+    },
+    {
+      "text": "Landing page hero section includes headline, subheadline, and CTA",
+      "passed": true,
+      "evidence": "All three hero variations explicitly label and include Headline, Subheadline, and CTA. For example, Variasi 1: Headline 'Undangan Nikah Sebagus Impianmu, Tanpa Drama Cetaknya', Subheadline starting with 'Buat undangan digital yang cantik dalam 15 menit...', CTA 'Buat Undangan Sekarang — Gratis Coba Template'."
+    },
+    {
+      "text": "Pricing section describes all 3 tiers (Basic, Premium, and one mid-tier) with distinct feature differentiation",
+      "passed": true,
+      "evidence": "Three tiers are described: Basic (Rp 99.000) with core features, Pro (Rp 249.000) adding musik, galeri 20 foto, guestbook digital, and filter tamu, and Premium (Rp 499.000) adding video, unlimited galeri, custom domain, fully customizable design, Google Maps, and multiple event support. Feature differentiation is clear and progressive."
+    },
+    {
+      "text": "Uses appropriate register for young couples 25-35 (not too formal, not too slang-heavy)",
+      "passed": true,
+      "evidence": "The register is semi-formal with casual touches appropriate for millennial/young professional audience. Uses 'kamu' (informal you), casual phrasing like 'nggak perlu repot', 'gas bikin undangannya sekarang', and 'stop ribet', while maintaining professional structure. Avoids heavy slang. The Ringkasan Pendekatan explicitly notes 'Semi-formal dengan sentuhan kasual'."
+    },
+    {
+      "text": "Mentions price points (99 ribu and/or 499 ribu or equivalent)",
+      "passed": true,
+      "evidence": "Both price points appear multiple times: 'Rp 99.000' in Basic pricing and referenced as '99 ribu' / '99rb' in Instagram captions and WhatsApp templates; 'Rp 499.000' in Premium pricing and referenced as 'Rp 499.000' in WhatsApp template variasi 1."
+    },
+    {
+      "text": "Instagram ad caption includes seasonal hook related to 'Musim Nikah 2026'",
+      "passed": true,
+      "evidence": "All three Instagram ad variations reference the seasonal hook: Variasi 1 opens with 'Musim nikah 2026 udah di depan mata', Variasi 2 includes 'Musim nikah 2026 udah deket. Yang mau nikah tahun ini, gas bikin undangannya sekarang!', Variasi 3 uses the hashtag #MusimNikah2026. The section title itself references the campaign name."
+    },
+    {
+      "text": "WhatsApp template is formatted appropriately for WO partners to forward (professional but warm)",
+      "passed": true,
+      "evidence": "All three WhatsApp templates use a warm, professional tone suitable for WO-to-client communication. They include personal greeting with placeholder '[Nama Client]', congratulatory opening ('Selamat ya atas rencana pernikahannya!'), recommendation framing (not hard selling), clear product info, and placeholder for link '[link NikahYuk]'. The notes confirm: 'Tone sengaja dibuat hangat dan helpful, bukan sales-y, karena konteksnya WO merekomendasikan ke client — relationship-based, bukan cold selling.'"
+    },
+    {
+      "text": "Translates technical features into emotional benefits (e.g., RSVP tracking becomes 'nggak perlu tanya satu-satu siapa yang dateng')",
+      "passed": true,
+      "evidence": "Multiple instances of feature-to-benefit translation: Hero Variasi 3 converts RSVP tracking to 'nggak perlu lagi nanya \"jadi dateng nggak?\" satu-satu'; Instagram Variasi 2 frames manual process as pain point 'ngetik satu-satu \"Hai kak, kami mau ngundang...\" di WhatsApp ke 300 tamu'; WhatsApp Variasi 1 translates the platform into 'Nggak perlu repot cetak, nggak perlu kirim satu-satu. Tamu tinggal klik, konfirmasi hadir, selesai.'; pricing compares value with 'Lebih murah dari cetak undangan'."
+    }
+  ],
+  "summary": {
+    "passed": 10,
+    "failed": 0,
+    "total": 10,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "output_chars": 8891,
+    "transcript_chars": 0
+  },
+  "timing": {
+    "total_tokens": 47636,
+    "duration_ms": 120351,
+    "total_duration_seconds": 120.4
+  },
+  "claims": [
+    {
+      "claim": "Copy uses PAS and AIDA frameworks",
+      "type": "quality",
+      "verified": true,
+      "evidence": "PAS (Problem-Agitate-Solution) is evident in Hero Variasi 1 and 3 which highlight pain points of physical invitations before presenting NikahYuk as solution. AIDA (Attention-Interest-Desire-Action) structure is visible in Hero Variasi 2 and Instagram captions which build from attention-grabbing hooks through feature interest to CTA."
+    },
+    {
+      "claim": "Provides multiple variations per deliverable for A/B testing",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Hero section has 3 variations, Pricing has 2 variations (narrative + table), Instagram ad has 3 variations, WhatsApp template has 3 variations. Each variation has distinct positioning noted in the catatan sections."
+    },
+    {
+      "claim": "Pro package at Rp 249.000 uses anchoring effect as psychological pricing strategy",
+      "type": "quality",
+      "verified": true,
+      "evidence": "The Catatan Pricing explicitly states the anchoring strategy and notes it as a recommendation if NikahYuk doesn't already have a mid-tier, showing intentional pricing psychology."
+    }
+  ],
+  "user_notes_summary": null,
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Uses appropriate register for young couples 25-35 (not too formal, not too slang-heavy)",
+        "reason": "This is inherently subjective and hard to fail — almost any casual Indonesian text would pass. Consider a more discriminating check, e.g., 'Uses kamu/lo rather than Anda or Bapak/Ibu as the primary pronoun' or 'Does not use purely English copy for any deliverable'."
+      },
+      {
+        "reason": "No assertion checks that the output provides strategic guidance or rationale (e.g., notes on when to use each variation, A/B testing suggestions). The output excels at this, but a weaker output that only produced raw copy without context would also pass all assertions."
+      }
+    ],
+    "overall": "Assertions cover the required deliverables and key content elements well. The main gap is that assertions test presence of content but not strategic depth — an output with bare-minimum copy for each section would pass all 10 assertions."
+  }
+}

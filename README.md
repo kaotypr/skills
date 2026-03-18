@@ -78,6 +78,23 @@ Tested across: empty vault setup with org system selection, messy vault reorgani
 
 ---
 
+### kao-copywriting-bahasa
+
+Skill untuk menulis copywriting dalam Bahasa Indonesia yang persuasif, culturally-aware, dan sesuai konteks platform digital Indonesia. Covers formula copywriting (AIDA, PAS, FAB, BAB, SLAP), register bahasa (formal/semi-formal/kasual), konteks budaya seasonal, dan panduan per platform (Instagram, TikTok, Shopee, WhatsApp, landing page).
+
+- **Version**: 1.0.0
+- **Skill**: [`skills/kao-copywriting-bahasa`](skills/kao-copywriting-bahasa)
+- **Evals**: [`workspaces/kao-copywriting-bahasa`](workspaces/kao-copywriting-bahasa) (4 scenarios, 2 iterations)
+
+| Metric | With Skill | Without Skill |
+|---|---|---|
+| Pass Rate | 100% (33/33) | 97% (32/33) |
+| Avg Tokens | 46,410 | 34,733 |
+
+Tested across: Instagram skincare caption (Gen Z), SaaS B2B landing page, Ramadan multi-platform campaign, digital wedding invitation SaaS multi-deliverable. The skill's primary value is producing multiple named variations with distinct copywriting frameworks, culturally-aware emotional framing, and consistent benefit-over-feature translation.
+
+---
+
 ## Project Structure
 
 ```

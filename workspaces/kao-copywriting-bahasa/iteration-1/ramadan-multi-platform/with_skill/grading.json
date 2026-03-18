@@ -1,0 +1,100 @@
+{
+  "expectations": [
+    {
+      "text": "Output is primarily written in Bahasa Indonesia",
+      "passed": true,
+      "evidence": "The entire output — headings, copy text, captions, and notes — is written in Bahasa Indonesia. All three platform sections and the strategic notes use Indonesian language throughout."
+    },
+    {
+      "text": "Contains copy for all 3 requested platforms (Instagram, WhatsApp, Shopee)",
+      "passed": true,
+      "evidence": "Three clearly labeled sections present: '## 1. Instagram Carousel Post' (3 variations with slides + captions), '## 2. WhatsApp Broadcast' (3 variations), '## 3. Banner Promo Shopee' (3 variations with headline/sub-headline/body/CTA/badge structure)."
+    },
+    {
+      "text": "References Ramadan theme (Ramadan/buka puasa/sahur/iftar/puasa)",
+      "passed": true,
+      "evidence": "'Ramadan' and 'buka puasa' appear extensively across all sections. Examples: 'Paket Ramadan MakanYuk', 'buka puasa keluarga', 'SPESIAL RAMADAN', 'Slot Ramadan Terbatas', 'bulan puasa'. The Ramadan theme is the central anchor of all copy."
+    },
+    {
+      "text": "Mentions the brand name 'MakanYuk'",
+      "passed": true,
+      "evidence": "'MakanYuk' appears in every platform section — in Instagram slides ('MakanYuk Paket Ramadan hadir buat Bunda'), WhatsApp messages ('MakanYuk punya solusinya'), and Shopee banners ('PAKET RAMADAN MakanYuk'). Also present in the summary heading and strategic notes."
+    },
+    {
+      "text": "Includes family/keluarga emotional appeal appropriate for the target audience",
+      "passed": true,
+      "evidence": "Strong family emotional appeals throughout: 'sekeluarga buka puasa dengan meja PENUH', 'momen kekeluargaan', 'keluarga kecil kita', 'rendang Mama, opor Nenek' (nostalgia), 'satu-satunya waktu keluarga duduk bareng di meja makan'. The sapaan 'Bunda' targets mothers specifically. WhatsApp Variasi 3 uses childhood family nostalgia as the core emotional hook."
+    },
+    {
+      "text": "Shows distinct formatting or tone differences between at least 2 of the 3 platforms",
+      "passed": true,
+      "evidence": "Clear platform-specific differences: Instagram uses carousel slide format with visual hooks, hashtags, and 'Link di bio' CTA. WhatsApp uses personal greeting 'Assalamu'alaikum Bunda', conversational tone, and reply-based CTA ('Balas PESAN'). Shopee uses structured e-commerce format (headline/sub-headline/body/CTA/badge) with price-forward, hard-sell tone. The notes section explicitly discusses these differences in the recommendation table."
+    },
+    {
+      "text": "Mentions the price (150 ribu or 150.000 or 150rb or equivalent)",
+      "passed": true,
+      "evidence": "'Rp150.000' appears in every platform section multiple times. Also broken down as 'Rp30.000/menu' for per-unit framing. Examples: 'Cuma Rp150.000' (IG Slide 5), 'Rp150.000' (WA Variasi 1), 'Rp150.000 = 5 Menu Buka Puasa!' (Shopee Variasi 3)."
+    },
+    {
+      "text": "Includes a CTA for each platform",
+      "passed": true,
+      "evidence": "Platform-appropriate CTAs present: Instagram — 'Order sekarang sebelum kehabisan / Link di bio', 'Pesan sekarang sebelum slot Ramadan habis'. WhatsApp — 'Balas PESAN atau klik link ini', 'Balas MAU atau klik: [link order]'. Shopee — 'Pesan Sekarang — Stok Terbatas!', 'Order Sekarang — Slot Ramadan Terbatas!', 'Beli Sekarang — Gratis Ongkir!'."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {},
+  "timing": {},
+  "claims": [
+    {
+      "claim": "Copy uses PAS (Problem-Agitation-Solution) formula for Instagram Variasi 1",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Slide 2 presents the problem (no time to cook), Slide 3 agitates (Ramadan moments being missed), Slide 4 offers the solution (MakanYuk Paket Ramadan). Structure clearly follows PAS."
+    },
+    {
+      "claim": "Copy uses AIDA formula for Instagram Variasi 2",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Slide 1 grabs Attention with relatable POV scenario, Slide 2 builds Interest with humor, Slide 3 creates Desire with vivid imagery of a full table, Slides 4-5 drive Action with price and CTA."
+    },
+    {
+      "claim": "Copy uses SLAP formula for Instagram Variasi 3",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Slide 1 is labeled 'Stop' with attention-grabbing headline, Slide 2 is 'Look' with product details, Slide 3 is 'Act + Purchase' with price and CTA. Follows the SLAP structure."
+    },
+    {
+      "claim": "Rp30.000/menu price breakdown is highlighted across all platforms",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Per-menu price framing appears in IG ('Rp30.000/menu'), WA ('Cuma Rp30.000/menu'), and Shopee ('Cuma Rp30.000/menu'). Present in all three platforms as claimed."
+    },
+    {
+      "claim": "Register is semi-formal appropriate for 30-45 year old mothers",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Uses 'Bunda' as primary address, avoids Gen Z slang while remaining warm and conversational. Includes respectful Islamic greetings in WA ('Assalamu'alaikum', 'Jazakillah khairan'). Tone is neither too casual nor too formal."
+    }
+  ],
+  "user_notes_summary": null,
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Shows distinct formatting or tone differences between at least 2 of the 3 platforms",
+        "reason": "This assertion would pass even if only superficial formatting differences existed (e.g., adding hashtags to one version). Consider asserting specific platform conventions: IG must have hashtags and carousel slide structure, WA must have a reply-based CTA keyword, Shopee must have a structured product description format."
+      },
+      {
+        "reason": "No assertion checks that the output addresses the specific target audience (ibu-ibu 30-45 tahun). The copy could theoretically target any demographic and still pass all assertions. Consider adding an assertion like 'Uses language/tone/address appropriate for mothers (e.g., Bunda, Ibu, Moms)' to verify audience targeting."
+      },
+      {
+        "reason": "No assertion checks whether the specific products (rendang, opor, soto) from the brief are mentioned in the copy. These were key requirements in the prompt and the output does include them, but a wrong output omitting them would still pass all current assertions."
+      }
+    ],
+    "overall": "Assertions cover the essential requirements well but lean toward presence-checking rather than quality verification. The biggest gap is the absence of assertions for product mention (rendang/opor/soto) and target audience targeting, both of which were explicit in the prompt."
+  }
+}

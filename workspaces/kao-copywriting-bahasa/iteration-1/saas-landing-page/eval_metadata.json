@@ -1,0 +1,14 @@
+{
+  "eval_id": 2,
+  "eval_name": "saas-landing-page",
+  "prompt": "Saya butuh copy untuk landing page produk SaaS bernama 'FinTrack' — platform manajemen keuangan untuk UKM Indonesia. Fitur utamanya: rekonsiliasi bank otomatis, laporan pajak sesuai regulasi Indonesia, dan dashboard real-time. Target audiens: pemilik UKM dan finance manager. Tolong buatkan headline, subheadline, 3 benefit sections, dan CTA.",
+  "assertions": [
+    "Output is primarily written in Bahasa Indonesia",
+    "Contains clearly labeled structured sections (headline, subheadline, benefit sections, CTA)",
+    "Mentions the brand name 'FinTrack'",
+    "Translates at least one technical feature into a concrete business benefit (e.g., 'rekonsiliasi otomatis' becomes time saved or error reduction)",
+    "Uses semi-formal or formal register appropriate for B2B audience",
+    "Contains at least 3 distinct benefit sections as requested",
+    "Includes a specific, actionable CTA (not just generic 'hubungi kami')"
+  ]
+}
