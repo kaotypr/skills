@@ -1,0 +1,14 @@
+{
+  "eval_id": 4,
+  "eval_name": "welcome-email",
+  "prompt": "Write a welcome email for 'InviteJoy' — a digital invitation platform where users can create beautiful online invitations for weddings, birthdays, baby showers, and other celebrations. The platform offers free templates and premium templates. Users sign up, pick a template, customize it, and share a link with guests. Target audience is anyone planning an event — primarily women 25-45, tech-comfortable but not technical, who want something prettier than a WhatsApp message but easier than printed invitations. The welcome email should make them excited to create their first invitation and guide them to browse templates. Tone: warm, celebratory, helpful. Global audience.",
+  "assertions": [
+    {"type": "content_check", "text": "Has subject line and preview text", "key": "has_subject_line"},
+    {"type": "content_check", "text": "Creates a warm, celebratory welcome feeling", "key": "celebratory_tone"},
+    {"type": "content_check", "text": "Guides user to browse templates or create first invitation as primary CTA", "key": "clear_cta_to_templates"},
+    {"type": "content_check", "text": "Mentions both free and premium template options", "key": "mentions_free_and_premium"},
+    {"type": "content_check", "text": "Benefits-driven (not just feature listing)", "key": "benefits_over_features"},
+    {"type": "content_check", "text": "Global audience safe — no region-specific idioms or cultural assumptions", "key": "global_audience_safe"},
+    {"type": "content_check", "text": "Provides multiple variations", "key": "multiple_variations"}
+  ]
+}

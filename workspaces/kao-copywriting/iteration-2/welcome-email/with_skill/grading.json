@@ -1,0 +1,14 @@
+{
+  "eval_id": 4,
+  "eval_name": "welcome-email",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Has subject line and preview text", "passed": true, "evidence": "All 3 variations have subject line + preview text pairs. E.g., 'Your first invitation is waiting' / 'Pick a template, make it yours, and share it in minutes.'"},
+    {"text": "Creates a warm, celebratory welcome feeling", "passed": true, "evidence": "All variations are warm and celebratory. V2 opens with 'You are planning something worth celebrating.' V1: 'you just made party planning a whole lot easier.'"},
+    {"text": "Guides user to browse templates or create first invitation as primary CTA", "passed": true, "evidence": "CTAs: '[Browse Templates]' (V1, V3), '[Start Creating]' (V2). Low-commitment, activation-focused."},
+    {"text": "Mentions both free and premium template options", "passed": true, "evidence": "V1: 'Start with our free templates, or explore premium designs for something extra.' V3: 'Free templates for every celebration / Premium designs when you want something extra special.'"},
+    {"text": "Benefits-driven (not just feature listing)", "passed": true, "evidence": "Consistently benefit-driven: 'looks like you spent hours on it. (You will not.)', 'No printing. No postage. No design skills needed.'"},
+    {"text": "Global audience safe — no region-specific idioms or cultural assumptions", "passed": true, "evidence": "Notes explicitly state: 'All three variations use Global English: short sentences, active voice, no idioms, no culture-specific references.'"},
+    {"text": "Provides multiple variations", "passed": true, "evidence": "3 variations: Celebratory+AIDA, Personal+BAB, Warm/Direct+AIDA with Social Proof. Each with different strategic angle and A/B testing notes."}
+  ]
+}

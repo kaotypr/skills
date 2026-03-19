@@ -1,0 +1,13 @@
+{
+  "eval_id": 3,
+  "eval_name": "landing-page-b2b-analytics",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Includes hero section with headline, subheadline, and CTA", "passed": true, "evidence": "All 3 variations have hero section with headline, subheadline, and CTA. Example: 'Your ROAS Looks Great. Your Margins Tell a Different Story.' + subheadline + 'See Your Profit Map — Book a 15-Minute Demo'."},
+    {"text": "Has two distinct content blocks below the hero", "passed": true, "evidence": "Each variation has 2 content blocks with clear section headings: V1 ('Revenue Attribution Is Lying to You' + 'One Dashboard. Every Channel. Actual Profit.'), V2 ('ROAS Is a Revenue Metric...' + 'Built for the Stack You Already Use'), V3 ('You Have the Data...' + 'What Changes When You See Profit...')."},
+    {"text": "Headline leads with benefit/outcome, not just the product name", "passed": true, "evidence": "All 3 headlines lead with benefit: 'Your ROAS Looks Great. Your Margins Tell a Different Story.' / 'Finally Know Which Marketing Channels Actually Make You Money' / 'Stop Scaling the Campaigns That Are Losing You Money'. MetricShift name appears only in subheadlines."},
+    {"text": "Includes social proof elements or placeholders", "passed": true, "evidence": "Notes section explicitly recommends adding customer logos, named CMO testimonials, and specific metrics. V2 includes marketing team reference. Detailed guidance on where and how to add social proof."},
+    {"text": "Uses specific data or numbers rather than vague claims", "passed": true, "evidence": "Multiple specific claims: 'under 10 minutes' setup, 'profit contribution per channel, per campaign, per SKU', '5x ROAS' example, '30% return rates' scenario. Concrete examples of what the dashboard shows."},
+    {"text": "Authoritative B2B tone without corporate jargon", "passed": true, "evidence": "Confident, peer-to-peer B2B tone. Uses industry terms (ROAS, COGS, contribution margin) that the CMO audience understands, without generic buzzwords. No 'leverage', 'synergy', or 'best-in-class'."}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "instagram-skincare-ad",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Includes both feed ad and story ad copy", "passed": true, "evidence": "3 feed ad variations and 3 story ad variations provided, with clear format distinction."},
+    {"text": "Feed ad opens with a strong first-line hook", "passed": true, "evidence": "Strong hooks: 'You've seen the claims. \"Glass skin in 3 days.\" \"Erases 10 years overnight.\"' / 'Most serums shout. This one works.' / 'It won't make you look 22 again.' All scroll-stopping for the skeptic audience."},
+    {"text": "Copy focuses on skin benefits, not just ingredient specs", "passed": true, "evidence": "Balances both: lists ingredients for credibility but frames them as benefits ('neutralizes free radical damage, evens out dark spots over weeks, strengthens your skin barrier'). Benefits lead, ingredients support."},
+    {"text": "No region-specific slang or idioms (global audience safe)", "passed": true, "evidence": "Explicitly noted as using Global English. No idioms, no culture-specific references. Notes section even suggests localized variants for East Asian markets."},
+    {"text": "Includes a clear call to action", "passed": true, "evidence": "Clear CTAs with price: 'Shop now at glowtheory.com', '$38 → glowtheory.com', 'Swipe up to shop'. Price included for transparency."},
+    {"text": "Provides 2+ copy variations", "passed": true, "evidence": "6 total variations: 3 feed (Skeptic's Choice, The Quiet Serum, What It Won't Do) + 3 story (Swipe-Through Honesty, The Anti-Ad, Ingredient-First). Each with named strategic approach."}
+  ]
+}

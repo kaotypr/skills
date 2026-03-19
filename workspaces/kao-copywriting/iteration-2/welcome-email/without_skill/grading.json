@@ -1,0 +1,14 @@
+{
+  "eval_id": 4,
+  "eval_name": "welcome-email",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "Has subject line and preview text", "passed": true, "evidence": "Subject: 'You're in! Let's make your first invitation beautiful'. Preview text: 'Your celebration deserves something special — start creating in minutes.'"},
+    {"text": "Creates a warm, celebratory welcome feeling", "passed": true, "evidence": "Warm tone throughout: 'We're so glad you're here', 'every celebration — big or small — deserves a beautiful start'."},
+    {"text": "Guides user to browse templates or create first invitation as primary CTA", "passed": true, "evidence": "Primary CTA: '[Browse Templates →]'. Secondary CTA at bottom: '[Create My First Invitation →]'."},
+    {"text": "Mentions both free and premium template options", "passed": true, "evidence": "Explicitly mentions: 'Free templates are always free — no catches, no watermarks.' and 'Premium templates unlock extra design options.'"},
+    {"text": "Benefits-driven (not just feature listing)", "passed": true, "evidence": "Mostly benefit-driven with steps framed as outcomes. Some feature listing in the 'A few things to know' section."},
+    {"text": "Global audience safe — no region-specific idioms or cultural assumptions", "passed": true, "evidence": "No idioms or culture-specific references. Simple, clear language throughout."},
+    {"text": "Provides multiple variations", "passed": false, "evidence": "Only one version of the welcome email provided. No variations or alternative approaches."}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "eval_id": 1,
+  "eval_name": "email-welcome-sequence",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "Contains three distinct emails", "passed": true, "evidence": "3 distinct emails: Welcome & Quick Win, Feature Spotlight (Timelines), Full Picture (Automated Reports)."},
+    {"text": "Each email has a subject line", "passed": true, "evidence": "Each email has a subject line. No preview text provided (unlike with_skill output)."},
+    {"text": "Copy emphasizes benefits over raw features", "passed": true, "evidence": "Does translate features to benefits reasonably well: 'clear picture of what everyone is working on — without pulling anyone into a call', 'See milestones, blockers, and progress at the project level.'"},
+    {"text": "Each email has a clear, specific CTA (not generic 'learn more')", "passed": true, "evidence": "CTAs are present and somewhat specific: 'Set Up Your First Standup', 'Build Your First Timeline', 'Turn On Automated Reports'. Email 3 has a secondary CTA 'Book an Onboarding Call' which slightly dilutes focus."},
+    {"text": "Tone is conversational and professional, not stiff corporate", "passed": true, "evidence": "Conversational with contractions and direct address. Slightly more instructional/tutorial-like than peer-to-peer, but not stiff."},
+    {"text": "Emails follow logical progression (welcome → value → conversion)", "passed": true, "evidence": "Follows immediate → Day 2 → Day 5 progression. Moves from setup to feature spotlight to full value pitch + onboarding call offer."},
+    {"text": "Provides multiple variations or strategic approaches", "passed": false, "evidence": "Only one version of the sequence provided. No variations, no alternative approaches, no A/B testing suggestions."}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "eval_id": 6,
+  "eval_name": "unfinished-payment",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Has subject line and preview text", "passed": true, "evidence": "All 3 variations have multiple subject line options + preview text. V1 offers 3 subject line choices. Excellent A/B testing readiness."},
+    {"text": "Reassures the user their design/progress is saved", "passed": true, "evidence": "All variations lead with reassurance. V1: 'your design is saved. Every detail you chose — the layout, the colors, the wording — it's all still there.' V3: 'we saved everything for you.'"},
+    {"text": "Creates soft urgency without being aggressive or guilt-tripping", "passed": true, "evidence": "V1: 'Saved designs are held for a limited time.' V2: 'Beautiful but unseen.' Soft, not pushy. V3 uses social proof: 'I wish I'd sent it sooner.' Ethical urgency."},
+    {"text": "Includes clear CTA to complete payment/checkout", "passed": true, "evidence": "All CTAs include price for transparency: '[Complete My Invitation — $9.99]', '[Send My Invitation — $9.99]', '[Complete My Purchase — $9.99]'."},
+    {"text": "Mentions the $9.99 price or references the premium template they chose", "passed": true, "evidence": "All 3 variations include $9.99 in both body text and CTA buttons."},
+    {"text": "Tone is helpful and understanding, not pushy", "passed": true, "evidence": "V1: 'No worries at all. Life gets busy.' V2: 'We saved your premium template and every customization you made. Nothing was lost.' V3: 'Then something came up. We get it — that's life.'"},
+    {"text": "Provides multiple variations", "passed": true, "evidence": "3 variations: PAS (empathetic nudge), BAB (warm contrast), PPPP (storytelling). Each with 3 subject line options, A/B testing recommendations, timing guidance, and cultural notes."}
+  ]
+}

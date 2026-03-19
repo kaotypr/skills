@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "instagram-skincare-ad",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "Includes both feed ad and story ad copy", "passed": true, "evidence": "Includes both a feed ad (with primary text, headline, description, CTA button) and a story ad (3-frame sequence)."},
+    {"text": "Feed ad opens with a strong first-line hook", "passed": true, "evidence": "'You don't need another serum that promises miracles overnight.' — good hook that speaks to the skeptic audience."},
+    {"text": "Copy focuses on skin benefits, not just ingredient specs", "passed": true, "evidence": "Mentions ingredients but frames around 'cleaner skin science'. Could be slightly more benefit-specific (doesn't mention specific outcomes like 'fades dark spots' or 'evens skin tone')."},
+    {"text": "No region-specific slang or idioms (global audience safe)", "passed": true, "evidence": "Clean, simple English throughout. No idioms or region-specific language."},
+    {"text": "Includes a clear call to action", "passed": true, "evidence": "CTA Button: 'Shop Now', 'Swipe Up to Shop'. Clear but generic."},
+    {"text": "Provides 2+ copy variations", "passed": false, "evidence": "Only 1 feed ad and 1 story ad provided. No variations or alternative approaches."}
+  ]
+}

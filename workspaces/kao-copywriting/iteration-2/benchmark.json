@@ -1,0 +1,113 @@
+{
+  "metadata": {
+    "skill_name": "kao-copywriting",
+    "skill_path": "skills/kao-copywriting",
+    "executor_model": "claude-opus-4-6",
+    "analyzer_model": "claude-opus-4-6",
+    "timestamp": "2026-03-19T04:30:00Z",
+    "evals_run": ["welcome-email", "upgrade-to-premium", "unfinished-payment", "unpublished-reminder"],
+    "runs_per_configuration": 4,
+    "scenario": "InviteJoy digital invitation platform — 4-email lifecycle sequence"
+  },
+  "runs": [
+    {
+      "eval_name": "welcome-email",
+      "configuration": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 7,
+      "total": 7,
+      "time_seconds": 69.5,
+      "tokens": 44820
+    },
+    {
+      "eval_name": "welcome-email",
+      "configuration": "without_skill",
+      "pass_rate": 0.857,
+      "passed": 6,
+      "total": 7,
+      "time_seconds": 34.5,
+      "tokens": 34568
+    },
+    {
+      "eval_name": "upgrade-to-premium",
+      "configuration": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 7,
+      "total": 7,
+      "time_seconds": 84.9,
+      "tokens": 44991
+    },
+    {
+      "eval_name": "upgrade-to-premium",
+      "configuration": "without_skill",
+      "pass_rate": 0.857,
+      "passed": 6,
+      "total": 7,
+      "time_seconds": 25.7,
+      "tokens": 34268
+    },
+    {
+      "eval_name": "unfinished-payment",
+      "configuration": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 7,
+      "total": 7,
+      "time_seconds": 76.4,
+      "tokens": 44919
+    },
+    {
+      "eval_name": "unfinished-payment",
+      "configuration": "without_skill",
+      "pass_rate": 0.857,
+      "passed": 6,
+      "total": 7,
+      "time_seconds": 37.0,
+      "tokens": 35109
+    },
+    {
+      "eval_name": "unpublished-reminder",
+      "configuration": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 7,
+      "total": 7,
+      "time_seconds": 71.3,
+      "tokens": 44817
+    },
+    {
+      "eval_name": "unpublished-reminder",
+      "configuration": "without_skill",
+      "pass_rate": 0.857,
+      "passed": 6,
+      "total": 7,
+      "time_seconds": 34.2,
+      "tokens": 34994
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": "100.0%",
+      "mean_pass_rate": 1.0,
+      "mean_time_seconds": 75.5,
+      "mean_tokens": 44887
+    },
+    "without_skill": {
+      "pass_rate": "85.7%",
+      "mean_pass_rate": 0.857,
+      "mean_time_seconds": 32.9,
+      "mean_tokens": 34735
+    },
+    "delta": {
+      "pass_rate": "+14.3%",
+      "time_seconds": "+42.6",
+      "tokens": "+10152"
+    }
+  },
+  "notes": [
+    "All 4 without-skill outputs failed the 'multiple_variations' assertion — consistent with iteration-1 findings. Without the skill, Claude produces a single competent email version.",
+    "All 4 with-skill outputs passed all 7 assertions, providing 3 variations each with named frameworks (BAB, PAS, PPPP, AIDA, ACCA), A/B testing recommendations, and strategic notes.",
+    "The with-skill outputs additionally provided: multiple subject line options per variation, cultural/global audience notes, timing recommendations, and personalization suggestions — none of which appeared in without-skill outputs.",
+    "Qualitative observation: with-skill outputs had stronger benefit framing (e.g., 'RSVP tracking — no spreadsheets, no guessing' vs 'RSVP tracking — Know exactly who's coming') and more deliberate persuasion psychology (loss aversion, reciprocity, specificity).",
+    "The 'multiple_variations' assertion continues to be the primary differentiator, consistently failing for without-skill and passing for with-skill across both iterations.",
+    "Token usage ~29% higher for with-skill runs due to reading skill+reference files and producing 3x more content. Time ~2.3x longer — expected tradeoff."
+  ]
+}
