@@ -1,0 +1,14 @@
+{
+  "eval_id": 7,
+  "eval_name": "unpublished-reminder",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "Has subject line and preview text", "passed": true, "evidence": "Subject: 'Your invitation is ready — time to hit publish!'. Preview: 'Your beautiful invitation is just one click away from reaching your guests.'"},
+    {"text": "Acknowledges that event planning is busy / empathizes with delay", "passed": true, "evidence": "'We know how it goes. Between picking the perfect date, sorting out the guest list, and juggling everything else life throws your way, it's easy for one small step to slip through the cracks.'"},
+    {"text": "Reminds them their invitation is ready and waiting", "passed": true, "evidence": "'your invitation is already designed and ready to go' and 'A week ago, you created something lovely on InviteJoy.'"},
+    {"text": "Makes publishing feel easy (one click, simple process)", "passed": true, "evidence": "'All that's left? One click.' and 'you'll get a shareable link you can send to your guests through text, email, WhatsApp, or wherever works best.'"},
+    {"text": "Clear CTA to publish the invitation", "passed": true, "evidence": "Two CTAs: '[Publish My Invitation]' and '[Go to My Draft]'."},
+    {"text": "Warm and supportive tone, not nagging", "passed": true, "evidence": "'So whenever you're ready, we're here.' P.S. addresses edits-before-publish objection. Warm and supportive throughout."},
+    {"text": "Provides multiple variations", "passed": false, "evidence": "Only one version provided. No alternative approaches or A/B testing suggestions."}
+  ]
+}

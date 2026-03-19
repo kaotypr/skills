@@ -1,0 +1,13 @@
+{
+  "eval_id": 3,
+  "eval_name": "landing-page-b2b-analytics",
+  "prompt": "Write the hero section and first two content blocks for a landing page for 'MetricShift' — a B2B analytics platform that helps e-commerce companies understand which marketing channels actually drive profit (not just revenue). Target: CMOs and marketing directors at $10M-$100M e-commerce companies. Key differentiator: integrates with Shopify, GA4, and Meta Ads to show true profit contribution per channel, not just ROAS.",
+  "assertions": [
+    {"type": "content_check", "text": "Includes hero section with headline, subheadline, and CTA", "key": "has_hero_section"},
+    {"type": "content_check", "text": "Has two distinct content blocks below the hero", "key": "has_two_content_blocks"},
+    {"type": "content_check", "text": "Headline leads with benefit/outcome, not just the product name", "key": "benefit_first_headline"},
+    {"type": "content_check", "text": "Includes social proof elements or placeholders", "key": "social_proof"},
+    {"type": "content_check", "text": "Uses specific data or numbers rather than vague claims", "key": "specific_claims"},
+    {"type": "content_check", "text": "Authoritative B2B tone without corporate jargon", "key": "b2b_professional_tone"}
+  ]
+}

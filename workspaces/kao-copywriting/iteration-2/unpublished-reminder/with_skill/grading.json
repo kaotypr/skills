@@ -1,0 +1,14 @@
+{
+  "eval_id": 7,
+  "eval_name": "unpublished-reminder",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Has subject line and preview text", "passed": true, "evidence": "All 3 variations have subject + preview. V1: 'Your invitation is ready — your guests are going to love it' / 'One click and the celebration begins.'"},
+    {"text": "Acknowledges that event planning is busy / empathizes with delay", "passed": true, "evidence": "V2: 'Planning a celebration means juggling a lot of details. Venue, food, timing, guest list — we get it. Some things end up on the back burner.' V1: 'We know event planning can feel like a long to-do list.'"},
+    {"text": "Reminds them their invitation is ready and waiting", "passed": true, "evidence": "All variations reference the week-old draft. V1: 'A week ago, you created something beautiful on InviteJoy. Your invitation is designed, saved, and ready to go.'"},
+    {"text": "Makes publishing feel easy (one click, simple process)", "passed": true, "evidence": "V2: 'All that's left is one click.' V3: 'One click to publish. One link to share. That's the entire process.' Strongly emphasizes simplicity."},
+    {"text": "Clear CTA to publish the invitation", "passed": true, "evidence": "Consistent specific CTAs: '[Publish Your Invitation Now]', '[Publish and Share Your Invitation]', '[Publish Your Invitation]'. All action-specific."},
+    {"text": "Warm and supportive tone, not nagging", "passed": true, "evidence": "V1: 'this step? This one is the fun part.' V3: 'Cheering you on.' All P.S. lines address objections gently (editing, no rush). Never guilt-inducing."},
+    {"text": "Provides multiple variations", "passed": true, "evidence": "3 variations: BAB (warm encouragement), PAS (supportive), PPPP (excitement-forward). Each with strategic notes, A/B testing, and global audience fit notes."}
+  ]
+}

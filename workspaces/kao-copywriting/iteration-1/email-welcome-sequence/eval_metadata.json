@@ -1,0 +1,14 @@
+{
+  "eval_id": 1,
+  "eval_name": "email-welcome-sequence",
+  "prompt": "Write a 3-email welcome sequence for a project management SaaS tool called 'FlowBoard' that targets remote teams of 5-20 people. The tool's main features are async standup updates, visual project timelines, and automated progress reports. The audience is team leads and ops managers who are frustrated with too many meetings and scattered communication.",
+  "assertions": [
+    {"type": "content_check", "text": "Contains three distinct emails", "key": "has_three_emails"},
+    {"type": "content_check", "text": "Each email has a subject line", "key": "has_subject_lines"},
+    {"type": "content_check", "text": "Copy emphasizes benefits over raw features", "key": "benefits_over_features"},
+    {"type": "content_check", "text": "Each email has a clear, specific CTA (not generic 'learn more')", "key": "has_clear_cta"},
+    {"type": "content_check", "text": "Tone is conversational and professional, not stiff corporate", "key": "conversational_tone"},
+    {"type": "content_check", "text": "Emails follow logical progression (welcome → value → conversion)", "key": "logical_sequence"},
+    {"type": "content_check", "text": "Provides multiple variations or strategic approaches", "key": "multiple_variations"}
+  ]
+}

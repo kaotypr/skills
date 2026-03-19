@@ -1,0 +1,13 @@
+{
+  "eval_id": 3,
+  "eval_name": "landing-page-b2b-analytics",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "Includes hero section with headline, subheadline, and CTA", "passed": true, "evidence": "Has headline ('Stop Optimizing for Revenue. Start Optimizing for Profit.'), subheadline, CTA button ('See Your True Channel Profitability'), and supporting text."},
+    {"text": "Has two distinct content blocks below the hero", "passed": true, "evidence": "Two blocks: 'ROAS Is Lying to You' (problem section) and 'From Connected Data to Confident Decisions in Three Steps' (how it works)."},
+    {"text": "Headline leads with benefit/outcome, not just the product name", "passed": true, "evidence": "'Stop Optimizing for Revenue. Start Optimizing for Profit.' — clear benefit-first headline using antithesis."},
+    {"text": "Includes social proof elements or placeholders", "passed": true, "evidence": "Includes a proof point: 'E-commerce brands using MetricShift reallocate an average of 30% of their ad budget within the first 60 days.' Qualifying text: 'Built for marketing leaders at e-commerce companies doing $10M-$100M in annual revenue.'"},
+    {"text": "Uses specific data or numbers rather than vague claims", "passed": true, "evidence": "'under 10 minutes' setup, '30% of ad budget within first 60 days', '$10M-$100M in annual revenue'. Good specificity."},
+    {"text": "Authoritative B2B tone without corporate jargon", "passed": true, "evidence": "Professional, direct tone. Uses relevant industry terms (ROAS, COGS, contribution margin) without corporate buzzwords. Clean and confident."}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "eval_id": 6,
+  "eval_name": "unfinished-payment",
+  "prompt": "Write an abandoned cart / unfinished payment email for 'InviteJoy' — a digital invitation platform. The user selected a premium template ($9.99), started the checkout process, but didn't complete payment. Their invitation is saved but not yet live. The email should gently remind them to complete their purchase, reassure them their design is saved, and create soft urgency without being aggressive. Tone: helpful, understanding, gently urgent. Target: global audience, primarily women 25-45.",
+  "assertions": [
+    {"type": "content_check", "text": "Has subject line and preview text", "key": "has_subject_line"},
+    {"type": "content_check", "text": "Reassures the user their design/progress is saved", "key": "design_saved_reassurance"},
+    {"type": "content_check", "text": "Creates soft urgency without being aggressive or guilt-tripping", "key": "soft_urgency"},
+    {"type": "content_check", "text": "Includes clear CTA to complete payment/checkout", "key": "complete_payment_cta"},
+    {"type": "content_check", "text": "Mentions the $9.99 price or references the premium template they chose", "key": "references_their_selection"},
+    {"type": "content_check", "text": "Tone is helpful and understanding, not pushy", "key": "helpful_tone"},
+    {"type": "content_check", "text": "Provides multiple variations", "key": "multiple_variations"}
+  ]
+}

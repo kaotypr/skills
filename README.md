@@ -95,6 +95,24 @@ Tested across: Instagram skincare caption (Gen Z), SaaS B2B landing page, Ramada
 
 ---
 
+### kao-copywriting
+
+Skill for writing high-quality, persuasive English copywriting for global and international audiences. Covers copywriting frameworks (AIDA, PAS, BAB, ACCA, SLAP), persuasion psychology, global English guidelines, platform-specific guidance (email, landing page, social ads, e-commerce), voice/tone calibration, and literary devices.
+
+- **Version**: 1.0.0
+- **Skill**: [`skills/kao-copywriting`](skills/kao-copywriting)
+- **Evals**: [`workspaces/kao-copywriting`](workspaces/kao-copywriting) (7 scenarios, 2 iterations)
+
+| Metric | With Skill | Without Skill |
+|---|---|---|
+| Pass Rate (iter-1) | 100% (19/19) | 89.5% (17/19) |
+| Pass Rate (iter-2) | 100% (28/28) | 85.7% (24/28) |
+| Avg Tokens | ~45,000 | ~34,600 |
+
+Tested across: SaaS email welcome sequence (FlowBoard), Instagram skincare ad copy (Glow Theory), B2B landing page (MetricShift), and a 4-email lifecycle sequence for a digital invitation platform (InviteJoy — welcome, upgrade to premium, abandoned cart, 7-day unpublished reminder). The skill's primary value is producing multiple named variations with distinct copywriting frameworks, A/B testing recommendations, global audience considerations, and strategic notes per variation.
+
+---
+
 ## Project Structure
 
 ```

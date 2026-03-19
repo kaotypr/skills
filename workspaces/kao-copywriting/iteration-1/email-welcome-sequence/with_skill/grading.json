@@ -1,0 +1,14 @@
+{
+  "eval_id": 1,
+  "eval_name": "email-welcome-sequence",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Contains three distinct emails", "passed": true, "evidence": "Each of the 3 variations contains 3 distinct emails (Day 0, Day 2, Day 5) — 9 emails total."},
+    {"text": "Each email has a subject line", "passed": true, "evidence": "Every email has both a subject line and preview text (e.g., 'Your Monday just got 3 meetings shorter', '4.3 hours/week — that's what meetings cost your team')."},
+    {"text": "Copy emphasizes benefits over raw features", "passed": true, "evidence": "Consistently translates features into benefits: 'see who's working on what, what's blocked, and what ships next' instead of 'Gantt chart view'; 'FlowBoard builds your weekly summary for you' instead of 'automated reporting feature'."},
+    {"text": "Each email has a clear, specific CTA (not generic 'learn more')", "passed": true, "evidence": "Specific CTAs: 'Invite your team now', 'Set up your first project', 'Upgrade your team's plan', 'Create your first async standup', 'Keep FlowBoard — upgrade now', 'See plans for your team size'."},
+    {"text": "Tone is conversational and professional, not stiff corporate", "passed": true, "evidence": "Uses contractions, direct address, casual phrasing ('Quick question:', 'That's not a small thing'), P.S. lines, and 'A real person reads every message.' Reads like a colleague, not a marketing department."},
+    {"text": "Emails follow logical progression (welcome → value → conversion)", "passed": true, "evidence": "All 3 variations follow Day 0 (welcome/pain validation) → Day 2 (demonstrate value/first win) → Day 5 (conversion with social proof or loss aversion). Clear strategic arc."},
+    {"text": "Provides multiple variations or strategic approaches", "passed": true, "evidence": "3 distinct variations: Empathy-First (PAS+BAB+AIDA), Data-Driven (PAS+ACCA+Loss Aversion), Storytelling (BAB+PPPP+Reciprocity). Each explained with recommended audience segment and A/B testing suggestions."}
+  ]
+}

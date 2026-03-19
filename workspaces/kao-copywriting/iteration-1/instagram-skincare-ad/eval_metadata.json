@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "instagram-skincare-ad",
+  "prompt": "I need Instagram ad copy for a skincare brand called 'Glow Theory' launching a vitamin C serum globally. Target audience is women 25-40 who care about clean beauty and are skeptical of over-hyped products. Price point is $38. Give me copy for both a feed ad and a story ad.",
+  "assertions": [
+    {"type": "content_check", "text": "Includes both feed ad and story ad copy", "key": "has_feed_and_story"},
+    {"type": "content_check", "text": "Feed ad opens with a strong first-line hook", "key": "scroll_stopping_hook"},
+    {"type": "content_check", "text": "Copy focuses on skin benefits, not just ingredient specs", "key": "benefit_driven"},
+    {"type": "content_check", "text": "No region-specific slang or idioms (global audience safe)", "key": "global_audience_safe"},
+    {"type": "content_check", "text": "Includes a clear call to action", "key": "has_cta"},
+    {"type": "content_check", "text": "Provides 2+ copy variations", "key": "multiple_variations"}
+  ]
+}

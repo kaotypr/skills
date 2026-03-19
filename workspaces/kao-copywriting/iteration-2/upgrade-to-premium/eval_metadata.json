@@ -1,0 +1,14 @@
+{
+  "eval_id": 5,
+  "eval_name": "upgrade-to-premium",
+  "prompt": "Write an email for 'InviteJoy' — a digital invitation platform — to nudge users who are currently using a free template to upgrade to a premium template. The user has already picked a free template and started customizing it but hasn't published yet. Premium templates offer: animated elements, custom fonts, RSVP tracking, photo galleries, and matching thank-you cards. Premium upgrade costs $9.99 per invitation. The email should show what they're missing without making them feel bad about the free choice. Tone: encouraging, aspirational, not pushy. Target: global audience, primarily women 25-45 planning celebrations.",
+  "assertions": [
+    {"type": "content_check", "text": "Has subject line and preview text", "key": "has_subject_line"},
+    {"type": "content_check", "text": "Shows premium benefits without shaming the free template choice", "key": "upgrade_without_shaming"},
+    {"type": "content_check", "text": "Mentions specific premium features (animations, RSVP, photo gallery, etc.)", "key": "specific_premium_features"},
+    {"type": "content_check", "text": "Includes the $9.99 price point", "key": "includes_price"},
+    {"type": "content_check", "text": "Has a clear CTA to upgrade or preview premium templates", "key": "clear_upgrade_cta"},
+    {"type": "content_check", "text": "Tone is encouraging and aspirational, not guilt-tripping", "key": "encouraging_tone"},
+    {"type": "content_check", "text": "Provides multiple variations", "key": "multiple_variations"}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "eval_id": 5,
+  "eval_name": "upgrade-to-premium",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "Has subject line and preview text", "passed": true, "evidence": "Subject: 'Your invitation is looking great — imagine what a little extra sparkle could do'. Preview text: 'You're so close to something stunning. See what premium can add.'"},
+    {"text": "Shows premium benefits without shaming the free template choice", "passed": true, "evidence": "Opens with 'it's already shaping up beautifully'. Closes with 'Your free template is yours to keep and publish anytime — no pressure at all.' No guilt-tripping."},
+    {"text": "Mentions specific premium features (animations, RSVP, photo gallery, etc.)", "passed": true, "evidence": "Lists all 5 features with benefit-oriented descriptions: animated elements, custom fonts, RSVP tracking, photo galleries, matching thank-you cards."},
+    {"text": "Includes the $9.99 price point", "passed": true, "evidence": "'Premium templates are just $9.99 per invitation.'"},
+    {"text": "Has a clear CTA to upgrade or preview premium templates", "passed": true, "evidence": "CTA: '[See Premium Templates →]'. Also P.S. mentions customizations carry over."},
+    {"text": "Tone is encouraging and aspirational, not guilt-tripping", "passed": true, "evidence": "Encouraging throughout: 'We just wanted to let you know there's even more you can do with it, if you're interested.' Very respectful."},
+    {"text": "Provides multiple variations", "passed": false, "evidence": "Only one version provided. No alternative approaches or A/B testing suggestions."}
+  ]
+}

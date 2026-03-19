@@ -1,0 +1,14 @@
+{
+  "eval_id": 7,
+  "eval_name": "unpublished-reminder",
+  "prompt": "Write a 7-day reminder email for 'InviteJoy' — a digital invitation platform. The user created an invitation (free or premium) 7 days ago but hasn't published it yet. The invitation is fully designed but sitting in their drafts. The email should gently remind them to publish and share their invitation, acknowledge that event planning can be busy, and make publishing feel easy and exciting (it's just one click to share the link with guests). Tone: warm, supportive, gently nudging. Target: global audience, primarily women 25-45 planning celebrations.",
+  "assertions": [
+    {"type": "content_check", "text": "Has subject line and preview text", "key": "has_subject_line"},
+    {"type": "content_check", "text": "Acknowledges that event planning is busy / empathizes with delay", "key": "empathy_for_delay"},
+    {"type": "content_check", "text": "Reminds them their invitation is ready and waiting", "key": "invitation_ready_reminder"},
+    {"type": "content_check", "text": "Makes publishing feel easy (one click, simple process)", "key": "easy_publishing"},
+    {"type": "content_check", "text": "Clear CTA to publish the invitation", "key": "publish_cta"},
+    {"type": "content_check", "text": "Warm and supportive tone, not nagging", "key": "warm_supportive_tone"},
+    {"type": "content_check", "text": "Provides multiple variations", "key": "multiple_variations"}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "eval_id": 5,
+  "eval_name": "upgrade-to-premium",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Has subject line and preview text", "passed": true, "evidence": "All 3 variations have subject line + preview text. E.g., V1: 'Your invitation is off to a great start' / 'Here is how to make it unforgettable.'"},
+    {"text": "Shows premium benefits without shaming the free template choice", "passed": true, "evidence": "V1: 'Your free template is a solid foundation. Premium turns it into something your guests will remember.' V3: 'This is not about replacing what you have built. It is about elevating it.' Never shames."},
+    {"text": "Mentions specific premium features (animations, RSVP, photo gallery, etc.)", "passed": true, "evidence": "All 5 features listed in all 3 variations with benefit framing: 'RSVP tracking — no spreadsheets, no guessing', 'Matching thank-you cards designed to complement your invitation'."},
+    {"text": "Includes the $9.99 price point", "passed": true, "evidence": "All variations include $9.99: V1 CTA includes it, V2 states 'For $9.99', V3 CTA: 'Upgrade for $9.99'."},
+    {"text": "Has a clear CTA to upgrade or preview premium templates", "passed": true, "evidence": "Specific CTAs: '[Upgrade My Invitation — $9.99]', '[See What Premium Looks Like]', '[Upgrade for $9.99]'. Each strategically different."},
+    {"text": "Tone is encouraging and aspirational, not guilt-tripping", "passed": true, "evidence": "Consistently encouraging. V1: 'You have already done the hard part — choosing the right design.' V3: 'Planning a celebration takes real effort... Your invitation should be one less thing to worry about.'"},
+    {"text": "Provides multiple variations", "passed": true, "evidence": "3 variations: BAB (aspirational contrast), PPPP (storytelling), PAS (gentle opportunity). With A/B testing, cultural, and personalization notes."}
+  ]
+}

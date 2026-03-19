@@ -1,0 +1,14 @@
+{
+  "eval_id": 6,
+  "eval_name": "unfinished-payment",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "Has subject line and preview text", "passed": true, "evidence": "Subject: 'Your beautiful invitation is waiting for you'. Preview: 'We saved your design -- come back and make it official.'"},
+    {"text": "Reassures the user their design/progress is saved", "passed": true, "evidence": "'your invitation design is safe and sound, right where you left it' and 'Your design is ready to go whenever you are.'"},
+    {"text": "Creates soft urgency without being aggressive or guilt-tripping", "passed": true, "evidence": "'Your saved design will be held for a limited time, so we recommend finishing up soon.' Soft urgency, not aggressive."},
+    {"text": "Includes clear CTA to complete payment/checkout", "passed": true, "evidence": "CTA: '[Complete My Purchase]'. Clear and direct."},
+    {"text": "Mentions the $9.99 price or references the premium template they chose", "passed": true, "evidence": "Cart recap: 'Template: Premium Invitation Design / Price: $9.99 / Status: Saved, but not yet live.'"},
+    {"text": "Tone is helpful and understanding, not pushy", "passed": true, "evidence": "'Life gets busy, and sometimes checkout gets interrupted. We totally get it.' Understanding and helpful tone."},
+    {"text": "Provides multiple variations", "passed": false, "evidence": "Only one version provided. No alternative approaches."}
+  ]
+}

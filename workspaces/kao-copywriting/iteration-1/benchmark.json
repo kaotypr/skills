@@ -1,0 +1,93 @@
+{
+  "metadata": {
+    "skill_name": "kao-copywriting",
+    "skill_path": "skills/kao-copywriting",
+    "executor_model": "claude-opus-4-6",
+    "analyzer_model": "claude-opus-4-6",
+    "timestamp": "2026-03-19T03:35:00Z",
+    "evals_run": ["email-welcome-sequence", "instagram-skincare-ad", "landing-page-b2b-analytics"],
+    "runs_per_configuration": 3
+  },
+  "runs": [
+    {
+      "eval_name": "email-welcome-sequence",
+      "configuration": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 7,
+      "total": 7,
+      "time_seconds": 118.2,
+      "tokens": 46446
+    },
+    {
+      "eval_name": "email-welcome-sequence",
+      "configuration": "without_skill",
+      "pass_rate": 0.857,
+      "passed": 6,
+      "total": 7,
+      "time_seconds": 44.3,
+      "tokens": 34905
+    },
+    {
+      "eval_name": "instagram-skincare-ad",
+      "configuration": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 6,
+      "total": 6,
+      "time_seconds": 73.1,
+      "tokens": 44604
+    },
+    {
+      "eval_name": "instagram-skincare-ad",
+      "configuration": "without_skill",
+      "pass_rate": 0.833,
+      "passed": 5,
+      "total": 6,
+      "time_seconds": 27.1,
+      "tokens": 34117
+    },
+    {
+      "eval_name": "landing-page-b2b-analytics",
+      "configuration": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 6,
+      "total": 6,
+      "time_seconds": 83.7,
+      "tokens": 44914
+    },
+    {
+      "eval_name": "landing-page-b2b-analytics",
+      "configuration": "without_skill",
+      "pass_rate": 1.0,
+      "passed": 6,
+      "total": 6,
+      "time_seconds": 36.4,
+      "tokens": 34383
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": "100.0%",
+      "mean_pass_rate": 1.0,
+      "mean_time_seconds": 91.7,
+      "mean_tokens": 45321
+    },
+    "without_skill": {
+      "pass_rate": "89.5%",
+      "mean_pass_rate": 0.897,
+      "mean_time_seconds": 35.9,
+      "mean_tokens": 34468
+    },
+    "delta": {
+      "pass_rate": "+10.5%",
+      "time_seconds": "+55.8",
+      "tokens": "+10853"
+    }
+  },
+  "notes": [
+    "With-skill outputs consistently provided multiple variations (2-3 strategic approaches) with named frameworks, A/B testing suggestions, and audience segment recommendations — this was the primary differentiator.",
+    "Without-skill outputs were competent but provided only single versions with no strategic optionality.",
+    "The landing-page-b2b-analytics eval showed both configurations performing equally on assertions (6/6), suggesting the assertions may not capture the qualitative depth differences. Human review is important here.",
+    "With-skill runs used ~30% more tokens and took ~2.5x longer due to reading the skill + reference files and producing multiple variations. This is an expected tradeoff for richer output.",
+    "The 'multiple_variations' assertion was the primary discriminator — it failed for all without_skill runs. Other assertions passed for both configurations, indicating baseline Claude already writes solid copy but lacks the structured multi-variation approach."
+  ]
+}

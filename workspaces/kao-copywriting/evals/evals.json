@@ -1,0 +1,108 @@
+{
+  "skill_name": "kao-copywriting",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Write a 3-email welcome sequence for a project management SaaS tool called 'FlowBoard' that targets remote teams of 5-20 people. The tool's main features are async standup updates, visual project timelines, and automated progress reports. The audience is team leads and ops managers who are frustrated with too many meetings and scattered communication.",
+      "expected_output": "Three emails with subject lines, each using an appropriate framework (likely PAS or AIDA), focusing on benefits over features, with clear CTAs, conversational professional tone, and logical sequence progression (welcome → value → conversion).",
+      "files": [],
+      "assertions": [
+        {"type": "content_check", "text": "Contains three distinct emails", "key": "has_three_emails"},
+        {"type": "content_check", "text": "Each email has a subject line", "key": "has_subject_lines"},
+        {"type": "content_check", "text": "Copy emphasizes benefits over raw features", "key": "benefits_over_features"},
+        {"type": "content_check", "text": "Each email has a clear, specific CTA (not generic 'learn more')", "key": "has_clear_cta"},
+        {"type": "content_check", "text": "Tone is conversational and professional, not stiff corporate", "key": "conversational_tone"},
+        {"type": "content_check", "text": "Emails follow logical progression (welcome → value → conversion)", "key": "logical_sequence"},
+        {"type": "content_check", "text": "Provides multiple variations or strategic approaches", "key": "multiple_variations"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I need Instagram ad copy for a skincare brand called 'Glow Theory' launching a vitamin C serum globally. Target audience is women 25-40 who care about clean beauty and are skeptical of over-hyped products. Price point is $38. Give me copy for both a feed ad and a story ad.",
+      "expected_output": "Multiple ad copy variations for feed and story formats, with scroll-stopping hooks in the first line, benefit-driven messaging, social proof elements, platform-appropriate length and tone, specific CTA, and sensitivity to global audience (no region-specific slang).",
+      "files": [],
+      "assertions": [
+        {"type": "content_check", "text": "Includes both feed ad and story ad copy", "key": "has_feed_and_story"},
+        {"type": "content_check", "text": "Feed ad opens with a strong first-line hook", "key": "scroll_stopping_hook"},
+        {"type": "content_check", "text": "Copy focuses on skin benefits, not just ingredient specs", "key": "benefit_driven"},
+        {"type": "content_check", "text": "No region-specific slang or idioms (global audience safe)", "key": "global_audience_safe"},
+        {"type": "content_check", "text": "Includes a clear call to action", "key": "has_cta"},
+        {"type": "content_check", "text": "Provides 2+ copy variations", "key": "multiple_variations"}
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Write the hero section and first two content blocks for a landing page for 'MetricShift' — a B2B analytics platform that helps e-commerce companies understand which marketing channels actually drive profit (not just revenue). Target: CMOs and marketing directors at $10M-$100M e-commerce companies. Key differentiator: integrates with Shopify, GA4, and Meta Ads to show true profit contribution per channel, not just ROAS.",
+      "expected_output": "A conversion-focused landing page structure with a compelling headline (benefit-first), subheadline, hero CTA, and two content blocks that build the case using authority, data, and specificity. Should use ACCA or AIDA framework, include social proof placeholders, and write in confident B2B tone without corporate jargon.",
+      "files": [],
+      "assertions": [
+        {"type": "content_check", "text": "Includes hero section with headline, subheadline, and CTA", "key": "has_hero_section"},
+        {"type": "content_check", "text": "Has two distinct content blocks below the hero", "key": "has_two_content_blocks"},
+        {"type": "content_check", "text": "Headline leads with benefit/outcome, not just the product name", "key": "benefit_first_headline"},
+        {"type": "content_check", "text": "Includes social proof elements or placeholders", "key": "social_proof"},
+        {"type": "content_check", "text": "Uses specific data or numbers rather than vague claims", "key": "specific_claims"},
+        {"type": "content_check", "text": "Authoritative B2B tone without corporate jargon", "key": "b2b_professional_tone"}
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Write a welcome email for 'InviteJoy' — a digital invitation platform where users can create beautiful online invitations for weddings, birthdays, baby showers, and other celebrations. The platform offers free templates and premium templates. Users sign up, pick a template, customize it, and share a link with guests. Target audience is anyone planning an event — primarily women 25-45, tech-comfortable but not technical, who want something prettier than a WhatsApp message but easier than printed invitations. The welcome email should make them excited to create their first invitation and guide them to browse templates. Tone: warm, celebratory, helpful. Global audience.",
+      "expected_output": "A warm welcome email with subject line, celebratory tone, clear CTA to browse templates, mentions free and premium options, benefit-driven language, global audience safe.",
+      "files": [],
+      "assertions": [
+        {"type": "content_check", "text": "Has subject line and preview text", "key": "has_subject_line"},
+        {"type": "content_check", "text": "Creates a warm, celebratory welcome feeling", "key": "celebratory_tone"},
+        {"type": "content_check", "text": "Guides user to browse templates or create first invitation as primary CTA", "key": "clear_cta_to_templates"},
+        {"type": "content_check", "text": "Mentions both free and premium template options", "key": "mentions_free_and_premium"},
+        {"type": "content_check", "text": "Benefits-driven (not just feature listing)", "key": "benefits_over_features"},
+        {"type": "content_check", "text": "Global audience safe — no region-specific idioms or cultural assumptions", "key": "global_audience_safe"},
+        {"type": "content_check", "text": "Provides multiple variations", "key": "multiple_variations"}
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Write an email for 'InviteJoy' — a digital invitation platform — to nudge users who are currently using a free template to upgrade to a premium template. The user has already picked a free template and started customizing it but hasn't published yet. Premium templates offer: animated elements, custom fonts, RSVP tracking, photo galleries, and matching thank-you cards. Premium upgrade costs $9.99 per invitation. The email should show what they're missing without making them feel bad about the free choice. Tone: encouraging, aspirational, not pushy. Target: global audience, primarily women 25-45 planning celebrations.",
+      "expected_output": "An upgrade nudge email that shows premium value without shaming free choice, lists premium features with benefits, includes $9.99 price, encouraging tone, clear upgrade CTA.",
+      "files": [],
+      "assertions": [
+        {"type": "content_check", "text": "Has subject line and preview text", "key": "has_subject_line"},
+        {"type": "content_check", "text": "Shows premium benefits without shaming the free template choice", "key": "upgrade_without_shaming"},
+        {"type": "content_check", "text": "Mentions specific premium features (animations, RSVP, photo gallery, etc.)", "key": "specific_premium_features"},
+        {"type": "content_check", "text": "Includes the $9.99 price point", "key": "includes_price"},
+        {"type": "content_check", "text": "Has a clear CTA to upgrade or preview premium templates", "key": "clear_upgrade_cta"},
+        {"type": "content_check", "text": "Tone is encouraging and aspirational, not guilt-tripping", "key": "encouraging_tone"},
+        {"type": "content_check", "text": "Provides multiple variations", "key": "multiple_variations"}
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Write an abandoned cart / unfinished payment email for 'InviteJoy' — a digital invitation platform. The user selected a premium template ($9.99), started the checkout process, but didn't complete payment. Their invitation is saved but not yet live. The email should gently remind them to complete their purchase, reassure them their design is saved, and create soft urgency without being aggressive. Tone: helpful, understanding, gently urgent. Target: global audience, primarily women 25-45.",
+      "expected_output": "An abandoned cart email that reassures design is saved, creates soft urgency, includes CTA to complete checkout, references the $9.99 premium template, helpful tone.",
+      "files": [],
+      "assertions": [
+        {"type": "content_check", "text": "Has subject line and preview text", "key": "has_subject_line"},
+        {"type": "content_check", "text": "Reassures the user their design/progress is saved", "key": "design_saved_reassurance"},
+        {"type": "content_check", "text": "Creates soft urgency without being aggressive or guilt-tripping", "key": "soft_urgency"},
+        {"type": "content_check", "text": "Includes clear CTA to complete payment/checkout", "key": "complete_payment_cta"},
+        {"type": "content_check", "text": "Mentions the $9.99 price or references the premium template they chose", "key": "references_their_selection"},
+        {"type": "content_check", "text": "Tone is helpful and understanding, not pushy", "key": "helpful_tone"},
+        {"type": "content_check", "text": "Provides multiple variations", "key": "multiple_variations"}
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Write a 7-day reminder email for 'InviteJoy' — a digital invitation platform. The user created an invitation (free or premium) 7 days ago but hasn't published it yet. The invitation is fully designed but sitting in their drafts. The email should gently remind them to publish and share their invitation, acknowledge that event planning can be busy, and make publishing feel easy and exciting (it's just one click to share the link with guests). Tone: warm, supportive, gently nudging. Target: global audience, primarily women 25-45 planning celebrations.",
+      "expected_output": "A gentle 7-day reminder email that empathizes with busy planning, reminds their invitation is ready, makes publishing feel easy (one click), warm tone, clear publish CTA.",
+      "files": [],
+      "assertions": [
+        {"type": "content_check", "text": "Has subject line and preview text", "key": "has_subject_line"},
+        {"type": "content_check", "text": "Acknowledges that event planning is busy / empathizes with delay", "key": "empathy_for_delay"},
+        {"type": "content_check", "text": "Reminds them their invitation is ready and waiting", "key": "invitation_ready_reminder"},
+        {"type": "content_check", "text": "Makes publishing feel easy (one click, simple process)", "key": "easy_publishing"},
+        {"type": "content_check", "text": "Clear CTA to publish the invitation", "key": "publish_cta"},
+        {"type": "content_check", "text": "Warm and supportive tone, not nagging", "key": "warm_supportive_tone"},
+        {"type": "content_check", "text": "Provides multiple variations", "key": "multiple_variations"}
+      ]
+    }
+  ]
+}
