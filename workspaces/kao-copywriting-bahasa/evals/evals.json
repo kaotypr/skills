@@ -1,0 +1,70 @@
+{
+  "skill_name": "kao-copywriting-bahasa",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Buatkan caption Instagram untuk brand skincare lokal bernama 'GlowNesia'. Produknya serum vitamin C 15% yang bisa mencerahkan wajah dalam 14 hari. Target audiensnya perempuan umur 20-30 tahun, urban, aktif di sosmed. Harga 89 ribu, lagi promo gratis ongkir hari ini aja.",
+      "expected_output": "2-3 variasi caption Instagram dalam Bahasa Indonesia kasual/gaul yang sesuai target Gen Z/Millennial, menggunakan formula copywriting yang tepat (PAS atau AIDA), mengandung hook di kalimat pertama, fokus pada manfaat bukan fitur, ada CTA yang jelas, dan terasa natural bukan seperti terjemahan.",
+      "files": [],
+      "expectations": [
+        "Output is primarily written in Bahasa Indonesia",
+        "Contains at least 2 distinct copy variations",
+        "Mentions the brand name 'GlowNesia'",
+        "Highlights a specific product benefit related to brightening/mencerahkan (not just listing the vitamin C feature)",
+        "Includes a clear call-to-action (CTA)",
+        "Uses casual/informal register appropriate for Gen Z audience (no 'Anda', uses conversational tone)",
+        "Mentions the price point (89 ribu or 89.000 or 89rb or equivalent)",
+        "Includes urgency element tied to the promo (hari ini/sekarang/terbatas or similar)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Saya butuh copy untuk landing page produk SaaS bernama 'FinTrack' — platform manajemen keuangan untuk UKM Indonesia. Fitur utamanya: rekonsiliasi bank otomatis, laporan pajak sesuai regulasi Indonesia, dan dashboard real-time. Target audiens: pemilik UKM dan finance manager. Tolong buatkan headline, subheadline, 3 benefit sections, dan CTA.",
+      "expected_output": "Copy landing page dalam Bahasa Indonesia semi-formal/formal yang terstruktur (headline, subheadline, benefit sections, CTA), menggunakan formula FAB atau AIDA, menerjemahkan fitur teknis menjadi manfaat bisnis yang konkret, tone profesional tapi tidak kaku, dan CTA yang spesifik.",
+      "files": [],
+      "expectations": [
+        "Output is primarily written in Bahasa Indonesia",
+        "Contains clearly labeled structured sections (headline, subheadline, benefit sections, CTA)",
+        "Mentions the brand name 'FinTrack'",
+        "Translates at least one technical feature into a concrete business benefit (e.g., 'rekonsiliasi otomatis' becomes time saved or error reduction)",
+        "Uses semi-formal or formal register appropriate for B2B audience",
+        "Contains at least 3 distinct benefit sections as requested",
+        "Includes a specific, actionable CTA (not just generic 'hubungi kami')"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Brand makanan beku 'MakanYuk' mau bikin kampanye Ramadan. Mereka jual frozen food siap masak (rendang, opor, soto) yang bisa dihidangkan untuk buka puasa keluarga. Harga paket Ramadan 150 ribu untuk 5 menu. Buatkan copy untuk: 1) Instagram carousel post, 2) WhatsApp broadcast, 3) banner promo di Shopee. Target: ibu-ibu 30-45 tahun yang sibuk tapi mau hidangkan masakan 'rumahan' untuk keluarga.",
+      "expected_output": "Copy multi-platform (Instagram, WhatsApp, Shopee) dalam Bahasa Indonesia yang menyentuh tema Ramadan/keluarga, menggunakan emotional storytelling yang relevan secara kultural, tone yang sesuai untuk ibu-ibu (semi-formal/warm), setiap platform punya format berbeda, ada social proof atau urgency, dan CTA spesifik per platform.",
+      "files": [],
+      "expectations": [
+        "Output is primarily written in Bahasa Indonesia",
+        "Contains copy for all 3 requested platforms (Instagram, WhatsApp, Shopee)",
+        "References Ramadan theme (Ramadan/buka puasa/sahur/iftar/puasa)",
+        "Mentions the brand name 'MakanYuk'",
+        "Includes family/keluarga emotional appeal appropriate for the target audience",
+        "Shows distinct formatting or tone differences between at least 2 of the 3 platforms",
+        "Mentions the price (150 ribu or 150.000 or 150rb or equivalent)",
+        "Includes a CTA for each platform"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Saya punya startup SaaS undangan pernikahan digital bernama 'NikahYuk'. Platform kami memudahkan pasangan membuat undangan digital yang cantik, kirim via WhatsApp/link, track RSVP, dan kelola daftar tamu — semua dalam satu dashboard. Harga mulai dari 99 ribu (paket Basic) sampai 499 ribu (paket Premium dengan fitur video, musik, galeri foto, dan domain custom). Target utama pasangan muda 25-35 tahun yang tech-savvy dan ingin wedding planning yang praktis. Buatkan copy untuk: 1) Landing page hero section (headline, subheadline, CTA), 2) 3 paket pricing dengan deskripsi masing-masing, 3) Instagram ad caption untuk campaign 'Musim Nikah 2026', 4) WhatsApp message template untuk di-share oleh wedding organizer partner kami ke client mereka.",
+      "expected_output": "Copy multi-deliverable (landing page hero, pricing tiers, IG ad, WA template) dalam Bahasa Indonesia yang sesuai untuk pasangan muda tech-savvy, menerjemahkan fitur teknis menjadi manfaat emosional, pricing section dengan diferensiasi tier yang jelas, seasonal hook untuk Musim Nikah, dan WA template yang profesional untuk WO partner.",
+      "files": [],
+      "expectations": [
+        "Output is primarily written in Bahasa Indonesia",
+        "Contains copy for all 4 requested deliverables (landing page hero, pricing packages, Instagram ad, WhatsApp template)",
+        "Mentions the brand name 'NikahYuk'",
+        "Landing page hero section includes headline, subheadline, and CTA",
+        "Pricing section describes all 3 tiers (Basic, Premium, and one mid-tier) with distinct feature differentiation",
+        "Uses appropriate register for young couples 25-35 (not too formal, not too slang-heavy)",
+        "Mentions price points (99 ribu and/or 499 ribu or equivalent)",
+        "Instagram ad caption includes seasonal hook related to 'Musim Nikah 2026'",
+        "WhatsApp template is formatted appropriately for WO partners to forward (professional but warm)",
+        "Translates technical features into emotional benefits (e.g., RSVP tracking becomes 'nggak perlu tanya satu-satu siapa yang dateng')"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "expectations": [
+    {
+      "text": "Output is primarily written in Bahasa Indonesia",
+      "passed": true,
+      "evidence": "The entire output is written in Bahasa Indonesia, from section headings ('Paket Pricing', 'Landing Page Hero Section') to body copy ('Buat undangan digital cantik dalam hitungan menit')."
+    },
+    {
+      "text": "Contains copy for all 4 requested deliverables (landing page hero, pricing packages, Instagram ad, WhatsApp template)",
+      "passed": true,
+      "evidence": "All four sections are present: '## 1. Landing Page Hero Section', '## 2. Paket Pricing', '## 3. Instagram Ad Caption', '## 4. WhatsApp Message Template (untuk Wedding Organizer Partner)'."
+    },
+    {
+      "text": "Mentions the brand name 'NikahYuk'",
+      "passed": true,
+      "evidence": "Brand name appears in the title ('NikahYuk'), Instagram ad ('Dengan NikahYuk, kamu bisa'), WhatsApp template ('**NikahYuk**'), and pricing section domain example ('nikahyuk.com/andi-dan-rina')."
+    },
+    {
+      "text": "Landing page hero section includes headline, subheadline, and CTA",
+      "passed": true,
+      "evidence": "All three elements are explicitly labeled: '**Headline:** Undangan Pernikahan Digital yang Bikin Tamu Langsung Bilang \"Hadir!\"', '**Subheadline:** Buat undangan digital cantik...', '**CTA:** Buat Undangan Sekarang'."
+    },
+    {
+      "text": "Pricing section describes all 3 tiers (Basic, Premium, and one mid-tier) with distinct feature differentiation",
+      "passed": true,
+      "evidence": "Three tiers present: 'Paket Basic — Rp 99.000' (6 features), 'Paket Exclusive — Rp 249.000' (mid-tier, 7 features building on Basic), 'Paket Premium — Rp 499.000' (8 features building on Exclusive). Each tier adds distinct features progressively."
+    },
+    {
+      "text": "Uses appropriate register for young couples 25-35 (not too formal, not too slang-heavy)",
+      "passed": true,
+      "evidence": "The register is casual-professional throughout. Uses 'kamu' (informal you), casual phrases like 'Mulai dari 99 ribu aja', 'Serius, lebih murah dari cetak undangan biasa', and 'Yuk' — but avoids heavy slang. WhatsApp template uses polite 'Kakak' form appropriate for B2B partner communication."
+    },
+    {
+      "text": "Mentions price points (99 ribu and/or 499 ribu or equivalent)",
+      "passed": true,
+      "evidence": "Both price points mentioned: 'Mulai dari 99 ribu aja' in subheadline and Instagram ad, 'Paket Basic — Rp 99.000' and 'Paket Premium — Rp 499.000' in pricing section, 'mulai dari Rp 99 ribu aja' in WhatsApp template."
+    },
+    {
+      "text": "Instagram ad caption includes seasonal hook related to 'Musim Nikah 2026'",
+      "passed": true,
+      "evidence": "Opens with 'Musim nikah 2026 udah di depan mata! Undangannya udah siap belum?' and includes hashtag '#MusimNikah2026'."
+    },
+    {
+      "text": "WhatsApp template is formatted appropriately for WO partners to forward (professional but warm)",
+      "passed": true,
+      "evidence": "Template includes placeholder '[Nama Client]' for personalization, opens with congratulations ('Selamat ya atas rencana pernikahannya!'), uses professional but warm 'Kakak' address, lists features in bullet points, includes a link placeholder, and closes with offer to help. Appropriate for a WO forwarding to clients."
+    },
+    {
+      "text": "Translates technical features into emotional benefits (e.g., RSVP tracking becomes 'nggak perlu tanya satu-satu siapa yang dateng')",
+      "passed": false,
+      "evidence": "The output mostly lists features in technical terms rather than translating them into emotional benefits. RSVP tracking is described as 'Pantau RSVP tamu secara real-time' and 'Fitur RSVP & konfirmasi kehadiran' — these are functional descriptions, not emotional reframes. The hero headline ('Bikin Tamu Langsung Bilang \"Hadir!\"') is one emotional touch, but the pricing and WhatsApp sections remain feature-focused rather than benefit-oriented. The specific example in the assertion ('nggak perlu tanya satu-satu siapa yang dateng') or equivalent emotional translation is absent."
+    }
+  ],
+  "summary": {
+    "passed": 9,
+    "failed": 1,
+    "total": 10,
+    "pass_rate": 0.9
+  },
+  "timing": {
+    "total_tokens": 35098,
+    "duration_ms": 35263,
+    "total_duration_seconds": 35.3
+  },
+  "claims": [
+    {
+      "claim": "Three pricing tiers with progressive feature sets",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Basic has 6 features, Exclusive adds 7 (including all Basic), Premium adds 8 (including all Exclusive). Each tier builds on the previous."
+    },
+    {
+      "claim": "Mid-tier is priced at Rp 249.000",
+      "type": "factual",
+      "verified": true,
+      "evidence": "The prompt did not specify the mid-tier price, so 249.000 is a reasonable interpolation between 99k and 499k. This is a creative decision, not a factual error."
+    },
+    {
+      "claim": "WhatsApp template is suitable for WO partners",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Uses professional tone with 'Kakak' honorific, includes client name placeholder, and positions NikahYuk as a recommendation from the WO rather than a direct sales pitch."
+    }
+  ],
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Translates technical features into emotional benefits",
+        "reason": "This assertion tests a genuinely important copywriting skill and discriminates well between skilled and generic output. It correctly caught that the without-skill output stayed feature-focused. Good assertion."
+      },
+      {
+        "reason": "No assertion checks whether the copy includes any social proof elements (testimonials, user counts, trust signals) which are standard for SaaS landing pages. This could differentiate skilled copywriting from basic output."
+      },
+      {
+        "reason": "No assertion checks whether the Instagram ad includes a clear call-to-action beyond 'Link di bio'. A strong ad caption should drive specific action."
+      }
+    ],
+    "overall": "The assertions cover structural completeness well and the emotional-benefits assertion is a good discriminator. Consider adding assertions for persuasion techniques (social proof, urgency, specificity) that distinguish expert copy from competent but generic output."
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "expectations": [
+    {
+      "text": "Output is primarily written in Bahasa Indonesia",
+      "passed": true,
+      "evidence": "The entire output is written in Bahasa Indonesia. Headlines like 'Kelola Keuangan Bisnis Tanpa Pusing', body copy like 'Masih habiskan berjam-jam mencocokkan mutasi bank dengan catatan penjualan?', and CTAs like 'Coba FinTrack Gratis 14 Hari' are all in Bahasa Indonesia. Some English loanwords (dashboard, real-time, compliance) appear naturally, which is standard in Indonesian B2B/tech writing."
+    },
+    {
+      "text": "Contains clearly labeled structured sections (headline, subheadline, benefit sections, CTA)",
+      "passed": true,
+      "evidence": "Each of the 3 variations contains explicitly labeled markdown sections: '### Headline', '### Subheadline', '### Benefit Section 1', '### Benefit Section 2', '### Benefit Section 3', and '### CTA'. The structure is consistent across all three variations."
+    },
+    {
+      "text": "Mentions the brand name 'FinTrack'",
+      "passed": true,
+      "evidence": "FinTrack is mentioned extensively: in the title ('Landing Page Copy — FinTrack'), in body copy ('FinTrack menyinkronkan seluruh transaksi bank Anda secara otomatis'), in CTAs ('Coba FinTrack Gratis 14 Hari'), and across all three variations."
+    },
+    {
+      "text": "Translates at least one technical feature into a concrete business benefit (e.g., 'rekonsiliasi otomatis' becomes time saved or error reduction)",
+      "passed": true,
+      "evidence": "Multiple technical-to-benefit translations: (1) Rekonsiliasi otomatis -> 'Tim finance Anda bisa fokus pada strategi, bukan sibuk copy-paste data' (time saved), (2) Rekonsiliasi otomatis -> 'Hemat 15+ Jam per Bulan' (quantified time in Variasi 3), (3) Laporan pajak otomatis -> 'Tidak perlu lagi bayar mahal untuk konsultan pajak' (cost reduction), (4) Dashboard real-time -> 'Tidak perlu tunggu laporan bulanan untuk tahu bisnis Anda sehat atau tidak' (faster decisions)."
+    },
+    {
+      "text": "Uses semi-formal or formal register appropriate for B2B audience",
+      "passed": true,
+      "evidence": "Register is semi-formal throughout. Uses 'Anda' (formal you) consistently, avoids slang, uses professional vocabulary ('regulasi', 'compliance', 'rekonsiliasi'), while staying conversational with phrases like 'Tanpa drama akhir bulan'. The output explicitly states rationale: 'Semi-formal — profesional tapi tetap approachable, karena audiensnya pelaku bisnis yang sibuk'."
+    },
+    {
+      "text": "Contains at least 3 distinct benefit sections as requested",
+      "passed": true,
+      "evidence": "Each of the 3 variations contains exactly 3 distinct benefit sections: (1) Rekonsiliasi Bank Otomatis, (2) Laporan Pajak Sesuai Regulasi Indonesia, (3) Dashboard Real-Time. Each has a unique sub-headline and body copy addressing different features and pain points."
+    },
+    {
+      "text": "Includes a specific, actionable CTA (not just generic 'hubungi kami')",
+      "passed": true,
+      "evidence": "All three CTAs are specific and actionable: Variasi 1: 'Coba FinTrack Gratis 14 Hari — Tanpa Kartu Kredit, Langsung Pakai' with '[Mulai Sekarang]'; Variasi 2: 'Gabung 5.000+ UKM Indonesia yang Sudah Pakai FinTrack' with '[Daftar Gratis Sekarang]'; Variasi 3: 'Mulai Gratis 14 Hari — Setup dalam 5 Menit, Tanpa Perlu Tim IT' with '[Coba Gratis Sekarang]'. All specify free trial details — none are generic."
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 0,
+    "total": 7,
+    "pass_rate": 1.0
+  },
+  "claims": [
+    {
+      "claim": "Three distinct copy variations using different frameworks (PAS, BAB+FAB, AIDA)",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Three clearly different variations with distinct tones: Variasi 1 uses pain-agitate-solve, Variasi 2 uses aspirational transformation, Variasi 3 uses urgency and direct conversion. Each has meaningfully different headlines, body copy, and CTAs."
+    },
+    {
+      "claim": "Rekonsiliasi otomatis saves 15+ hours per month",
+      "type": "factual",
+      "verified": false,
+      "evidence": "Variasi 3 states 'Hemat 15+ Jam per Bulan' — a specific quantitative claim with no basis in the original prompt. Fabricated for copywriting purposes; not a verified fact."
+    },
+    {
+      "claim": "5,000+ UKM Indonesia already use FinTrack",
+      "type": "factual",
+      "verified": false,
+      "evidence": "Variasi 2 CTA states 'Gabung 5.000+ UKM Indonesia yang Sudah Pakai FinTrack'. This social proof number is fabricated — the prompt does not mention any user base."
+    },
+    {
+      "claim": "Semi-formal register is appropriate for the target audience",
+      "type": "quality",
+      "verified": true,
+      "evidence": "The output correctly identifies that SME owners and finance managers in Indonesia respond better to professional-but-approachable language. The rationale in the summary section is sound for this audience segment."
+    }
+  ],
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Translates at least one technical feature into a concrete business benefit",
+        "reason": "Low bar — only requires 'at least one' translation. A stronger version could require all three features (rekonsiliasi, laporan pajak, dashboard) to each be translated into benefits, since good landing page copy should cover all features meaningfully."
+      },
+      {
+        "reason": "No assertion checks whether the output avoids fabricating unverifiable claims. The output includes '5.000+ UKM Indonesia' and 'Hemat 15+ Jam per Bulan' — statistics presented as facts but entirely invented. An assertion like 'Does not present fabricated statistics as facts, or marks them as placeholders' would catch this."
+      },
+      {
+        "reason": "No assertion checks for strategic depth beyond the minimum. This output provided 3 full variations with framework rationale and A/B testing suggestions — significantly beyond the brief. An assertion checking for multiple variations or strategic recommendations would distinguish high-quality outputs from minimal ones."
+      }
+    ],
+    "overall": "Assertions cover structural completeness well but miss content quality dimensions — fabricated statistics pass unchecked, and outputs that go significantly beyond requirements are not distinguished from minimal ones."
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "expectations": [
+    {
+      "text": "Output is primarily written in Bahasa Indonesia",
+      "passed": true,
+      "evidence": "The entire output is written in Bahasa Indonesia, from the headline 'Kelola Keuangan Bisnis Anda dengan Lebih Cerdas, Cepat, dan Akurat' through all benefit sections and the CTA. No English sentences appear in the body copy."
+    },
+    {
+      "text": "Contains clearly labeled structured sections (headline, subheadline, benefit sections, CTA)",
+      "passed": true,
+      "evidence": "Output contains explicit markdown headings: '## Headline', '## Subheadline', '## Benefit Sections' (with 3 numbered subsections), and '## Call to Action (CTA)'. All four requested section types are present and clearly labeled."
+    },
+    {
+      "text": "Mentions the brand name 'FinTrack'",
+      "passed": true,
+      "evidence": "FinTrack appears in the title ('# FinTrack — Landing Page Copy'), the subheadline ('FinTrack adalah platform manajemen keuangan...'), benefit sections ('FinTrack menghubungkan langsung ke rekening bank', 'Dashboard FinTrack menampilkan arus kas'), and CTA ('mempercayakan pengelolaan keuangan mereka kepada FinTrack')."
+    },
+    {
+      "text": "Translates at least one technical feature into a concrete business benefit (e.g., 'rekonsiliasi otomatis' becomes time saved or error reduction)",
+      "passed": true,
+      "evidence": "Benefit section 1 translates 'rekonsiliasi bank otomatis' into time savings and error reduction: 'Hemat Waktu, Kurangi Kesalahan' in the heading, and 'Proses yang biasanya memakan waktu berjam-jam kini selesai dalam hitungan menit' and 'Tim keuangan Anda bisa fokus pada hal yang lebih strategis, bukan pekerjaan administratif yang berulang.' Benefit section 2 translates tax compliance into 'Patuh Tanpa Ribet' (compliant without hassle). Benefit section 3 translates real-time dashboard into better decision-making: 'Keputusan Tepat di Waktu yang Tepat'."
+    },
+    {
+      "text": "Uses semi-formal or formal register appropriate for B2B audience",
+      "passed": true,
+      "evidence": "The output consistently uses 'Anda' (formal second-person pronoun) throughout, employs professional business vocabulary ('strategis', 'kepatuhan', 'regulasi', 'metrik keuangan'), and maintains a polished B2B tone without slang or casual language."
+    },
+    {
+      "text": "Contains at least 3 distinct benefit sections as requested",
+      "passed": true,
+      "evidence": "Three distinct benefit sections are present: (1) 'Rekonsiliasi Bank Otomatis — Hemat Waktu, Kurangi Kesalahan', (2) 'Laporan Pajak Sesuai Regulasi Indonesia — Patuh Tanpa Ribet', (3) 'Dashboard Real-Time — Keputusan Tepat di Waktu yang Tepat'. Each has a unique heading, explanatory paragraph, and bullet points."
+    },
+    {
+      "text": "Includes a specific, actionable CTA (not just generic 'hubungi kami')",
+      "passed": true,
+      "evidence": "The CTA is '[Coba Gratis Sekarang]' (Try Free Now), accompanied by supporting text: 'Mulai gratis hari ini — tanpa perlu kartu kredit.' This is specific (free trial), actionable (clear button text), and distinct from a generic 'hubungi kami'."
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 0,
+    "total": 7,
+    "pass_rate": 1.0
+  },
+  "timing": {
+    "total_duration_seconds": 20.0
+  },
+  "claims": [
+    {
+      "claim": "FinTrack connects directly to business bank accounts for automatic reconciliation",
+      "type": "factual",
+      "verified": true,
+      "evidence": "This is stated in the copy as a product feature description — it accurately reflects the prompt's specification of 'rekonsiliasi bank otomatis'."
+    },
+    {
+      "claim": "Ribuan pemilik UKM sudah menggunakan FinTrack (thousands of SME owners already use FinTrack)",
+      "type": "factual",
+      "verified": false,
+      "evidence": "The CTA states 'Bergabung dengan ribuan pemilik UKM di Indonesia yang sudah mempercayakan pengelolaan keuangan mereka kepada FinTrack.' This is a marketing claim fabricated by the model — there is no data to support it. While common in landing page copy, it is an unverifiable assertion."
+    },
+    {
+      "claim": "Tax report templates are always updated according to the latest regulations",
+      "type": "quality",
+      "verified": false,
+      "evidence": "The copy claims 'Template laporan pajak yang selalu diperbarui sesuai aturan terkini' — this is a product capability claim that cannot be verified from available information, though it is a reasonable marketing statement derived from the prompt's mention of 'laporan pajak sesuai regulasi Indonesia'."
+    }
+  ],
+  "user_notes_summary": null,
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Output is primarily written in Bahasa Indonesia",
+        "reason": "This assertion passes easily even for low-quality output. A model could produce grammatically broken Bahasa Indonesia and still pass. Consider adding an assertion about natural fluency or idiomatic phrasing."
+      },
+      {
+        "reason": "No assertion checks whether the copy avoids unsubstantiated social proof claims. The output fabricates 'ribuan pemilik UKM' (thousands of SME owners) as existing users, which is a quality issue in copywriting that goes unchecked."
+      },
+      {
+        "reason": "No assertion verifies that the output addresses the specified target audience (pemilik UKM and finance managers). The copy does address them, but this is not explicitly tested."
+      }
+    ],
+    "overall": "The assertions cover structural completeness well but lack depth on copy quality, audience targeting, and factual accuracy of marketing claims. The without-skill output passes all assertions cleanly, which suggests the assertions may not be discriminating enough to differentiate skilled from unskilled output."
+  }
+}

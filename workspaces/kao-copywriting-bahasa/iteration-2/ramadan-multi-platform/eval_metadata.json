@@ -1,0 +1,15 @@
+{
+  "eval_id": 3,
+  "eval_name": "ramadan-multi-platform",
+  "prompt": "Brand makanan beku 'MakanYuk' mau bikin kampanye Ramadan. Mereka jual frozen food siap masak (rendang, opor, soto) yang bisa dihidangkan untuk buka puasa keluarga. Harga paket Ramadan 150 ribu untuk 5 menu. Buatkan copy untuk: 1) Instagram carousel post, 2) WhatsApp broadcast, 3) banner promo di Shopee. Target: ibu-ibu 30-45 tahun yang sibuk tapi mau hidangkan masakan 'rumahan' untuk keluarga.",
+  "assertions": [
+    "Output is primarily written in Bahasa Indonesia",
+    "Contains copy for all 3 requested platforms (Instagram, WhatsApp, Shopee)",
+    "References Ramadan theme (Ramadan/buka puasa/sahur/iftar/puasa)",
+    "Mentions the brand name 'MakanYuk'",
+    "Includes family/keluarga emotional appeal appropriate for the target audience",
+    "Shows distinct formatting or tone differences between at least 2 of the 3 platforms",
+    "Mentions the price (150 ribu or 150.000 or 150rb or equivalent)",
+    "Includes a CTA for each platform"
+  ]
+}

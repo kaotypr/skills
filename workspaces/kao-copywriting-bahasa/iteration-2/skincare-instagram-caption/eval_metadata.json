@@ -1,0 +1,15 @@
+{
+  "eval_id": 1,
+  "eval_name": "skincare-instagram-caption",
+  "prompt": "Buatkan caption Instagram untuk brand skincare lokal bernama 'GlowNesia'. Produknya serum vitamin C 15% yang bisa mencerahkan wajah dalam 14 hari. Target audiensnya perempuan umur 20-30 tahun, urban, aktif di sosmed. Harga 89 ribu, lagi promo gratis ongkir hari ini aja.",
+  "assertions": [
+    "Output is primarily written in Bahasa Indonesia",
+    "Contains at least 2 distinct copy variations",
+    "Mentions the brand name 'GlowNesia'",
+    "Highlights a specific product benefit related to brightening/mencerahkan (not just listing the vitamin C feature)",
+    "Includes a clear call-to-action (CTA)",
+    "Uses casual/informal register appropriate for Gen Z audience (no 'Anda', uses conversational tone)",
+    "Mentions the price point (89 ribu or 89.000 or 89rb or equivalent)",
+    "Includes urgency element tied to the promo (hari ini/sekarang/terbatas or similar)"
+  ]
+}

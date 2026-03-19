@@ -1,0 +1,113 @@
+{
+  "expectations": [
+    {
+      "text": "Output is primarily written in Bahasa Indonesia",
+      "passed": true,
+      "evidence": "The entire output is written in Bahasa Indonesia — headings, body copy, captions, strategic notes, and all three platform sections use Indonesian language throughout. Examples: 'Puasa seharian, pulang kerja jam 5...', 'Tinggal masak 15-20 menit', 'Assalamu'alaikum Bun!'."
+    },
+    {
+      "text": "Contains copy for all 3 requested platforms (Instagram, WhatsApp, Shopee)",
+      "passed": true,
+      "evidence": "All three platforms are present with dedicated sections: '## 1. Instagram Carousel Post' (with 3 variasi, each containing multiple slides and captions), '## 2. WhatsApp Broadcast' (3 variasi), and '## 3. Banner Promo Shopee' (3 variasi with headline/subheadline/body/CTA structure)."
+    },
+    {
+      "text": "References Ramadan theme (Ramadan/buka puasa/sahur/iftar/puasa)",
+      "passed": true,
+      "evidence": "Ramadan references are pervasive. 'Paket Ramadan MakanYuk', 'buka puasa keluarga', 'Puasa seharian', 'SPESIAL RAMADAN', 'Selamat menyambut Ramadan', '#CeritaRamadan', '#PaketRamadan', and many more throughout all three platform sections."
+    },
+    {
+      "text": "Mentions the brand name 'MakanYuk'",
+      "passed": true,
+      "evidence": "Brand name 'MakanYuk' appears extensively across all platforms: 'MakanYuk Paket Ramadan hadir buat kamu' (IG Slide 3), 'PAKET RAMADAN MakanYuk' (WA Variasi 2), 'Paket Ramadan MakanYuk' (Shopee Variasi 2), and in hashtags like '#MakanYuk'."
+    },
+    {
+      "text": "Includes family/keluarga emotional appeal appropriate for the target audience",
+      "passed": true,
+      "evidence": "Family/keluarga emotional appeal is a core theme. Examples: 'Anak-anak kangen opor Mama' (IG Slide 2), 'buat buka puasa keluarga' (WA), 'Keluarga happy, Bunda juga happy' (IG Variasi 2), 'Suami nambah 2 kali' (IG Variasi 3), '2.000+ Keluarga Sudah Order' (Shopee Variasi 3), and the strategic note: 'Ramadan = momen paling family-centric di Indonesia'."
+    },
+    {
+      "text": "Shows distinct formatting or tone differences between at least 2 of the 3 platforms",
+      "passed": true,
+      "evidence": "Clear formatting and tone differences: Instagram uses multi-slide carousel format with cover hooks, slide-by-slide progression, emojis, and long captions with hashtags. WhatsApp uses personal conversational tone with greetings ('Assalamu'alaikum Bun!'), bold markdown (*text*), and reply-based CTAs ('Balas *RAMADAN* ke chat ini!'). Shopee uses short, punchy banner copy with structured Headline/Subheadline/Body/CTA/Badge format, focused on urgency and social proof ('Stok Terbatas', '2.000+ Keluarga Sudah Order')."
+    },
+    {
+      "text": "Mentions the price (150 ribu or 150.000 or 150rb or equivalent)",
+      "passed": true,
+      "evidence": "Price is mentioned across all platforms: 'Rp150.000 aja' (IG Variasi 1 Slide 5), 'Rp150.000 untuk 5 menu' (IG Variasi 2 Slide 4), '*Rp150.000* untuk 5 menu' (WA Variasi 1), 'Rp150.000 / 5 Menu' (Shopee Variasi 1), 'Cuma Rp150.000!' (Shopee Variasi 2)."
+    },
+    {
+      "text": "Includes a CTA for each platform",
+      "passed": true,
+      "evidence": "Each platform has clear CTAs. Instagram: 'Order sekarang sebelum kehabisan! Link di bio' (Variasi 1 Slide 5 and caption). WhatsApp: 'Langsung balas *RAMADAN* ke chat ini!' (Variasi 1), 'Balas *MAU* atau klik link ini: [link order]' (Variasi 2), 'Balas *PAKET RAMADAN* ya!' (Variasi 3). Shopee: 'BELI SEKARANG — Stok Terbatas!' (Variasi 1), 'Order Sekarang' (Variasi 2), 'Checkout Sekarang!' (Variasi 3)."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  },
+  "timing": {
+    "total_tokens": 48052,
+    "duration_ms": 129132,
+    "total_duration_seconds": 129.1
+  },
+  "claims": [
+    {
+      "claim": "Uses PAS (Problem - Agitation - Solution) framework for Instagram Variasi 1",
+      "type": "process",
+      "verified": true,
+      "evidence": "Slide 1 presents the problem (no time to cook after work), Slide 2 agitates ('Akhirnya? Gorengan lagi. Gorengan lagi.'), Slide 3 introduces the solution (MakanYuk Paket Ramadan)."
+    },
+    {
+      "claim": "Uses AIDA framework for Instagram Variasi 2",
+      "type": "process",
+      "verified": true,
+      "evidence": "Slide 1 = Attention (relatable POV hook), Slide 2 = Interest (the escalating daily struggle), Slide 3 = Desire (product details + benefits), Slide 4 = Action (price + CTA)."
+    },
+    {
+      "claim": "Uses BAB (Before - After - Bridge) framework for Instagram Variasi 3",
+      "type": "process",
+      "verified": true,
+      "evidence": "Slide 2 = Before (stressed, rushing, feeling like a failure), Slide 3 = After (full table, happy family), Slide 4 = Bridge (MakanYuk Paket Ramadan as the enabler)."
+    },
+    {
+      "claim": "Cooking time is 15-20 minutes",
+      "type": "factual",
+      "verified": false,
+      "evidence": "This is a product claim repeated throughout the output but not verifiable from the eval prompt — the prompt only mentions 'frozen food siap masak'. The 15-20 minute figure appears to be fabricated by the model."
+    },
+    {
+      "claim": "Package includes 5 specific menus (rendang, opor, soto, ayam bakar, gulai nangka)",
+      "type": "factual",
+      "verified": false,
+      "evidence": "The prompt specifies 'rendang, opor, soto' and '5 menu' in the package. The output adds 'Ayam Bakar Bumbu Rujak' and 'Gulai Nangka' as the 4th and 5th items, which are plausible but fabricated — the prompt does not specify what the other 2 menus are."
+    },
+    {
+      "claim": "Social proof testimonial from 'Mbak Rina, Jakarta Selatan'",
+      "type": "factual",
+      "verified": false,
+      "evidence": "This testimonial appears fabricated — no source data was provided. Similarly, 'Mbak Dewi dari Bekasi' and the '2.000+ Keluarga' figure are invented for copy purposes. While common in copywriting, these are unverifiable claims."
+    }
+  ],
+  "user_notes_summary": null,
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Contains copy for all 3 requested platforms (Instagram, WhatsApp, Shopee)",
+        "reason": "This checks platform presence but not minimum quality. An output that simply wrote 'Buy now' under each platform heading would pass. Consider requiring minimum word count per platform or checking for platform-specific elements (e.g., hashtags for Instagram, greeting for WhatsApp)."
+      },
+      {
+        "assertion": "Includes a CTA for each platform",
+        "reason": "Could be strengthened by checking that CTAs are platform-appropriate — e.g., Instagram should reference 'link di bio' or similar, WhatsApp should have a reply mechanism, Shopee should reference checkout/beli. A generic 'Buy now' on all three would currently pass."
+      },
+      {
+        "reason": "No assertion checks whether the copy addresses the specific target audience (ibu-ibu 30-45 tahun sibuk). The output does this well with references to working mothers and time constraints, but a copy that targeted teenagers would also pass all current assertions."
+      },
+      {
+        "reason": "No assertion validates that the output provides multiple variasi/variations per platform. The output delivers 3 variations per platform with different copywriting frameworks (PAS, AIDA, BAB, SLAP), which is strong added value but goes unchecked."
+      }
+    ],
+    "overall": "Assertions cover the essentials (language, platforms, theme, brand, price, audience appeal, formatting differences, CTAs) and all pass genuinely. The main gap is that assertions check for presence of elements rather than quality or platform-appropriateness — a mediocre output with minimal content per platform could pass all 8 assertions."
+  }
+}

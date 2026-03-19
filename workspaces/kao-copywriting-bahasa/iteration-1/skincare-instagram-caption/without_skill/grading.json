@@ -1,0 +1,92 @@
+{
+  "expectations": [
+    {
+      "text": "Output is primarily written in Bahasa Indonesia",
+      "passed": true,
+      "evidence": "The entire caption is written in Bahasa Indonesia: 'Kulit kusam?', 'kamu cuma butuh 14 hari buat glow up', 'mencerahkan, meratakan warna kulit', etc. Only minor English loanwords common in Indonesian social media ('girl', 'glow up', 'filter') appear."
+    },
+    {
+      "text": "Contains at least 2 distinct copy variations",
+      "passed": false,
+      "evidence": "Only one caption is provided. There is no second variation or alternative copy. The output contains a single 'Caption:' section with no additional versions."
+    },
+    {
+      "text": "Mentions the brand name 'GlowNesia'",
+      "passed": true,
+      "evidence": "Brand name appears in the title ('GlowNesia Serum Vitamin C 15%'), in the caption body ('Kenalan sama GlowNesia Vitamin C Serum 15%'), and in hashtags ('#GlowNesia')."
+    },
+    {
+      "text": "Highlights a specific product benefit related to brightening/mencerahkan (not just listing the vitamin C feature)",
+      "passed": true,
+      "evidence": "The caption highlights brightening as a benefit: 'bekerja mencerahkan, meratakan warna kulit, dan bikin wajahmu glowing dari dalam' and 'Kulit cerah, sehat, dan siap tanpa filter.' This goes beyond just mentioning vitamin C."
+    },
+    {
+      "text": "Includes a clear call-to-action (CTA)",
+      "passed": true,
+      "evidence": "Two CTAs present: 'Jangan sampai nyesel nggak checkout hari ini, babe' and 'Tap link di bio sekarang'."
+    },
+    {
+      "text": "Uses casual/informal register appropriate for Gen Z audience (no 'Anda', uses conversational tone)",
+      "passed": true,
+      "evidence": "Tone is casual throughout: uses 'kamu', 'Girl', 'babe', 'nggak', 'glow up', 'nolak', 'nyesel'. No formal 'Anda' appears. Register matches Gen Z social media language."
+    },
+    {
+      "text": "Mentions the price point (89 ribu or 89.000 or 89rb or equivalent)",
+      "passed": true,
+      "evidence": "Price is explicitly stated: 'Cuma Rp89.000'."
+    },
+    {
+      "text": "Includes urgency element tied to the promo (hari ini/sekarang/terbatas or similar)",
+      "passed": true,
+      "evidence": "Multiple urgency elements: 'HARI INI AJA!' (all caps for emphasis), 'Jangan sampai nyesel nggak checkout hari ini', and 'Stok terbatas!'."
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 1,
+    "total": 8,
+    "pass_rate": 0.875
+  },
+  "execution_metrics": {
+    "output_chars": 764
+  },
+  "timing": {
+    "total_duration_seconds": 15.0
+  },
+  "claims": [
+    {
+      "claim": "Serum contains 15% Vitamin C concentration",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Matches the prompt input which specified 'serum vitamin C 15%'. Caption correctly states 'Vitamin C Serum 15%'."
+    },
+    {
+      "claim": "Results visible in 14 days",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Matches the prompt: 'mencerahkan wajah dalam 14 hari'. Caption says 'kamu cuma butuh 14 hari buat glow up'."
+    },
+    {
+      "claim": "Free shipping promo is today only",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Matches the prompt: 'promo gratis ongkir hari ini aja'. Caption states 'GRATIS ONGKIR — HARI INI AJA!'."
+    }
+  ],
+  "user_notes_summary": null,
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Contains at least 2 distinct copy variations",
+        "reason": "This is the key differentiator assertion — it tests whether the agent provides multiple options as a professional copywriter would. It correctly caught that the baseline output only produced one version. Good assertion."
+      },
+      {
+        "reason": "No assertion checks for appropriate caption length for Instagram (typically under 2200 characters). The output is well within limits, but a length assertion could catch edge cases where the agent produces excessively long or short copy."
+      },
+      {
+        "reason": "No assertion checks whether hashtags are included. For an Instagram caption, hashtags are a standard deliverable. The output includes them, but this goes unverified by the current assertion set."
+      }
+    ],
+    "overall": "Assertions are well-targeted and discriminating. The 'at least 2 variations' assertion is especially useful for distinguishing skilled copywriting output from a generic single-caption response. Consider adding a hashtag presence check since it's standard for Instagram content."
+  }
+}

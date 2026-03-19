@@ -1,0 +1,17 @@
+{
+  "eval_id": 4,
+  "eval_name": "wedding-invitation-saas",
+  "prompt": "Saya punya startup SaaS undangan pernikahan digital bernama 'NikahYuk'. Platform kami memudahkan pasangan membuat undangan digital yang cantik, kirim via WhatsApp/link, track RSVP, dan kelola daftar tamu — semua dalam satu dashboard. Harga mulai dari 99 ribu (paket Basic) sampai 499 ribu (paket Premium dengan fitur video, musik, galeri foto, dan domain custom). Target utama pasangan muda 25-35 tahun yang tech-savvy dan ingin wedding planning yang praktis. Buatkan copy untuk: 1) Landing page hero section (headline, subheadline, CTA), 2) 3 paket pricing dengan deskripsi masing-masing, 3) Instagram ad caption untuk campaign 'Musim Nikah 2026', 4) WhatsApp message template untuk di-share oleh wedding organizer partner kami ke client mereka.",
+  "assertions": [
+    "Output is primarily written in Bahasa Indonesia",
+    "Contains copy for all 4 requested deliverables (landing page hero, pricing packages, Instagram ad, WhatsApp template)",
+    "Mentions the brand name 'NikahYuk'",
+    "Landing page hero section includes headline, subheadline, and CTA",
+    "Pricing section describes all 3 tiers (Basic, Premium, and one mid-tier) with distinct feature differentiation",
+    "Uses appropriate register for young couples 25-35 (not too formal, not too slang-heavy)",
+    "Mentions price points (99 ribu and/or 499 ribu or equivalent)",
+    "Instagram ad caption includes seasonal hook related to 'Musim Nikah 2026'",
+    "WhatsApp template is formatted appropriately for WO partners to forward (professional but warm)",
+    "Translates technical features into emotional benefits (e.g., RSVP tracking becomes 'nggak perlu tanya satu-satu siapa yang dateng')"
+  ]
+}
