@@ -1,0 +1,40 @@
+{
+  "eval_id": 1,
+  "eval_name": "sg-fintech-pricing",
+  "config": "without_skill",
+  "expectations": [
+    {
+      "text": "Prices displayed in SGD (S$), not just USD",
+      "passed": false,
+      "evidence": "Prices shown as '$0/mo', '$29/mo' without SGD notation. No S$ prefix. Ambiguous whether USD or SGD."
+    },
+    {
+      "text": "MAS license and Sequoia backing mentioned prominently",
+      "passed": true,
+      "evidence": "Trust line: 'Trusted by 2,500+ Singapore businesses. MAS-licensed. Backed by Sequoia.' Also expanded in 'Why 2,500+ Businesses Choose PaySync' section."
+    },
+    {
+      "text": "FAQ section present addressing billing, cancellation, or payment concerns",
+      "passed": true,
+      "evidence": "FAQ section present with 6 questions covering competitor comparison, fund safety, plan switching, currencies, corporate cards, and transaction limits."
+    },
+    {
+      "text": "'No credit card required' or equivalent friction-removal micro-copy present",
+      "passed": false,
+      "evidence": "No 'No credit card required' or equivalent micro-copy anywhere on the page. CTAs are bare: '[Get Started Free]', '[Start 14-Day Free Trial]', '[Talk to Sales]'."
+    },
+    {
+      "text": "Mentions Singapore-specific payment methods (PayNow, bank transfer, GrabPay, etc.)",
+      "passed": false,
+      "evidence": "No local payment methods mentioned anywhere. No PayNow, no bank transfer, no GrabPay references."
+    },
+    {
+      "text": "Clear value progression across Free → Growth → Enterprise with distinct positioning",
+      "passed": true,
+      "evidence": "Three tiers with clear progression: Free (1 currency, 50 txns) → Growth ($29, 5 currencies, unlimited, cards, 'Most Popular') → Enterprise (custom, unlimited, dedicated manager). Feature lists differentiate each tier."
+    }
+  ],
+  "pass_count": 3,
+  "fail_count": 3,
+  "pass_rate": 0.5
+}

@@ -1,0 +1,40 @@
+{
+  "eval_id": 2,
+  "eval_name": "ph-onboarding-emails",
+  "config": "with_skill",
+  "expectations": [
+    {
+      "text": "All email subject lines are under 40 characters for mobile truncation",
+      "passed": true,
+      "evidence": "All subject lines verified: 'Welcome to ShopFlow, [First Name]!' (35), 'Your first sale on ShopFlow' (30), 'How Lyn runs her shop in 30 min/day' (39), 'No more order chaos, [First Name]' (34), '3 minutes to your first order' (30), '\"I got my evenings back\" — Mae' (33), 'You are not alone, [First Name]' (31), 'The DM tracking stops today' (30), 'What 15,000 sellers know...' (39). All under 40."
+    },
+    {
+      "text": "Conversational and warm tone appropriate for Filipino audience",
+      "passed": true,
+      "evidence": "Warm, personal tone throughout all variations. Uses 'Hey [First Name]', empathetic language ('We know the hustle' equivalent), peer stories from Filipino merchants (Lyn from Cebu, Mae from Davao). Encouraging without being pushy."
+    },
+    {
+      "text": "Includes social proof with 15,000+ merchants and/or 500K+ orders",
+      "passed": true,
+      "evidence": "Both stats appear across all variations: '15,000+ merchants' in welcome emails, '500,000+ orders every month' in activation/retention emails. Used as community proof, not just numbers."
+    },
+    {
+      "text": "References Facebook and/or Instagram selling context specifically",
+      "passed": true,
+      "evidence": "Facebook and Instagram referenced naturally in all variations: 'Connect your Facebook or Instagram shop', 'copy them from your Facebook shop in one tap', 'A buyer messages you on Facebook. Then another on Instagram.' Facebook treated as primary platform (Philippines context)."
+    },
+    {
+      "text": "Emails build progressively: welcome → activation → value/retention",
+      "passed": true,
+      "evidence": "Clear progression across all variations: Email 1 = Welcome + connect shop, Email 2 = Activation + add products/first order, Email 3 = Peer story + community belonging + habit building. Each email has a single focused action."
+    },
+    {
+      "text": "Provides 2+ labeled variations with different approaches",
+      "passed": true,
+      "evidence": "Three full variations: Variation A (JTBD + Friction Removal), Variation B (Before-After-Bridge + Social Proof), Variation C (Adapted PAS + Community Belonging). Each with framework rationale and market fit notes. Includes A/B testing recommendations."
+    }
+  ],
+  "pass_count": 6,
+  "fail_count": 0,
+  "pass_rate": 1.0
+}

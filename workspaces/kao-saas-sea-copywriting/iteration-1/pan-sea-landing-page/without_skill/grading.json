@@ -1,0 +1,40 @@
+{
+  "eval_id": 0,
+  "eval_name": "pan-sea-landing-page",
+  "config": "without_skill",
+  "expectations": [
+    {
+      "text": "Copy is at Grade 7 or below — simple vocabulary, short sentences, no complex clauses",
+      "passed": true,
+      "evidence": "Copy uses simple vocabulary and short sentences. Subheadline is slightly longer but overall readability is acceptable at approximately Grade 7."
+    },
+    {
+      "text": "Includes specific number (8,000+) and names both Ninja Van and Love Bonito",
+      "passed": true,
+      "evidence": "Social proof banner reads 'Trusted by 8,000+ teams across Southeast Asia — including Ninja Van and Love, Bonito.' (Note: has a comma typo in 'Love, Bonito')."
+    },
+    {
+      "text": "Frames benefits in terms of team/community, not individual achievement",
+      "passed": false,
+      "evidence": "Uses 'your team' language but lacks explicit collectivist framing. No community-joining language, no 'Share with your team' CTA, no group decision facilitation. Framing is functional/product-centric rather than community-centric."
+    },
+    {
+      "text": "Zero English idioms or Western cultural references",
+      "passed": true,
+      "evidence": "No idioms or Western cultural references detected."
+    },
+    {
+      "text": "CTA uses 'free' or 'try' AND includes risk-reduction micro-copy",
+      "passed": false,
+      "evidence": "Primary CTA is 'Start Free Trial' which includes 'free', but there is no risk-reduction micro-copy (no 'No credit card required', no 'Cancel anytime', no 'Set up in X minutes')."
+    },
+    {
+      "text": "Provides 2+ labeled variations using different named copywriting frameworks",
+      "passed": false,
+      "evidence": "Only one version provided. No variations, no framework labels."
+    }
+  ],
+  "pass_count": 3,
+  "fail_count": 3,
+  "pass_rate": 0.5
+}

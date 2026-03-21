@@ -1,0 +1,40 @@
+{
+  "eval_id": 0,
+  "eval_name": "pan-sea-landing-page",
+  "config": "with_skill",
+  "expectations": [
+    {
+      "text": "Copy is at Grade 7 or below — simple vocabulary, short sentences, no complex clauses",
+      "passed": true,
+      "evidence": "All three variations use short sentences (under 20 words), simple vocabulary ('same page', 'chaos', 'synced'), and no complex clauses. Estimated Grade 5-6."
+    },
+    {
+      "text": "Includes specific number (8,000+) and names both Ninja Van and Love Bonito",
+      "passed": true,
+      "evidence": "All three variations include '8,000+ teams across Southeast Asia' and name both Ninja Van and Love Bonito in the social proof bar."
+    },
+    {
+      "text": "Frames benefits in terms of team/community, not individual achievement",
+      "passed": true,
+      "evidence": "All headlines use 'team' language ('Your Distributed Team', 'your distributed team', 'From Scattered to Synced'). 'Share with your team' appears as secondary CTA. Community numbers ('Join 8,000+ remote teams') used throughout. No individual hero framing."
+    },
+    {
+      "text": "Zero English idioms or Western cultural references",
+      "passed": true,
+      "evidence": "No idioms detected across all three variations. Language is literal and concrete throughout."
+    },
+    {
+      "text": "CTA uses 'free' or 'try' AND includes risk-reduction micro-copy",
+      "passed": true,
+      "evidence": "All CTAs use 'Try CloudTeam Free' or 'Start for Free'. Risk-reduction micro-copy present: 'No credit card required. Set up in 5 minutes.' and 'No credit card required. No long-term contract. Cancel anytime.'"
+    },
+    {
+      "text": "Provides 2+ labeled variations using different named copywriting frameworks",
+      "passed": true,
+      "evidence": "Three variations provided: Variation A (Adapted PAS + Social Proof), Variation B (JTBD + Friction Removal), Variation C (Before-After-Bridge + Community Proof). Each clearly labeled with framework rationale."
+    }
+  ],
+  "pass_count": 6,
+  "fail_count": 0,
+  "pass_rate": 1.0
+}

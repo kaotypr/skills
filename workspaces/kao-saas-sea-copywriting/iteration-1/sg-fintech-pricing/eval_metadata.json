@@ -1,0 +1,13 @@
+{
+  "eval_id": 1,
+  "eval_name": "sg-fintech-pricing",
+  "prompt": "Write pricing page copy for PaySync, a multi-currency business account platform for Singapore SMEs expanding into SEA markets. Three tiers: Free (1 currency, 50 transactions/mo), Growth ($29/mo — 5 currencies, unlimited transactions, corporate cards), Enterprise (custom). We're MAS-licensed and backed by Sequoia. 2,500+ businesses use us. Key competitors are Aspire and Airwallex.",
+  "assertions": [
+    {"id": "local-currency", "text": "Prices displayed in SGD (S$), not just USD"},
+    {"id": "trust-signals", "text": "MAS license and Sequoia backing mentioned prominently"},
+    {"id": "faq-section", "text": "FAQ section present addressing billing, cancellation, or payment concerns"},
+    {"id": "friction-removal", "text": "'No credit card required' or equivalent friction-removal micro-copy present"},
+    {"id": "local-payment-methods", "text": "Mentions Singapore-specific payment methods (PayNow, bank transfer, GrabPay, etc.)"},
+    {"id": "tier-differentiation", "text": "Clear value progression across Free → Growth → Enterprise with distinct positioning"}
+  ]
+}

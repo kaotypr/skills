@@ -1,0 +1,40 @@
+{
+  "eval_id": 1,
+  "eval_name": "sg-fintech-pricing",
+  "config": "with_skill",
+  "expectations": [
+    {
+      "text": "Prices displayed in SGD (S$), not just USD",
+      "passed": true,
+      "evidence": "All prices shown in S$ notation: 'S$0/month', 'S$39/month', 'Custom pricing'. Local currency used consistently across all three variations."
+    },
+    {
+      "text": "MAS license and Sequoia backing mentioned prominently",
+      "passed": true,
+      "evidence": "Trust bar in all variations: 'MAS-licensed | Backed by Sequoia | 2,500+ businesses across Southeast Asia'. Also mentioned in FAQ answers and bottom CTA sections."
+    },
+    {
+      "text": "FAQ section present addressing billing, cancellation, or payment concerns",
+      "passed": true,
+      "evidence": "Comprehensive FAQ sections in all 3 variations covering: plan switching, cancellation ('No penalties'), payment methods, fund safety, competitor comparison, and contract terms."
+    },
+    {
+      "text": "'No credit card required' or equivalent friction-removal micro-copy present",
+      "passed": true,
+      "evidence": "'No credit card required' appears as micro-copy below CTAs in all variations. Additional friction removal: 'No setup fee', 'No time limit', 'Cancel anytime', 'No penalties'."
+    },
+    {
+      "text": "Mentions Singapore-specific payment methods (PayNow, bank transfer, GrabPay, etc.)",
+      "passed": true,
+      "evidence": "FAQ in Variation A: 'We accept credit/debit cards, PayNow, bank transfer, and GrabPay. All prices are shown in SGD.' Similarly in Variations B and C."
+    },
+    {
+      "text": "Clear value progression across Free → Growth → Enterprise with distinct positioning",
+      "passed": true,
+      "evidence": "Clear progression: Starter (S$0, 1 currency, 50 txns) → Growth (S$39, 5 currencies, unlimited, corporate cards, 'Most popular') → Enterprise (custom, unlimited, dedicated manager, API). Each tier has distinct taglines and ROI anchors."
+    }
+  ],
+  "pass_count": 6,
+  "fail_count": 0,
+  "pass_rate": 1.0
+}

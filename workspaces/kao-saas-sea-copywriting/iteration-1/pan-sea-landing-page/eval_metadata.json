@@ -1,0 +1,13 @@
+{
+  "eval_id": 0,
+  "eval_name": "pan-sea-landing-page",
+  "prompt": "Write a landing page hero section for CloudTeam, a project management SaaS targeting remote teams across Southeast Asia. The product helps distributed teams in SG, PH, and MY coordinate work across time zones. We have 8,000+ teams using us and notable customers include Ninja Van and Love Bonito. Key features: real-time task boards, async video updates, and automated standup reports. Target audience: engineering managers and ops leads at mid-size tech companies.",
+  "assertions": [
+    {"id": "readability", "text": "Copy is at Grade 7 or below — simple vocabulary, short sentences, no complex clauses"},
+    {"id": "social-proof", "text": "Includes specific number (8,000+) and names both Ninja Van and Love Bonito"},
+    {"id": "collectivist-framing", "text": "Frames benefits in terms of team/community, not individual achievement"},
+    {"id": "no-idioms", "text": "Zero English idioms or Western cultural references"},
+    {"id": "cta-risk-reduction", "text": "CTA uses 'free' or 'try' AND includes risk-reduction micro-copy (e.g., 'No credit card required')"},
+    {"id": "multiple-variations", "text": "Provides 2+ labeled variations using different named copywriting frameworks"}
+  ]
+}

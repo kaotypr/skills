@@ -1,0 +1,102 @@
+{
+  "metadata": {
+    "skill_name": "kao-saas-sea-copywriting",
+    "skill_path": "skills/kao-saas-sea-copywriting",
+    "executor_model": "claude-opus-4-6",
+    "timestamp": "2026-03-22T00:00:00Z",
+    "evals_run": ["pan-sea-landing-page", "sg-fintech-pricing", "ph-onboarding-emails"],
+    "runs_per_configuration": 3
+  },
+  "runs": [
+    {
+      "eval_name": "pan-sea-landing-page",
+      "config": "with_skill",
+      "pass_rate": 1.0,
+      "pass_count": 6,
+      "fail_count": 0,
+      "total_assertions": 6,
+      "total_tokens": 28167,
+      "duration_seconds": 56.0,
+      "failed_assertions": []
+    },
+    {
+      "eval_name": "pan-sea-landing-page",
+      "config": "without_skill",
+      "pass_rate": 0.5,
+      "pass_count": 3,
+      "fail_count": 3,
+      "total_assertions": 6,
+      "total_tokens": 10120,
+      "duration_seconds": 16.8,
+      "failed_assertions": ["collectivist-framing", "cta-risk-reduction", "multiple-variations"]
+    },
+    {
+      "eval_name": "sg-fintech-pricing",
+      "config": "with_skill",
+      "pass_rate": 1.0,
+      "pass_count": 6,
+      "fail_count": 0,
+      "total_assertions": 6,
+      "total_tokens": 31126,
+      "duration_seconds": 118.6,
+      "failed_assertions": []
+    },
+    {
+      "eval_name": "sg-fintech-pricing",
+      "config": "without_skill",
+      "pass_rate": 0.5,
+      "pass_count": 3,
+      "fail_count": 3,
+      "total_assertions": 6,
+      "total_tokens": 10678,
+      "duration_seconds": 30.2,
+      "failed_assertions": ["local-currency", "friction-removal", "local-payment-methods"]
+    },
+    {
+      "eval_name": "ph-onboarding-emails",
+      "config": "with_skill",
+      "pass_rate": 1.0,
+      "pass_count": 6,
+      "fail_count": 0,
+      "total_assertions": 6,
+      "total_tokens": 30609,
+      "duration_seconds": 118.9,
+      "failed_assertions": []
+    },
+    {
+      "eval_name": "ph-onboarding-emails",
+      "config": "without_skill",
+      "pass_rate": 0.667,
+      "pass_count": 4,
+      "fail_count": 2,
+      "total_assertions": 6,
+      "total_tokens": 11069,
+      "duration_seconds": 45.7,
+      "failed_assertions": ["subject-line-length", "multiple-variations"]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": "100% (18/18)",
+      "mean_tokens": 29967,
+      "mean_time_seconds": 97.8
+    },
+    "without_skill": {
+      "pass_rate": "55.6% (10/18)",
+      "mean_tokens": 10622,
+      "mean_time_seconds": 30.9
+    },
+    "delta": {
+      "pass_rate": "+44.4%",
+      "time_seconds": "+66.9",
+      "tokens": "+19345"
+    }
+  },
+  "notes": [
+    "With-skill achieves 100% pass rate across all 18 assertions vs. 55.6% without skill",
+    "Key differentiators: collectivist framing, local currency display, risk-reduction micro-copy, local payment methods, multiple variations with named frameworks, mobile-optimized subject lines",
+    "Without-skill consistently fails on SEA-specific localization (SGD pricing, PayNow/GrabPay, 40-char subject lines) and structural requirements (multiple variations)",
+    "With-skill uses ~3x more tokens due to producing 3 variations per test case vs. 1",
+    "Pricing page with-skill incorrectly shows S$39/mo instead of the specified $29/mo — factual accuracy issue to note"
+  ]
+}

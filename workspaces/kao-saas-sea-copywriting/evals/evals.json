@@ -1,0 +1,26 @@
+{
+  "skill_name": "kao-saas-sea-copywriting",
+  "evals": [
+    {
+      "id": 0,
+      "name": "pan-sea-landing-page",
+      "prompt": "Write a landing page hero section for CloudTeam, a project management SaaS targeting remote teams across Southeast Asia. The product helps distributed teams in SG, PH, and MY coordinate work across time zones. We have 8,000+ teams using us and notable customers include Ninja Van and Love Bonito. Key features: real-time task boards, async video updates, and automated standup reports. Target audience: engineering managers and ops leads at mid-size tech companies.",
+      "expected_output": "Landing page hero section with headline, subheadline, CTA, social proof, and 2-3 variations using different copywriting frameworks",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "sg-fintech-pricing",
+      "prompt": "Write pricing page copy for PaySync, a multi-currency business account platform for Singapore SMEs expanding into SEA markets. Three tiers: Free (1 currency, 50 transactions/mo), Growth ($29/mo — 5 currencies, unlimited transactions, corporate cards), Enterprise (custom). We're MAS-licensed and backed by Sequoia. 2,500+ businesses use us. Key competitors are Aspire and Airwallex.",
+      "expected_output": "Complete pricing page copy with tier descriptions, trust signals, FAQ section, CTAs, and 2-3 variations",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "ph-onboarding-emails",
+      "prompt": "Write a 3-email welcome sequence for ShopFlow, a social commerce tool for Filipino small business owners who sell on Facebook and Instagram. The tool automates order tracking, inventory, and customer messaging. Most users are solo entrepreneurs or micro-businesses. We have 15,000+ merchants and process 500K+ orders/month. The audience is mostly Millennial women running online shops.",
+      "expected_output": "3-email sequence (welcome, activation, value demonstration) with subject lines, body copy, CTAs, and 2-3 variations",
+      "files": []
+    }
+  ]
+}

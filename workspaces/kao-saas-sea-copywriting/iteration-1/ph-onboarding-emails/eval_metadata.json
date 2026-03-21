@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "ph-onboarding-emails",
+  "prompt": "Write a 3-email welcome sequence for ShopFlow, a social commerce tool for Filipino small business owners who sell on Facebook and Instagram. The tool automates order tracking, inventory, and customer messaging. Most users are solo entrepreneurs or micro-businesses. We have 15,000+ merchants and process 500K+ orders/month. The audience is mostly Millennial women running online shops.",
+  "assertions": [
+    {"id": "subject-line-length", "text": "All email subject lines are under 40 characters for mobile truncation"},
+    {"id": "warm-tone", "text": "Conversational and warm tone appropriate for Filipino audience"},
+    {"id": "community-proof", "text": "Includes social proof with 15,000+ merchants and/or 500K+ orders"},
+    {"id": "platform-aware", "text": "References Facebook and/or Instagram selling context specifically"},
+    {"id": "progressive-activation", "text": "Emails build progressively: welcome → activation → value/retention"},
+    {"id": "multiple-variations", "text": "Provides 2+ labeled variations with different approaches"}
+  ]
+}

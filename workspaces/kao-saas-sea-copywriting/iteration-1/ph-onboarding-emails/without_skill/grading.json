@@ -1,0 +1,40 @@
+{
+  "eval_id": 2,
+  "eval_name": "ph-onboarding-emails",
+  "config": "without_skill",
+  "expectations": [
+    {
+      "text": "All email subject lines are under 40 characters for mobile truncation",
+      "passed": false,
+      "evidence": "Email 1: 'Welcome to ShopFlow! Let's get your shop running smoothly' (56 chars). Email 2: 'The 5-minute setup that saves you hours every week' (50 chars). Email 3: '\"I used to stay up until 2 AM tracking orders\" — here's what changed' (67 chars). All exceed 40 characters."
+    },
+    {
+      "text": "Conversational and warm tone appropriate for Filipino audience",
+      "passed": true,
+      "evidence": "Warm, conversational tone throughout. Uses 'You've got this!', 'We know the hustle', personal stories. Appropriate for Filipino audience."
+    },
+    {
+      "text": "Includes social proof with 15,000+ merchants and/or 500K+ orders",
+      "passed": true,
+      "evidence": "Email 1: 'over 15,000 merchants'. Email 3: '500,000+ orders processed through ShopFlow every month' and '15,000+ shop owners'. Both key stats present."
+    },
+    {
+      "text": "References Facebook and/or Instagram selling context specifically",
+      "passed": true,
+      "evidence": "Email 1: 'Connect your Facebook or Instagram shop'. Email 2: references products from 'your Facebook shop'. Email 3: 'Instagram with over 8,000 followers'. Platform context is natural."
+    },
+    {
+      "text": "Emails build progressively: welcome → activation → value/retention",
+      "passed": true,
+      "evidence": "Email 1 (Day 0): Welcome + connect shop. Email 2 (Day 2): Feature walkthrough + setup steps. Email 3 (Day 5): Social proof story + checklist for unfinished setup. Clear progression."
+    },
+    {
+      "text": "Provides 2+ labeled variations with different approaches",
+      "passed": false,
+      "evidence": "Only one version provided. No variations, no framework labels, no A/B testing recommendations."
+    }
+  ],
+  "pass_count": 4,
+  "fail_count": 2,
+  "pass_rate": 0.667
+}

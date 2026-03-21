@@ -114,6 +114,23 @@ Tested across: SME accounting landing page, Gen-Z fintech onboarding, enterprise
 
 ---
 
+### kao-saas-sea-copywriting
+
+Specialized English copywriting for SaaS products targeting Southeast Asian markets (Singapore, Philippines, Malaysia, Indonesia, Vietnam, Thailand). Covers landing pages, pricing pages, onboarding emails, in-app UX copy, and social media — using SEA-adapted persuasion frameworks (JTBD, Social Proof Amplification, Before-After-Bridge, Friction Removal) with collectivist framing, Grade 5-7 readability, and local trust signals.
+
+- **Version**: 1.0.0
+- **Skill**: [`skills/kao-saas-sea-copywriting`](skills/kao-saas-sea-copywriting)
+- **Evals**: [`workspaces/kao-saas-sea-copywriting`](workspaces/kao-saas-sea-copywriting) (3 scenarios, 1 iteration)
+
+| Metric | With Skill | Without Skill |
+|---|---|---|
+| Pass Rate | 100% (18/18) | 55.6% (10/18) |
+| Avg Tokens | ~29,967 | ~10,622 |
+
+Tested across: pan-SEA B2B landing page (CloudTeam), Singapore fintech pricing page (PaySync), and Philippines onboarding email sequence (ShopFlow). Encodes research from 15 SEA-facing brands (Grab, Wise, StoreHub, Xendit, Carousell, SleekFlow, Aspire, Gojek, Shopee, Funding Societies). The skill's primary value is enforcing collectivist framing, local currency/payment methods, risk-reduction micro-copy, mobile-first conventions, multiple named variations with A/B testing recommendations, and anti-pattern self-checks.
+
+---
+
 ## Project Structure
 
 ```
