@@ -1,0 +1,14 @@
+{
+  "eval_id": 2,
+  "eval_name": "genz-fintech-onboarding",
+  "prompt": "Write onboarding screens and pricing page copy for 'Nabungin' — a savings & micro-investment app for Gen-Z Indonesians (18-25). Features: auto-save from e-wallet, syariah-compliant portfolio, social savings goals with friends. Free tier available, premium at Rp49.000/month. Licensed by OJK. I need: welcome screen, 3-step tutorial, and pricing page.",
+  "assertions": [
+    {"name": "uses-kamu-register", "type": "includes_any", "values": ["kamu", "-mu"], "description": "Uses kamu register for Gen-Z consumer app"},
+    {"name": "has-particles", "type": "includes_any", "values": ["nih", "yuk", "dong", "ya"], "description": "Uses Indonesian softening particles for warmth"},
+    {"name": "has-ojk-trust", "type": "includes", "value": "OJK", "description": "Includes OJK regulatory trust signal"},
+    {"name": "has-syariah-mention", "type": "includes_any", "values": ["syariah", "Syariah"], "description": "Mentions syariah compliance"},
+    {"name": "has-gotong-royong-frame", "type": "includes_any", "values": ["bersama", "Bersama", "bareng", "teman"], "description": "Uses communal/togetherness framing for social savings feature"},
+    {"name": "has-tanpa-pattern", "type": "includes", "value": "Tanpa", "description": "Uses Tanpa pattern for pricing friction removal"},
+    {"name": "has-micro-pricing", "type": "regex", "pattern": "[Rr]p.*hari|per hari", "description": "Includes daily micro-price anchor"}
+  ]
+}

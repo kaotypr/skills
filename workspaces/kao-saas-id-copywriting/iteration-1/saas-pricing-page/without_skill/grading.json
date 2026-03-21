@@ -1,0 +1,41 @@
+{
+  "eval_name": "saas-pricing-page",
+  "variant": "without_skill",
+  "expectations": [
+    {
+      "text": "has-three-tiers",
+      "passed": true,
+      "evidence": "Regex matched: 'Gratis\n\n### Subheadline\nCloudKas adalah aplikasi kasir (POS) yang dirancang khusus untuk restoran dan kafe. Dipercaya oleh 8.000+ restoran di seluruh Indonesia. Pilih paket yang sesuai dengan kebutuhan bisnis Anda.\n\n### Badge / Social Proof\nDipercaya 8.000+ restoran & kafe di Indonesia\n\n---\n\n## Paket Harga\n\n### Gratis\n**Rp0 / bulan**\n\nCocok untuk usaha kecil yang baru memulai.\n\n- 1 outlet\n- Fitur kasir dasar\n- Manajemen menu\n- Laporan penjualan harian\n- Pembayaran tunai & QRIS\n- Dukungan email\n\n**[Mulai Gratis]**\n\n---\n\n### Pro (Paling Populer)\n**Rp150.000 / bulan**\n\nUntuk restoran yang ingin berkembang lebih cepat.\n\n- Hingga 5 outlet\n- Semua fitur paket Gratis\n- Laporan penjualan lengkap & analitik\n- Integrasi GoFood & GrabFood\n- Terima pembayaran via QRIS, GoPay, OVO, DANA\n- Manajemen stok & bahan baku\n- Multi-pengguna dengan hak akses\n- Dukungan prioritas via WhatsApp\n\n**[Coba Gratis 14 Hari]**\n\n---\n\n### Enterprise\n**Hubungi Kami**\n\nSolusi lengkap untuk jaringan restoran & franchise.\n\n- Outlet tanpa batas\n- Semua fitur paket Pro\n- Integrasi custom (POS hardware, ERP, accounting)\n- API akses penuh\n- Account manager khusus\n- SLA & dukungan 24/7\n- Pelatihan tim on-site\n- Kustomisasi sesuai kebutuhan bisnis\n\n**[Hubungi Sales]**\n\n---\n\n## Metode Pembayaran yang Didukung\n\nTerima pembayaran dari pelanggan Anda dengan berbagai metode:\n\n- QRIS (semua bank & e-wallet)\n- GoPay\n- OVO\n- DANA\n- Tunai\n\n---\n\n## Social Proof Section\n\n### Headline\nBergabung dengan 8.000+ Restoran yang Sudah Menggunakan CloudKas\n\n### Testimoni\n\n> \"Sejak pakai CloudKas, omzet kami naik 30% karena integrasi GoFood dan GrabFood yang seamless. Laporan penjualannya juga lengkap banget.\"\n> \u2014 Budi, pemilik Warung Sederhana, Jakarta\n\n> \"Aplikasinya ringan dan gampang dipakai. Karyawan baru pun bisa langsung paham dalam 10 menit.\"\n> \u2014 Sari, manager Kafe Nusantara, Bandung\n\n> \"Kami punya 12 cabang dan semuanya bisa dipantau dari satu dashboard. Enterprise'"
+    },
+    {
+      "text": "has-micro-pricing",
+      "passed": false,
+      "evidence": "Regex '[Rr]p.*hari|per hari|/hari' not matched"
+    },
+    {
+      "text": "has-tanpa-pattern",
+      "passed": true,
+      "evidence": "Found 'Tanpa'"
+    },
+    {
+      "text": "has-payment-logos",
+      "passed": true,
+      "evidence": "Found: ['QRIS', 'GoPay', 'OVO', 'DANA']"
+    },
+    {
+      "text": "has-social-proof",
+      "passed": true,
+      "evidence": "Found: ['8.000', 'Dipercaya']"
+    },
+    {
+      "text": "gratis-prominent",
+      "passed": true,
+      "evidence": "Regex matched: 'Mulai dari Gratis'"
+    },
+    {
+      "text": "has-soft-cta",
+      "passed": true,
+      "evidence": "Found: ['Mulai gratis']"
+    }
+  ]
+}

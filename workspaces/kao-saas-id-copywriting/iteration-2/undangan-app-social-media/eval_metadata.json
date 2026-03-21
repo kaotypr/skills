@@ -1,0 +1,14 @@
+{
+  "eval_id": 7,
+  "eval_name": "undangan-app-social-media",
+  "prompt": "Bikin campaign social media untuk 'Datangyuk' — platform undangan digital untuk semua acara (nikah, khitanan, ulang tahun, aqiqah, syukuran). Target: Gen-Z & Millennial Indonesia. Butuh: 1) Instagram caption untuk carousel 'Kenapa undangan digital lebih hemat dan ramah lingkungan', 2) TikTok script 30 detik yang menunjukkan betapa gampangnya bikin undangan digital dalam 5 menit, 3) WhatsApp broadcast template untuk promo Ramadan (diskon 40%). Sudah dipakai 100.000+ acara.",
+  "assertions": [
+    {"text": "instagram-semi-formal", "description": "Instagram caption uses semi-formal to casual register"},
+    {"text": "tiktok-casual", "description": "TikTok script uses casual/gaul register with hook in first 3 seconds"},
+    {"text": "whatsapp-personalized", "description": "WhatsApp template includes personalization (nama) and is direct/benefit-driven"},
+    {"text": "has-ramadan-promo", "description": "WhatsApp template includes Ramadan context and 40% discount"},
+    {"text": "has-eco-angle", "description": "Instagram carousel mentions environmental/hemat kertas benefit"},
+    {"text": "has-social-proof", "description": "Includes 100.000+ acara social proof"},
+    {"text": "has-soft-cta", "description": "Uses soft CTA with particles"}
+  ]
+}

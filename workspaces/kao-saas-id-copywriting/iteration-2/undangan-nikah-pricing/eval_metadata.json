@@ -1,0 +1,14 @@
+{
+  "eval_id": 6,
+  "eval_name": "undangan-nikah-pricing",
+  "prompt": "Buatkan copy pricing page untuk 'Nikahku' — aplikasi undangan digital nikah. Ada 4 paket: Gratis (1 template basic, RSVP 50 tamu), Silver Rp149.000 (5 template premium, RSVP 200 tamu, galeri foto, musik), Gold Rp299.000 (semua template, RSVP unlimited, video opening, amplop digital, countdown), Platinum Rp499.000 (semua fitur Gold + custom domain, guest book, live streaming). Semua harga per event (sekali bayar, bukan langganan). Sudah dipercaya 25.000+ pasangan.",
+  "assertions": [
+    {"text": "has-four-tiers", "description": "Shows all 4 pricing tiers clearly"},
+    {"text": "has-tanpa-pattern", "description": "Uses Tanpa pattern for hidden cost fears"},
+    {"text": "has-social-proof", "description": "Includes 25.000+ pasangan social proof"},
+    {"text": "has-soft-cta", "description": "Uses soft CTA with particles"},
+    {"text": "highlights-sekali-bayar", "description": "Emphasizes one-time payment (bukan langganan/subscription) as a key selling point"},
+    {"text": "gratis-tier-prominent", "description": "Free tier is prominently featured"},
+    {"text": "has-payment-methods", "description": "Mentions digital payment methods for amplop digital"}
+  ]
+}

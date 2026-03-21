@@ -1,0 +1,14 @@
+{
+  "eval_id": 5,
+  "eval_name": "undangan-digital-landing-page",
+  "prompt": "Buatkan copy landing page untuk 'Undangin' — platform undangan digital pernikahan & acara. Target: pasangan Millennial & Gen-Z Indonesia yang mau nikah. Fitur: template undangan premium, RSVP online, galeri foto/video, countdown timer, Google Maps lokasi, ucapan & amplop digital (angpao online). Harga mulai Rp99.000 per event. Sudah dipakai 50.000+ pasangan di seluruh Indonesia. Terima pembayaran via GoPay, OVO, DANA, QRIS untuk fitur amplop digital.",
+  "assertions": [
+    {"text": "uses-kamu-register", "description": "Uses kamu register for consumer product targeting young couples"},
+    {"text": "has-tanpa-pattern", "description": "Uses Tanpa pattern for friction removal"},
+    {"text": "has-social-proof-numbers", "description": "Includes specific social proof (50.000+ pasangan)"},
+    {"text": "has-micro-pricing", "description": "Converts Rp99.000/event to a micro-anchor or relatable comparison"},
+    {"text": "has-soft-cta", "description": "Uses soft CTA with particles (yuk/ayo)"},
+    {"text": "has-emotional-benefit", "description": "Frames features as emotional benefits related to wedding/celebration moments"},
+    {"text": "has-payment-logos", "description": "Mentions digital payment methods for amplop digital feature"}
+  ]
+}

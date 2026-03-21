@@ -1,0 +1,106 @@
+{
+  "metadata": {
+    "skill_name": "kao-saas-id-copywriting",
+    "timestamp": "2026-03-22T01:15:00Z",
+    "iteration": 2,
+    "focus": "Digital Invitation SaaS",
+    "evals_run": ["undangan-digital-landing-page", "undangan-nikah-pricing", "undangan-app-social-media", "undangan-digital-onboarding"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_name": "undangan-digital-landing-page",
+      "with_skill": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "total": 7,
+        "time_seconds": 96.2,
+        "tokens": 27533
+      },
+      "without_skill": {
+        "pass_rate": 0.714,
+        "passed": 5,
+        "total": 7,
+        "time_seconds": 46.3,
+        "tokens": 11817
+      }
+    },
+    {
+      "eval_name": "undangan-nikah-pricing",
+      "with_skill": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "total": 7,
+        "time_seconds": 89.8,
+        "tokens": 27125
+      },
+      "without_skill": {
+        "pass_rate": 0.714,
+        "passed": 5,
+        "total": 7,
+        "time_seconds": 33.1,
+        "tokens": 11219
+      }
+    },
+    {
+      "eval_name": "undangan-app-social-media",
+      "with_skill": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "total": 7,
+        "time_seconds": 95.2,
+        "tokens": 27149
+      },
+      "without_skill": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "total": 7,
+        "time_seconds": 45.8,
+        "tokens": 11426
+      }
+    },
+    {
+      "eval_name": "undangan-digital-onboarding",
+      "with_skill": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "total": 7,
+        "time_seconds": 88.9,
+        "tokens": 27256
+      },
+      "without_skill": {
+        "pass_rate": 0.714,
+        "passed": 5,
+        "total": 7,
+        "time_seconds": 29.6,
+        "tokens": 10976
+      }
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "mean_pass_rate": 1.0,
+      "mean_time_seconds": 92.5,
+      "mean_tokens": 27266
+    },
+    "without_skill": {
+      "mean_pass_rate": 0.786,
+      "mean_time_seconds": 38.7,
+      "mean_tokens": 11360
+    },
+    "delta": {
+      "pass_rate": "+21.4%",
+      "time_seconds": "+53.8",
+      "tokens": "+15906"
+    }
+  },
+  "notes": [
+    "With-skill: 100% pass rate (28/28 assertions) across all 4 Digital Invitation evals",
+    "Without-skill: 78.6% (22/28) — fails on Tanpa pattern, soft CTA particles, payment methods, and register consistency",
+    "Iteration 2 shows LARGER skill delta (+21.4%) vs iteration 1 (+10.7%) — skill adds more value in niche/vertical SaaS context",
+    "Key discriminating failures in without-skill: (1) Landing page missing Tanpa pattern + soft CTA, (2) Pricing page missing soft CTA + payment logos, (3) UX onboarding used 'Anda' register instead of 'kamu' for consumer product",
+    "Non-discriminating: social media campaign passes both — baseline handles platform-specific register well for social content",
+    "Without-skill UX copy defaulted to formal 'Anda' register for a consumer invitation app — a significant register mismatch the skill prevents",
+    "With-skill consistently produces 2-3 labeled variations + anti-pattern self-check; without-skill produces 1 version"
+  ]
+}

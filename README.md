@@ -96,6 +96,24 @@ Tested across: SaaS email welcome sequence (FlowBoard), Instagram skincare ad co
 
 ---
 
+### kao-saas-id-copywriting
+
+Specialized copywriting skill for Indonesian SaaS, tech products, and B2B/B2C software targeting Gen-Z and Millennials. Covers landing pages, onboarding UX copy, in-app microcopy, pricing pages, feature announcements, email sequences, and social media ads — using Indonesia-native persuasion patterns (Tanpa, Dipercaya Oleh, Gotong Royong) as primary frameworks.
+
+- **Version**: 1.0.0
+- **Skill**: [`skills/kao-saas-id-copywriting`](skills/kao-saas-id-copywriting)
+- **Evals**: [`workspaces/kao-saas-id-copywriting`](workspaces/kao-saas-id-copywriting) (8 scenarios, 2 iterations)
+
+| Metric | With Skill | Without Skill |
+|---|---|---|
+| Pass Rate (iter-1, General SaaS) | 100% (27/27) | 89.3% (24/27) |
+| Pass Rate (iter-2, Digital Invitation) | 100% (28/28) | 78.6% (22/28) |
+| Avg Tokens | ~27,300 | ~11,300 |
+
+Tested across: SME accounting landing page, Gen-Z fintech onboarding, enterprise HRIS multi-platform campaign, POS pricing page, digital invitation landing page, wedding invitation pricing, invitation social media campaign, and invitation builder UX copy. Encodes research from 15+ Indonesian SaaS brands (Bibit, Majoo, Fazz, Stockbit, Mekari Talenta, Paper.id, GoBiz, Hadirr, Xendit, Midtrans). The skill's primary value is enforcing Indonesia-native persuasion patterns, correct register selection (kamu/Anda/gue-lo), micro-pricing anchors, soft CTAs with particles, and anti-pattern self-checks.
+
+---
+
 ## Project Structure
 
 ```

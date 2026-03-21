@@ -1,0 +1,14 @@
+{
+  "eval_id": 1,
+  "eval_name": "sme-accounting-landing-page",
+  "prompt": "Buatkan copy landing page untuk aplikasi akuntansi UMKM bernama 'Bukuin'. Target: pemilik warung dan toko kecil di seluruh Indonesia. Fitur utama: pencatatan otomatis, laporan keuangan, invoice digital. Harga mulai Rp75.000/bulan. Sudah digunakan 12.000+ UMKM di 300+ kota.",
+  "assertions": [
+    {"name": "uses-kamu-register", "type": "includes_any", "values": ["kamu", "bisnismu", "-mu"], "description": "Uses kamu register (not Anda) for SME audience"},
+    {"name": "has-tanpa-pattern", "type": "includes", "value": "Tanpa", "description": "Uses the Tanpa (without) friction-removal pattern"},
+    {"name": "has-social-proof-numbers", "type": "includes_any", "values": ["12.000", "300+", "dipercaya"], "description": "Includes specific social proof numbers"},
+    {"name": "has-micro-pricing", "type": "regex", "pattern": "[Rr]p.*hari|per hari", "description": "Includes daily micro-price anchor alongside monthly price"},
+    {"name": "has-soft-cta", "type": "includes_any", "values": ["yuk", "Yuk", "ayo", "Ayo"], "description": "Uses soft CTA with Indonesian particles"},
+    {"name": "no-anda-register", "type": "excludes", "value": "Anda", "description": "Does NOT use Anda register for SME/consumer product"},
+    {"name": "has-gratis-mention", "type": "includes_any", "values": ["gratis", "Gratis"], "description": "Mentions free trial or free tier"}
+  ]
+}

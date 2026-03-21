@@ -1,0 +1,36 @@
+{
+  "eval_name": "enterprise-hris-campaign",
+  "variant": "without_skill",
+  "expectations": [
+    {
+      "text": "tiktok-casual-register",
+      "passed": true,
+      "evidence": "Found: ['gak', 'Udah', 'udah']"
+    },
+    {
+      "text": "linkedin-formal-register",
+      "passed": true,
+      "evidence": "Found 'Anda'"
+    },
+    {
+      "text": "has-before-after-metric",
+      "passed": true,
+      "evidence": "Found: ['5 hari', '1 jam']"
+    },
+    {
+      "text": "has-social-proof",
+      "passed": true,
+      "evidence": "Found: ['3.000', 'BUMN']"
+    },
+    {
+      "text": "has-tiktok-hook",
+      "passed": true,
+      "evidence": "Regex matched: 'Detik'"
+    },
+    {
+      "text": "has-email-subject",
+      "passed": true,
+      "evidence": "Regex matched: 'Subject'"
+    }
+  ]
+}

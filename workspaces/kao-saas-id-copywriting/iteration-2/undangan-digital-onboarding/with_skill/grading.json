@@ -1,0 +1,41 @@
+{
+  "eval_name": "undangan-digital-onboarding",
+  "variant": "with_skill",
+  "expectations": [
+    {
+      "text": "uses-kamu-register",
+      "passed": true,
+      "evidence": "Found: ['kamu', 'Kamu', '-mu']"
+    },
+    {
+      "text": "has-particles",
+      "passed": true,
+      "evidence": "Found: ['nih', 'yuk', 'Yuk', 'dong', ' ya', ' lho', ' kok']"
+    },
+    {
+      "text": "has-celebratory-tone",
+      "passed": true,
+      "evidence": "Found: ['Selamat', 'selamat', 'bahagia', 'spesial', 'momen', 'rayakan', 'Rayakan', 'Yeay']"
+    },
+    {
+      "text": "has-empty-state",
+      "passed": true,
+      "evidence": "Found: ['Belum ada tamu', 'masih kosong', 'Belum Ada Tamu']"
+    },
+    {
+      "text": "has-error-empathy",
+      "passed": true,
+      "evidence": "Found: ['Jangan khawatir', 'Tenang']"
+    },
+    {
+      "text": "has-success-celebration",
+      "passed": true,
+      "evidence": "Found: ['terkirim', 'Berhasil', 'berhasil', 'Yeay']"
+    },
+    {
+      "text": "localized-not-translated",
+      "passed": true,
+      "evidence": "'Anda' correctly absent"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "eval_name": "undangan-app-social-media",
+  "variant": "with_skill",
+  "expectations": [
+    {
+      "text": "instagram-semi-formal",
+      "passed": true,
+      "evidence": "Found: ['kamu', 'Kamu']"
+    },
+    {
+      "text": "tiktok-casual",
+      "passed": true,
+      "evidence": "Found: ['gue', 'Gue', 'Lo ', 'bro', 'cus', 'gak']"
+    },
+    {
+      "text": "whatsapp-personalized",
+      "passed": true,
+      "evidence": "Found: ['Kak', 'Assalamualaikum']"
+    },
+    {
+      "text": "has-ramadan-promo",
+      "passed": true,
+      "evidence": "Found: ['Ramadan', '40%', 'RAMADAN']"
+    },
+    {
+      "text": "has-eco-angle",
+      "passed": true,
+      "evidence": "Found: ['kertas', 'lingkungan', 'pohon', 'cetak', 'hemat']"
+    },
+    {
+      "text": "has-social-proof",
+      "passed": true,
+      "evidence": "Found: ['100.000']"
+    },
+    {
+      "text": "has-soft-cta",
+      "passed": true,
+      "evidence": "Found: ['yuk', 'Yuk', 'ayo']"
+    }
+  ]
+}

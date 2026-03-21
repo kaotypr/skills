@@ -1,0 +1,14 @@
+{
+  "eval_id": 8,
+  "eval_name": "undangan-digital-onboarding",
+  "prompt": "Write in-app UX copy for 'Sebarkan' — a digital invitation builder app. I need: 1) Welcome screen after sign-up, 2) 3-step onboarding tutorial (choose template → customize details → share to guests), 3) Empty state for guest list page ('belum ada tamu'), 4) Success screen after sharing invitation, 5) Error message when payment for premium template fails. Target audience: Indonesian couples and families planning events. The tone should be warm, celebratory, and supportive.",
+  "assertions": [
+    {"text": "uses-kamu-register", "description": "Uses kamu register consistently"},
+    {"text": "has-particles", "description": "Uses softening particles (nih, yuk, dong, ya) for warmth"},
+    {"text": "has-celebratory-tone", "description": "Copy feels warm and celebratory, matching the wedding/event context"},
+    {"text": "has-empty-state", "description": "Includes empty state copy for guest list"},
+    {"text": "has-error-empathy", "description": "Error message empathizes first, then directs — never blames user"},
+    {"text": "has-success-celebration", "description": "Success screen celebrates the moment of sharing invitation"},
+    {"text": "localized-not-translated", "description": "Copy feels naturally Indonesian, not stiffly translated from English"}
+  ]
+}

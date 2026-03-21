@@ -1,0 +1,41 @@
+{
+  "eval_name": "sme-accounting-landing-page",
+  "variant": "with_skill",
+  "expectations": [
+    {
+      "text": "uses-kamu-register",
+      "passed": true,
+      "evidence": "Found: ['kamu', 'usahamu']"
+    },
+    {
+      "text": "has-tanpa-pattern",
+      "passed": true,
+      "evidence": "Found 'Tanpa'"
+    },
+    {
+      "text": "has-social-proof-numbers",
+      "passed": true,
+      "evidence": "Found: ['12.000', '300+', 'Dipercaya']"
+    },
+    {
+      "text": "has-micro-pricing",
+      "passed": true,
+      "evidence": "Regex matched: 'Rp2.500/hari'"
+    },
+    {
+      "text": "has-soft-cta",
+      "passed": true,
+      "evidence": "Found: ['yuk', 'Yuk']"
+    },
+    {
+      "text": "no-anda-register",
+      "passed": true,
+      "evidence": "'Anda' correctly absent"
+    },
+    {
+      "text": "has-gratis-mention",
+      "passed": true,
+      "evidence": "Found: ['gratis']"
+    }
+  ]
+}

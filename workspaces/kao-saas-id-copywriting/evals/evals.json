@@ -1,0 +1,29 @@
+{
+  "skill_name": "kao-saas-id-copywriting",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Buatkan copy landing page untuk aplikasi akuntansi UMKM bernama 'Bukuin'. Target: pemilik warung dan toko kecil di seluruh Indonesia. Fitur utama: pencatatan otomatis, laporan keuangan, invoice digital. Harga mulai Rp75.000/bulan. Sudah digunakan 12.000+ UMKM di 300+ kota.",
+      "expected_output": "Landing page copy in Bahasa Indonesia with headline, subheadline, feature sections, social proof, pricing, and CTA. Should use kamu register, Tanpa pattern, Dipercaya Oleh, soft CTA with particles, micro-pricing anchor.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write onboarding screens and pricing page copy for 'Nabungin' — a savings & micro-investment app for Gen-Z Indonesians (18-25). Features: auto-save from e-wallet, syariah-compliant portfolio, social savings goals with friends. Free tier available, premium at Rp49.000/month. Licensed by OJK. I need: welcome screen, 3-step tutorial, and pricing page.",
+      "expected_output": "Onboarding flow + pricing copy in Bahasa Indonesia. Should use kamu register with particles (nih, yuk), include OJK trust badge, syariah compliance, Tanpa pattern for pricing, micro-anchor for premium price, community/gotong royong framing for social savings.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Kita mau bikin campaign untuk Kelolain, platform HRIS enterprise. Target: HR manager di perusahaan 200+ karyawan. Butuh: 1) TikTok script 30 detik, 2) LinkedIn post, 3) email subject line + preview text. Key selling point: payroll yang tadinya 5 hari jadi 1 jam. Sudah dipakai 3.000+ perusahaan termasuk 5 BUMN.",
+      "expected_output": "Multi-platform campaign copy. TikTok should use casual/gaul register with hook in first 3 seconds. LinkedIn should be semi-formal with Anda register. Email should have punchy subject line with power words. All should include before/after metric and social proof.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Buatkan copy pricing page untuk 'CloudKas', aplikasi kasir (POS) untuk restoran dan kafe. Ada 3 tier: Gratis (1 outlet, fitur dasar), Pro Rp150.000/bulan (5 outlet, laporan lengkap, integrasi GoFood/GrabFood), Enterprise (custom). Sudah dipakai 8.000+ restoran. Terima pembayaran via QRIS, GoPay, OVO, DANA.",
+      "expected_output": "Pricing page copy with 3 tiers in Bahasa Indonesia. Should use kamu register, micro-anchor for Pro tier, Tanpa pattern for friction removal, Gratis tier prominently featured, local payment logos mentioned, Dipercaya Oleh social proof.",
+      "files": []
+    }
+  ]
+}

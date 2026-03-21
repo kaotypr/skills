@@ -1,0 +1,41 @@
+{
+  "eval_name": "genz-fintech-onboarding",
+  "variant": "without_skill",
+  "expectations": [
+    {
+      "text": "uses-kamu-register",
+      "passed": true,
+      "evidence": "Found: ['kamu']"
+    },
+    {
+      "text": "has-particles",
+      "passed": true,
+      "evidence": "Found: ['Yuk', ' ya']"
+    },
+    {
+      "text": "has-ojk-trust",
+      "passed": true,
+      "evidence": "Found 'OJK'"
+    },
+    {
+      "text": "has-syariah-mention",
+      "passed": true,
+      "evidence": "Found: ['syariah', 'Syariah']"
+    },
+    {
+      "text": "has-gotong-royong-frame",
+      "passed": true,
+      "evidence": "Found: ['bersama', 'bareng', 'Bareng', 'teman']"
+    },
+    {
+      "text": "has-tanpa-pattern",
+      "passed": true,
+      "evidence": "Found 'Tanpa'"
+    },
+    {
+      "text": "has-micro-pricing",
+      "passed": true,
+      "evidence": "Regex matched: 'Rp5.000/hari'"
+    }
+  ]
+}

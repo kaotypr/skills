@@ -1,0 +1,41 @@
+{
+  "eval_name": "undangan-digital-landing-page",
+  "variant": "without_skill",
+  "expectations": [
+    {
+      "text": "uses-kamu-register",
+      "passed": true,
+      "evidence": "Found: ['kamu', 'Kamu', 'acaramu', 'undanganmu']"
+    },
+    {
+      "text": "has-tanpa-pattern",
+      "passed": false,
+      "evidence": "'Tanpa' not found"
+    },
+    {
+      "text": "has-social-proof-numbers",
+      "passed": true,
+      "evidence": "Found: ['50.000', 'Dipercaya']"
+    },
+    {
+      "text": "has-micro-pricing",
+      "passed": true,
+      "evidence": "Regex matched: 'Rp99.000 \u2014 tanpa ribet, tanpa cetak'"
+    },
+    {
+      "text": "has-soft-cta",
+      "passed": false,
+      "evidence": "None of ['yuk', 'Yuk', 'ayo', 'Ayo'] found"
+    },
+    {
+      "text": "has-emotional-benefit",
+      "passed": true,
+      "evidence": "Found: ['momen', 'Momen', 'bahagia', 'spesial', 'Spesial']"
+    },
+    {
+      "text": "has-payment-logos",
+      "passed": true,
+      "evidence": "Found: ['GoPay', 'OVO', 'DANA', 'QRIS']"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "eval_id": 3,
+  "eval_name": "enterprise-hris-campaign",
+  "prompt": "Kita mau bikin campaign untuk Kelolain, platform HRIS enterprise. Target: HR manager di perusahaan 200+ karyawan. Butuh: 1) TikTok script 30 detik, 2) LinkedIn post, 3) email subject line + preview text. Key selling point: payroll yang tadinya 5 hari jadi 1 jam. Sudah dipakai 3.000+ perusahaan termasuk 5 BUMN.",
+  "assertions": [
+    {"name": "tiktok-casual-register", "type": "includes_any", "values": ["gue", "lo", "banget", "bgt", "gak", "nih", "dong"], "description": "TikTok section uses casual/gaul register"},
+    {"name": "linkedin-formal-register", "type": "includes", "value": "Anda", "description": "LinkedIn section uses formal Anda register"},
+    {"name": "has-before-after-metric", "type": "includes_any", "values": ["5 hari", "1 jam"], "description": "Includes the before/after payroll metric"},
+    {"name": "has-social-proof", "type": "includes_any", "values": ["3.000", "BUMN"], "description": "Includes social proof (user count or BUMN mention)"},
+    {"name": "has-tiktok-hook", "type": "regex", "pattern": "(?i)(hook|detik pertama|opening|scene 1|frame 1)", "description": "TikTok script has an attention hook element"},
+    {"name": "has-email-subject", "type": "regex", "pattern": "(?i)(subject|subjek)", "description": "Includes email subject line"}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "eval_id": 4,
+  "eval_name": "saas-pricing-page",
+  "prompt": "Buatkan copy pricing page untuk 'CloudKas', aplikasi kasir (POS) untuk restoran dan kafe. Ada 3 tier: Gratis (1 outlet, fitur dasar), Pro Rp150.000/bulan (5 outlet, laporan lengkap, integrasi GoFood/GrabFood), Enterprise (custom). Sudah dipakai 8.000+ restoran. Terima pembayaran via QRIS, GoPay, OVO, DANA.",
+  "assertions": [
+    {"name": "has-three-tiers", "type": "regex", "pattern": "(?i)(gratis|free).*pro.*enterprise|(?i)3 (paket|tier|plan)", "description": "Shows all 3 pricing tiers"},
+    {"name": "has-micro-pricing", "type": "regex", "pattern": "[Rr]p.*hari|per hari", "description": "Pro tier shows daily micro-price anchor"},
+    {"name": "has-tanpa-pattern", "type": "includes", "value": "Tanpa", "description": "Uses Tanpa pattern for friction removal"},
+    {"name": "has-payment-logos", "type": "includes_any", "values": ["QRIS", "GoPay", "OVO", "DANA"], "description": "Mentions local payment methods"},
+    {"name": "has-social-proof", "type": "includes_any", "values": ["8.000", "dipercaya"], "description": "Includes restaurant count social proof"},
+    {"name": "gratis-prominent", "type": "regex", "pattern": "(?i)gratis.*selamanya|mulai.*gratis|coba.*gratis", "description": "Free tier is prominently featured"},
+    {"name": "has-soft-cta", "type": "includes_any", "values": ["yuk", "Yuk", "ayo", "Ayo", "Mulai gratis"], "description": "Uses soft CTA"}
+  ]
+}

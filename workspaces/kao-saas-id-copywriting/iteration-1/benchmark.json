@@ -1,0 +1,102 @@
+{
+  "metadata": {
+    "skill_name": "kao-saas-id-copywriting",
+    "timestamp": "2026-03-22T00:41:00Z",
+    "evals_run": ["sme-accounting-landing-page", "genz-fintech-onboarding", "enterprise-hris-campaign", "saas-pricing-page"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_name": "sme-accounting-landing-page",
+      "with_skill": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "total": 7,
+        "time_seconds": 92.6,
+        "tokens": 27512
+      },
+      "without_skill": {
+        "pass_rate": 0.714,
+        "passed": 5,
+        "total": 7,
+        "time_seconds": 51.6,
+        "tokens": 11843
+      }
+    },
+    {
+      "eval_name": "genz-fintech-onboarding",
+      "with_skill": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "total": 7,
+        "time_seconds": 107.2,
+        "tokens": 28465
+      },
+      "without_skill": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "total": 7,
+        "time_seconds": 38.1,
+        "tokens": 11297
+      }
+    },
+    {
+      "eval_name": "enterprise-hris-campaign",
+      "with_skill": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "total": 6,
+        "time_seconds": 76.3,
+        "tokens": 26191
+      },
+      "without_skill": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "total": 6,
+        "time_seconds": 31.3,
+        "tokens": 10803
+      }
+    },
+    {
+      "eval_name": "saas-pricing-page",
+      "with_skill": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "total": 7,
+        "time_seconds": 87.9,
+        "tokens": 27197
+      },
+      "without_skill": {
+        "pass_rate": 0.857,
+        "passed": 6,
+        "total": 7,
+        "time_seconds": 34.7,
+        "tokens": 11126
+      }
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "mean_pass_rate": 1.0,
+      "mean_time_seconds": 91.0,
+      "mean_tokens": 27341
+    },
+    "without_skill": {
+      "mean_pass_rate": 0.893,
+      "mean_time_seconds": 38.9,
+      "mean_tokens": 11267
+    },
+    "delta": {
+      "pass_rate": "+10.7%",
+      "time_seconds": "+52.1",
+      "tokens": "+16074"
+    }
+  },
+  "notes": [
+    "With-skill achieves 100% pass rate across all 4 evals (27/27 assertions)",
+    "Without-skill scores 89.3% (24/27 assertions) — fails on micro-pricing and soft CTA in 2 evals",
+    "With-skill runs use ~2.4x more tokens and ~2.3x more time due to reading 3 reference files + producing 2-3 variations",
+    "Non-discriminating: genz-fintech-onboarding and enterprise-hris-campaign pass 100% both with and without skill",
+    "Discriminating evals: sme-accounting-landing-page (71.4% vs 100%) and saas-pricing-page (85.7% vs 100%)"
+  ]
+}

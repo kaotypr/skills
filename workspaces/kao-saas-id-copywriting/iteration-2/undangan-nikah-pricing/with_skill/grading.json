@@ -1,0 +1,41 @@
+{
+  "eval_name": "undangan-nikah-pricing",
+  "variant": "with_skill",
+  "expectations": [
+    {
+      "text": "has-four-tiers",
+      "passed": true,
+      "evidence": "Regex matched: 'Gratis\n\n**Harga:** Gratis\n\n**Tagline:** Mulai dari sini, tanpa bayar apa pun.\n\n*'"
+    },
+    {
+      "text": "has-tanpa-pattern",
+      "passed": true,
+      "evidence": "Found 'Tanpa'"
+    },
+    {
+      "text": "has-social-proof",
+      "passed": true,
+      "evidence": "Found: ['25.000', 'dipercaya', 'Dipercaya']"
+    },
+    {
+      "text": "has-soft-cta",
+      "passed": true,
+      "evidence": "Found: ['yuk', 'Yuk']"
+    },
+    {
+      "text": "highlights-sekali-bayar",
+      "passed": true,
+      "evidence": "Found: ['sekali bayar', 'Sekali bayar', 'bukan langganan', 'Tanpa langganan']"
+    },
+    {
+      "text": "gratis-tier-prominent",
+      "passed": true,
+      "evidence": "Found: ['Gratis selamanya', 'Buat Undangan Gratis', 'Mulai Gratis', 'Coba Gratis', 'Rp0', 'Gratis\\n']"
+    },
+    {
+      "text": "has-payment-methods",
+      "passed": true,
+      "evidence": "Found: ['GoPay', 'OVO', 'DANA', 'QRIS']"
+    }
+  ]
+}
