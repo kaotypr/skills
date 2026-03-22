@@ -1,0 +1,23 @@
+{
+  "skill_name": "kao-motion",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Add a fade-in-up animation to each card in my product grid when they scroll into view. I want them to stagger in one by one. Here's my current component:\n\n```jsx\nimport React from 'react'\n\nfunction ProductGrid({ products }) {\n  return (\n    <div className=\"grid grid-cols-3 gap-6\">\n      {products.map(product => (\n        <div key={product.id} className=\"rounded-lg border p-4 shadow-sm\">\n          <img src={product.image} alt={product.name} className=\"w-full rounded\" />\n          <h3 className=\"mt-2 font-semibold\">{product.name}</h3>\n          <p className=\"text-gray-600\">${product.price}</p>\n        </div>\n      ))}\n    </div>\n  )\n}\n\nexport default ProductGrid\n```",
+      "expected_output": "A React component using motion.div with whileInView, initial/animate with opacity and y transform, and staggerChildren or stagger() for cascading entry. Should use viewport={{ once: true }}.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Create a reusable modal component with smooth animations. When opening, I want the backdrop to fade in and the modal to scale up from 90% with a spring feel. When closing, everything should animate out before unmounting. Use React and the motion library.",
+      "expected_output": "A modal component using AnimatePresence for exit animations, motion.div for backdrop (opacity) and modal content (scale + opacity), spring transition, and proper key props. Should handle close on backdrop click.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I want a horizontal tab bar component where the active indicator smoothly slides between tabs when you click them. The tab content should crossfade when switching. Build it with React and motion.",
+      "expected_output": "A tab component using layoutId for the sliding indicator rendered inside the active tab only, and AnimatePresence mode='wait' for content crossfade with opacity transitions. Spring transition on the indicator.",
+      "files": []
+    }
+  ]
+}

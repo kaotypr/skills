@@ -1,0 +1,15 @@
+{
+  "eval_id": 2,
+  "eval_name": "animated-modal",
+  "config": "with_skill",
+  "expectations": [
+    { "text": "Uses AnimatePresence for exit animation support", "passed": true, "evidence": "Line 15: <AnimatePresence>" },
+    { "text": "Imports from motion/react (not framer-motion)", "passed": true, "evidence": "Line 2: import { motion, AnimatePresence } from \"motion/react\"" },
+    { "text": "Backdrop has opacity animation (initial/animate/exit)", "passed": true, "evidence": "Lines 22-24: initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}" },
+    { "text": "Modal uses scale from 0.9 with spring transition", "passed": true, "evidence": "Line 39: initial={{ opacity: 0, scale: 0.9 }}, Lines 43-46: type: \"spring\", stiffness: 300, damping: 25" },
+    { "text": "Has exit prop for unmount animation", "passed": true, "evidence": "Line 41: exit={{ opacity: 0, scale: 0.9 }}" },
+    { "text": "Handles backdrop click to close", "passed": true, "evidence": "Line 21: onClick={onClose} on backdrop" },
+    { "text": "Uses per-property transitions (spring for scale, tween for opacity)", "passed": true, "evidence": "Lines 43-47: type: \"spring\" default with opacity: { duration: 0.2 } override" }
+  ],
+  "pass_rate": 1.0
+}

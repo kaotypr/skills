@@ -1,0 +1,15 @@
+{
+  "eval_id": 1,
+  "eval_name": "scroll-stagger-grid",
+  "config": "without_skill",
+  "expectations": [
+    { "text": "Uses motion.div for animated elements", "passed": true, "evidence": "Line 8: <motion.div> for each card" },
+    { "text": "Imports from motion/react (not framer-motion)", "passed": true, "evidence": "Line 2: import { motion } from 'motion/react'" },
+    { "text": "Uses whileInView for scroll-triggered animation", "passed": true, "evidence": "Line 12: whileInView={{ opacity: 1, y: 0 }}" },
+    { "text": "Has initial state with opacity: 0 and y offset", "passed": true, "evidence": "Line 11: initial={{ opacity: 0, y: 40 }}" },
+    { "text": "Uses staggerChildren in variants (idiomatic approach)", "passed": false, "evidence": "Uses delay: index * 0.1 instead of variants with staggerChildren. Functional but not the idiomatic Motion pattern." },
+    { "text": "Includes viewport once:true to prevent re-triggering", "passed": true, "evidence": "Line 13: viewport={{ once: true, amount: 0.2 }}" },
+    { "text": "Uses spring transition for natural feel", "passed": false, "evidence": "Uses tween with duration: 0.5, ease: 'easeOut' instead of spring physics." }
+  ],
+  "pass_rate": 0.714
+}

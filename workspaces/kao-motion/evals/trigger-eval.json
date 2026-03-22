@@ -1,0 +1,82 @@
+[
+  {
+    "query": "I have a product listing page and I want each card to fade in and slide up when the user scrolls down to it, with a staggered delay between cards. Using React and Tailwind CSS.",
+    "should_trigger": true
+  },
+  {
+    "query": "my modal component just pops in and out instantly, it looks really janky. can you add a smooth scale-up animation when it opens and a fade out when it closes? im using react",
+    "should_trigger": true
+  },
+  {
+    "query": "I need to build a drag-and-drop kanban board where tasks can be reordered within columns and moved between columns. The cards should animate smoothly when repositioned.",
+    "should_trigger": true
+  },
+  {
+    "query": "we have a Next.js app router project and want page transitions — when navigating between routes, the current page should fade out and the new one fade in. whats the best approach?",
+    "should_trigger": true
+  },
+  {
+    "query": "I'm working on a dashboard and want the sidebar nav to slide in from the left when the hamburger menu is clicked, with the menu items staggering in one by one. Also needs to animate out when closed.",
+    "should_trigger": true
+  },
+  {
+    "query": "Can you help me create a hero section where the heading text reveals word by word, then a subtitle fades in, and finally a CTA button scales up? All sequenced with slight delays between them.",
+    "should_trigger": true
+  },
+  {
+    "query": "i want to add a parallax scrolling effect to my landing page — the background image should scroll slower than the foreground content. using react with next.js 14",
+    "should_trigger": true
+  },
+  {
+    "query": "I need an animated tab component where the active underline indicator smoothly slides to whichever tab is selected, and the content below crossfades between panels. Framer motion or similar.",
+    "should_trigger": true
+  },
+  {
+    "query": "how do i add spring physics to a draggable slider component? i want it to have momentum after the user releases and snap to the nearest value with a bouncy feel",
+    "should_trigger": true
+  },
+  {
+    "query": "I want to draw an SVG logo on page load — the paths should animate from 0 to full length with a staggered effect, like a hand-drawing animation. Using React.",
+    "should_trigger": true
+  },
+  {
+    "query": "Help me set up a PostgreSQL database with Prisma ORM for my Next.js project. I need User, Post, and Comment models with proper relations and migrations.",
+    "should_trigger": false
+  },
+  {
+    "query": "I need to implement JWT authentication with refresh tokens in my Express.js API. The access token should expire in 15 minutes and the refresh token in 7 days.",
+    "should_trigger": false
+  },
+  {
+    "query": "can you write a python script that reads a CSV file, filters rows where the 'status' column is 'active', and outputs the results to a new CSV? using pandas",
+    "should_trigger": false
+  },
+  {
+    "query": "I want to add real-time notifications to my app using WebSockets. When a new order comes in, all connected admin users should see a toast notification. Using Socket.io with React.",
+    "should_trigger": false
+  },
+  {
+    "query": "My React app has a performance issue — the product list re-renders every time any state changes. I think I need to memoize some components. Can you help me profile and fix it?",
+    "should_trigger": false
+  },
+  {
+    "query": "I need to set up a CI/CD pipeline with GitHub Actions that runs tests, builds the Docker image, and deploys to AWS ECS on every push to main.",
+    "should_trigger": false
+  },
+  {
+    "query": "help me write CSS transitions for hover effects on my nav links — I want them to change color and have an underline slide in from the left on hover. pure CSS, no JS libraries.",
+    "should_trigger": false
+  },
+  {
+    "query": "I need a React hook that debounces API calls — when the user types in a search input, it should wait 300ms after they stop typing before making the fetch request.",
+    "should_trigger": false
+  },
+  {
+    "query": "Can you help me implement infinite scroll pagination for my blog posts? I'm using React Query with a REST API that supports cursor-based pagination.",
+    "should_trigger": false
+  },
+  {
+    "query": "I want to add dark mode to my Tailwind CSS project. Need a toggle button that switches between light and dark themes, persisted in localStorage. No animation library needed.",
+    "should_trigger": false
+  }
+]

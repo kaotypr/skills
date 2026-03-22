@@ -1,0 +1,186 @@
+{
+  "metadata": {
+    "skill_name": "kao-motion",
+    "skill_path": "/Users/kao/workspace/kaotypr/skills/skills/kao-motion",
+    "executor_model": "claude-opus-4-6",
+    "analyzer_model": "claude-opus-4-6",
+    "timestamp": "2026-03-22T00:00:00Z",
+    "evals_run": [1, 2, 3],
+    "runs_per_configuration": 1
+  },
+
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "scroll-stagger-grid",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 25.6,
+        "tokens": 16665,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses motion.div for animated elements", "passed": true, "evidence": "motion.div for container and cards"},
+        {"text": "Imports from motion/react", "passed": true, "evidence": "import { motion } from \"motion/react\""},
+        {"text": "Uses whileInView for scroll-triggered animation", "passed": true, "evidence": "whileInView=\"visible\""},
+        {"text": "Has initial state with opacity: 0 and y offset", "passed": true, "evidence": "hidden: { opacity: 0, y: 40 }"},
+        {"text": "Uses staggerChildren in variants (idiomatic)", "passed": true, "evidence": "staggerChildren: 0.1 in containerVariants"},
+        {"text": "Includes viewport once:true", "passed": true, "evidence": "viewport={{ once: true }}"},
+        {"text": "Uses spring transition", "passed": true, "evidence": "type: \"spring\", stiffness: 300, damping: 30"}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "scroll-stagger-grid",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.714,
+        "passed": 5,
+        "failed": 2,
+        "total": 7,
+        "time_seconds": 15.4,
+        "tokens": 10226,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses motion.div for animated elements", "passed": true, "evidence": "motion.div for each card"},
+        {"text": "Imports from motion/react", "passed": true, "evidence": "import { motion } from 'motion/react'"},
+        {"text": "Uses whileInView for scroll-triggered animation", "passed": true, "evidence": "whileInView={{ opacity: 1, y: 0 }}"},
+        {"text": "Has initial state with opacity: 0 and y offset", "passed": true, "evidence": "initial={{ opacity: 0, y: 40 }}"},
+        {"text": "Uses staggerChildren in variants (idiomatic)", "passed": false, "evidence": "Uses delay: index * 0.1 instead of variants"},
+        {"text": "Includes viewport once:true", "passed": true, "evidence": "viewport={{ once: true }}"},
+        {"text": "Uses spring transition", "passed": false, "evidence": "Uses tween with duration/easeOut instead of spring"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "animated-modal",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 36.4,
+        "tokens": 25804,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses AnimatePresence", "passed": true, "evidence": "<AnimatePresence>"},
+        {"text": "Imports from motion/react", "passed": true, "evidence": "import { motion, AnimatePresence } from \"motion/react\""},
+        {"text": "Backdrop has opacity animation", "passed": true, "evidence": "initial/animate/exit opacity on backdrop"},
+        {"text": "Modal uses scale 0.9 with spring", "passed": true, "evidence": "scale: 0.9, type: \"spring\""},
+        {"text": "Has exit prop", "passed": true, "evidence": "exit={{ opacity: 0, scale: 0.9 }}"},
+        {"text": "Handles backdrop click to close", "passed": true, "evidence": "onClick={onClose} on backdrop"},
+        {"text": "Per-property transitions", "passed": true, "evidence": "spring default + opacity: { duration: 0.2 }"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "animated-modal",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.857,
+        "passed": 6,
+        "failed": 1,
+        "total": 7,
+        "time_seconds": 28.6,
+        "tokens": 11065,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses AnimatePresence", "passed": true, "evidence": "<AnimatePresence>"},
+        {"text": "Imports from motion/react", "passed": true, "evidence": "import { motion, AnimatePresence } from \"motion/react\""},
+        {"text": "Backdrop has opacity animation", "passed": true, "evidence": "initial/animate/exit opacity on backdrop"},
+        {"text": "Modal uses scale 0.9 with spring", "passed": true, "evidence": "scale: 0.9, type: \"spring\""},
+        {"text": "Has exit prop", "passed": true, "evidence": "exit={{ opacity: 0, scale: 0.9 }}"},
+        {"text": "Handles backdrop click to close", "passed": true, "evidence": "onClick={onClose} with e.stopPropagation()"},
+        {"text": "Per-property transitions", "passed": false, "evidence": "Single spring for all properties, no per-property config"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "sliding-tabs",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 34.9,
+        "tokens": 25783,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses layoutId for sliding indicator", "passed": true, "evidence": "layoutId=\"active-tab-indicator\""},
+        {"text": "Imports from motion/react", "passed": true, "evidence": "import { motion, AnimatePresence } from \"motion/react\""},
+        {"text": "Uses AnimatePresence for content", "passed": true, "evidence": "<AnimatePresence mode=\"wait\">"},
+        {"text": "Has mode='wait' for crossfade", "passed": true, "evidence": "mode=\"wait\""},
+        {"text": "Spring transition on indicator", "passed": true, "evidence": "type: \"spring\", stiffness: 500, damping: 30"},
+        {"text": "Content has initial/animate/exit opacity", "passed": true, "evidence": "initial/animate/exit opacity props"},
+        {"text": "Includes ARIA roles", "passed": true, "evidence": "role=\"tablist\", role=\"tab\", role=\"tabpanel\""}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "sliding-tabs",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.857,
+        "passed": 6,
+        "failed": 1,
+        "total": 7,
+        "time_seconds": 24.5,
+        "tokens": 10838,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses layoutId for sliding indicator", "passed": true, "evidence": "layoutId=\"active-tab-indicator\""},
+        {"text": "Imports from motion/react", "passed": true, "evidence": "import { motion, AnimatePresence } from \"motion/react\""},
+        {"text": "Uses AnimatePresence for content", "passed": true, "evidence": "<AnimatePresence mode=\"wait\">"},
+        {"text": "Has mode='wait' for crossfade", "passed": true, "evidence": "mode=\"wait\""},
+        {"text": "Spring transition on indicator", "passed": true, "evidence": "type: \"spring\", stiffness: 500, damping: 35"},
+        {"text": "Content has initial/animate/exit opacity", "passed": true, "evidence": "initial/animate/exit opacity props"},
+        {"text": "Includes ARIA roles", "passed": false, "evidence": "No ARIA role attributes found on tab elements"}
+      ]
+    }
+  ],
+
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 32.3, "stddev": 5.7, "min": 25.6, "max": 36.4},
+      "tokens": {"mean": 22751, "stddev": 5247, "min": 16665, "max": 25804}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.81, "stddev": 0.08, "min": 0.714, "max": 0.857},
+      "time_seconds": {"mean": 22.8, "stddev": 6.7, "min": 15.4, "max": 28.6},
+      "tokens": {"mean": 10710, "stddev": 424, "min": 10226, "max": 11065}
+    },
+    "delta": {
+      "pass_rate": "+0.19",
+      "time_seconds": "+9.5",
+      "tokens": "+12041"
+    }
+  },
+
+  "notes": [
+    "With skill: 100% pass rate across all 3 evals (21/21 assertions passed)",
+    "Without skill: 81% pass rate (17/21 assertions passed)",
+    "Skill adds ~9.5s and ~12k tokens per run from reading skill + reference files",
+    "Biggest skill impact on eval 1 (scroll-stagger): idiomatic variants+staggerChildren+spring vs manual delay+tween",
+    "Eval 3 (tabs) baseline missed ARIA roles — skill's accessibility section prompted correct implementation",
+    "Eval 2 (modal) baseline missed per-property transitions — a nuanced pattern the skill explicitly teaches",
+    "'Imports from motion/react' passes 100% both configs — non-discriminating, consider removing in future iterations"
+  ]
+}

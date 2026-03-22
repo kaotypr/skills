@@ -1,0 +1,14 @@
+{
+  "eval_id": 1,
+  "eval_name": "scroll-stagger-grid",
+  "prompt": "Add a fade-in-up animation to each card in my product grid when they scroll into view. I want them to stagger in one by one.",
+  "assertions": [
+    { "text": "Uses motion.div for animated elements", "type": "code_check" },
+    { "text": "Imports from motion/react (not framer-motion)", "type": "code_check" },
+    { "text": "Uses whileInView for scroll-triggered animation", "type": "code_check" },
+    { "text": "Has initial state with opacity: 0 and y offset", "type": "code_check" },
+    { "text": "Uses staggerChildren in variants (idiomatic approach)", "type": "code_check" },
+    { "text": "Includes viewport once:true to prevent re-triggering", "type": "code_check" },
+    { "text": "Uses spring transition for natural feel", "type": "code_check" }
+  ]
+}

@@ -78,6 +78,23 @@ Tested across: empty vault setup with org system selection, messy vault reorgani
 
 ---
 
+### kao-motion
+
+Guide for implementing animations using Motion (motion.dev), the leading JavaScript animation library for React, Vue, and vanilla JS. Covers enter/exit animations, scroll-linked effects, drag interactions, layout transitions, shared element animations, gesture responses, spring physics, parallax, page transitions, SVG path drawing, and more.
+
+- **Version**: 1.0.0
+- **Skill**: [`skills/kao-motion`](skills/kao-motion)
+- **Evals**: [`workspaces/kao-motion`](workspaces/kao-motion) (3 scenarios, 1 iteration)
+
+| Metric | With Skill | Without Skill |
+|---|---|---|
+| Pass Rate | 100% (21/21) | 81% (17/21) |
+| Avg Tokens | 22,751 | 10,710 |
+
+Tested across: scroll-triggered stagger grid, animated modal with spring physics, sliding tab indicator with crossfade content. The skill's primary value is enforcing idiomatic Motion patterns (variants with staggerChildren over manual delays, spring physics, per-property transitions, ARIA accessibility, performance-tier awareness).
+
+---
+
 ### kao-copywriting
 
 Skill for writing high-quality, persuasive English copywriting for global and international audiences. Covers copywriting frameworks (AIDA, PAS, BAB, ACCA, SLAP), persuasion psychology, global English guidelines, platform-specific guidance (email, landing page, social ads, e-commerce), voice/tone calibration, and literary devices.

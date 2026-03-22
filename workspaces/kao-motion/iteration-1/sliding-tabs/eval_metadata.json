@@ -1,0 +1,14 @@
+{
+  "eval_id": 3,
+  "eval_name": "sliding-tabs",
+  "prompt": "Horizontal tab bar with active indicator that slides between tabs, content crossfades when switching.",
+  "assertions": [
+    { "text": "Uses layoutId for the sliding indicator", "type": "code_check" },
+    { "text": "Imports from motion/react (not framer-motion)", "type": "code_check" },
+    { "text": "Uses AnimatePresence for content transitions", "type": "code_check" },
+    { "text": "Has mode='wait' on AnimatePresence for crossfade", "type": "code_check" },
+    { "text": "Spring transition on indicator", "type": "code_check" },
+    { "text": "Content has initial/animate/exit opacity props", "type": "code_check" },
+    { "text": "Includes ARIA roles (tablist/tab/tabpanel)", "type": "code_check" }
+  ]
+}

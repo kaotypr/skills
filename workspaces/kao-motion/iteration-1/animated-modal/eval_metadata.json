@@ -1,0 +1,14 @@
+{
+  "eval_id": 2,
+  "eval_name": "animated-modal",
+  "prompt": "Create a reusable modal component with smooth animations. Backdrop fades in, modal scales up from 90% with spring feel, everything animates out before unmounting.",
+  "assertions": [
+    { "text": "Uses AnimatePresence for exit animation support", "type": "code_check" },
+    { "text": "Imports from motion/react (not framer-motion)", "type": "code_check" },
+    { "text": "Backdrop has opacity animation (initial/animate/exit)", "type": "code_check" },
+    { "text": "Modal uses scale from 0.9 with spring transition", "type": "code_check" },
+    { "text": "Has exit prop for unmount animation", "type": "code_check" },
+    { "text": "Handles backdrop click to close", "type": "code_check" },
+    { "text": "Uses per-property transitions (spring for scale, tween for opacity)", "type": "code_check" }
+  ]
+}

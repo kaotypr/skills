@@ -1,0 +1,15 @@
+{
+  "eval_id": 3,
+  "eval_name": "sliding-tabs",
+  "config": "without_skill",
+  "expectations": [
+    { "text": "Uses layoutId for the sliding indicator", "passed": true, "evidence": "Line 36: layoutId=\"active-tab-indicator\"" },
+    { "text": "Imports from motion/react (not framer-motion)", "passed": true, "evidence": "Line 2: import { motion, AnimatePresence } from \"motion/react\"" },
+    { "text": "Uses AnimatePresence for content transitions", "passed": true, "evidence": "Line 48: <AnimatePresence mode=\"wait\">" },
+    { "text": "Has mode='wait' on AnimatePresence for crossfade", "passed": true, "evidence": "Line 48: mode=\"wait\"" },
+    { "text": "Spring transition on indicator", "passed": true, "evidence": "Line 38: type: \"spring\", stiffness: 500, damping: 35" },
+    { "text": "Content has initial/animate/exit opacity props", "passed": true, "evidence": "Lines 51-53: initial/animate/exit opacity" },
+    { "text": "Includes ARIA roles (tablist/tab/tabpanel)", "passed": false, "evidence": "No role attributes found. Tab bar has no role=\"tablist\", buttons have no role=\"tab\", content has no role=\"tabpanel\"." }
+  ],
+  "pass_rate": 0.857
+}
