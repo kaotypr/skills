@@ -2,9 +2,9 @@
 name: kao-saas-sea-copywriting
 description: >
   Specialized English copywriting for SaaS products targeting Southeast Asian markets (Singapore, Philippines, Malaysia, Indonesia, Vietnam, Thailand).
-  Use this skill whenever the user asks to write, review, or improve English-language copy for any SaaS product, tech app, or software targeting Southeast Asian audiences — including landing pages, onboarding flows, in-app UX microcopy, pricing pages, feature announcements, email sequences, social media ads, or any product copy in English for SEA markets.
-  Trigger on: "SaaS copy for SEA", "landing page for Southeast Asia", "English copy for Asian market", "pricing page for Singapore", "onboarding copy Philippines", mentions of SEA SaaS brands (Grab, Wise, Xendit, Carousell, StoreHub, SleekFlow, Aspire, Shopee, etc.), or any request involving English software copywriting for Southeast Asian audiences.
-  Also trigger when the user mentions "SEA market", "APAC copy", "Singapore landing page", "Filipino audience", "Thai market copy", or writing English SaaS copy for audiences where English is a second language, even if they don't explicitly say "Southeast Asia".
+  Use this skill whenever the user asks to write, review, or improve English copy for any SaaS product or tech app targeting SEA audiences — including landing pages, onboarding flows, UX microcopy, pricing pages, feature announcements, email sequences, or social media ads.
+  Trigger on: "SaaS copy for SEA", "landing page for Southeast Asia", "pricing page for Singapore", "onboarding copy Philippines", mentions of SEA SaaS brands (Grab, Wise, Xendit, Carousell, StoreHub, SleekFlow, Aspire, Shopee), or any English software copywriting for SEA audiences.
+  Also trigger on "SEA market", "APAC copy", "Singapore landing page", "Filipino audience", "Thai market copy", or English SaaS copy for ESL audiences, even without explicitly saying "Southeast Asia".
 license: MIT
 metadata:
   author: kaotypr
