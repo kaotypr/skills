@@ -1,0 +1,25 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Added by code-review-graph
+.code-review-graph/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Workspace large files (optional — only if you have them)
+workspace/**/*.pdf
+workspace/**/*.mp4
+
+# research large files (optional — only if you have them)
+research/**/*.pdf
+research/**/*.mp4
+
+# Never commit
+workspace/**/private/
+workspace/**/credentials*
+research/**/private/
+research/**/credentials*
