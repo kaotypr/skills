@@ -43,15 +43,45 @@ Added two harder CLI-focused evals. Without the skill, Claude defaults to Python
 
 </details>
 
+### kao-project-vault
+
+Bridge a code repository to an Obsidian vault project folder via a `vault` symlink. Handles setup, convention discovery, and note creation with a precedence chain: vault root skill > vault root CLAUDE.md > fallback conventions.
+
+- **Version**: 2.0.0
+- **Skill**: [`skills/workflow/kao-project-vault`](skills/workflow/kao-project-vault)
+- **Evals**: [`workspace/kao-project-vault-workspace`](workspace/kao-project-vault-workspace) (11 scenarios, 1 iteration)
+
+| Metric | With Skill | Without Skill |
+|---|---|---|
+| Pass Rate | 100% (8/8) | 38% (3/8) |
+| Avg Tokens | 23,868 | 18,590 |
+
+Tested across: gitignored vault, vault root skill precedence, fallback conventions, setup from scratch, conflicting conventions, cross-vault access, multiple vault skills, deep convention override, real vault note, CLAUDE.md skill reference, cross-project reference.
+
+<details>
+<summary>Eval iterations</summary>
+
+**Iteration 1** — Model: `claude-sonnet-4-6` — Fair baselines (zero vault hints in without-skill prompts)
+
+| Eval | With Skill | Without Skill |
+|---|---|---|
+| E3 — fallback conventions | Proper frontmatter + callouts | No frontmatter at all |
+| E4 — setup from scratch | Full protocol (symlink, AGENTS.md, vault root, git tracking) | Symlink only |
+| E5 — conflicting conventions | Loaded vault root skill (kebab-case, nested tags) | Followed legacy notes (Title Case, flat tags) |
+| E8 — deep override | Inline tags, no frontmatter tags (correct) | Kept tags in frontmatter (wrong) |
+| E9 — real vault | Title Case filename (correct per CLAUDE.md) | kebab-case filename (wrong) |
+
+3 evals (E1, E2, E7) had race conditions from parallel runs sharing fixtures. 3 evals (E6, E10, E11) were non-discriminating — Sonnet 4.6 handled cross-vault access and CLAUDE.md conventions without the skill.
+
+The skill's value: convention precedence chain (vault root skill > CLAUDE.md > fallback), structured setup protocol, and gitignore-safe access guarantee.
+
+</details>
+
 ## Installation
 
-Copy the skill folder into your Claude Code skills directory:
-
 ```bash
-cp -r skills/<category>/<skill-name> ~/.claude/skills/
+npx skills add https://github.com/kaotypr/skills --skill <skill-name>
 ```
-
-Or reference the skill directly from this repo using the skill path.
 
 ## License
 
