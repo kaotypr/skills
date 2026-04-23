@@ -31,10 +31,11 @@ This skill bridges a code repository and an Obsidian vault project folder throug
 Obsidian conventions (frontmatter, tags, callouts, naming, organization) come from a chain of sources. Use the first one that provides guidance — higher sources completely override lower ones:
 
 1. **Vault root installed skill** — Check if a skill is installed at the vault root (in `.claude/skills/` under the vault root directory). If one exists that covers Obsidian conventions, load it. This overrides everything below.
-2. **Vault root CLAUDE.md** — If the vault root's CLAUDE.md defines Obsidian conventions (frontmatter formats, tag patterns, naming rules, organization methodology), use those. They override this skill's fallbacks.
-3. **This skill's fallback conventions** — Only used when neither of the above exists. See [Fallback Conventions](#fallback-conventions) at the bottom.
+2. **Vault root CLAUDE.md** — If the vault root's CLAUDE.md defines Obsidian conventions (frontmatter formats, tag patterns, naming rules, organization methodology), use those. They override everything below.
+3. **Project repo Obsidian skill** — Check the current project's `.claude/skills/` for a skill that covers Obsidian conventions (e.g., kao-obsidian). If one exists, load it. This overrides the fallback below.
+4. **This skill's fallback conventions** — Only used when none of the above exist. See [Fallback Conventions](#fallback-conventions) at the bottom.
 
-When a higher source is found, do not mix in conventions from lower sources — the higher source owns the full convention set. This skill provides the bridge mechanism and routing; when a vault root source exists, it owns the "how to write notes" part.
+When a higher source is found, do not mix in conventions from lower sources — the higher source owns the full convention set. This skill provides the bridge mechanism and routing; when a higher convention source exists, it owns the "how to write notes" part.
 
 ## Critical Rules
 
@@ -100,7 +101,9 @@ ls "$VAULT_ROOT/CLAUDE.md" 2>/dev/null
 
 **If no vault root skill, but CLAUDE.md exists** — Read it. If it defines Obsidian conventions (frontmatter, tags, naming, organization), those govern note operations. If it doesn't mention conventions, fall through to the next level.
 
-**If neither provides conventions** — Use the fallback conventions at the bottom of this file.
+**If no vault root conventions** — Check the current project repo's `.claude/skills/` for a skill covering Obsidian conventions. If found, load it.
+
+**If none of the above provide conventions** — Use the fallback conventions at the bottom of this file.
 
 ### Step 3: Route to the right phase
 
