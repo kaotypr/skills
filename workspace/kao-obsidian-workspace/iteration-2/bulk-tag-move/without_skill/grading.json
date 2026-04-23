@@ -1,0 +1,82 @@
+{
+  "expectations": [
+    {
+      "text": "Uses 'obsidian tag tag=\"#meeting\"' (or similar correct syntax) to find notes by tag",
+      "passed": false,
+      "evidence": "The guide uses 'grep -rl \"#meeting\" \"$VAULT\" --include=\"*.md\"' to find notes. No 'obsidian tag' CLI command is used anywhere in the output."
+    },
+    {
+      "text": "Uses 'format=paths' to get file paths suitable for looping/scripting",
+      "passed": false,
+      "evidence": "No 'format=paths' parameter appears in the output. The guide uses grep output piped to a temp file (/tmp/meeting_notes.txt) instead of an obsidian CLI with format=paths."
+    },
+    {
+      "text": "Uses 'obsidian move file=... to=...' to move files (not shell mv or cp)",
+      "passed": false,
+      "evidence": "The guide explicitly uses shell 'mv' to move files: 'mv \"$file\" \"$VAULT/meetings/$(basename \"$file\")\"'. No 'obsidian move' command is used."
+    },
+    {
+      "text": "Mentions or explains that 'obsidian move' auto-updates wikilinks (unlike shell mv)",
+      "passed": false,
+      "evidence": "The guide does mention Obsidian's built-in move auto-updates wikilinks (Step 8: 'Obsidian automatically updates all wikilinks'), but this is presented only as a GUI/app alternative, not as a CLI command. The 'obsidian move' CLI command is never referenced."
+    },
+    {
+      "text": "Provides a loop or scripted pattern to move all matching files, not just a single example",
+      "passed": true,
+      "evidence": "Step 5 provides a while-loop: 'while IFS= read -r file; do mv \"$file\" \"$VAULT/meetings/$(basename \"$file\")\"; done < /tmp/meeting_notes.txt'. A scripted bulk approach is provided."
+    },
+    {
+      "text": "CLI parameter style is param=value, not --param",
+      "passed": false,
+      "evidence": "The guide uses standard shell flag style throughout (e.g., 'grep -rl', 'find ... -name', 'mkdir -p'). There are no obsidian CLI commands present at all, so the param=value style is never demonstrated."
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 5,
+    "total": 6,
+    "pass_rate": 0.167
+  },
+  "execution_metrics": {
+    "tool_calls": {
+      "Read": 0,
+      "Write": 2,
+      "Bash": 2
+    },
+    "total_tool_calls": 4,
+    "total_steps": 3,
+    "files_created": ["guide.md", "metrics.json"],
+    "errors_encountered": 0,
+    "output_chars": 7715,
+    "transcript_chars": 9200
+  },
+  "timing": {
+    "executor_duration_seconds": 60.89,
+    "total_duration_seconds": 60.9
+  },
+  "claims": [
+    "Guide uses standard Unix tools (grep, find, mv, sed) instead of obsidian CLI",
+    "Mentions Obsidian GUI built-in move as a recommended alternative for auto-updating wikilinks",
+    "Provides multi-step workflow for bulk file moves with wikilink repair"
+  ],
+  "user_notes_summary": {
+    "uncertainties": [
+      "The guide acknowledges that short-name wikilinks may not need updating, but this depends on vault configuration"
+    ],
+    "needs_review": [
+      "Step 6b uses sed with .bak backups — this could be error-prone on vaults with spaces or special characters in paths",
+      "Assertion 4 is partially ambiguous: the concept is mentioned (Obsidian GUI auto-updates wikilinks) but the 'obsidian move' CLI command is not used"
+    ],
+    "workarounds": [
+      "Rather than using the obsidian CLI, the model chose shell tools (grep, mv, sed) as the primary workflow approach"
+    ]
+  },
+  "eval_feedback": {
+    "suggestions": [
+      "The task is specifically about using the Obsidian CLI (obsidian tag, obsidian move, param=value style) — the eval prompt or system context should make it clearer that the obsidian CLI tool is expected, not shell utilities",
+      "Consider adding a baseline assertion like 'does not use shell mv for moving vault files' to more clearly differentiate CLI vs shell approaches",
+      "Assertion 4 could be split: one for mentioning auto-link-update behavior, another specifically for using 'obsidian move' CLI"
+    ],
+    "overall": "The model completely missed the obsidian CLI and instead produced a thorough shell-scripting guide using grep/mv/sed. Only 1 of 6 assertions passed (providing a bulk loop pattern). The output is technically correct Unix scripting but ignores the intended tool entirely. This is a strong signal that without the skill, the model defaults to generic shell tooling rather than vault-aware CLI commands."
+  }
+}

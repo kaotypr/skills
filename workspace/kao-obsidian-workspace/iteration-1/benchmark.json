@@ -1,0 +1,185 @@
+{
+  "metadata": {
+    "skill_name": "kao-obsidian",
+    "skill_path": "/Users/kao/workspace/kaotypr/skills/skills/knowledge/kao-obsidian",
+    "executor_model": "claude-sonnet-4-6",
+    "analyzer_model": "claude-sonnet-4-6",
+    "timestamp": "2026-04-24T01:30:00Z",
+    "evals_run": [1, 2, 3],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "create-project-note",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 35.6,
+        "tokens": 20324,
+        "tool_calls": 6,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Output contains YAML frontmatter (fenced by ---) with at least tags, date, and status fields", "passed": true, "evidence": "Frontmatter with tags, date, status fields present."},
+        {"text": "Output uses wikilinks [[Meridian Consulting]] and [[HR Portal Requirements]], not markdown links", "passed": true, "evidence": "Both wikilinks appear multiple times throughout the note."},
+        {"text": "Output includes at least 3 task items using - [ ] checkbox syntax", "passed": true, "evidence": "5 tasks with - [ ] syntax found."},
+        {"text": "Output uses a heading structure appropriate for a project note", "passed": true, "evidence": "H1 title + H2 sections: Details, Tasks, Notes, Related."},
+        {"text": "Output does not use any forbidden characters in file path (# ^ [ ] | \\)", "passed": true, "evidence": "File named note.md, no forbidden characters."},
+        {"text": "Due date is represented as 2026-06-30 in frontmatter", "passed": true, "evidence": "due: 2026-06-30 in frontmatter."}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "create-project-note",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 20.8,
+        "tokens": 15061,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Output contains YAML frontmatter (fenced by ---) with at least tags, date, and status fields", "passed": true, "evidence": "Frontmatter with tags, status, created fields present."},
+        {"text": "Output uses wikilinks [[Meridian Consulting]] and [[HR Portal Requirements]], not markdown links", "passed": true, "evidence": "Both wikilinks appear in References and Tasks sections."},
+        {"text": "Output includes at least 3 task items using - [ ] checkbox syntax", "passed": true, "evidence": "5 task items with - [ ] syntax."},
+        {"text": "Output uses a heading structure appropriate for a project note", "passed": true, "evidence": "H1 + H2 sections: Overview, References, Tasks, Notes."},
+        {"text": "Output does not use any forbidden characters in file path (# ^ [ ] | \\)", "passed": true, "evidence": "File named note.md, clean filename."},
+        {"text": "Due date is represented as 2026-06-30 in frontmatter", "passed": true, "evidence": "deadline: 2026-06-30 in frontmatter."}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "vault-health-check",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 81.9,
+        "tokens": 26957,
+        "tool_calls": 8,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses 'obsidian orphans' to find disconnected notes", "passed": true, "evidence": "obsidian orphans used in Part 2, Quick Reference, and Summary Workflow."},
+        {"text": "Uses 'obsidian unresolved' to find broken links", "passed": true, "evidence": "obsidian unresolved used in Part 3, Quick Reference, Summary Workflow, and Part 6."},
+        {"text": "Uses 'obsidian deadends' to find dead-end notes", "passed": true, "evidence": "obsidian deadends used in Part 4, Quick Reference, and Summary Workflow."},
+        {"text": "Uses 'obsidian tag tag=\"#archived\"' (or similar correct syntax) to find archived notes", "passed": true, "evidence": "Exact syntax obsidian tag tag=\"#archived\" used in Part 5 Step 1."},
+        {"text": "Uses 'obsidian move file=... to=...' syntax for moving files (not cp or mv)", "passed": true, "evidence": "obsidian move used throughout Part 5; no shell mv/cp for file moves."},
+        {"text": "CLI parameter style is param=value (Obsidian CLI convention), not --param", "passed": true, "evidence": "All parameters use param=value style throughout. No --param flags."}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "vault-health-check",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0,
+        "failed": 6,
+        "total": 6,
+        "time_seconds": 65.8,
+        "tokens": 18281,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Uses 'obsidian orphans' to find disconnected notes", "passed": false, "evidence": "Uses shell commands (rg, fd, comm) instead. No obsidian CLI commands used."},
+        {"text": "Uses 'obsidian unresolved' to find broken links", "passed": false, "evidence": "Uses rg regex extraction and comm set-difference. No obsidian unresolved."},
+        {"text": "Uses 'obsidian deadends' to find dead-end notes", "passed": false, "evidence": "Uses fd/rg/comm shell pipelines. No obsidian deadends."},
+        {"text": "Uses 'obsidian tag tag=\"#archived\"' (or similar correct syntax) to find archived notes", "passed": false, "evidence": "Uses rg --files-with-matches with regex. No obsidian tag command."},
+        {"text": "Uses 'obsidian move file=... to=...' syntax for moving files (not cp or mv)", "passed": false, "evidence": "Uses Unix mv command. Agent noted that mv won't auto-update Obsidian backlinks."},
+        {"text": "CLI parameter style is param=value (Obsidian CLI convention), not --param", "passed": false, "evidence": "No Obsidian CLI used at all — all Unix shell conventions."}
+      ],
+      "notes": ["Agent had no knowledge of the Obsidian CLI and defaulted to shell tools (rg, fd, mv). Even noted that mv won't update Obsidian backlinks but still used it."]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "add-callouts",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 30.6,
+        "tokens": 20185,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Warning callout uses correct syntax: > [!warning] with the blocker message", "passed": true, "evidence": "Line 1: '> [!warning] Blocker: API rate limits may delay the Q2 release — needs escalation by EOW'"},
+        {"text": "Tip callout uses collapsed syntax: > [!tip]- (with minus for collapsed by default)", "passed": true, "evidence": "Line 3: '> [!tip]- How to check current rate limit status'"},
+        {"text": "Callout content matches the requested text accurately", "passed": true, "evidence": "Both callouts contain the requested content accurately."},
+        {"text": "Does not use incorrect callout delimiters (no triple backtick code blocks instead of > syntax)", "passed": true, "evidence": "Both callouts use > [!type] syntax. No triple backtick fences as callout delimiters."},
+        {"text": "Provides the content in a form ready to paste or append to the file (e.g., shows the exact markdown)", "passed": true, "evidence": "Output is a standalone callouts.md with only the two callout blocks, ready to paste."}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "add-callouts",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 26.6,
+        "tokens": 15227,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Warning callout uses correct syntax: > [!warning] with the blocker message", "passed": true, "evidence": "Line 1-2: '> [!warning]' with blocker message on next line."},
+        {"text": "Tip callout uses collapsed syntax: > [!tip]- (with minus for collapsed by default)", "passed": true, "evidence": "Line 4: '> [!tip]- How to check current rate limit status'"},
+        {"text": "Callout content matches the requested text accurately", "passed": true, "evidence": "Both callouts contain the requested content accurately."},
+        {"text": "Does not use incorrect callout delimiters (no triple backtick code blocks instead of > syntax)", "passed": true, "evidence": "Both callouts use > prefix. Triple backticks only inside tip callout for curl command (valid)."},
+        {"text": "Provides the content in a form ready to paste or append to the file (e.g., shows the exact markdown)", "passed": true, "evidence": "Output contains only the two callout blocks, pure markdown ready to paste."}
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 49.37, "stddev": 28.29, "min": 30.6, "max": 81.9},
+      "tokens": {"mean": 22489, "stddev": 3869, "min": 20185, "max": 26957}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.667, "stddev": 0.577, "min": 0.0, "max": 1.0},
+      "time_seconds": {"mean": 37.73, "stddev": 24.48, "min": 20.8, "max": 65.8},
+      "tokens": {"mean": 16190, "stddev": 1813, "min": 15061, "max": 18281}
+    },
+    "delta": {
+      "pass_rate": "+0.33",
+      "time_seconds": "+11.6",
+      "tokens": "+6299"
+    }
+  },
+  "notes": [
+    "Eval 1 (create-project-note) passes 100% with and without skill — Claude already knows Obsidian note conventions at baseline. Non-discriminating.",
+    "Eval 2 (vault-health-check) is highly discriminating: 6/6 with skill vs 0/6 without. The skill's CLI reference is the sole source of Obsidian CLI knowledge.",
+    "Eval 3 (add-callouts) passes 100% with and without skill — Claude already knows Obsidian callout syntax including the collapsed form. Non-discriminating.",
+    "The +0.33 pass rate delta is entirely driven by eval 2. Two of three evals do not differentiate skill vs no-skill.",
+    "Recommend replacing evals 1 and 3 with harder tests: vault reorganization preserving wikilinks, property-based filtering, or template-based note creation from CLI."
+  ]
+}

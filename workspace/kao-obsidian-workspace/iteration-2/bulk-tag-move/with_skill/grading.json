@@ -1,0 +1,75 @@
+{
+  "expectations": [
+    {
+      "text": "Uses 'obsidian tag tag=\"#meeting\"' (or similar correct syntax) to find notes by tag",
+      "passed": true,
+      "evidence": "Line 18 and 24: `obsidian tag tag=\"#meeting\"` used to find notes by tag, both for preview and for the scripted loop."
+    },
+    {
+      "text": "Uses 'format=paths' to get file paths suitable for looping/scripting",
+      "passed": true,
+      "evidence": "Line 24: `obsidian tag tag=\"#meeting\" format=paths` used explicitly for scripting. Also used in the loop on line 46 and in the full copy-paste sequence."
+    },
+    {
+      "text": "Uses 'obsidian move file=... to=...' to move files (not shell mv or cp)",
+      "passed": true,
+      "evidence": "Line 47: `obsidian move file=\"$note\" to=\"meetings/\"` inside the while loop. No shell `mv` or `cp` used anywhere."
+    },
+    {
+      "text": "Mentions or explains that 'obsidian move' auto-updates wikilinks (unlike shell mv)",
+      "passed": true,
+      "evidence": "Lines 6-7: \"The `obsidian move` command is the only safe way to relocate files in an Obsidian vault. It automatically updates every wikilink across the vault that points to a moved file. Using the shell's `mv` command (or Finder/Explorer drag-and-drop) bypasses Obsidian's link updater and will leave all `[[wikilinks]]` broken.\""
+    },
+    {
+      "text": "Provides a loop or scripted pattern to move all matching files, not just a single example",
+      "passed": true,
+      "evidence": "Lines 46-49: `obsidian tag tag=\"#meeting\" format=paths | while read note; do obsidian move file=\"$note\" to=\"meetings/\"; done` — a full shell loop over all matching files, not a single hardcoded path."
+    },
+    {
+      "text": "CLI parameter style is param=value, not --param",
+      "passed": true,
+      "evidence": "All CLI invocations consistently use param=value style: `tag=\"#meeting\"`, `format=paths`, `file=\"$note\"`, `to=\"meetings/\"`. No --param flags used anywhere."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "tool_calls": {
+      "Read": 3,
+      "Write": 2,
+      "Bash": 3,
+      "Glob": 1
+    },
+    "total_tool_calls": 9,
+    "total_steps": 6,
+    "files_created": ["guide.md", "metrics.json"],
+    "errors_encountered": 0,
+    "output_chars": 4479,
+    "transcript_chars": 18500
+  },
+  "timing": {
+    "executor_duration_seconds": 51.9,
+    "total_duration_seconds": 51.9
+  },
+  "claims": [
+    "obsidian move auto-creates the destination folder if it doesn't exist",
+    "obsidian move updates both bare [[Note Name]] and path-based [[path/Note Name]] wikilinks",
+    "~20 meeting notes are spread across 2-Areas/work/, 2-Areas/personal/, and vault root"
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      "Consider adding a dry-run or echo-only loop variant as a safety step before the live move loop.",
+      "The guide could note whether `obsidian move` is idempotent (i.e., safe to re-run if a file is already in the destination)."
+    ],
+    "overall": "Perfect score — all six assertions passed. The output is a well-structured, production-quality guide that correctly uses the Obsidian CLI, explains the wikilink safety rationale, and provides a complete scripted loop pattern. Execution was efficient (9 tool calls, no errors)."
+  }
+}

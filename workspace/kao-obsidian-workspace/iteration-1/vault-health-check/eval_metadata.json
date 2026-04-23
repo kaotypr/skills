@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "vault-health-check",
+  "prompt": "My Obsidian vault has been growing for 2 years and I think it's gotten messy. I want to do a health check: find orphan notes, broken links, and deadend notes. Then I want to move anything tagged #archived to my 4-Archive/ folder. Walk me through the exact CLI commands I'd run and what to do with the results.",
+  "assertions": [
+    "Uses 'obsidian orphans' to find disconnected notes",
+    "Uses 'obsidian unresolved' to find broken links",
+    "Uses 'obsidian deadends' to find dead-end notes",
+    "Uses 'obsidian tag tag=\"#archived\"' (or similar correct syntax) to find archived notes",
+    "Uses 'obsidian move file=... to=...' syntax for moving files (not cp or mv)",
+    "CLI parameter style is param=value (Obsidian CLI convention), not --param"
+  ]
+}

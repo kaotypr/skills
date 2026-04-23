@@ -1,0 +1,73 @@
+{
+  "skill_name": "kao-obsidian",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to create a project note in my Obsidian vault for a new client engagement. The client is Meridian Consulting, we're rebuilding their internal HR portal. Deadline is June 30th 2026, project lead is me (Adhitya), status is 'active'. I'm using PARA — so my vault structure is 1-Projects/, 2-Areas/, 3-Resources/, 4-Archive/. The note should link to a contact note [[Meridian Consulting]] and a resource note [[HR Portal Requirements]]. Include a task list with at least 3 initial tasks.",
+      "expected_output": "A properly formatted Obsidian markdown note at 1-Projects/meridian-hr-portal.md (or similar), with YAML frontmatter including tags, date, status, due, and priority fields; wikilinks to [[Meridian Consulting]] and [[HR Portal Requirements]]; and a task list using Obsidian's checkbox syntax.",
+      "files": [],
+      "expectations": [
+        "Output contains YAML frontmatter (fenced by ---) with at least tags, date, and status fields",
+        "Output uses wikilinks [[Meridian Consulting]] and [[HR Portal Requirements]], not markdown links",
+        "Output includes at least 3 task items using - [ ] checkbox syntax",
+        "Output uses a heading structure appropriate for a project note",
+        "Output does not use any forbidden characters in file path (# ^ [ ] | \\)",
+        "Due date is represented as 2026-06-30 in frontmatter"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "My Obsidian vault has been growing for 2 years and I think it's gotten messy. I want to do a health check: find orphan notes, broken links, and deadend notes. Then I want to move anything tagged #archived to my 4-Archive/ folder. Walk me through the exact CLI commands I'd run and what to do with the results.",
+      "expected_output": "A clear walkthrough using Obsidian CLI commands: obsidian orphans, obsidian unresolved, obsidian deadends, and a loop using obsidian tag to find #archived notes and move them. Commands should be correct syntax with proper parameter style (param=value, not --param value).",
+      "files": [],
+      "expectations": [
+        "Uses 'obsidian orphans' to find disconnected notes",
+        "Uses 'obsidian unresolved' to find broken links",
+        "Uses 'obsidian deadends' to find dead-end notes",
+        "Uses 'obsidian tag tag=\"#archived\"' (or similar correct syntax) to find archived notes",
+        "Uses 'obsidian move file=... to=...' syntax for moving files (not cp or mv)",
+        "CLI parameter style is param=value (Obsidian CLI convention), not --param"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I just had a meeting with my team and realized I need to add some important notes to my existing meeting note at 'Areas/meetings/2026-04-23 Team Sync.md'. Add a warning callout that says 'Blocker: API rate limits may delay the Q2 release — needs escalation by EOW'. Also add a collapsed tip callout about how to check current rate limit status: run 'curl https://api.internal/status' and look for the rate_limit_remaining field.",
+      "expected_output": "Proper Obsidian callout syntax for both callouts: a > [!warning] for the blocker and a > [!tip]- for the collapsed tip (collapsed by default). Content should be accurate to what was requested.",
+      "files": [],
+      "expectations": [
+        "Warning callout uses correct syntax: > [!warning] with the blocker message",
+        "Tip callout uses collapsed syntax: > [!tip]- (with minus for collapsed by default)",
+        "Callout content matches the requested text accurately",
+        "Does not use incorrect callout delimiters (no triple backtick code blocks instead of > syntax)",
+        "Provides the content in a form ready to paste or append to the file (e.g., shows the exact markdown)"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I have about 20 meeting notes scattered across my vault — some in 2-Areas/work/, some in 2-Areas/personal/, some just sitting in the root. They're all tagged #meeting. I want to consolidate them all into a new meetings/ folder. Walk me through the exact CLI commands to find all of them and move them without breaking any wikilinks that point to those notes.",
+      "expected_output": "A CLI walkthrough using obsidian tag to find notes by #meeting tag with format=paths, then obsidian move to relocate each file. Should explain that obsidian move auto-updates wikilinks (unlike shell mv). Should provide a loop/script pattern.",
+      "files": [],
+      "expectations": [
+        "Uses 'obsidian tag tag=\"#meeting\"' (or similar correct syntax) to find notes by tag",
+        "Uses 'format=paths' to get file paths suitable for looping/scripting",
+        "Uses 'obsidian move file=... to=...' to move files (not shell mv or cp)",
+        "Mentions or explains that 'obsidian move' auto-updates wikilinks (unlike shell mv)",
+        "Provides a loop or scripted pattern to move all matching files, not just a single example",
+        "CLI parameter style is param=value, not --param"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "I just finished my website-redesign project and want to mark it as complete in Obsidian. All the project notes are in 1-Projects/website-redesign/ — there are about 8 files in there. I want to set the 'status' property to 'complete' and add a 'completed' property with today's date (2026-04-24) on every note in that folder. What are the exact CLI commands to do this?",
+      "expected_output": "A CLI walkthrough using obsidian files or obsidian search to list notes in the folder, then obsidian property:set to update status and completed on each file. Should use correct param=value syntax and provide a loop pattern for all files.",
+      "files": [],
+      "expectations": [
+        "Uses 'obsidian files' or 'obsidian search' with a path/folder filter to list notes in 1-Projects/website-redesign/",
+        "Uses 'obsidian property:set file=\"...\" name=\"status\" value=\"complete\"' (or correct equivalent syntax)",
+        "Uses 'obsidian property:set' to set the completed date to 2026-04-24",
+        "Provides a loop pattern to apply the property updates to all files in the folder",
+        "CLI parameter style is param=value, not --param"
+      ]
+    }
+  ]
+}

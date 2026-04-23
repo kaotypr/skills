@@ -1,0 +1,76 @@
+{
+  "expectations": [
+    {
+      "text": "Uses 'obsidian files' or 'obsidian search' with a path/folder filter to list notes in 1-Projects/website-redesign/",
+      "passed": false,
+      "evidence": "The guide uses Python pathlib glob, bash glob patterns ('for f in \"$DIR\"/*.md'), and find commands to list files. No 'obsidian files' or 'obsidian search' CLI commands are used anywhere in the guide."
+    },
+    {
+      "text": "Uses 'obsidian property:set file=\"...\" name=\"status\" value=\"complete\"' (or correct equivalent syntax)",
+      "passed": false,
+      "evidence": "Option C uses a third-party obsidian-cli with syntax 'obsidian-cli property set \"$note_name\" status complete --vault \"$VAULT\"' which differs from the expected 'obsidian property:set' command. Options A and B bypass the Obsidian CLI entirely, using Python/Perl to directly edit YAML frontmatter."
+    },
+    {
+      "text": "Uses 'obsidian property:set' to set the completed date to 2026-04-24",
+      "passed": false,
+      "evidence": "No 'obsidian property:set' command is used. Option C uses 'obsidian-cli property set \"$note_name\" completed 2026-04-24' (different CLI tool), while Options A and B use Python/Perl regex substitution on YAML frontmatter directly."
+    },
+    {
+      "text": "Provides a loop pattern to apply the property updates to all files in the folder",
+      "passed": true,
+      "evidence": "Multiple loop patterns provided: Python 'for path in pathlib.Path(PROJECT_DIR).glob(\"*.md\")' in Option A, bash 'for f in \"$DIR\"/*.md; do ... done' in Options B and C, all iterating over files in 1-Projects/website-redesign/."
+    },
+    {
+      "text": "CLI parameter style is param=value, not --param",
+      "passed": false,
+      "evidence": "Option C uses '--vault \"$VAULT\"' flag style throughout. No param=value style is used anywhere in the guide. The guide relies on positional arguments and --param flags."
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 4,
+    "total": 5,
+    "pass_rate": 0.2
+  },
+  "execution_metrics": {
+    "tool_calls": {
+      "Read": 0,
+      "Write": 2,
+      "Bash": 1
+    },
+    "total_tool_calls": 3,
+    "total_steps": 2,
+    "files_created": ["guide.md", "metrics.json"],
+    "errors_encountered": 0,
+    "output_chars": 3487,
+    "transcript_chars": 5200
+  },
+  "timing": {
+    "executor_duration_seconds": 38.5,
+    "total_duration_seconds": 38.5
+  },
+  "claims": [
+    "Guide provides three options: Python, Perl, and obsidian-cli",
+    "All options handle both existing and missing frontmatter",
+    "Option C references obsidian-cli but notes syntax may vary by version"
+  ],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Option C notes 'Check your CLI's exact syntax with obsidian-cli --help — flags vary by version', indicating uncertainty about the correct CLI syntax"
+    ],
+    "needs_review": [
+      "The guide assumes 'obsidian-cli' from github.com/Yakitrak/obsidian-cli, which is a third-party tool unrelated to the expected 'obsidian' CLI with 'property:set' subcommand"
+    ],
+    "workarounds": [
+      "Model bypassed the expected Obsidian CLI entirely in favor of direct YAML file manipulation (Options A and B), likely because it was unaware of the correct 'obsidian property:set' command syntax"
+    ]
+  },
+  "eval_feedback": {
+    "suggestions": [
+      "The eval should clarify which specific Obsidian CLI tool is expected (the one with 'obsidian files', 'obsidian search', 'obsidian property:set' subcommands and param=value syntax)",
+      "Including example CLI commands or a reference to the CLI's help output in the prompt would reduce ambiguity",
+      "The model defaulted to raw file manipulation and a different third-party CLI because it lacked knowledge of the specific expected CLI's command syntax and style"
+    ],
+    "overall": "The output completely misses the expected Obsidian CLI workflow. Only 1 of 5 assertions passed (loop pattern). The model defaulted to direct YAML frontmatter manipulation and a third-party CLI tool instead of using the expected 'obsidian' CLI with 'files'/'search'/'property:set' subcommands and param=value argument style. This reflects a knowledge gap about the specific CLI's interface rather than a reasoning failure."
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "expectations": [
+    {
+      "text": "Warning callout uses correct syntax: > [!warning] with the blocker message",
+      "passed": true,
+      "evidence": "Line 1: '> [!warning] Blocker: API rate limits may delay the Q2 release — needs escalation by EOW' — correct Obsidian callout syntax with title inline"
+    },
+    {
+      "text": "Tip callout uses collapsed syntax: > [!tip]- (with minus for collapsed by default)",
+      "passed": true,
+      "evidence": "Line 3: '> [!tip]- How to check current rate limit status' — uses the minus sign for collapsed-by-default syntax"
+    },
+    {
+      "text": "Callout content matches the requested text accurately",
+      "passed": true,
+      "evidence": "Warning message matches exactly: 'Blocker: API rate limits may delay the Q2 release — needs escalation by EOW'. Tip content includes the curl command 'curl https://api.internal/status' and references the 'rate_limit_remaining' field."
+    },
+    {
+      "text": "Does not use incorrect callout delimiters (no triple backtick code blocks instead of > syntax)",
+      "passed": true,
+      "evidence": "Both callouts use '> [!type]' syntax throughout. No triple backtick fences are used as callout delimiters. Inline code backticks are used correctly for the curl command and field name."
+    },
+    {
+      "text": "Provides the content in a form ready to paste or append to the file (e.g., shows the exact markdown)",
+      "passed": true,
+      "evidence": "The output is a standalone callouts.md file containing only the two callout blocks, ready to copy and paste directly into an Obsidian note."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "tool_calls": {"Read": 1, "Write": 2, "Bash": 2, "Edit": 0},
+    "total_tool_calls": 5,
+    "total_steps": 4,
+    "files_created": ["callouts.md"],
+    "errors_encountered": 0,
+    "output_chars": 229,
+    "transcript_chars": 12500
+  },
+  "timing": {
+    "executor_duration_seconds": null,
+    "total_duration_seconds": 30.6
+  },
+  "claims": [],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      "The warning callout could optionally use a title-only format (no inline title) with the blocker message on the next line — both approaches are valid Obsidian syntax, but the inline title form used here is clean and acceptable.",
+      "timing.json does not include a separate executor_duration_seconds field; only total_duration_seconds (30.6s) is available. Consider adding executor_duration_seconds to the timing schema for more granular tracking."
+    ],
+    "overall": "The agent produced a perfect output: both callouts use correct Obsidian syntax, the warning uses > [!warning] with the full blocker message inline, the tip uses the collapsed > [!tip]- form, and all requested content is accurately represented. The output is minimal and paste-ready. All 5 expectations passed."
+  }
+}

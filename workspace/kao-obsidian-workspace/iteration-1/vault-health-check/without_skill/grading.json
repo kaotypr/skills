@@ -1,0 +1,67 @@
+{
+  "expectations": [
+    {
+      "text": "Uses 'obsidian orphans' to find disconnected notes",
+      "passed": false,
+      "evidence": "The guide uses shell commands (rg, fd, comm) to find orphan notes. No 'obsidian orphans' CLI command appears anywhere in the output."
+    },
+    {
+      "text": "Uses 'obsidian unresolved' to find broken links",
+      "passed": false,
+      "evidence": "The guide uses rg regex extraction plus comm set-difference to find broken links. No 'obsidian unresolved' CLI command appears anywhere in the output."
+    },
+    {
+      "text": "Uses 'obsidian deadends' to find dead-end notes",
+      "passed": false,
+      "evidence": "The guide uses fd/rg/comm shell pipelines to find dead-end notes. No 'obsidian deadends' CLI command appears anywhere in the output."
+    },
+    {
+      "text": "Uses 'obsidian tag tag=\"#archived\"' (or similar correct syntax) to find archived notes",
+      "passed": false,
+      "evidence": "The guide uses 'rg --files-with-matches' with a regex pattern to find archived notes. No 'obsidian tag' CLI command appears anywhere in the output."
+    },
+    {
+      "text": "Uses 'obsidian move file=... to=...' syntax for moving files (not cp or mv)",
+      "passed": false,
+      "evidence": "The guide uses the Unix 'mv' command to move files to 4-Archive/. The 'obsidian move' CLI command is never used. The guide even notes in a caveat that using CLI mv will NOT auto-update backlinks and suggests using Obsidian's file explorer instead."
+    },
+    {
+      "text": "CLI parameter style is param=value (Obsidian CLI convention), not --param",
+      "passed": false,
+      "evidence": "The guide does not use the Obsidian CLI at all. All commands use standard Unix/shell conventions (rg, fd, mv, bash). There are no param=value style arguments present."
+    }
+  ],
+  "summary": {
+    "passed": 0,
+    "failed": 6,
+    "total": 6,
+    "pass_rate": 0.0
+  },
+  "execution_metrics": {
+    "tool_calls": {"Read": 0, "Write": 2, "Bash": 2, "Edit": 0},
+    "total_tool_calls": 4,
+    "total_steps": 3,
+    "files_created": ["guide.md", "metrics.json"],
+    "errors_encountered": 0,
+    "output_chars": 9676,
+    "transcript_chars": 9676
+  },
+  "timing": {
+    "executor_duration_seconds": 65.8,
+    "total_duration_seconds": 65.8
+  },
+  "claims": [],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      "The agent had no knowledge of the Obsidian CLI and defaulted to standard Unix shell tools (rg, fd, mv) instead. The skill should teach the agent the correct Obsidian CLI commands (obsidian orphans, obsidian unresolved, obsidian deadends, obsidian tag, obsidian move) and their param=value argument syntax.",
+      "This is a clear case where the 'without_skill' baseline produces a completely different approach — shell scripting instead of Obsidian CLI — confirming that the skill adds meaningful value by teaching the correct tooling.",
+      "The output is otherwise coherent and would work as a shell-based guide, but it entirely misses the Obsidian CLI abstraction layer that the evaluation expects."
+    ],
+    "overall": "0/6 expectations passed. The agent produced a technically valid shell-scripting guide but did not use any Obsidian CLI commands. All six expectations require use of the Obsidian CLI (obsidian orphans, obsidian unresolved, obsidian deadends, obsidian tag, obsidian move) with param=value syntax — none of which appear in the output."
+  }
+}

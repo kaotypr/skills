@@ -1,0 +1,9 @@
+{
+  "tool_calls": {"Read": 1, "Write": 2, "Bash": 2, "Edit": 0},
+  "total_tool_calls": 5,
+  "total_steps": 4,
+  "files_created": ["callouts.md"],
+  "errors_encountered": 0,
+  "output_chars": 229,
+  "transcript_chars": 12500
+}

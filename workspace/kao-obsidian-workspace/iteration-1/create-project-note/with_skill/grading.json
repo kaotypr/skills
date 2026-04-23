@@ -1,0 +1,66 @@
+{
+  "expectations": [
+    {
+      "text": "Output contains YAML frontmatter (fenced by ---) with at least tags, date, and status fields",
+      "passed": true,
+      "evidence": "Frontmatter present between --- fences. Contains: tags (list with project, active, client, hr), date: 2026-04-24, status: active"
+    },
+    {
+      "text": "Output uses wikilinks [[Meridian Consulting]] and [[HR Portal Requirements]], not markdown links",
+      "passed": true,
+      "evidence": "Both wikilinks appear multiple times: [[Meridian Consulting]] on lines 14, 21, 28, 49 and [[HR Portal Requirements]] on lines 15, 21, 38, 50. No markdown-style links ([text](url)) used for these references."
+    },
+    {
+      "text": "Output includes at least 3 task items using - [ ] checkbox syntax",
+      "passed": true,
+      "evidence": "Five tasks with - [ ] syntax found on lines 35-39: kickoff meeting, review requirements, set up repository, draft architecture, deliver wireframes"
+    },
+    {
+      "text": "Output uses a heading structure appropriate for a project note",
+      "passed": true,
+      "evidence": "H1 title 'Meridian Consulting — HR Portal Rebuild', followed by H2 sections: Details, Tasks, Notes, Related — a clear and logical project note structure"
+    },
+    {
+      "text": "Output does not use any forbidden characters in file path (# ^ [ ] | \\)",
+      "passed": true,
+      "evidence": "The note.md filename contains none of the forbidden characters. The title 'Meridian Consulting — HR Portal Rebuild' uses an em dash (—), not any forbidden character."
+    },
+    {
+      "text": "Due date is represented as 2026-06-30 in frontmatter",
+      "passed": true,
+      "evidence": "Frontmatter line 11: 'due: 2026-06-30' — exact ISO date format match"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "tool_calls": {"Read": 1, "Write": 2, "Bash": 3, "Edit": 0},
+    "total_tool_calls": 6,
+    "total_steps": 4,
+    "files_created": ["note.md", "metrics.json"],
+    "errors_encountered": 0,
+    "output_chars": 1282,
+    "transcript_chars": 15800
+  },
+  "timing": {
+    "executor_duration_seconds": 35.6,
+    "total_duration_seconds": 35.6
+  },
+  "claims": [],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      "Consider adding a 'file_path' expectation to verify the note is saved to the correct vault location (e.g., 1-Projects/ folder)",
+      "A test for the Obsidian callout syntax (> [!info]) could validate richer note formatting beyond basic structure"
+    ],
+    "overall": "Perfect score — all 6 expectations passed. The generated note correctly uses YAML frontmatter with required fields, wikilinks throughout, 5 checkbox tasks, a logical H1/H2 heading structure, a valid filename, and the exact due date 2026-06-30. The skill produced a well-formed Obsidian project note with no errors."
+  }
+}

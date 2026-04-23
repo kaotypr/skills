@@ -1,0 +1,66 @@
+{
+  "expectations": [
+    {
+      "text": "Uses 'obsidian orphans' to find disconnected notes",
+      "passed": true,
+      "evidence": "guide.md Part 2 uses 'obsidian orphans' as the primary command, repeated in Quick Reference table and Summary Workflow section."
+    },
+    {
+      "text": "Uses 'obsidian unresolved' to find broken links",
+      "passed": true,
+      "evidence": "guide.md Part 3 uses 'obsidian unresolved' as the primary command, also appears in Quick Reference table, Summary Workflow, and Part 6 verification."
+    },
+    {
+      "text": "Uses 'obsidian deadends' to find dead-end notes",
+      "passed": true,
+      "evidence": "guide.md Part 4 uses 'obsidian deadends' as the primary command, also in Quick Reference table and Summary Workflow."
+    },
+    {
+      "text": "Uses 'obsidian tag tag=\"#archived\"' (or similar correct syntax) to find archived notes",
+      "passed": true,
+      "evidence": "guide.md Part 5 Step 1 uses 'obsidian tag tag=\"#archived\"' exactly, also in Quick Reference table and Summary Workflow."
+    },
+    {
+      "text": "Uses 'obsidian move file=... to=...' syntax for moving files (not cp or mv)",
+      "passed": true,
+      "evidence": "guide.md Part 5 Step 2 uses 'obsidian move file=\"1-Projects/old-project.md\" to=\"4-Archive/\"' and similar. Quick Reference table shows 'obsidian move file=\"path.md\" to=\"4-Archive/\"'. No cp or mv shell commands used for file moves."
+    },
+    {
+      "text": "CLI parameter style is param=value (Obsidian CLI convention), not --param",
+      "passed": true,
+      "evidence": "All CLI parameters throughout guide.md use param=value style (e.g., format=json, format=paths, tag=\"#archived\", file=\"...\", to=\"...\", sort=modified, limit=20, name=\"tags\", value='[\"done\"]'). No --param style flags appear anywhere in the guide."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "tool_calls": {"Read": 3, "Write": 2, "Bash": 3, "Edit": 0},
+    "total_tool_calls": 8,
+    "total_steps": 5,
+    "files_created": ["guide.md", "metrics.json"],
+    "errors_encountered": 0,
+    "output_chars": 9534,
+    "transcript_chars": 0
+  },
+  "timing": {
+    "executor_duration_seconds": null,
+    "total_duration_seconds": 81.9
+  },
+  "claims": [],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      "Consider adding an expectation for correct vault-scoped commands (vault= prefix) to validate multi-vault awareness.",
+      "timing.json does not include an executor_duration_seconds field — consider adding it to the harness for finer-grained timing analysis."
+    ],
+    "overall": "Perfect pass on all 6 expectations. The guide correctly uses all required Obsidian CLI commands with proper param=value syntax, uses obsidian move instead of shell mv/cp, and demonstrates correct tag query syntax. The output is thorough and well-structured."
+  }
+}

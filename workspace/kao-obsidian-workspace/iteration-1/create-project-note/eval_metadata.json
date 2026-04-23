@@ -1,0 +1,13 @@
+{
+  "eval_id": 1,
+  "eval_name": "create-project-note",
+  "prompt": "I need to create a project note in my Obsidian vault for a new client engagement. The client is Meridian Consulting, we're rebuilding their internal HR portal. Deadline is June 30th 2026, project lead is me (Adhitya), status is 'active'. I'm using PARA — so my vault structure is 1-Projects/, 2-Areas/, 3-Resources/, 4-Archive/. The note should link to a contact note [[Meridian Consulting]] and a resource note [[HR Portal Requirements]]. Include a task list with at least 3 initial tasks.",
+  "assertions": [
+    "Output contains YAML frontmatter (fenced by ---) with at least tags, date, and status fields",
+    "Output uses wikilinks [[Meridian Consulting]] and [[HR Portal Requirements]], not markdown links",
+    "Output includes at least 3 task items using - [ ] checkbox syntax",
+    "Output uses a heading structure appropriate for a project note",
+    "Output does not use any forbidden characters in file path (# ^ [ ] | \\)",
+    "Due date is represented as 2026-06-30 in frontmatter"
+  ]
+}

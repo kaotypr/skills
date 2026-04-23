@@ -1,0 +1,13 @@
+{
+  "eval_id": 4,
+  "eval_name": "bulk-tag-move",
+  "prompt": "I have about 20 meeting notes scattered across my vault — some in 2-Areas/work/, some in 2-Areas/personal/, some just sitting in the root. They're all tagged #meeting. I want to consolidate them all into a new meetings/ folder. Walk me through the exact CLI commands to find all of them and move them without breaking any wikilinks that point to those notes.",
+  "assertions": [
+    "Uses 'obsidian tag tag=\"#meeting\"' (or similar correct syntax) to find notes by tag",
+    "Uses 'format=paths' to get file paths suitable for looping/scripting",
+    "Uses 'obsidian move file=... to=...' to move files (not shell mv or cp)",
+    "Mentions or explains that 'obsidian move' auto-updates wikilinks (unlike shell mv)",
+    "Provides a loop or scripted pattern to move all matching files, not just a single example",
+    "CLI parameter style is param=value, not --param"
+  ]
+}

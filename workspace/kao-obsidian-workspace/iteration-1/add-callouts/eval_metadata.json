@@ -1,0 +1,12 @@
+{
+  "eval_id": 3,
+  "eval_name": "add-callouts",
+  "prompt": "I just had a meeting with my team and realized I need to add some important notes to my existing meeting note at 'Areas/meetings/2026-04-23 Team Sync.md'. Add a warning callout that says 'Blocker: API rate limits may delay the Q2 release — needs escalation by EOW'. Also add a collapsed tip callout about how to check current rate limit status: run 'curl https://api.internal/status' and look for the rate_limit_remaining field.",
+  "assertions": [
+    "Warning callout uses correct syntax: > [!warning] with the blocker message",
+    "Tip callout uses collapsed syntax: > [!tip]- (with minus for collapsed by default)",
+    "Callout content matches the requested text accurately",
+    "Does not use incorrect callout delimiters (no triple backtick code blocks instead of > syntax)",
+    "Provides the content in a form ready to paste or append to the file (e.g., shows the exact markdown)"
+  ]
+}

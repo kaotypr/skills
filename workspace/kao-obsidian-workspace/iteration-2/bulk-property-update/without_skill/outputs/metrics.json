@@ -1,0 +1,13 @@
+{
+  "tool_calls": {
+    "Read": 0,
+    "Write": 2,
+    "Bash": 1
+  },
+  "total_tool_calls": 3,
+  "total_steps": 2,
+  "files_created": ["guide.md", "metrics.json"],
+  "errors_encountered": 0,
+  "output_chars": 3487,
+  "transcript_chars": 5200
+}

@@ -1,0 +1,12 @@
+{
+  "eval_id": 5,
+  "eval_name": "bulk-property-update",
+  "prompt": "I just finished my website-redesign project and want to mark it as complete in Obsidian. All the project notes are in 1-Projects/website-redesign/ — there are about 8 files in there. I want to set the 'status' property to 'complete' and add a 'completed' property with today's date (2026-04-24) on every note in that folder. What are the exact CLI commands to do this?",
+  "assertions": [
+    "Uses 'obsidian files' or 'obsidian search' with a path/folder filter to list notes in 1-Projects/website-redesign/",
+    "Uses 'obsidian property:set file=\"...\" name=\"status\" value=\"complete\"' (or correct equivalent syntax)",
+    "Uses 'obsidian property:set' to set the completed date to 2026-04-24",
+    "Provides a loop pattern to apply the property updates to all files in the folder",
+    "CLI parameter style is param=value, not --param"
+  ]
+}
