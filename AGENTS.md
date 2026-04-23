@@ -19,11 +19,51 @@ skills/                  # Shareable skills organized by category
 .claude/skills/          # Project-local skills (explore-codebase, review-changes, debug-issue, refactor-safely)
 research/                # Research notes and materials
 workspace/               # Eval and testing space for skills
+  <skill-name>-workspace/  # One workspace per skill, named <skill-name>-workspace
+    evals/                 # Eval definitions (evals.json, input files)
+    iteration-N/           # Results for each eval iteration
 ```
 
 - Each skill is a Markdown file (`.md`) following the Claude Code custom slash command convention
 - Skills in `skills/` are organized by category and intended for sharing
 - Skills in `.experimental/` are work-in-progress, mirroring the same category structure
+- Skill eval workspaces (evals/ and iteration-N/ dirs) always go in `workspace/<skill-name>-workspace/` — never inside the `skills/` category directories
+
+## Skill Documentation Workflow
+
+After creating or evaluating a skill, always update `README.md` with a skill entry in this format:
+
+```markdown
+### <skill-name>
+
+One-line description of what the skill does.
+
+- **Version**: X.Y.Z
+- **Skill**: [`skills/<category>/<skill-name>`](skills/<category>/<skill-name>)
+- **Evals**: [`workspace/<skill-name>-workspace`](workspace/<skill-name>-workspace) (N scenarios, N iterations)
+
+| Metric | With Skill | Without Skill |
+|---|---|---|
+| Pass Rate | X% (N/N) | X% (N/N) |
+| Avg Tokens | N | N |
+
+Tested across: scenario1, scenario2, ...
+
+<details>
+<summary>Eval iterations</summary>
+
+**Iteration N** — Model: `model-id`
+
+| Eval | With Skill | Without Skill |
+|---|---|---|
+| eval-name | N/N | N/N |
+
+Notes on findings.
+
+</details>
+```
+
+Include: aggregate pass rates, average token usage, model used per iteration, per-eval breakdown, and a short note on what each iteration found.
 
 ## Commit Message Convention
 
