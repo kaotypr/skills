@@ -1,0 +1,131 @@
+{
+  "skill_name": "kao-project-vault",
+  "evals": [
+    {
+      "id": 1,
+      "name": "gitignored-vault-create-note",
+      "prompt": "Create a note documenting the decision to use PostgreSQL over MongoDB for the user service. The main reasons are: better support for relational queries across user profiles and permissions, and our team's existing expertise with SQL.",
+      "expected_output": "A decision note created inside vault/decisions/ following the existing conventions (frontmatter with tags/date/status/parent, callout, Options Considered section, Decision section). Should NOT fail or hesitate due to gitignore. Should NOT run setup.",
+      "working_dir": "eval-1-gitignored-vault/project",
+      "assertions": [
+        {
+          "id": "a1-no-setup",
+          "text": "Did NOT attempt to create a symlink or run setup steps",
+          "type": "negative"
+        },
+        {
+          "id": "a1-no-gitignore-hesitation",
+          "text": "Did NOT warn about gitignore or refuse to access vault/ due to git tracking",
+          "type": "negative"
+        },
+        {
+          "id": "a1-note-created",
+          "text": "Created a .md file inside vault/ (any subdirectory)",
+          "type": "positive"
+        },
+        {
+          "id": "a1-frontmatter-matches",
+          "text": "Frontmatter uses the same fields as existing notes (tags, date, status, parent) — not invented fields",
+          "type": "positive"
+        },
+        {
+          "id": "a1-parent-index-updated",
+          "text": "Updated the parent index note (User Service.md) with a wikilink to the new note",
+          "type": "positive"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "vault-root-skill-conventions",
+      "prompt": "Add an implementation note about the auth middleware refactor. We replaced the custom session middleware with a standard OAuth2 proxy. This simplified the codebase and improved security.",
+      "expected_output": "An implementation note created using the vault root skill's conventions (kebab-case filename, title/created/modified/type/project frontmatter, nested tags with /, no callouts, Related section at bottom). Should NOT use fallback conventions (no Title Case filename, no date field, no parent field, no callouts).",
+      "working_dir": "eval-2-vault-root-skill/project",
+      "assertions": [
+        {
+          "id": "a2-loaded-vault-skill",
+          "text": "Read the vault root skill at .claude/skills/obsidian-conventions/SKILL.md before creating the note",
+          "type": "positive"
+        },
+        {
+          "id": "a2-kebab-filename",
+          "text": "Created note with kebab-case filename (e.g., auth-middleware-refactor.md), NOT Title Case",
+          "type": "positive"
+        },
+        {
+          "id": "a2-vault-skill-frontmatter",
+          "text": "Frontmatter uses vault skill fields (title, created, modified, type, project) — NOT fallback fields (date, parent, status)",
+          "type": "positive"
+        },
+        {
+          "id": "a2-nested-tags",
+          "text": "Tags use nested format with / (e.g., #dev/auth, #project/auth-app) — NOT flat kebab-case",
+          "type": "positive"
+        },
+        {
+          "id": "a2-no-callouts",
+          "text": "Note does NOT use callouts (> [!abstract], etc.) since vault skill says not to",
+          "type": "negative"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "fallback-conventions",
+      "prompt": "Create a research note about rate limiting strategies. Cover token bucket, sliding window, and fixed window approaches.",
+      "expected_output": "A research note using this skill's fallback conventions (Title Case filename, tags/date frontmatter, callouts allowed). Should NOT invent frontmatter fields not in the fallback spec.",
+      "working_dir": "eval-3-fallback-conventions/project",
+      "assertions": [
+        {
+          "id": "a3-checked-vault-root",
+          "text": "Checked the vault root for .claude/skills/ and/or CLAUDE.md before falling back",
+          "type": "positive"
+        },
+        {
+          "id": "a3-fallback-frontmatter",
+          "text": "Frontmatter uses fallback fields (tags, date) — not invented fields like title, created, type",
+          "type": "positive"
+        },
+        {
+          "id": "a3-title-case-filename",
+          "text": "Filename uses Title Case (e.g., Rate Limiting Strategies.md)",
+          "type": "positive"
+        },
+        {
+          "id": "a3-note-created",
+          "text": "Created a .md file inside vault/",
+          "type": "positive"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "setup-from-scratch",
+      "prompt": "Link my vault project folder at VAULT_TARGET_PATH",
+      "expected_output": "Runs Phase 1 setup: creates vault symlink, updates AGENTS.md with vault section, finds vault root. Should ask about git tracking preference, not decide for the user.",
+      "working_dir": "eval-4-setup-from-scratch/project",
+      "assertions": [
+        {
+          "id": "a4-symlink-created",
+          "text": "Created a vault symlink pointing to the target path",
+          "type": "positive"
+        },
+        {
+          "id": "a4-agents-updated",
+          "text": "Updated AGENTS.md with a section about the vault",
+          "type": "positive"
+        },
+        {
+          "id": "a4-git-tracking-choice",
+          "text": "Informed the user about git tracking options without making the decision for them",
+          "type": "positive"
+        },
+        {
+          "id": "a4-vault-root-found",
+          "text": "Resolved the vault root (found .obsidian/ directory)",
+          "type": "positive"
+        }
+      ]
+    }
+  ]
+}

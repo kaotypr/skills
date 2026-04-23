@@ -1,0 +1,33 @@
+{
+  "metadata": {
+    "skill_name": "kao-project-vault",
+    "skill_path": "skills/workflow/kao-project-vault",
+    "executor_model": "claude-sonnet-4-6",
+    "analyzer_model": "claude-opus-4-6",
+    "timestamp": "2026-04-24T05:00:00Z",
+    "evals_run": ["gitignored-vault","vault-root-skill","fallback-conventions","setup-from-scratch","conflicting-conventions","cross-vault-access","multiple-vault-skills","deep-override","real-vault-note","claude-md-skill-ref","cross-project-ref"],
+    "runs_per_configuration": 1,
+    "baseline_design": "Fair baselines — without-skill prompts contain ZERO vault/Obsidian hints, just the task"
+  },
+  "runs": [
+    {"eval_name":"E1-gitignored-vault","with_skill":{"tokens":21897,"time_s":50.1},"without_skill":{"tokens":16096,"time_s":29.2}},
+    {"eval_name":"E2-vault-root-skill","with_skill":{"tokens":22740,"time_s":56.4},"without_skill":{"tokens":16902,"time_s":27.1}},
+    {"eval_name":"E3-fallback-conventions","with_skill":{"tokens":24419,"time_s":83.1},"without_skill":{"tokens":16171,"time_s":37.5}},
+    {"eval_name":"E4-setup-from-scratch","with_skill":{"tokens":24149,"time_s":62.4},"without_skill":{"tokens":23506,"time_s":58.9}},
+    {"eval_name":"E5-conflicting-conventions","with_skill":{"tokens":23143,"time_s":61.9},"without_skill":{"tokens":16973,"time_s":32.4}},
+    {"eval_name":"E6-cross-vault-access","with_skill":{"tokens":22137,"time_s":53.9},"without_skill":{"tokens":17554,"time_s":46.8}},
+    {"eval_name":"E7-multiple-vault-skills","with_skill":{"tokens":22280,"time_s":55.8},"without_skill":{"tokens":16737,"time_s":29.4}},
+    {"eval_name":"E8-deep-override","with_skill":{"tokens":24933,"time_s":67.8},"without_skill":{"tokens":16878,"time_s":39.6}},
+    {"eval_name":"E9-real-vault-note","with_skill":{"tokens":24328,"time_s":71.2},"without_skill":{"tokens":16628,"time_s":45.8}},
+    {"eval_name":"E10-claude-md-skill-ref","with_skill":{"tokens":26874,"time_s":56.1},"without_skill":{"tokens":25006,"time_s":45.6}},
+    {"eval_name":"E11-cross-project-ref","with_skill":{"tokens":25655,"time_s":73.5},"without_skill":{"tokens":29199,"time_s":120.7}}
+  ],
+  "key_findings": [
+    "E5 DISCRIMINATING: without-skill used LEGACY conventions (Title Case, flat tags, callouts, date/status/parent) — ignored vault root skill entirely. With-skill correctly loaded vault-style skill (kebab-case, nested tags, no callouts).",
+    "E8 PARTIALLY DISCRIMINATING: without-skill used Mermaid + UPPERCASE filename (learned from existing notes) BUT kept tags in frontmatter (vault-docs says no frontmatter tags, inline only). With-skill correctly used inline #tags, no frontmatter tags.",
+    "E3 DISCRIMINATING: without-skill created note with NO frontmatter at all — just a plain markdown file. With-skill used fallback conventions (tags, date, parent, callouts).",
+    "E9 DISCRIMINATING: without-skill used kebab-case filename (vault-stats-cli-planning.md) — vault CLAUDE.md says Title Case. With-skill correctly used Title Case.",
+    "E4 DISCRIMINATING: with-skill ran full setup protocol (validate, symlink, AGENTS.md, vault root resolution, git tracking info). Without-skill created symlink but no structured setup.",
+    "Race condition: E1, E2, E7 with-skill found notes already created by without-skill (parallel runs share fixtures)"
+  ]
+}
