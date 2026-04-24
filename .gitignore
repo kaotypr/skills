@@ -14,6 +14,12 @@ Thumbs.db
 workspace/**/*.pdf
 workspace/**/*.mp4
 
+# Node dependencies inside workspace (demo apps, etc.)
+workspace/**/node_modules/
+workspace/**/dist/
+workspace/**/.vite/
+workspace/**/.next/
+
 # workspace mock SKILLS for evals
 workspace/**/skills/**/*
 
