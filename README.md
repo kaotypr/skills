@@ -43,6 +43,50 @@ Added two harder CLI-focused evals. Without the skill, Claude defaults to Python
 
 </details>
 
+### kao-react-motion
+
+Advanced/complex React animations with Motion (formerly Framer Motion) in a Tailwind + shadcn/ui (Radix) project — hero reveals, feature grids, scroll-driven storytelling, parallax, horizontal-scroll sections, shared-element transitions, layout animations, and custom gesture UX. Integrates with shadcn via the `asChild` + Radix Slot pattern. Assumes shadcn theme tokens. Excludes Motion+ paid components.
+
+- **Version**: 1.0.0
+- **Skill**: [`skills/engineering/kao-react-motion`](skills/engineering/kao-react-motion)
+- **Evals**: [`workspace/kao-react-motion-workspace`](workspace/kao-react-motion-workspace) (5 scenarios per iteration, 2 iterations)
+
+| Metric | With Skill | Without Skill |
+|---|---|---|
+| Pass Rate (iter 2) | 96% (55/57) | 72% (41/57) |
+| Avg Tokens (iter 2) | 24,043 | 22,108 |
+
+Tested across: landing hero with staggered reveal + animated stat counter, shared-element card→modal morph, asChild magnetic CTA, horizontal-scroll case studies, custom Motion override of shadcn Dialog's default animation.
+
+<details>
+<summary>Eval iterations</summary>
+
+**Iteration 1** — Model: `claude-opus-4-7[1m]` — Generic React animation scope
+
+| Eval | With Skill | Without Skill |
+|---|---|---|
+| scroll-staggered-reveal | 8/8 | 7/8 |
+| shared-element-card-to-modal | 8/8 | 8/8 |
+| horizontal-scroll-section | 8/8 | 8/8 |
+| reorderable-todo-list | 10/10 | 10/10 |
+| animated-counter | 8/8 | 7/8 |
+
+Aggregate: 100% vs 95% (+5% delta). Small lift — baseline already knows Motion well enough for prime use cases. The skill's value showed at the edges: modern `stagger()` vs legacy `staggerChildren`, and refusing `<AnimateNumber>` as Motion+ (baseline misattributed it to `number-flow`). Review surfaced two real regressions in with-skill output that the assertions missed: shadcn theme tokens assumed without declaring, and shared-element `layoutId` on both container and children without the `visibility: hidden` compensator.
+
+**Iteration 2** — Model: `claude-opus-4-7[1m]` — Scope narrowed to Tailwind + shadcn projects
+
+| Eval | With Skill | Without Skill |
+|---|---|---|
+| landing-hero-stagger-counter | 9/10 | 5/10 |
+| shared-element-portfolio-morph | 11/11 | 10/11 |
+| aschild-magnetic-cta | 12/12 | 5/12 |
+| horizontal-scroll-case-studies | 11/12 | 10/12 |
+| shadcn-dialog-motion-override | 12/12 | 11/12 |
+
+Aggregate: 96% vs 72% (+25% delta). Scope rewrite (marketing/landing animations in Tailwind + shadcn only, with `asChild` + Radix Slot as the integration pattern) made the eval set discriminating. Biggest deltas: hero/counter +40% (baseline misattributed `<AnimateNumber>`, used legacy `staggerChildren`, imported `framer-motion`); asChild magnetic CTA +58% (baseline wrapped the anchor with `motion.span` instead of using `<Button asChild><motion.a>` as the direct child). The iteration-1 shared-element regression is fixed — with-skill now satisfies both Shape A (no container `layoutId`) and Shape B (`visibility: hidden` on source) guards simultaneously. One remaining weakness identified and patched post-iter-2: scroll-animations.md previously allowed `useSpring(scrollYProgress)` without distinguishing the scrub-linked case (where spring lag feels broken) from the progress-indicator case (where smoothing is fine).
+
+</details>
+
 ### kao-project-vault
 
 Bridge a code repository to an Obsidian vault project folder via a `vault` symlink. Handles setup, convention discovery, and note creation with a precedence chain: vault root skill > vault root CLAUDE.md > fallback conventions.
