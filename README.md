@@ -1,6 +1,6 @@
-# Claude Code Skills
+# kaotypr/skills
 
-A collection of shareable [Claude Code](https://claude.ai/code) skills (slash commands) maintained by [@kaotypr](https://github.com/kaotypr).
+A collection of shareable AI agent skills maintained by [@kaotypr](https://github.com/kaotypr).
 
 ## Available Skills
 
