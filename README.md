@@ -1,6 +1,6 @@
 # kaotypr/skills
 
-A collection of shareable AI agent skills maintained by [@kaotypr](https://github.com/kaotypr).
+A collection of shareable AI agent skills maintained by [@kaotypr](https://github.com/kaotypr). Skills are developed using materials gathered in [`research/`](research/) and tested against eval scenarios in [`workspace/`](workspace/).
 
 ## Available Skills
 
