@@ -1,0 +1,129 @@
+{
+  "expectations": [
+    {
+      "text": "Uses Reorder.Group with values and onReorder props",
+      "passed": true,
+      "evidence": "TodoList.tsx lines 67-73: `<Reorder.Group axis=\"y\" values={items} onReorder={setItems} as=\"ul\" className=\"todo-list__items\">` — both `values` and `onReorder` props are wired correctly to state."
+    },
+    {
+      "text": "Uses Reorder.Item with key={item.id} and value={item}",
+      "passed": true,
+      "evidence": "TodoList.tsx line 77: `<TodoItem key={item.id} ...` (key on the rendered list element) and line 112: `<Reorder.Item value={item} as=\"li\" ...>` — the key is on the TodoItem wrapper which renders the Reorder.Item, and `value={item}` is on Reorder.Item."
+    },
+    {
+      "text": "Uses useDragControls() and dragListener={false} to restrict drag to a handle",
+      "passed": true,
+      "evidence": "TodoList.tsx line 97: `const dragControls = useDragControls();` and lines 116-117: `dragListener={false}` and `dragControls={dragControls}` on Reorder.Item."
+    },
+    {
+      "text": "Drag handle uses onPointerDown={(e) => controls.start(e)}",
+      "passed": true,
+      "evidence": "TodoList.tsx lines 143-148: the handle button has `onPointerDown={(e) => { e.preventDefault(); dragControls.start(e); }}` — calls `dragControls.start(e)` inside the onPointerDown handler (with an additional preventDefault)."
+    },
+    {
+      "text": "Wraps items in AnimatePresence for enter/exit animations",
+      "passed": true,
+      "evidence": "TodoList.tsx line 74: `<AnimatePresence initial={false}>` wraps the mapped list of TodoItem (Reorder.Item) elements inside Reorder.Group."
+    },
+    {
+      "text": "Items have initial/animate/exit for smooth add/remove",
+      "passed": true,
+      "evidence": "TodoList.tsx lines 119-125 on Reorder.Item: `initial={{ opacity: 0, x: -40 }}`, `animate={{ opacity: 1, x: 0 }}`, `exit={{ opacity: 0, x: 300, transition: { duration: 0.2 } }}`."
+    },
+    {
+      "text": "For swipe-to-delete, uses drag='x' or onDragEnd with an offset threshold to remove item",
+      "passed": true,
+      "evidence": "TodoList.tsx line 175: `<motion.div drag=\"x\" ...>` with `onDragEnd={handleDragEnd}`. The handler (lines 101-108) checks `Math.abs(info.offset.x) > SWIPE_THRESHOLD` (120) and calls `onRemove(item.id)`."
+    },
+    {
+      "text": "Imports from 'motion/react'",
+      "passed": true,
+      "evidence": "TodoList.tsx lines 2-8: `import { Reorder, useDragControls, motion, AnimatePresence, type PanInfo } from \"motion/react\";`"
+    },
+    {
+      "text": "Does not use any Motion+ components",
+      "passed": true,
+      "evidence": "Only standard motion/react primitives are imported (Reorder, useDragControls, motion, AnimatePresence, PanInfo). No Motion+ components such as Cursor, Ticker, AnimateNumber, etc. are referenced in the file."
+    },
+    {
+      "text": "Uses TypeScript",
+      "passed": true,
+      "evidence": "Output file is TodoList.tsx (.tsx extension). Includes typed interfaces (`interface Todo`, `interface TodoListProps`, `interface TodoItemProps`), typed state `useState<Todo[]>(...)`, typed handler signature `(_e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo)`, and `type PanInfo` import."
+    }
+  ],
+  "summary": {
+    "passed": 10,
+    "failed": 0,
+    "total": 10,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": null,
+    "total_steps": null,
+    "errors_encountered": 0,
+    "output_chars": 13625,
+    "transcript_chars": 8280
+  },
+  "timing": {
+    "executor_duration_seconds": 72.1,
+    "total_duration_seconds": 72.1,
+    "total_tokens": 24642
+  },
+  "claims": [
+    {
+      "claim": "motion/react is the React 19-compatible entry point / modern successor to framer-motion",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Correct — the `motion` package (imported via `motion/react`) is the rebranded successor to framer-motion and supports React 19."
+    },
+    {
+      "claim": "Swipe gesture nested inside Reorder.Item works without manual gesture arbitration because Motion isolates axes (drag='x' inner, vertical outer)",
+      "type": "quality",
+      "verified": false,
+      "evidence": "In practice, nesting a `drag='x'` motion.div inside a `Reorder.Item` with `dragListener={false}` can work but is not guaranteed to cleanly isolate — pointer events on the inner element can still be consumed first and block other gestures. The executor's assertion that 'no manual gesture arbitration needed' is an optimistic claim; this architecture often needs careful handling (e.g. pointer capture, stopPropagation). Not falsified by any test here, but unverified."
+    },
+    {
+      "claim": "AnimatePresence + exit transform will correctly animate swipe-delete removal",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Reorder.Item has an `exit` prop defined and the parent is wrapped in AnimatePresence, so on removal the exit animation will run. Keys are stable (item.id), which is required for AnimatePresence to track enter/exit."
+    },
+    {
+      "claim": "crypto.randomUUID() with a fallback provides stable keys",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Lines 28-31: uses `crypto.randomUUID()` when available, else falls back to `${Date.now()}-${Math.random().toString(36).slice(2)}`. IDs are generated once at item creation and stored, so keys remain stable."
+    },
+    {
+      "claim": "Handle-only dragging follows the documented Motion pattern (dragListener=false + dragControls.start on pointer down)",
+      "type": "process",
+      "verified": true,
+      "evidence": "Matches the documented Motion reorder-with-handle pattern exactly."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Uses Reorder.Item with key={item.id} and value={item}",
+        "reason": "The key appears on the outer TodoItem wrapper rather than directly on Reorder.Item. The current implementation is correct (React only requires the key on the top-level rendered element in the list), but a strict literal reading of the assertion (`key={item.id}` *on* Reorder.Item) could trip up graders. Consider rewording the assertion as 'each rendered list element has a stable key (e.g. item.id) and Reorder.Item receives value={item}' to avoid ambiguity."
+      },
+      {
+        "reason": "No assertion checks that a new item is actually added to state and appears at a predictable position, or that `removeItem` is actually called from the swipe handler (vs. e.g. always firing). The current assertions check structure (props/hooks used) but not behavioral correctness. Consider an assertion like 'swipe-delete handler calls the remove function with the correct item id' or 'add handler inserts with a stable id.'"
+      },
+      {
+        "assertion": "For swipe-to-delete, uses drag='x' or onDragEnd with an offset threshold to remove item",
+        "reason": "This passes even if the threshold is absurdly low (e.g. 5px) or if the handler removes a different item. Consider tightening: 'threshold is a reasonable pixel/velocity value and the correct item id is passed to the removal callback.'"
+      },
+      {
+        "reason": "No assertion covers the nested-gesture concern: putting drag='x' inside a Reorder.Item with dragListener=false is a known tricky area. A test that the reorder handle still starts vertical reorder, and horizontal swipe starts deletion, without one cancelling the other, would be a more discriminating check."
+      }
+    ],
+    "overall": "All 10 assertions pass with clear evidence. The assertions cover API surface well but check structure over behavior — a component that imports the right symbols and wires the right props could still ship with broken gestures. Consider adding behavioral/correctness checks for a stronger eval."
+  }
+}

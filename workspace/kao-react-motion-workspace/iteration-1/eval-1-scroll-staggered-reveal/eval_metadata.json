@@ -1,0 +1,15 @@
+{
+  "eval_id": 1,
+  "eval_name": "scroll-staggered-reveal",
+  "prompt": "I'm building a marketing page with Next.js 15 (App Router) + TypeScript + Tailwind. I have a Features section with an array of 6 feature cards (each is { id, icon, title, description }). I want each card to fade up and in as the section scrolls into view, staggered one after the other — but only the first time it enters (no re-animating if the user scrolls up and back down). I also want the whole thing to respect prefers-reduced-motion. Give me the full Features.tsx component file — I'll pass the features array in as a prop. Use Motion for React (not framer-motion).",
+  "assertions": [
+    "Imports from 'motion/react' (not 'framer-motion')",
+    "Uses variants (not individual delay props on each item)",
+    "Uses stagger() from motion/react in delayChildren",
+    "Uses whileInView with viewport={{ once: true }}",
+    "Handles prefers-reduced-motion via useReducedMotion() or MotionConfig",
+    "Writes valid TSX with proper typing for the features prop",
+    "Does not use any Motion+ components (Cursor, AnimateNumber, Ticker)",
+    "Does not reference Motion Studio MCP in generated code or comments"
+  ]
+}

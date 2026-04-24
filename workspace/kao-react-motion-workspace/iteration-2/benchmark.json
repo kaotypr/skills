@@ -1,0 +1,828 @@
+{
+  "metadata": {
+    "skill_name": "kao-react-motion",
+    "skill_path": "/Users/kao/workspace/kaotypr/skills/skills/engineering/kao-react-motion",
+    "executor_model": "claude-opus-4-7[1m]",
+    "analyzer_model": "claude-opus-4-7[1m]",
+    "timestamp": "2026-04-24T11:15:43Z",
+    "evals_run": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.9,
+        "passed": 9,
+        "failed": 1,
+        "total": 10,
+        "time_seconds": 106.4,
+        "tokens": 17458,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Imports from 'motion/react' (not 'framer-motion')",
+          "passed": true,
+          "evidence": "Hero.tsx line 4-13 imports { animate, motion, stagger, useInView, useMotionValue, useReducedMotion, useTransform, type Variants } from \"motion/react\". No 'framer-motion' import appears anywhere."
+        },
+        {
+          "text": "Uses shadcn theme tokens (text-foreground, bg-background, bg-primary, bg-card, border-border, text-muted-foreground, text-primary-foreground) \u2014 NOT concrete bg-white / bg-indigo-* / text-neutral-* utilities",
+          "passed": true,
+          "evidence": "Hero.tsx uses text-foreground (line 144, 169, 192), text-muted-foreground (lines 151, 164, 173, 193), bg-card (line 190), border-border (line 190), text-card-foreground (line 190). No concrete color utilities like bg-white, bg-indigo-*, or text-neutral-* appear."
+        },
+        {
+          "text": "Feature grid uses variants + stagger() from motion/react (not legacy staggerChildren number)",
+          "passed": true,
+          "evidence": "gridContainer variant (line 51-56) uses `transition: { delayChildren: stagger(0.07) }`; stagger is imported from motion/react (line 7). The feature grid <motion.ul> uses variants={gridContainer} (line 181) with children using variants={gridItem}. No staggerChildren: 0.07 literal number is used."
+        },
+        {
+          "text": "Feature grid uses whileInView with viewport={{ once: true }} so it doesn't re-animate on scroll back",
+          "passed": false,
+          "evidence": "The feature grid does NOT use whileInView or a viewport prop. Instead it uses useInView(sectionRef, { once: true, amount: 0.25 }) on the parent section (line 127) and drives animate={state} (line 183). While this functionally achieves \"only animate once\" via once: true on the hook, the specific API called out by the assertion (whileInView + viewport={{ once: true }}) is not used. The response.md explicitly justifies this substitution: \"Why useInView + one animate={state} gate instead of whileInView?\""
+        },
+        {
+          "text": "Stat counter uses useMotionValue + animate() + useTransform rounding + motion component as child (<motion.span>{rounded}</motion.span>), NOT useState + setInterval and NOT toFixed-in-render",
+          "passed": true,
+          "evidence": "AnimatedCounter (lines 88-118) uses useMotionValue(0) (line 100), animate(count, target, {...}) (line 110), useTransform with toLocaleString rounding (line 101), and renders <motion.span className={className}>{rounded}</motion.span> (line 117). No useState, no setInterval, no toFixed."
+        },
+        {
+          "text": "Explicitly declines <AnimateNumber> as a Motion+ paid component (not 'number-flow' or 'Motion-Plus examples' or similar misattribution)",
+          "passed": true,
+          "evidence": "response.md line 5: \"<AnimateNumber> is a **Motion+ (paid)** component, and you don't need it.\" Also line 244: \"<AnimateNumber> / <Ticker> \u2014 Motion+ paid.\" Correctly attributes it to Motion+ (paid), not number-flow or similar."
+        },
+        {
+          "text": "Handles prefers-reduced-motion via useReducedMotion() or MotionConfig reducedMotion='user'",
+          "passed": true,
+          "evidence": "AnimatedCounter uses `const reduce = useReducedMotion()` (line 99) and snaps to target when reduced motion is preferred (lines 105-108). response.md also recommends <MotionConfig reducedMotion=\"user\"> at the app root (line 14)."
+        },
+        {
+          "text": "Uses shadcn Button for the CTA (imports from '@/components/ui/button' or equivalent, does not rebuild a button from scratch with motion.button and button-like classes)",
+          "passed": true,
+          "evidence": "Line 15: `import { Button } from \"@/components/ui/button\"`. Line 158: `<Button size=\"lg\">Get started</Button>` wrapped in motion.div (not motion.button). The shadcn Button component itself is used as-is."
+        },
+        {
+          "text": "Does not use any Motion+ components (Cursor, AnimateNumber, Ticker, Motion Studio MCP)",
+          "passed": true,
+          "evidence": "No imports or usages of Cursor, AnimateNumber, Ticker, or Motion Studio MCP components in Hero.tsx. response.md explicitly declines them (lines 244-245)."
+        },
+        {
+          "text": "Uses TypeScript",
+          "passed": true,
+          "evidence": "File extension is .tsx. Uses `type Variants` import (line 11), typed data (`type Stat`, `type Feature`), typed props (`{ target: number; play: boolean; duration?: number; className?: string }`), typed ref (`useRef<HTMLElement>(null)`)."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 11,
+        "failed": 0,
+        "total": 11,
+        "time_seconds": 145.8,
+        "tokens": 24699,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": true,
+          "evidence": "ProjectGallery.tsx lines 4-10: `import { AnimatePresence, LayoutGroup, MotionConfig, motion, useReducedMotion, } from \"motion/react\"`"
+        },
+        {
+          "text": "Uses matching layoutId on the image, title, and description between grid card and modal (with per-card namespace, e.g. `img-${id}` or `img-card-${id}`)",
+          "passed": true,
+          "evidence": "Grid uses layoutId=`project-image-${p.id}` (line 106), `project-title-${p.id}` (line 116), `project-desc-${p.id}` (line 123). Modal matches with layoutId=`project-image-${project.id}` (line 202), `project-title-${project.id}` (line 212), `project-desc-${project.id}` (line 220). All per-card namespaced."
+        },
+        {
+          "text": "Either (a) does NOT put layoutId on the outer card container, OR (b) DOES put layoutId on the container AND hides the source with `visibility: hidden` (via style or className) when that card is active \u2014 one of these two patterns must be present",
+          "passed": true,
+          "evidence": "Satisfies BOTH conditions redundantly: (a) the Card container has no layoutId (lines 91-104); AND (b) the source Card is hidden via `style={{ visibility: isActive ? \"hidden\" : \"visible\" }}` on line 93."
+        },
+        {
+          "text": "Wraps the modal in AnimatePresence, placed outside the conditional mount",
+          "passed": true,
+          "evidence": "Lines 140-150: `<AnimatePresence>{active && (<ProjectModal ... />)}</AnimatePresence>` \u2014 AnimatePresence is outside the `active &&` gate, with a stable `key=\"project-modal\"` on the child."
+        },
+        {
+          "text": "Uses shadcn theme tokens (bg-card, text-foreground, bg-background, border-border, text-muted-foreground) \u2014 NOT bg-white, text-neutral-*, bg-black/*, bg-indigo-*",
+          "passed": true,
+          "evidence": "Uses `text-card-foreground` (lines 117, 214), `text-muted-foreground` (lines 124, 221), `bg-background/80` (line 183), `border-border` (line 200), `bg-card text-card-foreground` (line 200), `text-foreground/90` (line 244). No raw color utilities like bg-white, text-neutral-*, bg-black/*, bg-indigo-*."
+        },
+        {
+          "text": "Handles Escape key to close the modal",
+          "passed": true,
+          "evidence": "Lines 51-63: `useEffect` with keydown listener: `if (e.key === \"Escape\") setActiveId(null)` \u2014 attaches/detaches a window keydown listener while active."
+        },
+        {
+          "text": "Handles click-outside (backdrop click) to close the modal",
+          "passed": true,
+          "evidence": "Line 188: the backdrop `motion.div` has `onClick={onClose}` which calls `setActiveId(null)`."
+        },
+        {
+          "text": "Explains the flicker/overlap trap in prose: either calls out 'don't layoutId both container and children' OR 'hide the source with visibility: hidden' as the fix",
+          "passed": true,
+          "evidence": "response.md calls out BOTH in the 'How to avoid the flicker / overlap you've seen in other demos' section: #1 'Double-layoutId on container AND children' \u2014 pick one level of granularity; #2 'Forgetting to hide the source during the morph' \u2014 fix: `visibility: hidden` on the source Card while active."
+        },
+        {
+          "text": "Modal-only content (e.g. Close button, extended description) uses a separate initial/animate/exit with a delay so it fades in after the shared-element morph settles \u2014 NOT a layoutId",
+          "passed": true,
+          "evidence": "Lines 232-258: modal-only content wrapped in a `motion.div` with `initial={{ opacity: 0, y: 8 }}`, `animate={{ opacity: 1, y: 0 }}`, `exit={{ opacity: 0, y: 4, transition: { duration: 0.12 } }}`, `transition={{ duration: 0.22, ease: \"easeOut\", delay: revealDelay }}` where `revealDelay = 0.28`. No layoutId on this wrapper."
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Imports only `AnimatePresence, LayoutGroup, MotionConfig, motion, useReducedMotion` from `motion/react` \u2014 no Motion+ paid components (e.g., Cursor, AnimateNumber, Ticker) are used."
+        },
+        {
+          "text": "Uses TypeScript with typed Project prop",
+          "passed": true,
+          "evidence": "Lines 15-22 define `export type Project = { id: string; title: string; description: string; extendedDescription?: string; image: string }`. Lines 24-26 define `type ProjectGalleryProps = { projects: Project[] }`. Component is typed: `export function ProjectGallery({ projects }: ProjectGalleryProps)`."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 12,
+        "failed": 0,
+        "total": 12,
+        "time_seconds": 79.7,
+        "tokens": 9374,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses <Button asChild> from shadcn wrapping a motion.a (NOT a raw <motion.button> or custom button)",
+          "passed": true,
+          "evidence": "MagneticCTA.tsx lines 106-126: `<Button asChild variant={variant} size={size} className={className}>` wraps `<motion.a ref={anchorRef} href={href} ...>`. No raw motion.button or custom button present."
+        },
+        {
+          "text": "The motion.a is the direct child of Button and receives the animation props (whileHover, whileTap, style, onMouseMove, etc.)",
+          "passed": true,
+          "evidence": "motion.a is the direct child of Button (line 107) and receives style={{ x: sx, y: sy }} (line 113), whileHover={whileHover} (line 114), whileTap={whileTap} (line 115), transition (line 117), onPointerMove/onPointerLeave/onPointerCancel (lines 118-120)."
+        },
+        {
+          "text": "Uses useSpring to smooth the magnetic follow motion (either useSpring(0, {...}) directly, OR useSpring wrapping a useMotionValue source)",
+          "passed": true,
+          "evidence": "Lines 60-61: `const sx = useSpring(x, springConfig)` and `const sy = useSpring(y, springConfig)` \u2014 useSpring wraps the useMotionValue sources x and y."
+        },
+        {
+          "text": "Implements the magnetic effect via onMouseMove reading event.currentTarget.getBoundingClientRect() and setting motion values based on pointer offset from center",
+          "passed": true,
+          "evidence": "Lines 70-94: handlePointerMove reads `el.getBoundingClientRect()` (via anchorRef, equivalent to currentTarget), computes center (cx, cy), calculates dx/dy offset from pointer, and calls `x.set(dx * strength)` and `y.set(dy * strength)`. Uses onPointerMove (pointer events superset of mouse events) rather than onMouseMove but semantically equivalent and arguably better."
+        },
+        {
+          "text": "Implements onMouseLeave (or equivalent) to reset the motion values to 0 so the button returns to origin",
+          "passed": true,
+          "evidence": "Lines 96-99: `handlePointerLeave = React.useCallback(() => { x.set(0); y.set(0); })`; wired up as `onPointerLeave={handlePointerLeave}` and `onPointerCancel={handlePointerLeave}` on the motion.a (lines 119-120). Also resets inside handlePointerMove when pointer exceeds radius."
+        },
+        {
+          "text": "Uses style={{ x: mx, y: my }} on the motion.a to apply the magnetic translation (OR equivalent via transform)",
+          "passed": true,
+          "evidence": "Line 113: `style={{ x: sx, y: sy }}` on motion.a \u2014 applies spring-smoothed motion values via Motion's transform shortcut."
+        },
+        {
+          "text": "Applies whileHover and/or whileTap for the scale pop on gesture",
+          "passed": true,
+          "evidence": "Lines 102-103: `whileHover = shouldReduceMotion ? undefined : { scale: 1.06 }` and `whileTap = shouldReduceMotion ? undefined : { scale: 0.96 }`. Applied on motion.a lines 114-115."
+        },
+        {
+          "text": "href='/signup' is present on the motion.a element",
+          "passed": true,
+          "evidence": "Line 42: `href = \"/signup\"` default prop; Line 109: `href={href}` passed to motion.a. Default value resolves to '/signup'."
+        },
+        {
+          "text": "Imports Button from shadcn path (e.g. '@/components/ui/button' or similar) \u2014 does NOT recreate Button styling from scratch",
+          "passed": true,
+          "evidence": "Line 11: `import { Button } from \"@/components/ui/button\"` and Line 12: `import type { ButtonProps } from \"@/components/ui/button\"`. No custom Button styling recreated."
+        },
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": true,
+          "evidence": "Lines 4-9: `import { motion, useMotionValue, useReducedMotion, useSpring } from \"motion/react\"`."
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Only imports `motion`, `useMotionValue`, `useReducedMotion`, `useSpring` from `motion/react` \u2014 all standard (free) Motion APIs. No Motion+ components (e.g. Cursor, AnimatedNumber, etc.) referenced."
+        },
+        {
+          "text": "Uses TypeScript",
+          "passed": true,
+          "evidence": "File is MagneticCTA.tsx; uses TypeScript syntax throughout \u2014 `type MagneticCTAProps = {...}` (line 14), typed React refs `React.useRef<HTMLAnchorElement>(null)` (line 63), typed event parameter `React.PointerEvent<HTMLAnchorElement>` (line 66), imported `ButtonProps` type (line 12)."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.92,
+        "passed": 11,
+        "failed": 1,
+        "total": 12,
+        "time_seconds": 122.3,
+        "tokens": 16905,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses useScroll with target: ref and offset: ['start start', 'end end'] (or equivalent 2-item offset that starts progress at 0 when section top hits viewport top)",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx lines 62-65: `const { scrollYProgress } = useScroll({ target: sectionRef, offset: [\"start start\", \"end end\"] })`"
+        },
+        {
+          "text": "Uses useTransform to map scrollYProgress to a horizontal x translation (percentage-based: '0%' to '-(N-1)/N * 100%' or similar, OR viewport-unit based)",
+          "passed": true,
+          "evidence": "Lines 78-83: `const endPercent = count > 1 ? -((count - 1) * 100) : 0; const x = useTransform(smoothProgress, [0, 1], [\"0%\", `${endPercent}%`])`. For N=5 this maps 0% to -400%, which on a flex row of 5 w-screen items is equivalent to -(N-1)/N * 100% = -80% of the track width, producing the correct end position."
+        },
+        {
+          "text": "Does NOT apply useSpring to the scroll-linked x motion value (scroll-linked springs lag behind the scroll and feel broken)",
+          "passed": false,
+          "evidence": "Lines 69-73: `const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 })` \u2014 a spring is applied to scrollYProgress, and then line 79 pipes smoothProgress (not scrollYProgress) into useTransform for x. This is exactly the anti-pattern the assertion forbids: the scroll-linked x motion value is driven by a spring, which produces lag between scroll input and horizontal position."
+        },
+        {
+          "text": "Outer container height is \u2265 400vh (tall enough to produce slower-than-1:1 feel for 5 cards)",
+          "passed": true,
+          "evidence": "Lines 88-89, 116: `extraScrollVh = PACE * Math.max(count - 1, 0) * 100` \u2192 1.25 * 4 * 100 = 500vh; `sectionHeight = 100 + 500 = 600vh`; applied via `style={{ height: sectionHeight }}`. 600vh \u2265 400vh."
+        },
+        {
+          "text": "The ratio of vertical scroll to horizontal travel is > 1:1 (slower than 1:1) \u2014 e.g. 500vh outer + 100vh sticky = 400vh vertical per (N-1)*100vw horizontal, giving 400/400 = 1:1 MINIMUM; should be higher for 'slightly slower'",
+          "passed": true,
+          "evidence": "Section is 600vh with 100vh sticky \u2192 500vh of vertical scroll drives 400vw of horizontal travel (ratio 500/400 = 1.25:1, slower than 1:1). Comment on line 50-51 states ratio \u2248 0.8 horizontal vw per vertical vh, which is the same 1.25:1 slowdown."
+        },
+        {
+          "text": "Inner container uses position: sticky with top: 0, overflow: hidden, height: 100vh (or h-screen)",
+          "passed": true,
+          "evidence": "Line 118: `<div className=\"sticky top-0 flex h-screen flex-col overflow-hidden\">` \u2014 uses sticky positioning, top-0, h-screen (100vh), and overflow-hidden."
+        },
+        {
+          "text": "Cards have flex-shrink: 0 (or 'shrink-0' / 'flex: 0 0 ...') AND fixed width of 100vw (or 'w-screen')",
+          "passed": true,
+          "evidence": "Line 133: `className=\"flex h-full w-screen shrink-0 items-center justify-center px-6 md:px-12\"` \u2014 each slide li has both w-screen and shrink-0."
+        },
+        {
+          "text": "Uses shadcn theme tokens (bg-background on section, bg-card / text-foreground / text-muted-foreground / border-border on cards) \u2014 NOT bg-white / text-neutral-* / bg-black",
+          "passed": true,
+          "evidence": "Line 115: `bg-background` on section. Line 163: Card has `border-border bg-card text-card-foreground`. Headings use `text-foreground` (line 153, 180), captions use `text-muted-foreground` (lines 148, 177, 186). Image placeholder uses `bg-muted` (line 165). No bg-white, text-neutral-*, or bg-black appear in the file."
+        },
+        {
+          "text": "Handles prefers-reduced-motion (e.g. falls back to a vertical stack, or disables the transform)",
+          "passed": true,
+          "evidence": "Line 60: `const prefersReducedMotion = useReducedMotion()`. Lines 91-109: when true, returns an alternate section with a `grid gap-6 md:grid-cols-2` vertical stack instead of the sticky scroll stage, so no horizontal transform is applied."
+        },
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": true,
+          "evidence": "Lines 4-10: `import { motion, useReducedMotion, useScroll, useSpring, useTransform } from \"motion/react\"`."
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Only imports motion, useReducedMotion, useScroll, useSpring, useTransform from motion/react. No imports from motion-plus or Motion+ components (ScrollProgress, Cursor, etc.)."
+        },
+        {
+          "text": "Uses TypeScript with typed CaseStudy and props",
+          "passed": true,
+          "evidence": "Lines 20-26: `export interface CaseStudy { id: string; title: string; client: string; summary: string; image: string }`. Lines 28-33: `interface HorizontalCaseStudiesProps { caseStudies: CaseStudy[]; eyebrow?: string; heading?: string }`. Component is typed with this props interface on line 58."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 12,
+        "failed": 0,
+        "total": 12,
+        "time_seconds": 209.7,
+        "tokens": 51781,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses <DialogContent asChild> with a motion component (e.g. motion.div) as its child \u2014 the motion component owns the animation",
+          "passed": true,
+          "evidence": "AnimatedDialog.tsx line 226-257: <DialogPrimitive.Content asChild forceMount {...props}><motion.div ... variants={chosenContainer} initial=\"hidden\" animate=\"visible\" exit=\"exit\" ...>. The motion.div is the child of DialogPrimitive.Content asChild and owns the animation via variants."
+        },
+        {
+          "text": "Explicitly strips OR does not include the default tw-animate-css animate-in/animate-out/fade-in-*/zoom-in-* classes on the DialogContent (or wraps a DialogContent-like primitive that doesn't have them), because Motion is now driving the animation and stacking both causes stutter",
+          "passed": true,
+          "evidence": "The component uses DialogPrimitive.Content (Radix primitive directly, not shadcn's DialogContent), so no tw-animate-css classes are inherited. Line 239 className contains only layout/theme classes: 'bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg' \u2014 no animate-in/zoom-in-*/fade-in-*/slide-in-from-* classes. Comment at lines 236-238 explicitly notes: 'Deliberately stripped: every tw-animate-css class (animate-in, zoom-in-95, slide-in-from-*, fade-in-0, data-[state=*]:*) so Motion owns opacity/transform without a fight.'"
+        },
+        {
+          "text": "The prose / comments explicitly acknowledge that shadcn's default tw-animate-css animation is being overridden (not just silently replaced)",
+          "passed": true,
+          "evidence": "response.md lines 5-15 have a dedicated section titled 'The decision: override tw-animate-css, don't mix' explaining the stutter problem. The code comment at lines 236-238 states 'Deliberately stripped: every tw-animate-css class ... so Motion owns opacity/transform without a fight.' Line 3 of response.md: 'Motion owns the open/close animation instead of the default tw-animate-css classes.'"
+        },
+        {
+          "text": "Uses variants to drive the container spring (scale 0.8 \u2192 1, y 20 \u2192 0) on open",
+          "passed": true,
+          "evidence": "Lines 34-58 of AnimatedDialog.tsx define containerVariants with hidden: { opacity: 0, scale: 0.8, y: 20 } and visible: { opacity: 1, scale: 1, y: 0, transition: { ...containerSpring } }. containerSpring (lines 27-32) is { type: 'spring', stiffness: 260, damping: 24, mass: 0.9 }."
+        },
+        {
+          "text": "Uses stagger() or staggerChildren in the open variant's transition to cascade the header/body/footer content",
+          "passed": true,
+          "evidence": "Line 43: 'delayChildren: stagger(0.07, { startDelay: 0.12 })' in containerVariants.visible.transition. stagger is imported from 'motion/react' on line 9. Header/Body/Footer at lines 274-320 are motion.div components consuming variants via SectionVariantsContext, and variant propagation from parent animate=\"visible\" cascades to each with stagger timing."
+        },
+        {
+          "text": "On close (data-state=closed, or via AnimatePresence exit / usePresence, or variant swap) the animation reverses",
+          "passed": true,
+          "evidence": "AnimatePresence wraps the conditional content at line 222. Each motion component has exit=\"exit\" (lines 184, 230). containerVariants.exit (lines 46-57) reverses to { opacity: 0, scale: 0.8, y: 20 } with 'when: afterChildren' and 'delayChildren: stagger(0.04, { from: last })' to reverse the stagger order on close."
+        },
+        {
+          "text": "Uses shadcn theme tokens (bg-background, text-foreground, border-border, etc.) \u2014 NOT bg-white / text-neutral-*",
+          "passed": true,
+          "evidence": "Line 239: 'bg-background ... border'. Line 251: 'ring-offset-background focus:ring-ring'. Line 298: 'text-muted-foreground'. Line 342: 'text-muted-foreground'. No bg-white / text-neutral-* / hardcoded colors in content/header/body/footer styling. (bg-black/50 is used on the overlay, which is idiomatic for a modal scrim.)"
+        },
+        {
+          "text": "Exports a component with the API <AnimatedDialog open onOpenChange>{children}</AnimatedDialog> (or a close equivalent \u2014 props named 'open' and 'onOpenChange' matching shadcn's Dialog)",
+          "passed": true,
+          "evidence": "Lines 107-140 define AnimatedDialog with AnimatedDialogProps = React.ComponentProps<typeof DialogPrimitive.Root>, destructuring { open, defaultOpen, onOpenChange, children, ...props }. Exported at line 376. Usage example in response.md lines 62-80 shows <AnimatedDialog open={open} onOpenChange={setOpen}>."
+        },
+        {
+          "text": "Does NOT rebuild Dialog / DialogContent from scratch \u2014 uses shadcn's Dialog primitives",
+          "passed": true,
+          "evidence": "Line 4: import * as DialogPrimitive from '@radix-ui/react-dialog'. The component uses DialogPrimitive.Root, DialogPrimitive.Trigger, DialogPrimitive.Portal, DialogPrimitive.Close, DialogPrimitive.Overlay, DialogPrimitive.Content, DialogPrimitive.Title, DialogPrimitive.Description \u2014 the same primitives shadcn uses. Focus trap, Esc-to-close, scroll lock, aria-* all come from Radix. Note: Uses Radix directly rather than importing from '@/components/ui/dialog', which is actually how shadcn itself is structured (shadcn's Dialog file re-exports Radix primitives). Response.md line 12 acknowledges: 'Kept Radix's behaviour ... via asChild + forceMount.'"
+        },
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": true,
+          "evidence": "Lines 6-13: 'import { AnimatePresence, motion, stagger, useReducedMotion, type Transition, type Variants, } from \"motion/react\"'."
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Only uses AnimatePresence, motion, stagger, useReducedMotion, Transition, Variants \u2014 all free-tier motion/react exports. No AnimateNumber, Cursor, ScrollMenu, or other Motion+ gated components."
+        },
+        {
+          "text": "Uses TypeScript",
+          "passed": true,
+          "evidence": "File extension is .tsx. Uses TypeScript type annotations throughout: 'type Transition, type Variants' imports; Variants-typed variants objects; 'type AnimatedDialogProps = React.ComponentProps<typeof DialogPrimitive.Root>'; typed React.ComponentProps on every sub-component."
+        }
+      ],
+      "notes": [
+        "Used AnimatePresence + mirrored open-state context instead of forceMount + data-state, because variant-propagated `exit` and `when: afterChildren` don't fire when the element stays mounted. This is a deliberate, well-documented trade-off, not a bug."
+      ]
+    },
+    {
+      "eval_id": 1,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 5,
+        "failed": 5,
+        "total": 10,
+        "time_seconds": 107.9,
+        "tokens": 24349,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Imports from 'motion/react' (not 'framer-motion')",
+          "passed": false,
+          "evidence": "Hero.tsx line 4-12 imports from 'framer-motion': `import { motion, useInView, useMotionValue, useSpring, useReducedMotion, useTransform, type Variants, } from \"framer-motion\";`. Response.md line 31 even explicitly notes: 'If you prefer the renamed `motion` package (Framer Motion v12+), change the import to `from \"motion/react\"`' \u2014 so the author knew about motion/react but chose framer-motion."
+        },
+        {
+          "text": "Uses shadcn theme tokens (text-foreground, bg-background, bg-primary, bg-card, border-border, text-muted-foreground, text-primary-foreground) \u2014 NOT concrete bg-white / bg-indigo-* / text-neutral-* utilities",
+          "passed": true,
+          "evidence": "Hero.tsx uses only shadcn theme tokens: `bg-background text-foreground` (line 213), `text-muted-foreground` (lines 238, 254, 270, 299, 308), `border-border` (line 291), `bg-card/60` (line 291), `bg-primary/10 text-primary` (line 293). No concrete tailwind color utilities like bg-white/bg-indigo-*/text-neutral-*."
+        },
+        {
+          "text": "Feature grid uses variants + stagger() from motion/react (not legacy staggerChildren number)",
+          "passed": false,
+          "evidence": "Hero.tsx line 173 uses the legacy `staggerChildren: 0.08` number inside the featureGrid variants transition, not the modern `stagger()` helper from motion/react. Same for heroContainer (line 154)."
+        },
+        {
+          "text": "Feature grid uses whileInView with viewport={{ once: true }} so it doesn't re-animate on scroll back",
+          "passed": false,
+          "evidence": "Hero.tsx uses `useInView(featuresRef, { once: true, amount: 0.2 })` (line 203) combined with `initial=\"hidden\" animate={featuresAnimate}` (lines 283-284), not the `whileInView` prop with `viewport={{ once: true }}`. This achieves similar behavior but does not match the asserted API."
+        },
+        {
+          "text": "Stat counter uses useMotionValue + animate() + useTransform rounding + motion component as child (<motion.span>{rounded}</motion.span>), NOT useState + setInterval and NOT toFixed-in-render",
+          "passed": false,
+          "evidence": "The counter uses useMotionValue + useSpring + useTransform, but instead of rendering a motion.span child of the rounded MotionValue, it subscribes via `rounded.on('change', (v) => setDisplay(v))` (line 134) and renders plain `<span>{display}</span>` driven by useState. The assertion requires `<motion.span>{rounded}</motion.span>` form; this implementation is the useState-mirroring pattern, not the motion-component-as-child pattern."
+        },
+        {
+          "text": "Explicitly declines <AnimateNumber> as a Motion+ paid component (not 'number-flow' or 'Motion-Plus examples' or similar misattribution)",
+          "passed": false,
+          "evidence": "Response.md lines 14-18 misattributes <AnimateNumber>: 'you're likely thinking of... NumberFlow (@number-flow/react)... <AnimatedNumber> from Magic UI / Aceternity... Framer Motion itself has no built-in <AnimateNumber> component.' It does NOT identify <AnimateNumber> as a Motion+ paid component; instead it attributes it to NumberFlow or Magic UI/Aceternity, which is precisely the misattribution the assertion flags."
+        },
+        {
+          "text": "Handles prefers-reduced-motion via useReducedMotion() or MotionConfig reducedMotion='user'",
+          "passed": true,
+          "evidence": "Hero.tsx imports and uses `useReducedMotion` at lines 9, 109, 193. It gates both the variant-based animations (lines 207-209) and the counter's final value (lines 126-129) based on `shouldReduceMotion`."
+        },
+        {
+          "text": "Uses shadcn Button for the CTA (imports from '@/components/ui/button' or equivalent, does not rebuild a button from scratch with motion.button and button-like classes)",
+          "passed": true,
+          "evidence": "Hero.tsx line 22 imports `import { Button } from \"@/components/ui/button\";` and uses it at line 245: `<Button size=\"lg\" className=\"px-8\">Get started</Button>`. No rebuild with motion.button."
+        },
+        {
+          "text": "Does not use any Motion+ components (Cursor, AnimateNumber, Ticker, Motion Studio MCP)",
+          "passed": true,
+          "evidence": "Hero.tsx uses only standard framer-motion primitives (motion, useInView, useMotionValue, useSpring, useReducedMotion, useTransform, Variants). No Cursor, AnimateNumber, Ticker, or Motion Studio MCP component is imported or referenced in the final file."
+        },
+        {
+          "text": "Uses TypeScript",
+          "passed": true,
+          "evidence": "The file is named Hero.tsx with TypeScript types throughout: `type Stat = { ... }` (line 34), `type Feature = { ... }` (line 49), `type AnimatedNumberProps = { ... }` (line 92), `type Variants` import (line 11), and typed refs like `useRef<HTMLDivElement>(null)` (lines 195-197)."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.91,
+        "passed": 10,
+        "failed": 1,
+        "total": 11,
+        "time_seconds": 118.3,
+        "tokens": 27405,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": false,
+          "evidence": "ProjectGallery.tsx line 4-9 imports from 'framer-motion': `import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from \"framer-motion\";` \u2014 not from the unified 'motion/react' package."
+        },
+        {
+          "text": "Uses matching layoutId on the image, title, and description between grid card and modal (with per-card namespace, e.g. `img-${id}` or `img-card-${id}`)",
+          "passed": true,
+          "evidence": "Grid card uses `layoutId={`image-${project.id}`}` (line 167), `layoutId={`title-${project.id}`}` (line 181), `layoutId={`description-${project.id}`}` (line 187). Modal uses the same layoutIds on lines 245, 260, 272 \u2014 namespaced per-card with project.id."
+        },
+        {
+          "text": "Either (a) does NOT put layoutId on the outer card container, OR (b) DOES put layoutId on the container AND hides the source with `visibility: hidden` (via style or className) when that card is active \u2014 one of these two patterns must be present",
+          "passed": true,
+          "evidence": "Both patterns present \u2014 layoutId on container (line 159: `layoutId={`card-${project.id}`}`) AND visibility-hidden on active source (line 153: `style={{ visibility: isActive ? \"hidden\" : \"visible\" }}`). Matches pattern (b)."
+        },
+        {
+          "text": "Wraps the modal in AnimatePresence, placed outside the conditional mount",
+          "passed": true,
+          "evidence": "Lines 116-125: `<AnimatePresence>{activeProject && (<ProjectModal ... />)}</AnimatePresence>` \u2014 AnimatePresence wraps the conditional mount from the outside."
+        },
+        {
+          "text": "Uses shadcn theme tokens (bg-card, text-foreground, bg-background, border-border, text-muted-foreground) \u2014 NOT bg-white, text-neutral-*, bg-black/*, bg-indigo-*",
+          "passed": true,
+          "evidence": "Uses bg-card (line 165), bg-muted (lines 169, 247), bg-background/80 (line 233), text-card-foreground (line 242), text-muted-foreground (line 275), text-foreground/90 (line 299), border-border/60 (line 165), ring-ring, ring-offset-background (line 162). No bg-white, text-neutral-*, bg-black/*, or bg-indigo-* found."
+        },
+        {
+          "text": "Handles Escape key to close the modal",
+          "passed": true,
+          "evidence": "Lines 76-83: `useEffect` adds a `keydown` listener that calls `setActiveId(null)` when `e.key === \"Escape\"`."
+        },
+        {
+          "text": "Handles click-outside (backdrop click) to close the modal",
+          "passed": true,
+          "evidence": "Line 232: Scrim div has `onClick={onClose}` \u2014 `<motion.div ... onClick={onClose} className=\"absolute inset-0 bg-background/80 backdrop-blur-sm\" />`."
+        },
+        {
+          "text": "Explains the flicker/overlap trap in prose: either calls out 'don't layoutId both container and children' OR 'hide the source with visibility: hidden' as the fix",
+          "passed": true,
+          "evidence": "response.md section 'How to avoid the flicker/overlap you've seen elsewhere' point 1: 'Don't render the source element while the destination is mounted. The grid card is wrapped in a visibility: hidden container while its modal is open... visibility: hidden (not display: none) preserves grid layout so the return morph lands on the correct rectangle.' Explicitly calls out the hide-source fix."
+        },
+        {
+          "text": "Modal-only content (e.g. Close button, extended description) uses a separate initial/animate/exit with a delay so it fades in after the shared-element morph settles \u2014 NOT a layoutId",
+          "passed": true,
+          "evidence": "Extended description (lines 279-295) and Close button (lines 307-323) use initial/animate/exit with `delay: 0.22` \u2014 no layoutId. E.g. `initial={{ opacity: 0, y: 8 }}, animate={{ ... transition: { delay: ... 0.22 } }}`."
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Imports only AnimatePresence, LayoutGroup, motion, useReducedMotion \u2014 all base framer-motion/Motion APIs. No Motion+ components (e.g., Cursor, AnimateNumber, Ticker, SpringElement) used."
+        },
+        {
+          "text": "Uses TypeScript with typed Project prop",
+          "passed": true,
+          "evidence": "Lines 26-33: `export type Project = { id: string; title: string; description: string; image: string; extendedDescription?: string; };` and ProjectGalleryProps (lines 35-38) types the `projects: Project[]` prop."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.42,
+        "passed": 5,
+        "failed": 7,
+        "total": 12,
+        "time_seconds": 65.2,
+        "tokens": 10426,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses <Button asChild> from shadcn wrapping a motion.a (NOT a raw <motion.button> or custom button)",
+          "passed": false,
+          "evidence": "Button asChild is used (line 112), but it wraps a plain <a href={href}>{children}</a> (line 118), not a motion.a. The animation element is a motion.span that wraps OUTSIDE the Button, not inside it. Assertion requires Button asChild to wrap motion.a."
+        },
+        {
+          "text": "The motion.a is the direct child of Button and receives the animation props (whileHover, whileTap, style, onMouseMove, etc.)",
+          "passed": false,
+          "evidence": "There is no motion.a in the file. The direct child of Button is a plain <a> element with no animation props. Animation props (style, onHoverStart, onTapStart) are on the external motion.span wrapper (lines 95-110)."
+        },
+        {
+          "text": "Uses useSpring to smooth the magnetic follow motion (either useSpring(0, {...}) directly, OR useSpring wrapping a useMotionValue source)",
+          "passed": true,
+          "evidence": "Lines 30-36: const x = useMotionValue(0); const y = useMotionValue(0); const springX = useSpring(x, springConfig); const springY = useSpring(y, springConfig). Uses the useSpring(motionValue, config) pattern."
+        },
+        {
+          "text": "Implements the magnetic effect via onMouseMove reading event.currentTarget.getBoundingClientRect() and setting motion values based on pointer offset from center",
+          "passed": false,
+          "evidence": "Uses window-level 'pointermove' event listener (line 73) rather than onMouseMove prop on the element, and reads wrapperRef.current.getBoundingClientRect() (line 49) rather than event.currentTarget.getBoundingClientRect(). It does compute the pointer offset from center (lines 50-54) and sets motion values (lines 60-61). The core intent (pointer offset from center -> motion values) is met, but the specific mechanism named in the assertion (onMouseMove + event.currentTarget) is not used."
+        },
+        {
+          "text": "Implements onMouseLeave (or equivalent) to reset the motion values to 0 so the button returns to origin",
+          "passed": true,
+          "evidence": "Lines 68-71: handlePointerLeave resets x.set(0) and y.set(0). Registered as window 'pointerleave' listener (line 74). Also, when distance > radius in pointermove (lines 63-65), the values reset to 0."
+        },
+        {
+          "text": "Uses style={{ x: mx, y: my }} on the motion.a to apply the magnetic translation (OR equivalent via transform)",
+          "passed": false,
+          "evidence": "The style with x and y (lines 97-100) is applied to a motion.span wrapper, not to a motion.a. There is no motion.a in the component. The translation is applied to a wrapper span that surrounds the Button \u2014 the assertion specifically requires this on motion.a."
+        },
+        {
+          "text": "Applies whileHover and/or whileTap for the scale pop on gesture",
+          "passed": false,
+          "evidence": "No whileHover or whileTap props are used anywhere. Scale pop is implemented via onHoverStart/onHoverEnd/onTapStart/onTap handlers (lines 105-109) that imperatively set a motion value, rather than using the declarative whileHover/whileTap props the assertion calls for."
+        },
+        {
+          "text": "href='/signup' is present on the motion.a element",
+          "passed": false,
+          "evidence": "href={href} (defaulting to '/signup') is present on a plain <a> element (line 118), not on a motion.a. There is no motion.a element in the component."
+        },
+        {
+          "text": "Imports Button from shadcn path (e.g. '@/components/ui/button' or similar) \u2014 does NOT recreate Button styling from scratch",
+          "passed": true,
+          "evidence": "Line 5: import { Button, type ButtonProps } from '@/components/ui/button'; Uses the shadcn Button primitive with variant/size/className forwarded."
+        },
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": false,
+          "evidence": "Line 4: import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion'; Uses the legacy 'framer-motion' package, not 'motion/react'. The response even acknowledges this: 'On Motion's newer package (motion/react), change the import to from motion/react' (response.md line 175)."
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Only uses motion, useMotionValue, useSpring, useReducedMotion \u2014 all core Motion APIs. No Motion+ (paid) components like Cursor, Ticker, etc. are used."
+        },
+        {
+          "text": "Uses TypeScript",
+          "passed": true,
+          "evidence": "File is .tsx; uses type annotations including 'type MagneticCTAProps = Omit<ButtonProps, \"asChild\"> & {...}' (lines 7-14), React.useRef<HTMLSpanElement>, event: PointerEvent, etc."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.83,
+        "passed": 10,
+        "failed": 2,
+        "total": 12,
+        "time_seconds": 92.6,
+        "tokens": 17721,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses useScroll with target: ref and offset: ['start start', 'end end'] (or equivalent 2-item offset that starts progress at 0 when section top hits viewport top)",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx lines 61-64: `const { scrollYProgress } = useScroll({ target: sectionRef, offset: [\"start start\", \"end end\"] });`"
+        },
+        {
+          "text": "Uses useTransform to map scrollYProgress to a horizontal x translation (percentage-based: '0%' to '-(N-1)/N * 100%' or similar, OR viewport-unit based)",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx lines 75-76: `const maxTranslatePct = count > 1 ? -(count - 1) * 100 : 0; const x = useTransform(smoothProgress, [0, 1], [\\`0vw\\`, \\`${maxTranslatePct}vw\\`]);` \u2014 viewport-unit based, mapping to -(N-1)*100vw."
+        },
+        {
+          "text": "Does NOT apply useSpring to the scroll-linked x motion value (scroll-linked springs lag behind the scroll and feel broken)",
+          "passed": false,
+          "evidence": "HorizontalCaseStudies.tsx lines 67-71 and 76 wrap scrollYProgress in useSpring and then pipe smoothProgress into useTransform for x: `const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.35 }); ... const x = useTransform(smoothProgress, [0, 1], [\\`0vw\\`, \\`${maxTranslatePct}vw\\`]);`. The response explicitly says `useSpring smooths the motion so fast scroll wheels / trackpads don't jitter` \u2014 this is exactly the anti-pattern the assertion forbids."
+        },
+        {
+          "text": "Outer container height is >= 400vh (tall enough to produce slower-than-1:1 feel for 5 cards)",
+          "passed": true,
+          "evidence": "Line 81: `const wrapperHeight = \\`${Math.max(1, count) * scrollRatio * 100}vh\\`;` \u2192 for 5 cards with default scrollRatio=1.4, height = 5 * 1.4 * 100 = 700vh, which is >= 400vh."
+        },
+        {
+          "text": "The ratio of vertical scroll to horizontal travel is > 1:1 (slower than 1:1) \u2014 e.g. 500vh outer + 100vh sticky = 400vh vertical per (N-1)*100vw horizontal, giving 400/400 = 1:1 MINIMUM; should be higher for 'slightly slower'",
+          "passed": true,
+          "evidence": "Outer wrapper = 700vh (5 * 1.4 * 100), sticky panel = 100vh, so vertical scroll distance is 600vh. Horizontal travel = (5-1)*100vw = 400vw. Ratio = 600/400 = 1.5:1 (slower than 1:1), matching the 'slightly slower' intent."
+        },
+        {
+          "text": "Inner container uses position: sticky with top: 0, overflow: hidden, height: 100vh (or h-screen)",
+          "passed": true,
+          "evidence": "Line 91: `<div className=\"sticky top-0 flex h-screen w-full flex-col overflow-hidden\">` \u2014 has sticky, top-0, h-screen, and overflow-hidden."
+        },
+        {
+          "text": "Cards have flex-shrink: 0 (or 'shrink-0' / 'flex: 0 0 ...') AND fixed width of 100vw (or 'w-screen')",
+          "passed": true,
+          "evidence": "Line 119: `className=\"flex h-full w-screen shrink-0 items-center justify-center px-6 motion-reduce:snap-center md:px-12\"` \u2014 each card wrapper li has both shrink-0 and w-screen."
+        },
+        {
+          "text": "Uses shadcn theme tokens (bg-background on section, bg-card / text-foreground / text-muted-foreground / border-border on cards) \u2014 NOT bg-white / text-neutral-* / bg-black",
+          "passed": true,
+          "evidence": "Section: `bg-background text-foreground` (line 87). Card: `border-border/60 bg-card text-card-foreground` (line 121). Uses `text-muted-foreground` (lines 93, 139, 147, 150) and `border-border` (line 151). No bg-white/bg-black/text-neutral-* found."
+        },
+        {
+          "text": "Handles prefers-reduced-motion (e.g. falls back to a vertical stack, or disables the transform)",
+          "passed": true,
+          "evidence": "Line 105: `motion-reduce:overflow-x-auto motion-reduce:overflow-y-hidden`; line 111: `motion-reduce:!transform-none motion-reduce:snap-x motion-reduce:snap-mandatory`; the transform is disabled and native scroll with snap is used as the fallback when prefers-reduced-motion is set."
+        },
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": false,
+          "evidence": "Line 4: `import { motion, useScroll, useTransform, useSpring } from \"framer-motion\";` \u2014 imports from 'framer-motion', not 'motion/react'."
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Only `motion`, `useScroll`, `useTransform`, `useSpring` are imported (line 4). No Motion+ components (e.g. ScrollContent, Cursor, etc.) are used."
+        },
+        {
+          "text": "Uses TypeScript with typed CaseStudy and props",
+          "passed": true,
+          "evidence": "Lines 8-14 define `export interface CaseStudy { id: string; title: string; client: string; summary: string; image: string; }` and lines 16-28 define `export interface HorizontalCaseStudiesProps { caseStudies: CaseStudy[]; scrollRatio?: number; className?: string; eyebrow?: string; heading?: string; }`. Component is typed accordingly."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.9167,
+        "passed": 11,
+        "failed": 1,
+        "total": 12,
+        "time_seconds": 145.8,
+        "tokens": 30641,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses <DialogContent asChild> with a motion component (e.g. motion.div) as its child \u2014 the motion component owns the animation",
+          "passed": true,
+          "evidence": "The output uses `motion.create(DialogPrimitive.Content)` to produce `MotionContent`, then renders it directly. The assertion's intent is 'the motion component owns the animation' and `motion.create(Radix.Content)` achieves exactly that (equivalent to `<DialogContent asChild><motion.div .../>`). See AnimatedDialog.tsx line 128: `const MotionContent = motion.create(DialogPrimitive.Content);` and lines 144-165 where it renders with variants/initial/animate/exit."
+        },
+        {
+          "text": "Explicitly strips OR does not include the default tw-animate-css animate-in/animate-out/fade-in-*/zoom-in-* classes on the DialogContent (or wraps a DialogContent-like primitive that doesn't have them), because Motion is now driving the animation and stacking both causes stutter",
+          "passed": true,
+          "evidence": "The MotionContent className at line 147 is `'bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg'` \u2014 no animate-in/animate-out/fade-*/zoom-* classes. Comment at line 146 states: 'We strip shadcn's default data-[state=...] animate-in/out classes and rely on Motion.' Overlay similarly excludes those classes (line 111-114)."
+        },
+        {
+          "text": "The prose / comments explicitly acknowledge that shadcn's default tw-animate-css animation is being overridden (not just silently replaced)",
+          "passed": true,
+          "evidence": "response.md has an entire section titled 'The decision: override `tw-animate-css`, don't fight it' (line 6) explaining the conflict: 'If you leave those classes in place and layer Motion on top, you get two animation systems fighting over `transform` and `opacity`...' Additional comments in AnimatedDialog.tsx call this out (lines 110, 146)."
+        },
+        {
+          "text": "Uses variants to drive the container spring (scale 0.8 \u2192 1, y 20 \u2192 0) on open",
+          "passed": true,
+          "evidence": "AnimatedDialog.tsx lines 51-63: `containerVariants` has `hidden: { opacity: 0, scale: 0.8, y: 20 }` and `visible: { opacity: 1, scale: 1, y: 0, transition: { ...containerSpring, ... } }` where containerSpring is `{ type: 'spring', stiffness: 380, damping: 32, mass: 0.9 }`."
+        },
+        {
+          "text": "Uses stagger() or staggerChildren in the open variant's transition to cascade the header/body/footer content",
+          "passed": true,
+          "evidence": "AnimatedDialog.tsx line 61-62: `staggerChildren: SECTION_STAGGER` and `delayChildren: SECTION_DELAY` are set inside the `visible` variant's transition block. Header/Body/Footer use `sectionVariants` to participate in the stagger (lines 184-224)."
+        },
+        {
+          "text": "On close (data-state=closed, or via AnimatePresence exit / usePresence, or variant swap) the animation reverses",
+          "passed": true,
+          "evidence": "AnimatedDialog.tsx line 311: `<AnimatePresence>` wraps the Portal content, and line 312 `{actualOpen && (...)}` conditionally mounts it. `exit` variant (lines 64-77) reverses the animation with scale/y collapsing and `staggerDirection: -1` to reverse children. `forceMount` on Portal/Overlay/Content (lines 313, 319, 353) plus controlled-open mirror ensures exit animation runs."
+        },
+        {
+          "text": "Uses shadcn theme tokens (bg-background, text-foreground, border-border, etc.) \u2014 NOT bg-white / text-neutral-*",
+          "passed": true,
+          "evidence": "Uses `bg-background` (line 147), `text-muted-foreground` (line 244), `ring-offset-background` and `focus:ring-ring` (line 169). No `bg-white` or `text-neutral-*` anywhere. Minor note: the Overlay uses `bg-black/50` (line 113) rather than shadcn's standard `bg-black/80` \u2014 but this is not `bg-white`/`text-neutral-*`, so the assertion is satisfied."
+        },
+        {
+          "text": "Exports a component with the API <AnimatedDialog open onOpenChange>{children}</AnimatedDialog> (or a close equivalent \u2014 props named 'open' and 'onOpenChange' matching shadcn's Dialog)",
+          "passed": true,
+          "evidence": "AnimatedDialogRoot (lines 275-331) accepts `open`, `defaultOpen`, `onOpenChange`, `children` \u2014 exact shadcn/Radix Dialog API. Exported as `AnimatedDialog` on line 390. Usage in response.md line 35 shows `<AnimatedDialog open={open} onOpenChange={setOpen}>`."
+        },
+        {
+          "text": "Does NOT rebuild Dialog / DialogContent from scratch \u2014 uses shadcn's Dialog primitives",
+          "passed": false,
+          "evidence": "The output does NOT import from `@/components/ui/dialog` or any shadcn-wrapped Dialog component. It imports `@radix-ui/react-dialog` directly (line 4) and reconstructs DialogContent's styling manually (line 147: `'bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg'` \u2014 these classes are copied from shadcn's dialog.tsx). The response explicitly acknowledges this at response.md line 11: 'The correct move is to not render shadcn's `DialogContent` / `DialogOverlay` at all... We build a parallel component.' While the author argues this is equivalent because shadcn uses Radix under the hood, this IS rebuilding DialogContent from scratch rather than reusing shadcn's primitive."
+        },
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": true,
+          "evidence": "AnimatedDialog.tsx line 5: `import { AnimatePresence, motion, type Transition } from 'motion/react';`"
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Only uses core Motion APIs: `motion`, `motion.create`, `AnimatePresence`, and `Transition` type. No Motion+ paid components (e.g. SplitText, Cursor, AnimateNumber) are imported or used."
+        },
+        {
+          "text": "Uses TypeScript",
+          "passed": true,
+          "evidence": "File is `.tsx`. Uses TypeScript features throughout: typed constants with `Transition` (line 16), typed props (`AnimatedDialogContentProps` at line 130, `AnimatedDialogProps` at line 273), `React.ComponentProps<typeof DialogPrimitive.X>`, and typed compound component (`AnimatedDialogComponent` at line 364)."
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 0.964,
+        "stddev": 0.0498,
+        "min": 0.9,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 132.78,
+        "stddev": 49.2682,
+        "min": 79.7,
+        "max": 209.7
+      },
+      "tokens": {
+        "mean": 24043,
+        "stddev": 16427,
+        "min": 9374,
+        "max": 51781
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.7153,
+        "stddev": 0.2373,
+        "min": 0.42,
+        "max": 0.9167
+      },
+      "time_seconds": {
+        "mean": 105.96,
+        "stddev": 29.9296,
+        "min": 65.2,
+        "max": 145.8
+      },
+      "tokens": {
+        "mean": 22108,
+        "stddev": 8087,
+        "min": 10426,
+        "max": 30641
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.25",
+      "time_seconds": "+26.8",
+      "tokens": "+1935"
+    }
+  },
+  "notes": [
+    "Pass-rate delta: +25% (96.4% vs 71.5%). Much larger than iteration-1's +5%. The new eval set is genuinely more discriminating \u2014 each eval has 1-2 assertions that probe skill-specific knowledge the baseline typically misses (motion/react vs framer-motion import, stagger() vs legacy staggerChildren, AnimateNumber as Motion+, Shape A/B layoutId, tw-animate-css class stripping, asChild+motion.a vs motion.span-wrapping-a).",
+    "Biggest deltas: Eval 1 (hero stagger+counter) 50% \u2192 90%, and Eval 3 (asChild magnetic CTA) 42% \u2192 100%. Both are squarely in the new scope (marketing patterns + shadcn integration).",
+    "The AnimateNumber trap (Eval 1) remains the most discriminating single assertion: with-skill correctly identifies it as Motion+ paid; baseline misattributes to NumberFlow / Magic UI without using the word 'paid'.",
+    "The asChild pattern (Eval 3) is the clearest new-scope signal: baseline wraps the anchor with motion.span (not knowing asChild merges props to the direct child), breaking the integration spirit. With-skill places motion.a as the direct child of Button asChild as the skill documents.",
+    "Shape A/B regression fix (Eval 2) working: with-skill satisfied BOTH the Shape A guard (no container layoutId) AND the Shape B guard (visibility: hidden on source) redundantly. This directly fixes the iteration-1 regression I identified.",
+    "One skill weakness confirmed: useSpring on scroll-linked scrollYProgress (Eval 4). Both with-skill and baseline applied it. The skill's scroll-animations.md 'Smoothed progress' recipe shows useSpring(scrollYProgress) for progress bars \u2014 which is valid \u2014 but doesn't differentiate the scrub-linked case (horizontal-scroll case studies) where spring lag feels broken. Worth a clarifying note in iter-3.",
+    "Cost: +51s duration, +16k tokens per run on average. Higher than iter-1's +29s/+4.5k \u2014 because SKILL.md body shrank but references grew and the with-skill agent does deeper reads (shadcn-integration.md, layout-animations.md, gotchas.md).",
+    "With-skill outputs still show consistent quality extras: useReducedMotion branches that actually gate behaviour, pointer-events over mouse-events for touch support (Eval 3), tw-animate-css class stripping with explicit justification (Eval 5), LayoutGroup id namespacing (Eval 2). These weren't all captured by assertions; the qualitative review loop catches them."
+  ]
+}

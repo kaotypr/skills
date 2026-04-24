@@ -1,0 +1,166 @@
+/* Stable gutter so the scrollbar appearing when the modal opens
+   doesn't trigger a layout animation on the cards underneath. */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* ---------- Grid ---------- */
+
+.gallery-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery-grid__item {
+  display: block;
+}
+
+/* ---------- Card ---------- */
+
+.gallery-card {
+  /* Must NOT be inline — transforms are ignored on inline. `button` is already
+     inline-block by default; we make it block to fill the grid cell. */
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: #fff;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.04);
+  /* border-radius is set inline via style={{ borderRadius: 16 }} so Motion
+     can correct for scale distortion during the layout animation. */
+  font: inherit;
+}
+
+.gallery-card:focus-visible {
+  outline: 3px solid #5b8cff;
+  outline-offset: 2px;
+}
+
+.gallery-card__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: #eee;
+}
+
+.gallery-card__body {
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.gallery-card__title {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.gallery-card__description {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #555;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- Modal ---------- */
+
+.card-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 24, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 40;
+}
+
+.card-modal {
+  position: fixed;
+  /* Centered, constrained panel — this is the layout the card morphs INTO. */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(960px, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  /* border-radius set inline for scale correction. */
+}
+
+.card-modal:focus {
+  outline: none;
+}
+
+.card-modal__image {
+  display: block;
+  width: 100%;
+  max-height: 55vh;
+  object-fit: cover;
+  background: #eee;
+}
+
+.card-modal__body {
+  padding: 1.5rem 2rem 2rem;
+  overflow: auto;
+}
+
+.card-modal__title {
+  margin: 0 0 0.75rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.card-modal__description {
+  margin: 0 0 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.card-modal__extra {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card-modal__close {
+  appearance: none;
+  border: 0;
+  border-radius: 8px;
+  padding: 0.55rem 1.1rem;
+  background: #111;
+  color: #fff;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.card-modal__close:focus-visible {
+  outline: 3px solid #5b8cff;
+  outline-offset: 2px;
+}
+
+/* ---------- Reduced motion ----------
+   Motion respects prefers-reduced-motion via useReducedMotion() / MotionConfig,
+   but we also neutralise any CSS transitions just to be safe. */
+@media (prefers-reduced-motion: reduce) {
+  .gallery-card,
+  .card-modal,
+  .card-modal__backdrop {
+    transition: none !important;
+  }
+}

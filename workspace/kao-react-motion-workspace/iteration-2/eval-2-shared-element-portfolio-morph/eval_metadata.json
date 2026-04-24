@@ -1,0 +1,18 @@
+{
+  "eval_id": 2,
+  "eval_name": "shared-element-portfolio-morph",
+  "prompt": "I have a portfolio page with a grid of project cards \u2014 each project is { id, title, description, image }, and I use shadcn's Card component for styling. When a user clicks a card, I want it to morph into a fullscreen view where the image, title, and description fly smoothly to their new positions, and modal-only content (a 'Close' button plus an extended description) fades in after the morph settles. Clicking outside or pressing Escape should morph back to the grid. React 19 + TypeScript + Tailwind + shadcn tokens. Give me ProjectGallery.tsx including the modal in one file. Also \u2014 I've seen subtle flicker/overlap in other shared-element demos. How do I avoid it?",
+  "assertions": [
+    "Imports from 'motion/react'",
+    "Uses matching layoutId on the image, title, and description between grid card and modal (with per-card namespace, e.g. `img-${id}` or `img-card-${id}`)",
+    "Either (a) does NOT put layoutId on the outer card container, OR (b) DOES put layoutId on the container AND hides the source with `visibility: hidden` (via style or className) when that card is active \u2014 one of these two patterns must be present",
+    "Wraps the modal in AnimatePresence, placed outside the conditional mount",
+    "Uses shadcn theme tokens (bg-card, text-foreground, bg-background, border-border, text-muted-foreground) \u2014 NOT bg-white, text-neutral-*, bg-black/*, bg-indigo-*",
+    "Handles Escape key to close the modal",
+    "Handles click-outside (backdrop click) to close the modal",
+    "Explains the flicker/overlap trap in prose: either calls out 'don't layoutId both container and children' OR 'hide the source with visibility: hidden' as the fix",
+    "Modal-only content (e.g. Close button, extended description) uses a separate initial/animate/exit with a delay so it fades in after the shared-element morph settles \u2014 NOT a layoutId",
+    "Does not use any Motion+ components",
+    "Uses TypeScript with typed Project prop"
+  ]
+}

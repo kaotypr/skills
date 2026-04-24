@@ -1,0 +1,55 @@
+{
+  "reviews": [
+    {
+      "run_id": "eval-1-landing-hero-stagger-counter-with_skill-run-1",
+      "feedback": "Feature grid uses whileInView with viewport={{ once: true }} so it doesn't re-animate on scroll back, is it really an issue or not? if its issue we need to fix it",
+      "timestamp": "2026-04-24T11:21:54.658Z"
+    },
+    {
+      "run_id": "eval-1-landing-hero-stagger-counter-without_skill-run-1",
+      "feedback": "",
+      "timestamp": "2026-04-24T11:21:54.658Z"
+    },
+    {
+      "run_id": "eval-2-shared-element-portfolio-morph-with_skill-run-1",
+      "feedback": "",
+      "timestamp": "2026-04-24T11:21:54.658Z"
+    },
+    {
+      "run_id": "eval-2-shared-element-portfolio-morph-without_skill-run-1",
+      "feedback": "Imports from 'motion/react'\nProjectGallery.tsx line 4-9 imports from 'framer-motion': `import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from \"framer-motion\";` \u2014 not from the unified 'motion/react' package.\nThis is a critical issue, needs to fix it",
+      "timestamp": "2026-04-24T11:21:54.658Z"
+    },
+    {
+      "run_id": "eval-3-aschild-magnetic-cta-with_skill-run-1",
+      "feedback": "",
+      "timestamp": "2026-04-24T11:21:54.658Z"
+    },
+    {
+      "run_id": "eval-3-aschild-magnetic-cta-without_skill-run-1",
+      "feedback": "",
+      "timestamp": "2026-04-24T11:21:54.658Z"
+    },
+    {
+      "run_id": "eval-4-horizontal-scroll-case-studies-with_skill-run-1",
+      "feedback": "Make sure the skill never produces lag between scroll input and horizontal position",
+      "timestamp": "2026-04-24T11:21:54.658Z"
+    },
+    {
+      "run_id": "eval-4-horizontal-scroll-case-studies-without_skill-run-1",
+      "feedback": "",
+      "timestamp": "2026-04-24T11:21:54.658Z"
+    },
+    {
+      "run_id": "eval-5-shadcn-dialog-motion-override-with_skill-run-1",
+      "feedback": "",
+      "timestamp": "2026-04-24T11:21:54.658Z"
+    },
+    {
+      "run_id": "eval-5-shadcn-dialog-motion-override-without_skill-run-1",
+      "feedback": "",
+      "timestamp": "2026-04-24T11:21:54.658Z"
+    }
+  ],
+  "status": "complete"
+}

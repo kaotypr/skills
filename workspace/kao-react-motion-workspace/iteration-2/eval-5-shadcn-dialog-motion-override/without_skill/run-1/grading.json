@@ -1,0 +1,150 @@
+{
+  "expectations": [
+    {
+      "text": "Uses <DialogContent asChild> with a motion component (e.g. motion.div) as its child — the motion component owns the animation",
+      "passed": true,
+      "evidence": "The output uses `motion.create(DialogPrimitive.Content)` to produce `MotionContent`, then renders it directly. The assertion's intent is 'the motion component owns the animation' and `motion.create(Radix.Content)` achieves exactly that (equivalent to `<DialogContent asChild><motion.div .../>`). See AnimatedDialog.tsx line 128: `const MotionContent = motion.create(DialogPrimitive.Content);` and lines 144-165 where it renders with variants/initial/animate/exit."
+    },
+    {
+      "text": "Explicitly strips OR does not include the default tw-animate-css animate-in/animate-out/fade-in-*/zoom-in-* classes on the DialogContent (or wraps a DialogContent-like primitive that doesn't have them), because Motion is now driving the animation and stacking both causes stutter",
+      "passed": true,
+      "evidence": "The MotionContent className at line 147 is `'bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg'` — no animate-in/animate-out/fade-*/zoom-* classes. Comment at line 146 states: 'We strip shadcn's default data-[state=...] animate-in/out classes and rely on Motion.' Overlay similarly excludes those classes (line 111-114)."
+    },
+    {
+      "text": "The prose / comments explicitly acknowledge that shadcn's default tw-animate-css animation is being overridden (not just silently replaced)",
+      "passed": true,
+      "evidence": "response.md has an entire section titled 'The decision: override `tw-animate-css`, don't fight it' (line 6) explaining the conflict: 'If you leave those classes in place and layer Motion on top, you get two animation systems fighting over `transform` and `opacity`...' Additional comments in AnimatedDialog.tsx call this out (lines 110, 146)."
+    },
+    {
+      "text": "Uses variants to drive the container spring (scale 0.8 → 1, y 20 → 0) on open",
+      "passed": true,
+      "evidence": "AnimatedDialog.tsx lines 51-63: `containerVariants` has `hidden: { opacity: 0, scale: 0.8, y: 20 }` and `visible: { opacity: 1, scale: 1, y: 0, transition: { ...containerSpring, ... } }` where containerSpring is `{ type: 'spring', stiffness: 380, damping: 32, mass: 0.9 }`."
+    },
+    {
+      "text": "Uses stagger() or staggerChildren in the open variant's transition to cascade the header/body/footer content",
+      "passed": true,
+      "evidence": "AnimatedDialog.tsx line 61-62: `staggerChildren: SECTION_STAGGER` and `delayChildren: SECTION_DELAY` are set inside the `visible` variant's transition block. Header/Body/Footer use `sectionVariants` to participate in the stagger (lines 184-224)."
+    },
+    {
+      "text": "On close (data-state=closed, or via AnimatePresence exit / usePresence, or variant swap) the animation reverses",
+      "passed": true,
+      "evidence": "AnimatedDialog.tsx line 311: `<AnimatePresence>` wraps the Portal content, and line 312 `{actualOpen && (...)}` conditionally mounts it. `exit` variant (lines 64-77) reverses the animation with scale/y collapsing and `staggerDirection: -1` to reverse children. `forceMount` on Portal/Overlay/Content (lines 313, 319, 353) plus controlled-open mirror ensures exit animation runs."
+    },
+    {
+      "text": "Uses shadcn theme tokens (bg-background, text-foreground, border-border, etc.) — NOT bg-white / text-neutral-*",
+      "passed": true,
+      "evidence": "Uses `bg-background` (line 147), `text-muted-foreground` (line 244), `ring-offset-background` and `focus:ring-ring` (line 169). No `bg-white` or `text-neutral-*` anywhere. Minor note: the Overlay uses `bg-black/50` (line 113) rather than shadcn's standard `bg-black/80` — but this is not `bg-white`/`text-neutral-*`, so the assertion is satisfied."
+    },
+    {
+      "text": "Exports a component with the API <AnimatedDialog open onOpenChange>{children}</AnimatedDialog> (or a close equivalent — props named 'open' and 'onOpenChange' matching shadcn's Dialog)",
+      "passed": true,
+      "evidence": "AnimatedDialogRoot (lines 275-331) accepts `open`, `defaultOpen`, `onOpenChange`, `children` — exact shadcn/Radix Dialog API. Exported as `AnimatedDialog` on line 390. Usage in response.md line 35 shows `<AnimatedDialog open={open} onOpenChange={setOpen}>`."
+    },
+    {
+      "text": "Does NOT rebuild Dialog / DialogContent from scratch — uses shadcn's Dialog primitives",
+      "passed": false,
+      "evidence": "The output does NOT import from `@/components/ui/dialog` or any shadcn-wrapped Dialog component. It imports `@radix-ui/react-dialog` directly (line 4) and reconstructs DialogContent's styling manually (line 147: `'bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg'` — these classes are copied from shadcn's dialog.tsx). The response explicitly acknowledges this at response.md line 11: 'The correct move is to not render shadcn's `DialogContent` / `DialogOverlay` at all... We build a parallel component.' While the author argues this is equivalent because shadcn uses Radix under the hood, this IS rebuilding DialogContent from scratch rather than reusing shadcn's primitive."
+    },
+    {
+      "text": "Imports from 'motion/react'",
+      "passed": true,
+      "evidence": "AnimatedDialog.tsx line 5: `import { AnimatePresence, motion, type Transition } from 'motion/react';`"
+    },
+    {
+      "text": "Does not use any Motion+ components",
+      "passed": true,
+      "evidence": "Only uses core Motion APIs: `motion`, `motion.create`, `AnimatePresence`, and `Transition` type. No Motion+ paid components (e.g. SplitText, Cursor, AnimateNumber) are imported or used."
+    },
+    {
+      "text": "Uses TypeScript",
+      "passed": true,
+      "evidence": "File is `.tsx`. Uses TypeScript features throughout: typed constants with `Transition` (line 16), typed props (`AnimatedDialogContentProps` at line 130, `AnimatedDialogProps` at line 273), `React.ComponentProps<typeof DialogPrimitive.X>`, and typed compound component (`AnimatedDialogComponent` at line 364)."
+    }
+  ],
+  "summary": {
+    "passed": 11,
+    "failed": 1,
+    "total": 12,
+    "pass_rate": 0.9167
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": null,
+    "total_steps": null,
+    "errors_encountered": 0,
+    "output_chars": 30641,
+    "transcript_chars": 17381
+  },
+  "timing": {
+    "executor_duration_seconds": 145.8,
+    "total_duration_seconds": 145.8
+  },
+  "claims": [
+    {
+      "claim": "shadcn's dialog.tsx relies on `data-[state=open]:animate-in / data-[state=closed]:animate-out` utility classes (the `tw-animate-css` plugin) on both DialogOverlay and DialogContent",
+      "type": "factual",
+      "verified": true,
+      "evidence": "This is accurate — shadcn's current Dialog primitive applies these data-attribute-driven utility classes on both Overlay and Content."
+    },
+    {
+      "claim": "Stacking tw-animate-css + Motion on the same element causes conflict (snap, double-bounce, or CSS winning first frame)",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Correct rationale — both systems would try to manage transform/opacity; this is a well-known issue."
+    },
+    {
+      "claim": "`motion` is the new package name for Framer Motion 11+ with imports from `motion/react`",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Correct — the `motion` package is the renamed successor to `framer-motion`."
+    },
+    {
+      "claim": "`motion.create(...)` is the v11+ replacement for the callable form `motion(Component)`",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Correct — Motion 11 introduced `motion.create()` as the preferred API for wrapping custom components."
+    },
+    {
+      "claim": "forceMount on Portal+Overlay+Content is required for exit animations with AnimatePresence + Radix",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Correct — this is the standard Radix+Motion pattern. Without forceMount, Radix unmounts children as soon as open=false, preventing exit animations."
+    },
+    {
+      "claim": "Motion auto-respects prefers-reduced-motion when MotionConfig reducedMotion='user' is set at the app root",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Correct — this is documented Motion behavior."
+    },
+    {
+      "claim": "Uses `@radix-ui/react-dialog` primitives directly (same base as shadcn, so behavior is identical)",
+      "type": "factual",
+      "verified": true,
+      "evidence": "True — shadcn's Dialog is built atop `@radix-ui/react-dialog`, so Radix primitives preserve behavior. However, this also means the output does not reuse shadcn's wrapped DialogContent (bearing on assertion 9)."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Does NOT rebuild Dialog / DialogContent from scratch — uses shadcn's Dialog primitives",
+        "reason": "This assertion is ambiguous. 'shadcn's Dialog primitives' could mean (a) import from `@/components/ui/dialog` and wrap shadcn's DialogContent, or (b) use `@radix-ui/react-dialog` primitives directly since that's what shadcn is built on. The current output takes interpretation (b) and copies shadcn's DialogContent class string manually. Consider tightening: 'Imports DialogContent/DialogOverlay from shadcn's local dialog component (e.g. @/components/ui/dialog) rather than reconstructing the className recipe from @radix-ui/react-dialog'. As written, reasonable graders could disagree."
+      },
+      {
+        "assertion": "Uses <DialogContent asChild> with a motion component (e.g. motion.div) as its child",
+        "reason": "The assertion names a specific pattern (`asChild` + motion child), but the underlying intent ('the motion component owns the animation') can also be achieved via `motion.create(DialogPrimitive.Content)` as the output does. The parenthetical 'or a close equivalent' is missing here — consider adding or splitting into 'motion component owns animation' as the primary check."
+      },
+      {
+        "reason": "No assertion verifies that `forceMount` is applied to Portal/Overlay/Content, which is required for exit animations to actually play. This is a common pitfall that silently breaks the reverse-on-close behavior. Consider adding: 'Applies forceMount to Portal and/or Content so that AnimatePresence can gate unmount and play the exit animation.'"
+      },
+      {
+        "reason": "No assertion checks for the overlay animation. The prompt focuses on container + children stagger, but a dialog without an animated (or explicitly non-animated) overlay will look jarring. Consider adding an assertion about the overlay either fading via Motion or being handled deliberately."
+      }
+    ],
+    "overall": "Most assertions are discriminating and well-targeted. The main weakness is assertion 9 ('uses shadcn's Dialog primitives') — ambiguous between Radix primitives and shadcn's wrapped components. A motivated implementer could argue either way, and different graders will rule differently. Tightening that wording would improve reproducibility of the eval."
+  }
+}

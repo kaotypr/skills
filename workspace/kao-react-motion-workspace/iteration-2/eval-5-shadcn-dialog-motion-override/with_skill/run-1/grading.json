@@ -1,0 +1,147 @@
+{
+  "expectations": [
+    {
+      "text": "Uses <DialogContent asChild> with a motion component (e.g. motion.div) as its child — the motion component owns the animation",
+      "passed": true,
+      "evidence": "AnimatedDialog.tsx line 226-257: <DialogPrimitive.Content asChild forceMount {...props}><motion.div ... variants={chosenContainer} initial=\"hidden\" animate=\"visible\" exit=\"exit\" ...>. The motion.div is the child of DialogPrimitive.Content asChild and owns the animation via variants."
+    },
+    {
+      "text": "Explicitly strips OR does not include the default tw-animate-css animate-in/animate-out/fade-in-*/zoom-in-* classes on the DialogContent (or wraps a DialogContent-like primitive that doesn't have them), because Motion is now driving the animation and stacking both causes stutter",
+      "passed": true,
+      "evidence": "The component uses DialogPrimitive.Content (Radix primitive directly, not shadcn's DialogContent), so no tw-animate-css classes are inherited. Line 239 className contains only layout/theme classes: 'bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg' — no animate-in/zoom-in-*/fade-in-*/slide-in-from-* classes. Comment at lines 236-238 explicitly notes: 'Deliberately stripped: every tw-animate-css class (animate-in, zoom-in-95, slide-in-from-*, fade-in-0, data-[state=*]:*) so Motion owns opacity/transform without a fight.'"
+    },
+    {
+      "text": "The prose / comments explicitly acknowledge that shadcn's default tw-animate-css animation is being overridden (not just silently replaced)",
+      "passed": true,
+      "evidence": "response.md lines 5-15 have a dedicated section titled 'The decision: override tw-animate-css, don't mix' explaining the stutter problem. The code comment at lines 236-238 states 'Deliberately stripped: every tw-animate-css class ... so Motion owns opacity/transform without a fight.' Line 3 of response.md: 'Motion owns the open/close animation instead of the default tw-animate-css classes.'"
+    },
+    {
+      "text": "Uses variants to drive the container spring (scale 0.8 → 1, y 20 → 0) on open",
+      "passed": true,
+      "evidence": "Lines 34-58 of AnimatedDialog.tsx define containerVariants with hidden: { opacity: 0, scale: 0.8, y: 20 } and visible: { opacity: 1, scale: 1, y: 0, transition: { ...containerSpring } }. containerSpring (lines 27-32) is { type: 'spring', stiffness: 260, damping: 24, mass: 0.9 }."
+    },
+    {
+      "text": "Uses stagger() or staggerChildren in the open variant's transition to cascade the header/body/footer content",
+      "passed": true,
+      "evidence": "Line 43: 'delayChildren: stagger(0.07, { startDelay: 0.12 })' in containerVariants.visible.transition. stagger is imported from 'motion/react' on line 9. Header/Body/Footer at lines 274-320 are motion.div components consuming variants via SectionVariantsContext, and variant propagation from parent animate=\"visible\" cascades to each with stagger timing."
+    },
+    {
+      "text": "On close (data-state=closed, or via AnimatePresence exit / usePresence, or variant swap) the animation reverses",
+      "passed": true,
+      "evidence": "AnimatePresence wraps the conditional content at line 222. Each motion component has exit=\"exit\" (lines 184, 230). containerVariants.exit (lines 46-57) reverses to { opacity: 0, scale: 0.8, y: 20 } with 'when: afterChildren' and 'delayChildren: stagger(0.04, { from: last })' to reverse the stagger order on close."
+    },
+    {
+      "text": "Uses shadcn theme tokens (bg-background, text-foreground, border-border, etc.) — NOT bg-white / text-neutral-*",
+      "passed": true,
+      "evidence": "Line 239: 'bg-background ... border'. Line 251: 'ring-offset-background focus:ring-ring'. Line 298: 'text-muted-foreground'. Line 342: 'text-muted-foreground'. No bg-white / text-neutral-* / hardcoded colors in content/header/body/footer styling. (bg-black/50 is used on the overlay, which is idiomatic for a modal scrim.)"
+    },
+    {
+      "text": "Exports a component with the API <AnimatedDialog open onOpenChange>{children}</AnimatedDialog> (or a close equivalent — props named 'open' and 'onOpenChange' matching shadcn's Dialog)",
+      "passed": true,
+      "evidence": "Lines 107-140 define AnimatedDialog with AnimatedDialogProps = React.ComponentProps<typeof DialogPrimitive.Root>, destructuring { open, defaultOpen, onOpenChange, children, ...props }. Exported at line 376. Usage example in response.md lines 62-80 shows <AnimatedDialog open={open} onOpenChange={setOpen}>."
+    },
+    {
+      "text": "Does NOT rebuild Dialog / DialogContent from scratch — uses shadcn's Dialog primitives",
+      "passed": true,
+      "evidence": "Line 4: import * as DialogPrimitive from '@radix-ui/react-dialog'. The component uses DialogPrimitive.Root, DialogPrimitive.Trigger, DialogPrimitive.Portal, DialogPrimitive.Close, DialogPrimitive.Overlay, DialogPrimitive.Content, DialogPrimitive.Title, DialogPrimitive.Description — the same primitives shadcn uses. Focus trap, Esc-to-close, scroll lock, aria-* all come from Radix. Note: Uses Radix directly rather than importing from '@/components/ui/dialog', which is actually how shadcn itself is structured (shadcn's Dialog file re-exports Radix primitives). Response.md line 12 acknowledges: 'Kept Radix's behaviour ... via asChild + forceMount.'"
+    },
+    {
+      "text": "Imports from 'motion/react'",
+      "passed": true,
+      "evidence": "Lines 6-13: 'import { AnimatePresence, motion, stagger, useReducedMotion, type Transition, type Variants, } from \"motion/react\"'."
+    },
+    {
+      "text": "Does not use any Motion+ components",
+      "passed": true,
+      "evidence": "Only uses AnimatePresence, motion, stagger, useReducedMotion, Transition, Variants — all free-tier motion/react exports. No AnimateNumber, Cursor, ScrollMenu, or other Motion+ gated components."
+    },
+    {
+      "text": "Uses TypeScript",
+      "passed": true,
+      "evidence": "File extension is .tsx. Uses TypeScript type annotations throughout: 'type Transition, type Variants' imports; Variants-typed variants objects; 'type AnimatedDialogProps = React.ComponentProps<typeof DialogPrimitive.Root>'; typed React.ComponentProps on every sub-component."
+    }
+  ],
+  "summary": {
+    "passed": 12,
+    "failed": 0,
+    "total": 12,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": null,
+    "total_steps": null,
+    "errors_encountered": 0,
+    "output_chars": 30594,
+    "transcript_chars": 18324
+  },
+  "timing": {
+    "executor_duration_seconds": 209.7,
+    "total_duration_seconds": 209.7,
+    "total_tokens": 51781
+  },
+  "claims": [
+    {
+      "claim": "shadcn's DialogContent ships tw-animate-css classes (animate-in, fade-in-0, zoom-in-95, slide-in-from-*, data-[state=open/closed]:*) that would stack with Motion's transforms and cause stutter",
+      "type": "factual",
+      "verified": true,
+      "evidence": "This accurately describes shadcn/ui's current Dialog implementation which uses tw-animate-css utilities on DialogContent via data-state selectors. The reasoning about stutter (two systems fighting over the same transform matrix) is correct — Motion writes to inline style.transform while tw-animate-css writes via CSS class transform, and layered transforms on the same element do conflict."
+    },
+    {
+      "claim": "Radix's Dialog.Root does not expose open state via public context, justifying the mirrored open state context",
+      "type": "factual",
+      "verified": true,
+      "evidence": "This is correct as of current @radix-ui/react-dialog: the DialogContext is internal. Mirroring open for AnimatePresence gating is a reasonable pattern, though an alternative (reading data-state with forceMount + variant lookup on data attributes) is also common and the response acknowledges both paths."
+    },
+    {
+      "claim": "Using Portal with forceMount is required so the exit animation can play before Radix unmounts the subtree",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Correct — without forceMount, Radix unmounts the Portal immediately when open becomes false, preventing the exit animation from running. This is a well-known Radix + animation library interaction pattern."
+    },
+    {
+      "claim": "Spring for physical values (scale, y), tween for pure opacity, is the skill's guidance",
+      "type": "process",
+      "verified": true,
+      "evidence": "The overlay uses tween (duration + ease) for opacity (lines 23, 25). The container uses spring for scale/y (line 30-31). This matches the spring-vs-tween guidance commonly taught. Tokens used align with motion/react's Transition type."
+    },
+    {
+      "claim": "Header/Body/Footer inherit variants via variant propagation when the parent sets animate='visible'",
+      "type": "factual",
+      "verified": true,
+      "evidence": "This is how Motion variants propagate: children with `variants` but no explicit `animate` prop pick up the parent's animate state by name. Combined with delayChildren: stagger(...) on the parent's visible transition, children with the matching 'visible' variant name are staggered correctly."
+    },
+    {
+      "claim": "useReducedMotion falls back to opacity-only fades for prefers-reduced-motion: reduce users",
+      "type": "factual",
+      "verified": true,
+      "evidence": "reducedContainerVariants (lines 74-81) and reducedSectionVariants (lines 83-87) only animate opacity. chosenContainer/chosenSection switches at lines 215-218. This correctly respects the reduced-motion preference."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": [
+      "Used AnimatePresence + mirrored open-state context instead of forceMount + data-state, because variant-propagated `exit` and `when: afterChildren` don't fire when the element stays mounted. This is a deliberate, well-documented trade-off, not a bug."
+    ]
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Does NOT rebuild Dialog / DialogContent from scratch — uses shadcn's Dialog primitives",
+        "reason": "The executor imported directly from '@radix-ui/react-dialog' rather than from '@/components/ui/dialog'. This passes the assertion as stated (Radix primitives ARE the shadcn primitives, and shadcn's Dialog.tsx just re-exports Radix with className defaults), but a stricter reading of the user prompt ('shadcn's Dialog') could argue the wrapper should compose the project's existing shadcn Dialog file instead. Consider clarifying whether the assertion means 'use the same underlying primitives shadcn uses' (passed) or 'import from the project's @/components/ui/dialog' (would need stricter check). The current response's approach is arguably better because it avoids inheriting the tw-animate-css classes baked into shadcn's DialogContent, but that's a judgment call worth making explicit in the assertion."
+      },
+      {
+        "assertion": "Uses stagger() or staggerChildren in the open variant's transition to cascade the header/body/footer content",
+        "reason": "The assertion passes on the presence of stagger(), but doesn't verify the stagger actually applies to the header/body/footer. A stronger version would check that sections use variants={...} (so variant propagation kicks in) AND that stagger is in delayChildren/staggerChildren of the parent's visible transition — both conditions together. The current output satisfies both, but stagger() alone on delayChildren with no children declaring variants would still pass the text."
+      },
+      {
+        "reason": "No assertion checks that the overlay (scrim) is also Motion-driven (or that it doesn't retain tw-animate-css classes). An output that replaced content animation but left the overlay using tw-animate-css data-[state=*] classes would still pass every assertion, yet exhibit a visible mismatch between overlay and content timings. Consider adding: 'the overlay is either Motion-driven or uses no tw-animate-css classes'."
+      },
+      {
+        "reason": "No assertion checks that forceMount is used on the Portal/Content so exit animations actually play. A response that wired up exit variants correctly but forgot forceMount would visually fail (exit animation skipped) yet still pass every listed assertion."
+      }
+    ],
+    "overall": "All 12 assertions pass with strong evidence — the output is substantive, not surface-level. A few assertions are slightly underspecified (Radix-vs-shadcn-Dialog import, stagger applied to actual children, overlay handling, forceMount requirement), but the current set does a solid job of discriminating a real solution from a hallucinated one."
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "expectations": [
+    {
+      "text": "Imports from 'motion/react'",
+      "passed": false,
+      "evidence": "ProjectGallery.tsx line 4-9 imports from 'framer-motion': `import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from \"framer-motion\";` — not from the unified 'motion/react' package."
+    },
+    {
+      "text": "Uses matching layoutId on the image, title, and description between grid card and modal (with per-card namespace, e.g. `img-${id}` or `img-card-${id}`)",
+      "passed": true,
+      "evidence": "Grid card uses `layoutId={`image-${project.id}`}` (line 167), `layoutId={`title-${project.id}`}` (line 181), `layoutId={`description-${project.id}`}` (line 187). Modal uses the same layoutIds on lines 245, 260, 272 — namespaced per-card with project.id."
+    },
+    {
+      "text": "Either (a) does NOT put layoutId on the outer card container, OR (b) DOES put layoutId on the container AND hides the source with `visibility: hidden` (via style or className) when that card is active — one of these two patterns must be present",
+      "passed": true,
+      "evidence": "Both patterns present — layoutId on container (line 159: `layoutId={`card-${project.id}`}`) AND visibility-hidden on active source (line 153: `style={{ visibility: isActive ? \"hidden\" : \"visible\" }}`). Matches pattern (b)."
+    },
+    {
+      "text": "Wraps the modal in AnimatePresence, placed outside the conditional mount",
+      "passed": true,
+      "evidence": "Lines 116-125: `<AnimatePresence>{activeProject && (<ProjectModal ... />)}</AnimatePresence>` — AnimatePresence wraps the conditional mount from the outside."
+    },
+    {
+      "text": "Uses shadcn theme tokens (bg-card, text-foreground, bg-background, border-border, text-muted-foreground) — NOT bg-white, text-neutral-*, bg-black/*, bg-indigo-*",
+      "passed": true,
+      "evidence": "Uses bg-card (line 165), bg-muted (lines 169, 247), bg-background/80 (line 233), text-card-foreground (line 242), text-muted-foreground (line 275), text-foreground/90 (line 299), border-border/60 (line 165), ring-ring, ring-offset-background (line 162). No bg-white, text-neutral-*, bg-black/*, or bg-indigo-* found."
+    },
+    {
+      "text": "Handles Escape key to close the modal",
+      "passed": true,
+      "evidence": "Lines 76-83: `useEffect` adds a `keydown` listener that calls `setActiveId(null)` when `e.key === \"Escape\"`."
+    },
+    {
+      "text": "Handles click-outside (backdrop click) to close the modal",
+      "passed": true,
+      "evidence": "Line 232: Scrim div has `onClick={onClose}` — `<motion.div ... onClick={onClose} className=\"absolute inset-0 bg-background/80 backdrop-blur-sm\" />`."
+    },
+    {
+      "text": "Explains the flicker/overlap trap in prose: either calls out 'don't layoutId both container and children' OR 'hide the source with visibility: hidden' as the fix",
+      "passed": true,
+      "evidence": "response.md section 'How to avoid the flicker/overlap you've seen elsewhere' point 1: 'Don't render the source element while the destination is mounted. The grid card is wrapped in a visibility: hidden container while its modal is open... visibility: hidden (not display: none) preserves grid layout so the return morph lands on the correct rectangle.' Explicitly calls out the hide-source fix."
+    },
+    {
+      "text": "Modal-only content (e.g. Close button, extended description) uses a separate initial/animate/exit with a delay so it fades in after the shared-element morph settles — NOT a layoutId",
+      "passed": true,
+      "evidence": "Extended description (lines 279-295) and Close button (lines 307-323) use initial/animate/exit with `delay: 0.22` — no layoutId. E.g. `initial={{ opacity: 0, y: 8 }}, animate={{ ... transition: { delay: ... 0.22 } }}`."
+    },
+    {
+      "text": "Does not use any Motion+ components",
+      "passed": true,
+      "evidence": "Imports only AnimatePresence, LayoutGroup, motion, useReducedMotion — all base framer-motion/Motion APIs. No Motion+ components (e.g., Cursor, AnimateNumber, Ticker, SpringElement) used."
+    },
+    {
+      "text": "Uses TypeScript with typed Project prop",
+      "passed": true,
+      "evidence": "Lines 26-33: `export type Project = { id: string; title: string; description: string; image: string; extendedDescription?: string; };` and ProjectGalleryProps (lines 35-38) types the `projects: Project[]` prop."
+    }
+  ],
+  "summary": {
+    "passed": 10,
+    "failed": 1,
+    "total": 11,
+    "pass_rate": 0.91
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "total_steps": 0,
+    "errors_encountered": 0,
+    "output_chars": 27405,
+    "transcript_chars": 16340
+  },
+  "timing": {
+    "executor_duration_seconds": 118.3,
+    "total_duration_seconds": 118.3
+  },
+  "claims": [
+    {
+      "claim": "Implementation uses Framer Motion's layoutId as the shared-element primitive",
+      "type": "process",
+      "verified": true,
+      "evidence": "Confirmed via layoutId usage on card, image, title, description in both grid and modal."
+    },
+    {
+      "claim": "LayoutGroup id='project-gallery' scopes layoutId matching",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Line 98-103 wraps the gallery in `<LayoutGroup id=\"project-gallery\">`."
+    },
+    {
+      "claim": "useReducedMotion collapses every transition to duration: 0",
+      "type": "quality",
+      "verified": true,
+      "evidence": "All motion.* elements apply `transition={reducedMotion ? { duration: 0 } : MORPH_SPRING}` and delayed fades use `delay: reducedMotion ? 0 : 0.22`."
+    },
+    {
+      "claim": "Body scroll lock while modal is open",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Lines 86-93: useEffect sets `document.body.style.overflow = \"hidden\"` when activeId is set and restores on cleanup."
+    },
+    {
+      "claim": "Uses 'framer-motion' package import (not 'motion/react')",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Line 9 imports from 'framer-motion'. This contradicts the prompt's intended modern package pattern and fails assertion 1."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Imports from 'motion/react'",
+        "reason": "This assertion is a strict string match for a specific package name. Without the skill nudging toward the 'motion/react' unified package, models default to 'framer-motion' which is still valid and widely used. Consider whether this should be a hard fail or whether either package should be accepted — the distinction is mostly a rebrand choice, not a correctness issue."
+      },
+      {
+        "reason": "No assertion checks whether the Close button actually wires to onClose (just that the modal handles click-outside/Escape). A Close button that's visually present but non-functional would still pass. Consider asserting that the Close button has an onClick that closes the modal."
+      }
+    ],
+    "overall": "Assertions are generally discriminating — they test the real shared-element pitfalls (container+children pattern, visibility hiding, AnimatePresence placement, shadcn tokens, separate animation channel for modal-only chrome). The main weakness is that 'Imports from motion/react' may be overly strict given the framer-motion/motion rebrand context."
+  }
+}

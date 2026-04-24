@@ -1,0 +1,116 @@
+{
+  "expectations": [
+    {
+      "text": "Uses layoutId on matching elements in both grid and modal (e.g. `card-${id}`, `img-${id}`, `title-${id}`)",
+      "passed": true,
+      "evidence": "Gallery.tsx uses layoutId on motion.button (`card-${project.id}`), motion.img (`card-image-${project.id}`), motion.h3 (`card-title-${project.id}`), motion.p (`card-description-${project.id}`). CardModal.tsx uses matching layoutIds: `card-${project.id}` on the dialog, `card-image-${project.id}` on image, `card-title-${project.id}` on title, `card-description-${project.id}` on description."
+    },
+    {
+      "text": "Wraps modal in AnimatePresence",
+      "passed": true,
+      "evidence": "Gallery.tsx lines 71-79 wrap the CardModal in <AnimatePresence>{activeProject && <CardModal ... />}</AnimatePresence>, with comment noting AnimatePresence lives OUTSIDE the conditional so it can run the exit animation."
+    },
+    {
+      "text": "layoutId values are unique per card (namespaced with id)",
+      "passed": true,
+      "evidence": "All layoutId values use template literals namespaced with project.id: `card-${project.id}`, `card-image-${project.id}`, `card-title-${project.id}`, `card-description-${project.id}`. Additionally wrapped in <LayoutGroup id=\"project-gallery\"> for further scoping."
+    },
+    {
+      "text": "Imports from 'motion/react'",
+      "passed": true,
+      "evidence": "Gallery.tsx line 2: `import { AnimatePresence, LayoutGroup, motion } from \"motion/react\"`. CardModal.tsx line 2: `import { motion, useReducedMotion } from \"motion/react\"`. Response also notes: 'Do not use framer-motion.'"
+    },
+    {
+      "text": "Handles Escape key to close modal",
+      "passed": true,
+      "evidence": "CardModal.tsx lines 18-22: `const onKey = (e: KeyboardEvent) => { if (e.key === \"Escape\") onClose() }; window.addEventListener(\"keydown\", onKey)`. Listener cleanup on unmount on line 30."
+    },
+    {
+      "text": "Explains at least one gotcha (e.g. layout prop on children, border-radius/box-shadow via style, image distortion using layout=\"position\", or setting position: relative where needed)",
+      "passed": true,
+      "evidence": "Response includes a dedicated 'Gotchas you should know' section with 12 numbered gotchas, including #2 'border-radius and box-shadow must come from style, not CSS', #5 'img aspect-ratio stretches during the morph' with layout=\"position\" suggestion, #6 'display: inline silently breaks everything', and others."
+    },
+    {
+      "text": "Does not use any Motion+ components",
+      "passed": true,
+      "evidence": "Only standard motion components used: motion.button, motion.img, motion.h3, motion.p, motion.div, AnimatePresence, LayoutGroup, useReducedMotion. No imports of Motion+ paid components (e.g., Cursor, Ticker, AnimateNumber). Response explicitly guides users to 'motion/react' package only."
+    },
+    {
+      "text": "Uses TypeScript with typed props",
+      "passed": true,
+      "evidence": "Gallery.tsx declares `export type Project = { id: string; title: string; description: string; image: string; imageAlt?: string }` and `type GalleryProps = { projects: Project[] }` with typed signature `Gallery({ projects }: GalleryProps)`. CardModal.tsx declares `type CardModalProps = { project: Project; onClose: () => void }` with typed signature `CardModal({ project, onClose }: CardModalProps)`."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "output_chars": 25922,
+    "transcript_chars": 15888,
+    "files_created": 4
+  },
+  "timing": {
+    "executor_duration_seconds": 166.8,
+    "total_duration_seconds": 166.8,
+    "total_tokens": 49401
+  },
+  "claims": [
+    {
+      "claim": "Package is `motion` (successor to Framer Motion), imports come from `motion/react`",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Correct — Motion (formerly Framer Motion) publishes as the `motion` package with React entry point `motion/react` since v11+."
+    },
+    {
+      "claim": "border-radius must be inline via style so Motion can correct scale distortion during layout animations",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Correct and well-known Motion gotcha — Motion's scale-correction for border-radius only applies when radius is set via the style prop or animated directly; CSS-defined radius gets distorted by transform: scale()."
+    },
+    {
+      "claim": "A comment at Gallery.tsx line 47 says 'layout=\"position\" avoids aspect-ratio stretch on the <img>' but no layout=\"position\" is actually set on the motion.img",
+      "type": "factual",
+      "verified": false,
+      "evidence": "The comment suggests layout=\"position\" is applied, but the motion.img only has layoutId — no `layout=\"position\"` prop. The written gotcha #5 in response.md clarifies this as an optional mitigation, but the inline code comment is misleading/stale."
+    },
+    {
+      "claim": "LayoutGroup namespaces layoutIds to prevent cross-component collisions",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Correct usage — LayoutGroup with an `id` prop scopes layoutIds so identical ids in different groups don't animate into each other."
+    },
+    {
+      "claim": "Focus management, scroll lock, and Escape handling are the developer's responsibility (Motion only animates pixels)",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Accurate characterization. CardModal implements body scroll lock, focus on open, focus restore on close, and Escape listener — a reasonable minimum acknowledged as non-exhaustive (suggests focus-trap-react for production)."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Does not use any Motion+ components",
+        "reason": "The assertion passes trivially since the task doesn't naturally call for Motion+ components (Cursor, Ticker, AnimateNumber, etc.). An output could fail only by going out of its way to include paid components. Consider either dropping this assertion for this eval or replacing it with a more discriminating check (e.g., uses LayoutGroup or useReducedMotion for correctness, or animates only via free Motion APIs)."
+      },
+      {
+        "assertion": "Explains at least one gotcha",
+        "reason": "A single generic gotcha satisfies this. Consider requiring 2-3 specific gotchas from the suggested list (border-radius via style, AnimatePresence placement for exit, image distortion) to discriminate thorough explanations from superficial ones. The current output covers 12 — the bar is low enough that a one-line 'watch for border-radius' would also pass."
+      },
+      {
+        "reason": "No assertion checks that AnimatePresence is placed OUTSIDE the conditional mount (a common bug where wrapping AnimatePresence around only the mounted modal breaks exit animation). The output gets this right and even documents it as a gotcha, but a less careful output could wrap AnimatePresence inside the `{activeProject && ...}` conditional and still pass the 'Wraps modal in AnimatePresence' assertion."
+      },
+      {
+        "reason": "No assertion verifies the 'click outside to close' behavior required by the prompt. The output implements this via backdrop onClick, but an output that omitted it would still pass all 8 assertions."
+      }
+    ],
+    "overall": "Assertions cover the core layoutId/AnimatePresence/import/Escape shape well, but several are easy to satisfy superficially. Adding checks for AnimatePresence placement correctness and click-outside-to-close would make the eval more discriminating."
+  }
+}

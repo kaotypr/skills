@@ -1,0 +1,126 @@
+{
+  "expectations": [
+    {
+      "text": "Imports from 'motion/react'",
+      "passed": true,
+      "evidence": "ProjectGallery.tsx lines 4-10: `import { AnimatePresence, LayoutGroup, MotionConfig, motion, useReducedMotion, } from \"motion/react\"`"
+    },
+    {
+      "text": "Uses matching layoutId on the image, title, and description between grid card and modal (with per-card namespace, e.g. `img-${id}` or `img-card-${id}`)",
+      "passed": true,
+      "evidence": "Grid uses layoutId=`project-image-${p.id}` (line 106), `project-title-${p.id}` (line 116), `project-desc-${p.id}` (line 123). Modal matches with layoutId=`project-image-${project.id}` (line 202), `project-title-${project.id}` (line 212), `project-desc-${project.id}` (line 220). All per-card namespaced."
+    },
+    {
+      "text": "Either (a) does NOT put layoutId on the outer card container, OR (b) DOES put layoutId on the container AND hides the source with `visibility: hidden` (via style or className) when that card is active — one of these two patterns must be present",
+      "passed": true,
+      "evidence": "Satisfies BOTH conditions redundantly: (a) the Card container has no layoutId (lines 91-104); AND (b) the source Card is hidden via `style={{ visibility: isActive ? \"hidden\" : \"visible\" }}` on line 93."
+    },
+    {
+      "text": "Wraps the modal in AnimatePresence, placed outside the conditional mount",
+      "passed": true,
+      "evidence": "Lines 140-150: `<AnimatePresence>{active && (<ProjectModal ... />)}</AnimatePresence>` — AnimatePresence is outside the `active &&` gate, with a stable `key=\"project-modal\"` on the child."
+    },
+    {
+      "text": "Uses shadcn theme tokens (bg-card, text-foreground, bg-background, border-border, text-muted-foreground) — NOT bg-white, text-neutral-*, bg-black/*, bg-indigo-*",
+      "passed": true,
+      "evidence": "Uses `text-card-foreground` (lines 117, 214), `text-muted-foreground` (lines 124, 221), `bg-background/80` (line 183), `border-border` (line 200), `bg-card text-card-foreground` (line 200), `text-foreground/90` (line 244). No raw color utilities like bg-white, text-neutral-*, bg-black/*, bg-indigo-*."
+    },
+    {
+      "text": "Handles Escape key to close the modal",
+      "passed": true,
+      "evidence": "Lines 51-63: `useEffect` with keydown listener: `if (e.key === \"Escape\") setActiveId(null)` — attaches/detaches a window keydown listener while active."
+    },
+    {
+      "text": "Handles click-outside (backdrop click) to close the modal",
+      "passed": true,
+      "evidence": "Line 188: the backdrop `motion.div` has `onClick={onClose}` which calls `setActiveId(null)`."
+    },
+    {
+      "text": "Explains the flicker/overlap trap in prose: either calls out 'don't layoutId both container and children' OR 'hide the source with visibility: hidden' as the fix",
+      "passed": true,
+      "evidence": "response.md calls out BOTH in the 'How to avoid the flicker / overlap you've seen in other demos' section: #1 'Double-layoutId on container AND children' — pick one level of granularity; #2 'Forgetting to hide the source during the morph' — fix: `visibility: hidden` on the source Card while active."
+    },
+    {
+      "text": "Modal-only content (e.g. Close button, extended description) uses a separate initial/animate/exit with a delay so it fades in after the shared-element morph settles — NOT a layoutId",
+      "passed": true,
+      "evidence": "Lines 232-258: modal-only content wrapped in a `motion.div` with `initial={{ opacity: 0, y: 8 }}`, `animate={{ opacity: 1, y: 0 }}`, `exit={{ opacity: 0, y: 4, transition: { duration: 0.12 } }}`, `transition={{ duration: 0.22, ease: \"easeOut\", delay: revealDelay }}` where `revealDelay = 0.28`. No layoutId on this wrapper."
+    },
+    {
+      "text": "Does not use any Motion+ components",
+      "passed": true,
+      "evidence": "Imports only `AnimatePresence, LayoutGroup, MotionConfig, motion, useReducedMotion` from `motion/react` — no Motion+ paid components (e.g., Cursor, AnimateNumber, Ticker) are used."
+    },
+    {
+      "text": "Uses TypeScript with typed Project prop",
+      "passed": true,
+      "evidence": "Lines 15-22 define `export type Project = { id: string; title: string; description: string; extendedDescription?: string; image: string }`. Lines 24-26 define `type ProjectGalleryProps = { projects: Project[] }`. Component is typed: `export function ProjectGallery({ projects }: ProjectGalleryProps)`."
+    }
+  ],
+  "summary": {
+    "passed": 11,
+    "failed": 0,
+    "total": 11,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "total_steps": 0,
+    "errors_encountered": 0,
+    "output_chars": 24699,
+    "transcript_chars": 15821
+  },
+  "timing": {
+    "executor_duration_seconds": 145.8,
+    "total_duration_seconds": 145.8
+  },
+  "claims": [
+    {
+      "claim": "The transition defined on the NEW element governs the direction of the morph",
+      "type": "factual",
+      "verified": true,
+      "evidence": "This matches documented Motion behavior for shared layout animations. The solution applies identical `morphTransition` to both twins, which is the correct mitigation."
+    },
+    {
+      "claim": "`visibility: hidden` preserves layout measurement while `display: none` would break it",
+      "type": "factual",
+      "verified": true,
+      "evidence": "This is correct CSS/DOM behavior — `visibility: hidden` keeps an element in flow for measurement; `display: none` removes it so layout projection math would not be able to measure it."
+    },
+    {
+      "claim": "`layout=\"position\"` on the image animates position only, jumping size",
+      "type": "factual",
+      "verified": true,
+      "evidence": "This matches Motion docs — `layout=\"position\"` restricts to positional animation and is a recommended pattern for images to avoid aspect-ratio warp. Used on the image on lines 107 and 203."
+    },
+    {
+      "claim": "Modal-only content exit of 120ms finishes before the back-to-grid morph starts",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Line 235 sets exit duration 0.12s on the modal-content wrapper while the morph spring is ~320ms. This does ensure the Close button/extended description fade out before the morph becomes dominant."
+    },
+    {
+      "claim": "MotionConfig reducedMotion=\"user\" respects prefers-reduced-motion",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Line 76: `<MotionConfig reducedMotion=\"user\">` — this is the documented opt-in to honor the user's OS-level setting."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "reason": "No assertion checks that imports include AnimatePresence (or that `AnimatePresence` as a named import is actually used). The existing 'wraps in AnimatePresence' assertion could pass on a grep for the string `AnimatePresence` even if it weren't imported from motion/react. Minor — the combined-import assertion implicitly covers it here, but being explicit would harden the eval."
+      },
+      {
+        "assertion": "Modal-only content (e.g. Close button, extended description) uses a separate initial/animate/exit with a delay so it fades in after the shared-element morph settles — NOT a layoutId",
+        "reason": "This assertion would pass for any `motion.div` with `initial/animate/exit` even if the `delay` were 0 or missing. Consider explicitly checking for a non-zero `delay` value (e.g., `delay: 0.2` to `0.4`) to ensure the fade genuinely waits for the morph to settle rather than animating concurrently."
+      }
+    ],
+    "overall": "Assertions are well-chosen and discriminating — they map cleanly to the skill's known pitfalls and reject superficial solutions. Two minor tightening opportunities noted; otherwise solid."
+  }
+}

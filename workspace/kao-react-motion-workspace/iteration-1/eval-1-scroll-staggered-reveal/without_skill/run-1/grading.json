@@ -1,0 +1,116 @@
+{
+  "expectations": [
+    {
+      "text": "Imports from 'motion/react' (not 'framer-motion')",
+      "passed": true,
+      "evidence": "Features.tsx line 3: `import { motion, useReducedMotion, type Variants } from \"motion/react\";` — correct package, no framer-motion imports anywhere."
+    },
+    {
+      "text": "Uses variants (not individual delay props on each item)",
+      "passed": true,
+      "evidence": "Uses `SECTION_VARIANTS` and `CARD_VARIANTS` Variants objects (lines 17-37), applied via `variants={sectionVariants}` on the parent `motion.ul` and `variants={cardVariants}` on each `motion.li`. No per-item `delay` props on children."
+    },
+    {
+      "text": "Uses stagger() from motion/react in delayChildren",
+      "passed": false,
+      "evidence": "The section variant uses plain numeric values: `staggerChildren: 0.12, delayChildren: 0.05` (lines 21-22). There is no import or call to `stagger()` from motion/react. The assertion specifically requires `stagger()` used in `delayChildren`, which is the newer Motion-for-React API; the output uses the legacy numeric `staggerChildren` pattern instead."
+    },
+    {
+      "text": "Uses whileInView with viewport={{ once: true }}",
+      "passed": true,
+      "evidence": "Features.tsx lines 68-69: `whileInView=\"visible\"` and `viewport={{ once: true, amount: 0.2, margin: \"0px 0px -10% 0px\" }}` — `once: true` is present."
+    },
+    {
+      "text": "Handles prefers-reduced-motion via useReducedMotion() or MotionConfig",
+      "passed": true,
+      "evidence": "Features.tsx line 50: `const prefersReducedMotion = useReducedMotion();` and lines 52-57 swap in no-op variant objects when reduced motion is preferred. `useReducedMotion` is imported on line 3."
+    },
+    {
+      "text": "Writes valid TSX with proper typing for the features prop",
+      "passed": true,
+      "evidence": "Exports `type Feature = { id: string; icon: ComponentType<SVGProps<SVGSVGElement>>; title: string; description: string }` (lines 6-11) and `type FeaturesProps = { features: Feature[] }` (lines 13-15). Component is typed `function Features({ features }: FeaturesProps)`. Variants typed as `Variants`. JSX is well-formed with `\"use client\"` directive."
+    },
+    {
+      "text": "Does not use any Motion+ components (Cursor, AnimateNumber, Ticker)",
+      "passed": true,
+      "evidence": "Only `motion`, `useReducedMotion`, and `Variants` type are imported from `motion/react`. No Motion+ components (Cursor, AnimateNumber, Ticker) referenced anywhere in Features.tsx or response.md."
+    },
+    {
+      "text": "Does not reference Motion Studio MCP in generated code or comments",
+      "passed": true,
+      "evidence": "No mention of 'Motion Studio' or 'MCP' anywhere in Features.tsx or response.md. Comments/prose only discuss the motion/react API."
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 1,
+    "total": 8,
+    "pass_rate": 0.875
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": null,
+    "total_steps": null,
+    "errors_encountered": 0,
+    "output_chars": 10273,
+    "transcript_chars": 7551
+  },
+  "timing": {
+    "executor_duration_seconds": 64.7,
+    "total_duration_seconds": 64.7,
+    "total_tokens": 23351
+  },
+  "claims": [
+    {
+      "claim": "The `motion` package is the successor to `framer-motion` and React bindings live at `motion/react`",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Response.md line 108 states this. This matches the current public Motion-for-React package layout."
+    },
+    {
+      "claim": "`viewport={{ once: true }}` ensures the animation is not replayed on subsequent scrolls",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Response.md line 112 describes this behavior, which matches Motion's documented whileInView/viewport semantics."
+    },
+    {
+      "claim": "The staggered reveal is implemented correctly via parent/child variants",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Parent `motion.ul` declares `staggerChildren` in the `visible` transition; children declare matching `hidden`/`visible` states and inherit sequencing. This works, but uses the older numeric `staggerChildren` rather than `stagger()`, which is a stylistic/API mismatch with the assertion (see assertion 3)."
+    },
+    {
+      "claim": "`useReducedMotion` returns `null` on the server then resolves on the client; no hydration mismatch because both render the same DOM",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Response.md line 146. The chosen reduced-motion strategy keeps identical DOM structure and only swaps variant objects, which avoids hydration mismatch. Consistent with documented behavior."
+    },
+    {
+      "claim": "The `icon` type `ComponentType<SVGProps<SVGSVGElement>>` accepts lucide-react / Heroicons / custom SVG components",
+      "type": "factual",
+      "verified": true,
+      "evidence": "lucide-react and Heroicons export components matching `ComponentType<SVGProps<SVGSVGElement>>`-compatible signatures; the usage example on lines 124-134 of response.md passes lucide-react icons directly."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Uses stagger() from motion/react in delayChildren",
+        "reason": "This assertion is quite strict — the legacy `staggerChildren: <number>` API produces an equivalent visual result and is still valid in motion/react. Unless the intent is specifically to teach the newer `stagger()` helper, this assertion will fail on a perfectly working solution. Consider either (a) relaxing to accept either `stagger()` OR `staggerChildren` numeric, or (b) keeping it strict but making the prompt explicitly ask for the `stagger()` helper so the requirement is visible to the model."
+      },
+      {
+        "assertion": "Writes valid TSX with proper typing for the features prop",
+        "reason": "This passes on syntactic typing but doesn't verify the TSX actually compiles. A type-check step (tsc --noEmit against a minimal harness) would make the assertion discriminating — e.g., it would catch a missing `\"use client\"` directive or a variant typed incorrectly."
+      },
+      {
+        "reason": "No assertion checks that the initial/animate states are wired correctly (e.g., `initial=\"hidden\"` on the parent). A solution could pass all current assertions but omit `initial`, leaving the cards visible before the scroll trigger. Worth adding an assertion like 'Parent sets initial=\"hidden\" (or equivalent) so children start offscreen-state'."
+      }
+    ],
+    "overall": "Assertions cover the main contract (package, viewport-once, reduced-motion, typing, no Motion+/MCP leakage) well. The main rough edge is assertion 3 being stricter than the user-facing prompt — the prompt doesn't mention `stagger()`, so the model has no signal to use it over the legacy numeric API."
+  }
+}

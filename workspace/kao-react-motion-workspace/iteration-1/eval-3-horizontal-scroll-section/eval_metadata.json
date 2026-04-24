@@ -1,0 +1,15 @@
+{
+  "eval_id": 3,
+  "eval_name": "horizontal-scroll-section",
+  "prompt": "I want a horizontal-scrolling case-studies section on my website. As the user scrolls vertically through this section, the inner content should translate horizontally. There should be 5 case studies, each is a full-viewport-width card. The horizontal scroll should feel a bit slower than 1:1 (so the user spends some time in the section). Write me the full React + TypeScript component. Use Motion. I already have the case studies array defined elsewhere.",
+  "assertions": [
+    "Uses useScroll with target: ref and offset: ['start start', 'end end'] (or equivalent)",
+    "Uses useTransform to map scrollYProgress to a horizontal translation",
+    "Outer container has a tall height (e.g. 300vh or larger) to slow the scroll",
+    "Inner container uses position: sticky with top: 0 and overflow: hidden",
+    "Flex row of cards inside the sticky container with appropriate flex-shrink: 0 or fixed widths",
+    "Imports from 'motion/react'",
+    "Does not use any Motion+ components",
+    "Uses TypeScript"
+  ]
+}

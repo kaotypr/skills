@@ -1,0 +1,119 @@
+{
+  "expectations": [
+    {
+      "text": "Imports from 'motion/react' (not 'framer-motion')",
+      "passed": true,
+      "evidence": "Features.tsx line 3: `import { motion, stagger, useReducedMotion } from \"motion/react\"` and line 4: `import type { Variants } from \"motion/react\"`. No reference to 'framer-motion' anywhere in the file or response.md. Response explicitly notes: \"The package was renamed; Motion ships all the old Framer Motion React APIs from `motion/react`. Don't install `framer-motion` on greenfield work.\""
+    },
+    {
+      "text": "Uses variants (not individual delay props on each item)",
+      "passed": true,
+      "evidence": "Features.tsx defines `listVariants` and `itemVariants` (lines 32-62), passes them via `variants={listVariants}` on the parent `motion.ul` (line 92) and `variants={itemVariants}` on each `motion.li` (line 98). No per-item `transition: { delay: ... }` prop is set. Response explicitly calls out: \"Rather than hand-delaying each card with `transition: { delay: i * 0.08 }`, the parent `<motion.ul>` owns the orchestration via `delayChildren: stagger(0.08)`.\""
+    },
+    {
+      "text": "Uses stagger() from motion/react in delayChildren",
+      "passed": true,
+      "evidence": "Features.tsx line 38: `delayChildren: stagger(shouldReduceMotion ? 0 : 0.08, { startDelay: shouldReduceMotion ? 0 : 0.1 })`. `stagger` is imported from 'motion/react' on line 3."
+    },
+    {
+      "text": "Uses whileInView with viewport={{ once: true }}",
+      "passed": true,
+      "evidence": "Features.tsx line 88 uses `whileInView=\"visible\"`; line 91 sets `viewport={{ once: true, amount: 0.2, margin: \"0px 0px -10% 0px\" }}` — `once: true` is present."
+    },
+    {
+      "text": "Handles prefers-reduced-motion via useReducedMotion() or MotionConfig",
+      "passed": true,
+      "evidence": "Features.tsx imports `useReducedMotion` from 'motion/react' (line 3), invokes it at line 27 (`const shouldReduceMotion = useReducedMotion()`), and branches on the result to zero out `y` translate (line 49), zero out stagger (lines 38-40), and swap the spring for a short easeOut tween (lines 54-60)."
+    },
+    {
+      "text": "Writes valid TSX with proper typing for the features prop",
+      "passed": true,
+      "evidence": "File is `.tsx` with explicit types: `export type Feature = { id: string | number; icon: ComponentType<{ className?: string }> | ReactNode; title: string; description: string }` (lines 7-12) and `type FeaturesProps = { features: Feature[]; heading?: string; subheading?: string; className?: string }` (lines 14-19). The component destructures the typed prop at lines 21-26: `export function Features({ features, heading = \"Features\", subheading, className }: FeaturesProps)`. Variants are typed with `Variants` import. Syntax is well-formed TSX."
+    },
+    {
+      "text": "Does not use any Motion+ components (Cursor, AnimateNumber, Ticker)",
+      "passed": true,
+      "evidence": "Grep of Features.tsx and response.md for 'Cursor', 'AnimateNumber', 'Ticker' yields no matches. The only Motion APIs used are `motion`, `stagger`, `useReducedMotion`, and the type `Variants` — all standard open-source APIs."
+    },
+    {
+      "text": "Does not reference Motion Studio MCP in generated code or comments",
+      "passed": true,
+      "evidence": "No mention of 'Motion Studio', 'MCP', or similar in Features.tsx or response.md. Comments reference `stagger()`, `useReducedMotion`, `whileInView`, and `useMemo` only."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": null,
+    "total_steps": null,
+    "errors_encountered": 0,
+    "output_chars": 11014,
+    "transcript_chars": 6858
+  },
+  "timing": {
+    "executor_duration_seconds": 95.8,
+    "total_duration_seconds": 95.8,
+    "total_tokens": 37488
+  },
+  "claims": [
+    {
+      "claim": "whileInView with once: true is cheaper than wiring useInView + useEffect manually",
+      "type": "quality",
+      "verified": true,
+      "evidence": "True — `whileInView` is Motion's built-in helper that manages IntersectionObserver and animation orchestration internally; hand-rolling `useInView` + `useEffect` requires more code and an additional state trigger. The claim is a reasonable stylistic/ergonomic assertion."
+    },
+    {
+      "claim": "stagger(0.08) stays under the ~0.15s-per-item threshold where things start to feel draggy",
+      "type": "quality",
+      "verified": true,
+      "evidence": "0.08s < 0.15s, and the rule-of-thumb for stagger cadence in motion design is commonly in the 40-120ms range. Reasonable justification."
+    },
+    {
+      "claim": "The component correctly skips y translate and strips the stagger cascade under reduced motion",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Confirmed in Features.tsx lines 38-40 (stagger becomes 0) and line 49 (`y: shouldReduceMotion ? 0 : 24`). Opacity still fades via a short easeOut tween (lines 54-55)."
+    },
+    {
+      "claim": "The icon prop supports both a component reference and a ready node",
+      "type": "factual",
+      "verified": true,
+      "evidence": "The FeatureIcon helper (lines 117-134) branches on `typeof icon === \"function\"` to render either `<Icon />` or the raw node. The Feature type allows `ComponentType<{ className?: string }> | ReactNode`."
+    },
+    {
+      "claim": "role=\"list\" is needed because Tailwind Preflight can strip implicit list semantics in Safari",
+      "type": "factual",
+      "verified": true,
+      "evidence": "This is a well-known accessibility note: Safari/VoiceOver strips the implicit list role when `list-style: none` is applied. The explicit `role=\"list\"` on line 86 restores it. Claim is accurate."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Uses stagger() from motion/react in delayChildren",
+        "reason": "The assertion checks that `stagger()` is used inside `delayChildren`, but a model could technically satisfy this by writing `delayChildren: stagger(0)` — no actual stagger effect. Consider tightening to also require a non-zero stagger value in the default (non-reduced-motion) branch, or assert that `delayChildren` or `staggerChildren` produces a visible cascade."
+      },
+      {
+        "assertion": "Handles prefers-reduced-motion via useReducedMotion() or MotionConfig",
+        "reason": "Currently passes on mere presence of `useReducedMotion()`. A model could call the hook and ignore the result. Consider asserting that the returned value actually gates either the transform, the stagger, or the transition — i.e. the value is read and branched on."
+      },
+      {
+        "reason": "No assertion checks that the component is a Client Component (`\"use client\"`). Since `whileInView` and `useReducedMotion` require the browser in Next.js App Router, a missing `\"use client\"` directive would be a real bug the prompt implies but no assertion catches."
+      },
+      {
+        "reason": "No assertion checks that per-item `initial`/`whileInView` are NOT set on the children. The variants pattern relies on the parent driving state; setting them redundantly on each child is a common LLM mistake that breaks the cascade but would pass all current assertions."
+      }
+    ],
+    "overall": "Assertions cover the important surface-level correctness (correct package, variants pattern, viewport once, reduced motion, typing, no Motion+ leakage) but a few key assertions can be trivially satisfied without real behavior. Adding checks for non-zero stagger value, actually-branched reduced-motion usage, and presence of `\"use client\"` would make the eval more discriminating."
+  }
+}

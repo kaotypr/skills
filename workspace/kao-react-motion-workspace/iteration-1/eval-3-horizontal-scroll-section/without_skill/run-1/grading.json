@@ -1,0 +1,113 @@
+{
+  "expectations": [
+    {
+      "text": "Uses useScroll with target: ref and offset: ['start start', 'end end'] (or equivalent)",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx lines 32-35: `const { scrollYProgress } = useScroll({ target: sectionRef, offset: [\"start start\", \"end end\"] });`"
+    },
+    {
+      "text": "Uses useTransform to map scrollYProgress to a horizontal translation",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx line 41: `const rawX = useTransform(scrollYProgress, [0, 1], [\"0%\", \"-80%\"]);` — mapped to `x` on the motion.ul at line 69."
+    },
+    {
+      "text": "Outer container has a tall height (e.g. 300vh or larger) to slow the scroll",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx line 62: `style={{ height: `${count * 100 * slowness}vh` }}` — with count=5 and slowness=1.5 this yields 750vh, comfortably >=300vh."
+    },
+    {
+      "text": "Inner container uses position: sticky with top: 0 and overflow: hidden",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx line 67: `<div className=\"sticky top-0 h-screen w-screen overflow-hidden\">` — Tailwind classes for position: sticky, top: 0, and overflow: hidden."
+    },
+    {
+      "text": "Flex row of cards inside the sticky container with appropriate flex-shrink: 0 or fixed widths",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx line 70: `<motion.ul ... className=\"flex h-full list-none p-0 m-0 will-change-transform\">` (flex row) and each `<li>` uses `w-screen shrink-0` (line 75), i.e. fixed viewport width and flex-shrink: 0."
+    },
+    {
+      "text": "Imports from 'motion/react'",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx line 2: `import { motion, useScroll, useTransform, useSpring, MotionValue } from \"motion/react\";`"
+    },
+    {
+      "text": "Does not use any Motion+ components",
+      "passed": true,
+      "evidence": "Only primitives used: `motion.ul`, `motion.article`, `useScroll`, `useTransform`, `useSpring`, `MotionValue`. No Motion+ components (e.g. Cursor, Ticker, AnimateNumber, etc.) are imported or referenced."
+    },
+    {
+      "text": "Uses TypeScript",
+      "passed": true,
+      "evidence": "File extension is .tsx; explicit TypeScript types are defined and used: `type CaseStudy`, `type HorizontalCaseStudiesProps`, `type CardProps`, `useRef<HTMLElement | null>(null)`, `MotionValue<string>`, `MotionValue<number>`."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": null,
+    "total_steps": null,
+    "errors_encountered": 0,
+    "output_chars": 13269,
+    "transcript_chars": 8004
+  },
+  "timing": {
+    "executor_duration_seconds": 80.5,
+    "total_duration_seconds": 80.5,
+    "total_tokens": 24530
+  },
+  "claims": [
+    {
+      "claim": "Section height of 750vh (with count=5, slowness=1.5) creates a slower-than-1:1 horizontal scroll feel",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Track travels -80% of 500vw = -400vw over a 750vh vertical scroll. Ratio of horizontal px per vertical px is ~0.53, which is indeed slower than 1:1 as requested."
+    },
+    {
+      "claim": "useSpring on the X motion value smooths the translation",
+      "type": "process",
+      "verified": true,
+      "evidence": "Lines 45-49 wrap rawX in useSpring with stiffness 120, damping 30, mass 0.3. This does smooth the motion but slightly decouples X from exact scroll position — a tradeoff that wasn't explicitly requested but is a reasonable interpretation of 'slower feel'."
+    },
+    {
+      "claim": "5 full-viewport-width cards",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Each `<li>` uses `w-screen shrink-0` (line 75); count derived from caseStudies.length (expected to be 5 per the prompt)."
+    },
+    {
+      "claim": "Component is 'full React + TypeScript'",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Complete component with props typed, ref typed, inner Card subcomponent typed, all exports present. Imports caseStudies from an external module per the prompt's stipulation that the array is defined elsewhere."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Uses useTransform to map scrollYProgress to a horizontal translation",
+        "reason": "The assertion passes on any useTransform call that happens to produce a string/number used on x. It would also pass even if the translation range was wrong (e.g. only moving one card-width). Consider asserting that the output range covers (count - 1) viewport widths, or that the mapping is monotonically decreasing from 0 to a negative value."
+      },
+      {
+        "assertion": "Outer container has a tall height (e.g. 300vh or larger) to slow the scroll",
+        "reason": "A hardcoded `300vh` would pass but would give a 1:1 or faster feel (not 'slower than 1:1' as the prompt requested). Consider asserting that total section height exceeds `count * 100vh` (the 1:1 baseline) — e.g. requiring >= 500vh for 5 cards to demonstrably slow the scroll."
+      },
+      {
+        "reason": "No assertion verifies the prompt's key qualitative requirement: the horizontal scroll 'feels a bit slower than 1:1'. A solution could technically satisfy all assertions with a 300vh outer container mapped to a full horizontal traversal, which is actually faster than 1:1. An assertion comparing outer-height-vh to horizontal-travel-vw ratio would catch this."
+      },
+      {
+        "reason": "No assertion checks that there are specifically 5 cards rendered (the prompt specifies 5). A solution iterating a hardcoded 3-item array would still pass all current assertions."
+      }
+    ],
+    "overall": "Assertions cover the structural mechanics of the scroll-linked horizontal scroller well, but miss the quantitative 'slower than 1:1' feel and the specified card count. The submission genuinely meets the prompt, but the assertion set would not discriminate strongly against incorrect implementations that hit the structural checkboxes."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "eval_id": 2,
+  "eval_name": "shared-element-card-to-modal",
+  "prompt": "I have a grid of project cards on my portfolio site. When a user clicks a card, I want it to animate into a full-screen modal view with the same image, title, and content, using a shared-element transition (so it feels like the card is morphing into the modal). Clicking outside or pressing Escape should animate it back to its grid position. The card has an <img>, a <h3> title, and a short description. Write me a Gallery component and a CardModal component that together implement this with Motion. React 19, TypeScript, plain CSS (no Tailwind). Explain any gotchas I should know about.",
+  "assertions": [
+    "Uses layoutId on matching elements in both grid and modal (e.g. `card-${id}`, `img-${id}`, `title-${id}`)",
+    "Wraps modal in AnimatePresence",
+    "layoutId values are unique per card (namespaced with id)",
+    "Imports from 'motion/react'",
+    "Handles Escape key to close modal",
+    "Explains at least one gotcha (e.g. layout prop on children, border-radius/box-shadow via style, image distortion using layout=\"position\", or setting position: relative where needed)",
+    "Does not use any Motion+ components",
+    "Uses TypeScript with typed props"
+  ]
+}

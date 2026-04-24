@@ -1,0 +1,131 @@
+{
+  "expectations": [
+    {
+      "text": "Uses useScroll with target: ref and offset: ['start start', 'end end'] (or equivalent 2-item offset that starts progress at 0 when section top hits viewport top)",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx lines 61-64: `const { scrollYProgress } = useScroll({ target: sectionRef, offset: [\"start start\", \"end end\"] });`"
+    },
+    {
+      "text": "Uses useTransform to map scrollYProgress to a horizontal x translation (percentage-based: '0%' to '-(N-1)/N * 100%' or similar, OR viewport-unit based)",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx lines 75-76: `const maxTranslatePct = count > 1 ? -(count - 1) * 100 : 0; const x = useTransform(smoothProgress, [0, 1], [\\`0vw\\`, \\`${maxTranslatePct}vw\\`]);` — viewport-unit based, mapping to -(N-1)*100vw."
+    },
+    {
+      "text": "Does NOT apply useSpring to the scroll-linked x motion value (scroll-linked springs lag behind the scroll and feel broken)",
+      "passed": false,
+      "evidence": "HorizontalCaseStudies.tsx lines 67-71 and 76 wrap scrollYProgress in useSpring and then pipe smoothProgress into useTransform for x: `const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.35 }); ... const x = useTransform(smoothProgress, [0, 1], [\\`0vw\\`, \\`${maxTranslatePct}vw\\`]);`. The response explicitly says `useSpring smooths the motion so fast scroll wheels / trackpads don't jitter` — this is exactly the anti-pattern the assertion forbids."
+    },
+    {
+      "text": "Outer container height is >= 400vh (tall enough to produce slower-than-1:1 feel for 5 cards)",
+      "passed": true,
+      "evidence": "Line 81: `const wrapperHeight = \\`${Math.max(1, count) * scrollRatio * 100}vh\\`;` → for 5 cards with default scrollRatio=1.4, height = 5 * 1.4 * 100 = 700vh, which is >= 400vh."
+    },
+    {
+      "text": "The ratio of vertical scroll to horizontal travel is > 1:1 (slower than 1:1) — e.g. 500vh outer + 100vh sticky = 400vh vertical per (N-1)*100vw horizontal, giving 400/400 = 1:1 MINIMUM; should be higher for 'slightly slower'",
+      "passed": true,
+      "evidence": "Outer wrapper = 700vh (5 * 1.4 * 100), sticky panel = 100vh, so vertical scroll distance is 600vh. Horizontal travel = (5-1)*100vw = 400vw. Ratio = 600/400 = 1.5:1 (slower than 1:1), matching the 'slightly slower' intent."
+    },
+    {
+      "text": "Inner container uses position: sticky with top: 0, overflow: hidden, height: 100vh (or h-screen)",
+      "passed": true,
+      "evidence": "Line 91: `<div className=\"sticky top-0 flex h-screen w-full flex-col overflow-hidden\">` — has sticky, top-0, h-screen, and overflow-hidden."
+    },
+    {
+      "text": "Cards have flex-shrink: 0 (or 'shrink-0' / 'flex: 0 0 ...') AND fixed width of 100vw (or 'w-screen')",
+      "passed": true,
+      "evidence": "Line 119: `className=\"flex h-full w-screen shrink-0 items-center justify-center px-6 motion-reduce:snap-center md:px-12\"` — each card wrapper li has both shrink-0 and w-screen."
+    },
+    {
+      "text": "Uses shadcn theme tokens (bg-background on section, bg-card / text-foreground / text-muted-foreground / border-border on cards) — NOT bg-white / text-neutral-* / bg-black",
+      "passed": true,
+      "evidence": "Section: `bg-background text-foreground` (line 87). Card: `border-border/60 bg-card text-card-foreground` (line 121). Uses `text-muted-foreground` (lines 93, 139, 147, 150) and `border-border` (line 151). No bg-white/bg-black/text-neutral-* found."
+    },
+    {
+      "text": "Handles prefers-reduced-motion (e.g. falls back to a vertical stack, or disables the transform)",
+      "passed": true,
+      "evidence": "Line 105: `motion-reduce:overflow-x-auto motion-reduce:overflow-y-hidden`; line 111: `motion-reduce:!transform-none motion-reduce:snap-x motion-reduce:snap-mandatory`; the transform is disabled and native scroll with snap is used as the fallback when prefers-reduced-motion is set."
+    },
+    {
+      "text": "Imports from 'motion/react'",
+      "passed": false,
+      "evidence": "Line 4: `import { motion, useScroll, useTransform, useSpring } from \"framer-motion\";` — imports from 'framer-motion', not 'motion/react'."
+    },
+    {
+      "text": "Does not use any Motion+ components",
+      "passed": true,
+      "evidence": "Only `motion`, `useScroll`, `useTransform`, `useSpring` are imported (line 4). No Motion+ components (e.g. ScrollContent, Cursor, etc.) are used."
+    },
+    {
+      "text": "Uses TypeScript with typed CaseStudy and props",
+      "passed": true,
+      "evidence": "Lines 8-14 define `export interface CaseStudy { id: string; title: string; client: string; summary: string; image: string; }` and lines 16-28 define `export interface HorizontalCaseStudiesProps { caseStudies: CaseStudy[]; scrollRatio?: number; className?: string; eyebrow?: string; heading?: string; }`. Component is typed accordingly."
+    }
+  ],
+  "summary": {
+    "passed": 10,
+    "failed": 2,
+    "total": 12,
+    "pass_rate": 0.83
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "total_steps": 0,
+    "errors_encountered": 0,
+    "output_chars": 17721,
+    "transcript_chars": 10286
+  },
+  "timing": {
+    "executor_duration_seconds": 92.6,
+    "total_duration_seconds": 92.6
+  },
+  "claims": [
+    {
+      "claim": "useSpring smooths the motion so fast scroll wheels / trackpads don't jitter the cards",
+      "type": "quality",
+      "verified": false,
+      "evidence": "This is a common misconception. Applying useSpring to scrollYProgress makes the x value lag behind the actual scroll position, which feels broken/disconnected from the scroll wheel rather than smoother. Motion's own guidance is to avoid wrapping scroll-linked values in useSpring. Raw scrollYProgress is already interpolated by the browser."
+    },
+    {
+      "claim": "The component imports from framer-motion",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Line 4 shows `import { motion, useScroll, useTransform, useSpring } from \"framer-motion\";` — but the prompt/assertion explicitly requires 'motion/react' (the new package name). framer-motion still works but is the deprecated import path."
+    },
+    {
+      "claim": "Outer wrapper height is N * scrollRatio * 100vh",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Line 81 computes `${Math.max(1, count) * scrollRatio * 100}vh`, matching the claim."
+    },
+    {
+      "claim": "prefers-reduced-motion falls back to native horizontal scroll with CSS scroll-snap",
+      "type": "process",
+      "verified": true,
+      "evidence": "Lines 105 and 111 apply `motion-reduce:overflow-x-auto` and `motion-reduce:!transform-none motion-reduce:snap-x motion-reduce:snap-mandatory`. The cards use w-screen shrink-0 so native scroll-snap between cards works."
+    },
+    {
+      "claim": "Cards use shadcn Card primitives",
+      "type": "process",
+      "verified": true,
+      "evidence": "Line 5 imports `Card, CardContent, CardHeader, CardTitle, CardDescription` from `@/components/ui/card`, and these are used in the card markup."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Does NOT apply useSpring to the scroll-linked x motion value (scroll-linked springs lag behind the scroll and feel broken)",
+        "reason": "This assertion fires correctly here, but the output pattern is a very common trap — the LLM even cites the (incorrect) motivation (`so fast trackpad flicks don't jitter`). Consider tightening the assertion to also flag cases where useSpring is wrapped around scrollYProgress itself (not just the final x), since the lag comes from spring on the progress signal, not specifically the x transform."
+      },
+      {
+        "reason": "No assertion checks that all N cards (not just N-1) end up visible. The (N-1)*100% pattern correctly lands the last card, but a wrong implementation using -N*100% (which pans the last card off-screen) would still pass the current useTransform assertion. Consider asserting specifically on the -(N-1) coefficient."
+      }
+    ],
+    "overall": "Assertions are well-targeted and caught the two real issues in this run (wrong import path, spring on scroll progress). Minor tightening opportunities around the spring assertion wording and last-card-visible check."
+  }
+}

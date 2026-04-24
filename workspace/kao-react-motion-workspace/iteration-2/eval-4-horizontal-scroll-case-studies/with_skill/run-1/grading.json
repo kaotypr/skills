@@ -1,0 +1,132 @@
+{
+  "expectations": [
+    {
+      "text": "Uses useScroll with target: ref and offset: ['start start', 'end end'] (or equivalent 2-item offset that starts progress at 0 when section top hits viewport top)",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx lines 62-65: `const { scrollYProgress } = useScroll({ target: sectionRef, offset: [\"start start\", \"end end\"] })`"
+    },
+    {
+      "text": "Uses useTransform to map scrollYProgress to a horizontal x translation (percentage-based: '0%' to '-(N-1)/N * 100%' or similar, OR viewport-unit based)",
+      "passed": true,
+      "evidence": "Lines 78-83: `const endPercent = count > 1 ? -((count - 1) * 100) : 0; const x = useTransform(smoothProgress, [0, 1], [\"0%\", `${endPercent}%`])`. For N=5 this maps 0% to -400%, which on a flex row of 5 w-screen items is equivalent to -(N-1)/N * 100% = -80% of the track width, producing the correct end position."
+    },
+    {
+      "text": "Does NOT apply useSpring to the scroll-linked x motion value (scroll-linked springs lag behind the scroll and feel broken)",
+      "passed": false,
+      "evidence": "Lines 69-73: `const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 })` — a spring is applied to scrollYProgress, and then line 79 pipes smoothProgress (not scrollYProgress) into useTransform for x. This is exactly the anti-pattern the assertion forbids: the scroll-linked x motion value is driven by a spring, which produces lag between scroll input and horizontal position."
+    },
+    {
+      "text": "Outer container height is ≥ 400vh (tall enough to produce slower-than-1:1 feel for 5 cards)",
+      "passed": true,
+      "evidence": "Lines 88-89, 116: `extraScrollVh = PACE * Math.max(count - 1, 0) * 100` → 1.25 * 4 * 100 = 500vh; `sectionHeight = 100 + 500 = 600vh`; applied via `style={{ height: sectionHeight }}`. 600vh ≥ 400vh."
+    },
+    {
+      "text": "The ratio of vertical scroll to horizontal travel is > 1:1 (slower than 1:1) — e.g. 500vh outer + 100vh sticky = 400vh vertical per (N-1)*100vw horizontal, giving 400/400 = 1:1 MINIMUM; should be higher for 'slightly slower'",
+      "passed": true,
+      "evidence": "Section is 600vh with 100vh sticky → 500vh of vertical scroll drives 400vw of horizontal travel (ratio 500/400 = 1.25:1, slower than 1:1). Comment on line 50-51 states ratio ≈ 0.8 horizontal vw per vertical vh, which is the same 1.25:1 slowdown."
+    },
+    {
+      "text": "Inner container uses position: sticky with top: 0, overflow: hidden, height: 100vh (or h-screen)",
+      "passed": true,
+      "evidence": "Line 118: `<div className=\"sticky top-0 flex h-screen flex-col overflow-hidden\">` — uses sticky positioning, top-0, h-screen (100vh), and overflow-hidden."
+    },
+    {
+      "text": "Cards have flex-shrink: 0 (or 'shrink-0' / 'flex: 0 0 ...') AND fixed width of 100vw (or 'w-screen')",
+      "passed": true,
+      "evidence": "Line 133: `className=\"flex h-full w-screen shrink-0 items-center justify-center px-6 md:px-12\"` — each slide li has both w-screen and shrink-0."
+    },
+    {
+      "text": "Uses shadcn theme tokens (bg-background on section, bg-card / text-foreground / text-muted-foreground / border-border on cards) — NOT bg-white / text-neutral-* / bg-black",
+      "passed": true,
+      "evidence": "Line 115: `bg-background` on section. Line 163: Card has `border-border bg-card text-card-foreground`. Headings use `text-foreground` (line 153, 180), captions use `text-muted-foreground` (lines 148, 177, 186). Image placeholder uses `bg-muted` (line 165). No bg-white, text-neutral-*, or bg-black appear in the file."
+    },
+    {
+      "text": "Handles prefers-reduced-motion (e.g. falls back to a vertical stack, or disables the transform)",
+      "passed": true,
+      "evidence": "Line 60: `const prefersReducedMotion = useReducedMotion()`. Lines 91-109: when true, returns an alternate section with a `grid gap-6 md:grid-cols-2` vertical stack instead of the sticky scroll stage, so no horizontal transform is applied."
+    },
+    {
+      "text": "Imports from 'motion/react'",
+      "passed": true,
+      "evidence": "Lines 4-10: `import { motion, useReducedMotion, useScroll, useSpring, useTransform } from \"motion/react\"`."
+    },
+    {
+      "text": "Does not use any Motion+ components",
+      "passed": true,
+      "evidence": "Only imports motion, useReducedMotion, useScroll, useSpring, useTransform from motion/react. No imports from motion-plus or Motion+ components (ScrollProgress, Cursor, etc.)."
+    },
+    {
+      "text": "Uses TypeScript with typed CaseStudy and props",
+      "passed": true,
+      "evidence": "Lines 20-26: `export interface CaseStudy { id: string; title: string; client: string; summary: string; image: string }`. Lines 28-33: `interface HorizontalCaseStudiesProps { caseStudies: CaseStudy[]; eyebrow?: string; heading?: string }`. Component is typed with this props interface on line 58."
+    }
+  ],
+  "summary": {
+    "passed": 11,
+    "failed": 1,
+    "total": 12,
+    "pass_rate": 0.92
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "total_steps": 0,
+    "errors_encountered": 0,
+    "output_chars": 16905,
+    "transcript_chars": 10943
+  },
+  "timing": {
+    "executor_duration_seconds": 122.3,
+    "total_duration_seconds": 122.3
+  },
+  "claims": [
+    {
+      "claim": "With PACE=1.25 and N=5, section height is 600vh and horizontal travel is 400vw, giving ratio ≈ 0.8 horizontal vw per vertical vh",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Math checks out: extraScrollVh = 1.25 * 4 * 100 = 500; sectionHeight = 100 + 500 = 600vh. Horizontal travel = (5-1)*100vw = 400vw. Scroll range (sectionHeight - stickyHeight) = 500vh. 400vw / 500vh = 0.8."
+    },
+    {
+      "claim": "useSpring on scrollYProgress smooths trackpad momentum and wheel jitter with tight spring",
+      "type": "quality",
+      "verified": false,
+      "evidence": "While the author justifies the spring as 'tight' with stiffness 120/damping 30/mass 0.3, this still introduces lag between scroll input and visual position. The skill's guidance (per assertion 3) is that scroll-linked springs feel broken because they lag behind scroll. The response.md even calls this out as a 'Key implementation choice' rather than recognizing it as an anti-pattern."
+    },
+    {
+      "claim": "End-x of -((N-1)*100)% parks the last card flush with the left edge",
+      "type": "factual",
+      "verified": true,
+      "evidence": "For a flex container with N children each 100vw (w-screen), the track is N*100vw wide. Translating by -((N-1)*100)% of the track (since % refers to the element's own size for transform: translateX) moves the track left by (N-1)/N of its width, which positions child N at the left edge. Verified by the comment on lines 76-77."
+    },
+    {
+      "claim": "Handles single-card edge case gracefully",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Line 78: `const endPercent = count > 1 ? -((count - 1) * 100) : 0`. Line 88: `Math.max(count - 1, 0) * 100`. With count=1, endPercent=0 and extraScrollVh=0, so section is 100vh with no translate."
+    },
+    {
+      "claim": "Uses shadcn Card, CardHeader, CardTitle, CardDescription, CardContent as shipped",
+      "type": "process",
+      "verified": true,
+      "evidence": "Lines 12-18 import these exact components from @/components/ui/card, and they are used on lines 163, 176, 180, 185, 186."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "The ratio of vertical scroll to horizontal travel is > 1:1 (slower than 1:1) — e.g. 500vh outer + 100vh sticky = 400vh vertical per (N-1)*100vw horizontal, giving 400/400 = 1:1 MINIMUM; should be higher for 'slightly slower'",
+        "reason": "The worked example in the assertion says '500vh outer + 100vh sticky = 400vh vertical per (N-1)*100vw horizontal, giving 400/400 = 1:1 MINIMUM'. But 500vh outer minus 100vh sticky = 400vh scroll range over 400vw horizontal is exactly 1:1, not >1:1. So the 'MINIMUM' wording is confusing — an implementation that matches the example would be borderline, not passing. Consider restating as 'outer height > (N-1)*100vh + 100vh' or giving a concrete minimum like 'outer ≥ 500vh for N=5 is acceptable but 600vh+ is preferred'."
+      },
+      {
+        "assertion": "Does NOT apply useSpring to the scroll-linked x motion value (scroll-linked springs lag behind the scroll and feel broken)",
+        "reason": "The implementation applies useSpring to scrollYProgress (the upstream signal), not directly to x, but the result is the same anti-pattern: x is driven by a lagging spring. The assertion wording 'to the scroll-linked x motion value' could be read narrowly to mean 'directly wrapped around x', which would let this implementation pass on a technicality. Consider tightening to 'Does NOT apply useSpring anywhere in the chain between scrollYProgress and the x transform' so the assertion catches both `useSpring(scrollYProgress)` and `useSpring(x)` patterns."
+      }
+    ],
+    "overall": "Assertions are largely well-targeted. The useSpring assertion is the most important finding — the implementation violates the skill's guidance but justifies it in prose as if it's a feature, which suggests the skill's SKILL.md may not be emphatic enough about this anti-pattern. Suggest tightening assertion 3's wording and reconsidering assertion 5's worked example."
+  }
+}

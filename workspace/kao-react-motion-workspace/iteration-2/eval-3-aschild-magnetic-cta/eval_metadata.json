@@ -1,0 +1,19 @@
+{
+  "eval_id": 3,
+  "eval_name": "aschild-magnetic-cta",
+  "prompt": "I want my landing page's primary CTA to feel 'magnetic': as the user's cursor approaches the button, it subtly follows the cursor with a spring, and on hover/tap it has a small scale pop. It must be a shadcn Button (so I keep the variant styling and accessibility) \u2014 not a from-scratch button. The button should be an anchor linking to /signup. React 19 + TypeScript + Tailwind + shadcn. Give me MagneticCTA.tsx.",
+  "assertions": [
+    "Uses <Button asChild> from shadcn wrapping a motion.a (NOT a raw <motion.button> or custom button)",
+    "The motion.a is the direct child of Button and receives the animation props (whileHover, whileTap, style, onMouseMove, etc.)",
+    "Uses useSpring to smooth the magnetic follow motion (either useSpring(0, {...}) directly, OR useSpring wrapping a useMotionValue source)",
+    "Implements the magnetic effect via onMouseMove reading event.currentTarget.getBoundingClientRect() and setting motion values based on pointer offset from center",
+    "Implements onMouseLeave (or equivalent) to reset the motion values to 0 so the button returns to origin",
+    "Uses style={{ x: mx, y: my }} on the motion.a to apply the magnetic translation (OR equivalent via transform)",
+    "Applies whileHover and/or whileTap for the scale pop on gesture",
+    "href='/signup' is present on the motion.a element",
+    "Imports Button from shadcn path (e.g. '@/components/ui/button' or similar) \u2014 does NOT recreate Button styling from scratch",
+    "Imports from 'motion/react'",
+    "Does not use any Motion+ components",
+    "Uses TypeScript"
+  ]
+}

@@ -1,0 +1,673 @@
+{
+  "metadata": {
+    "skill_name": "kao-react-motion",
+    "skill_path": "/Users/kao/workspace/kaotypr/skills/skills/engineering/kao-react-motion",
+    "executor_model": "claude-opus-4-7[1m]",
+    "analyzer_model": "claude-opus-4-7[1m]",
+    "timestamp": "2026-04-24T09:43:52Z",
+    "evals_run": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "time_seconds": 95.8,
+        "tokens": 37488,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Imports from 'motion/react' (not 'framer-motion')",
+          "passed": true,
+          "evidence": "Features.tsx line 3: `import { motion, stagger, useReducedMotion } from \"motion/react\"` and line 4: `import type { Variants } from \"motion/react\"`. No reference to 'framer-motion' anywhere in the file or response.md. Response explicitly notes: \"The package was renamed; Motion ships all the old Framer Motion React APIs from `motion/react`. Don't install `framer-motion` on greenfield work.\""
+        },
+        {
+          "text": "Uses variants (not individual delay props on each item)",
+          "passed": true,
+          "evidence": "Features.tsx defines `listVariants` and `itemVariants` (lines 32-62), passes them via `variants={listVariants}` on the parent `motion.ul` (line 92) and `variants={itemVariants}` on each `motion.li` (line 98). No per-item `transition: { delay: ... }` prop is set. Response explicitly calls out: \"Rather than hand-delaying each card with `transition: { delay: i * 0.08 }`, the parent `<motion.ul>` owns the orchestration via `delayChildren: stagger(0.08)`.\""
+        },
+        {
+          "text": "Uses stagger() from motion/react in delayChildren",
+          "passed": true,
+          "evidence": "Features.tsx line 38: `delayChildren: stagger(shouldReduceMotion ? 0 : 0.08, { startDelay: shouldReduceMotion ? 0 : 0.1 })`. `stagger` is imported from 'motion/react' on line 3."
+        },
+        {
+          "text": "Uses whileInView with viewport={{ once: true }}",
+          "passed": true,
+          "evidence": "Features.tsx line 88 uses `whileInView=\"visible\"`; line 91 sets `viewport={{ once: true, amount: 0.2, margin: \"0px 0px -10% 0px\" }}` \u2014 `once: true` is present."
+        },
+        {
+          "text": "Handles prefers-reduced-motion via useReducedMotion() or MotionConfig",
+          "passed": true,
+          "evidence": "Features.tsx imports `useReducedMotion` from 'motion/react' (line 3), invokes it at line 27 (`const shouldReduceMotion = useReducedMotion()`), and branches on the result to zero out `y` translate (line 49), zero out stagger (lines 38-40), and swap the spring for a short easeOut tween (lines 54-60)."
+        },
+        {
+          "text": "Writes valid TSX with proper typing for the features prop",
+          "passed": true,
+          "evidence": "File is `.tsx` with explicit types: `export type Feature = { id: string | number; icon: ComponentType<{ className?: string }> | ReactNode; title: string; description: string }` (lines 7-12) and `type FeaturesProps = { features: Feature[]; heading?: string; subheading?: string; className?: string }` (lines 14-19). The component destructures the typed prop at lines 21-26: `export function Features({ features, heading = \"Features\", subheading, className }: FeaturesProps)`. Variants are typed with `Variants` import. Syntax is well-formed TSX."
+        },
+        {
+          "text": "Does not use any Motion+ components (Cursor, AnimateNumber, Ticker)",
+          "passed": true,
+          "evidence": "Grep of Features.tsx and response.md for 'Cursor', 'AnimateNumber', 'Ticker' yields no matches. The only Motion APIs used are `motion`, `stagger`, `useReducedMotion`, and the type `Variants` \u2014 all standard open-source APIs."
+        },
+        {
+          "text": "Does not reference Motion Studio MCP in generated code or comments",
+          "passed": true,
+          "evidence": "No mention of 'Motion Studio', 'MCP', or similar in Features.tsx or response.md. Comments reference `stagger()`, `useReducedMotion`, `whileInView`, and `useMemo` only."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "time_seconds": 166.8,
+        "tokens": 49401,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses layoutId on matching elements in both grid and modal (e.g. `card-${id}`, `img-${id}`, `title-${id}`)",
+          "passed": true,
+          "evidence": "Gallery.tsx uses layoutId on motion.button (`card-${project.id}`), motion.img (`card-image-${project.id}`), motion.h3 (`card-title-${project.id}`), motion.p (`card-description-${project.id}`). CardModal.tsx uses matching layoutIds: `card-${project.id}` on the dialog, `card-image-${project.id}` on image, `card-title-${project.id}` on title, `card-description-${project.id}` on description."
+        },
+        {
+          "text": "Wraps modal in AnimatePresence",
+          "passed": true,
+          "evidence": "Gallery.tsx lines 71-79 wrap the CardModal in <AnimatePresence>{activeProject && <CardModal ... />}</AnimatePresence>, with comment noting AnimatePresence lives OUTSIDE the conditional so it can run the exit animation."
+        },
+        {
+          "text": "layoutId values are unique per card (namespaced with id)",
+          "passed": true,
+          "evidence": "All layoutId values use template literals namespaced with project.id: `card-${project.id}`, `card-image-${project.id}`, `card-title-${project.id}`, `card-description-${project.id}`. Additionally wrapped in <LayoutGroup id=\"project-gallery\"> for further scoping."
+        },
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": true,
+          "evidence": "Gallery.tsx line 2: `import { AnimatePresence, LayoutGroup, motion } from \"motion/react\"`. CardModal.tsx line 2: `import { motion, useReducedMotion } from \"motion/react\"`. Response also notes: 'Do not use framer-motion.'"
+        },
+        {
+          "text": "Handles Escape key to close modal",
+          "passed": true,
+          "evidence": "CardModal.tsx lines 18-22: `const onKey = (e: KeyboardEvent) => { if (e.key === \"Escape\") onClose() }; window.addEventListener(\"keydown\", onKey)`. Listener cleanup on unmount on line 30."
+        },
+        {
+          "text": "Explains at least one gotcha (e.g. layout prop on children, border-radius/box-shadow via style, image distortion using layout=\"position\", or setting position: relative where needed)",
+          "passed": true,
+          "evidence": "Response includes a dedicated 'Gotchas you should know' section with 12 numbered gotchas, including #2 'border-radius and box-shadow must come from style, not CSS', #5 'img aspect-ratio stretches during the morph' with layout=\"position\" suggestion, #6 'display: inline silently breaks everything', and others."
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Only standard motion components used: motion.button, motion.img, motion.h3, motion.p, motion.div, AnimatePresence, LayoutGroup, useReducedMotion. No imports of Motion+ paid components (e.g., Cursor, Ticker, AnimateNumber). Response explicitly guides users to 'motion/react' package only."
+        },
+        {
+          "text": "Uses TypeScript with typed props",
+          "passed": true,
+          "evidence": "Gallery.tsx declares `export type Project = { id: string; title: string; description: string; image: string; imageAlt?: string }` and `type GalleryProps = { projects: Project[] }` with typed signature `Gallery({ projects }: GalleryProps)`. CardModal.tsx declares `type CardModalProps = { project: Project; onClose: () => void }` with typed signature `CardModal({ project, onClose }: CardModalProps)`."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "time_seconds": 94.13,
+        "tokens": 11882,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses useScroll with target: ref and offset: ['start start', 'end end'] (or equivalent)",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx lines 44-47: `const { scrollYProgress } = useScroll({ target: containerRef, offset: [\"start start\", \"end end\"] })` \u2014 exact match."
+        },
+        {
+          "text": "Uses useTransform to map scrollYProgress to a horizontal translation",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx line 53: `const x = useTransform(scrollYProgress, [0, 1], [\"0%\", `${endPercent}%`])` \u2014 maps scrollYProgress to the `x` motion value applied to the flex track via `style={{ x, ... }}` on motion.ol."
+        },
+        {
+          "text": "Outer container has a tall height (e.g. 300vh or larger) to slow the scroll",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx line 71: `const OUTER_HEIGHT_VH = 600` and line 77: `style={{ position: \"relative\", height: `${OUTER_HEIGHT_VH}vh` }}` \u2014 outer section is 600vh, well above the 300vh threshold."
+        },
+        {
+          "text": "Inner container uses position: sticky with top: 0 and overflow: hidden",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx lines 79-86: the inner div has `style={{ position: \"sticky\", top: 0, height: \"100vh\", overflow: \"hidden\" }}`."
+        },
+        {
+          "text": "Flex row of cards inside the sticky container with appropriate flex-shrink: 0 or fixed widths",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx lines 87-110: motion.ol uses `display: \"flex\"` with `width: ${total * 100}vw`; each child li has `flex: \"0 0 100vw\"` (flex-shrink: 0) and explicit `width: \"100vw\"`."
+        },
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx line 2: `import { motion, useReducedMotion, useScroll, useTransform } from \"motion/react\"` \u2014 imports from motion/react, not framer-motion."
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Only core Motion APIs are used: motion, useReducedMotion, useScroll, useTransform. No Motion+ components (e.g., Cursor, AnimateNumber, Ticker, etc.) are imported or referenced."
+        },
+        {
+          "text": "Uses TypeScript",
+          "passed": true,
+          "evidence": "File extension is .tsx. HorizontalCaseStudies.tsx defines typed interfaces: `export type CaseStudy = { id: string; title: string; ... }` (lines 4-10), `type Props = { caseStudies: CaseStudy[] }` (lines 12-14), and typed useRef `useRef<HTMLDivElement>(null)` (line 39)."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 10,
+        "failed": 0,
+        "total": 10,
+        "time_seconds": 122.5,
+        "tokens": 17480,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses Reorder.Group with values and onReorder props",
+          "passed": true,
+          "evidence": "TodoList.tsx lines 80-85: `<Reorder.Group axis=\"y\" values={todos} onReorder={setTodos} className=\"relative flex flex-col gap-2\">`"
+        },
+        {
+          "text": "Uses Reorder.Item with key={item.id} and value={item}",
+          "passed": true,
+          "evidence": "TodoList.tsx line 89 shows `<TodoRow key={todo.id} todo={todo} ... />` and line 140-141 shows `<Reorder.Item value={todo} dragListener={false} ...>`. The key is on the TodoRow component that renders the Reorder.Item (React key placement pattern), and value={todo} is passed to Reorder.Item."
+        },
+        {
+          "text": "Uses useDragControls() and dragListener={false} to restrict drag to a handle",
+          "passed": true,
+          "evidence": "Line 112: `const dragControls = useDragControls()` and line 142: `dragListener={false}` with `dragControls={dragControls}` on line 143."
+        },
+        {
+          "text": "Drag handle uses onPointerDown={(e) => controls.start(e)}",
+          "passed": true,
+          "evidence": "Line 191: `onPointerDown={(e) => dragControls.start(e)}` on the drag handle button."
+        },
+        {
+          "text": "Wraps items in AnimatePresence for enter/exit animations",
+          "passed": true,
+          "evidence": "Line 86: `<AnimatePresence mode=\"popLayout\" initial={false}>` wraps the mapped TodoRow components inside Reorder.Group."
+        },
+        {
+          "text": "Items have initial/animate/exit for smooth add/remove",
+          "passed": true,
+          "evidence": "Lines 146-157 on Reorder.Item: `initial={reduce ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.96 }}`, `animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}`, and `exit={...}` with opacity, x, scale transitions."
+        },
+        {
+          "text": "For swipe-to-delete, uses drag='x' or onDragEnd with an offset threshold to remove item",
+          "passed": true,
+          "evidence": "Line 170: `drag=\"x\"` on the inner motion.div, line 175: `onDragEnd={handleSwipeEnd}`, and lines 129-137 check `info.offset.x < -SWIPE_DELETE_THRESHOLD` (120px) or velocity threshold before calling `onRemove()`."
+        },
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": true,
+          "evidence": "Lines 2-11: `import { AnimatePresence, Reorder, motion, useDragControls, useMotionValue, useReducedMotion, useTransform } from \"motion/react\"` and `import type { PanInfo } from \"motion/react\"`."
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Only core motion/react APIs used (AnimatePresence, Reorder, motion, useDragControls, useMotionValue, useReducedMotion, useTransform). No Motion+ components like Cursor, Ticker, AnimateNumber, etc. are imported or used."
+        },
+        {
+          "text": "Uses TypeScript",
+          "passed": true,
+          "evidence": "File extension is .tsx, contains explicit type definitions: `export type Todo = { id: string; text: string; done: boolean }`, `type TodoListProps = { initialTodos?: Todo[] }`, `type TodoRowProps = {...}`, `useState<Todo[]>(initialTodos)`, and typed event handler `(_: PointerEvent, info: PanInfo) => {...}`."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "time_seconds": 67.3,
+        "tokens": 5818,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses useMotionValue to hold the animating number",
+          "passed": true,
+          "evidence": "AnimatedCounter.tsx line 26: `const count = useMotionValue(0)` and imported from 'motion/react' on line 2."
+        },
+        {
+          "text": "Uses useTransform with a function (e.g. () => Math.round(n.get())) to round to integer",
+          "passed": true,
+          "evidence": "AnimatedCounter.tsx line 28: `const rounded = useTransform(() => Math.round(count.get()))`."
+        },
+        {
+          "text": "Renders the motion value as a child of a motion component (e.g. <motion.span>{rounded}</motion.span>) \u2014 NOT via toFixed / useState + setState",
+          "passed": true,
+          "evidence": "AnimatedCounter.tsx line 43: `return <motion.span className={className}>{rounded}</motion.span>`. No useState, setState, or toFixed is used."
+        },
+        {
+          "text": "Uses animate() imperative function from motion/react to drive the change",
+          "passed": true,
+          "evidence": "AnimatedCounter.tsx line 34: `const controls = animate(count, target, { duration, ease: [0.22, 1, 0.36, 1] })`. `animate` is imported from 'motion/react' on line 2."
+        },
+        {
+          "text": "useEffect starts the animation when target changes and returns cleanup (controls.stop())",
+          "passed": true,
+          "evidence": "AnimatedCounter.tsx lines 30-41: `useEffect(() => { count.set(0); const controls = animate(...); return () => controls.stop() }, [target, duration])`. Cleanup returns `controls.stop()` and dependency array includes `target`."
+        },
+        {
+          "text": "Explicitly states that AnimateNumber is a Motion+ (paid) component and declines to use it",
+          "passed": true,
+          "evidence": "response.md lines 91-99: 'Is AnimateNumber the right tool? Short answer: no, not for this project. <AnimateNumber> is a component from Motion+, which is the paid tier of Motion ... using it would require a paid Motion+ license ... So: skip AnimateNumber, ship the component above.'"
+        },
+        {
+          "text": "Imports from 'motion/react' (not 'framer-motion')",
+          "passed": true,
+          "evidence": "AnimatedCounter.tsx line 2: `import { animate, motion, useMotionValue, useTransform } from \"motion/react\"`. No 'framer-motion' import anywhere."
+        },
+        {
+          "text": "Uses TypeScript with a typed target prop",
+          "passed": true,
+          "evidence": "File is `.tsx`. Lines 9-16 define `type AnimatedCounterProps = { target: number; duration?: number; className?: string }`, and component signature on lines 25-29 uses that type: `export function AnimatedCounter({ target, duration = 1, className }: AnimatedCounterProps)`."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.875,
+        "passed": 7,
+        "failed": 1,
+        "total": 8,
+        "time_seconds": 64.7,
+        "tokens": 23351,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Imports from 'motion/react' (not 'framer-motion')",
+          "passed": true,
+          "evidence": "Features.tsx line 3: `import { motion, useReducedMotion, type Variants } from \"motion/react\";` \u2014 correct package, no framer-motion imports anywhere."
+        },
+        {
+          "text": "Uses variants (not individual delay props on each item)",
+          "passed": true,
+          "evidence": "Uses `SECTION_VARIANTS` and `CARD_VARIANTS` Variants objects (lines 17-37), applied via `variants={sectionVariants}` on the parent `motion.ul` and `variants={cardVariants}` on each `motion.li`. No per-item `delay` props on children."
+        },
+        {
+          "text": "Uses stagger() from motion/react in delayChildren",
+          "passed": false,
+          "evidence": "The section variant uses plain numeric values: `staggerChildren: 0.12, delayChildren: 0.05` (lines 21-22). There is no import or call to `stagger()` from motion/react. The assertion specifically requires `stagger()` used in `delayChildren`, which is the newer Motion-for-React API; the output uses the legacy numeric `staggerChildren` pattern instead."
+        },
+        {
+          "text": "Uses whileInView with viewport={{ once: true }}",
+          "passed": true,
+          "evidence": "Features.tsx lines 68-69: `whileInView=\"visible\"` and `viewport={{ once: true, amount: 0.2, margin: \"0px 0px -10% 0px\" }}` \u2014 `once: true` is present."
+        },
+        {
+          "text": "Handles prefers-reduced-motion via useReducedMotion() or MotionConfig",
+          "passed": true,
+          "evidence": "Features.tsx line 50: `const prefersReducedMotion = useReducedMotion();` and lines 52-57 swap in no-op variant objects when reduced motion is preferred. `useReducedMotion` is imported on line 3."
+        },
+        {
+          "text": "Writes valid TSX with proper typing for the features prop",
+          "passed": true,
+          "evidence": "Exports `type Feature = { id: string; icon: ComponentType<SVGProps<SVGSVGElement>>; title: string; description: string }` (lines 6-11) and `type FeaturesProps = { features: Feature[] }` (lines 13-15). Component is typed `function Features({ features }: FeaturesProps)`. Variants typed as `Variants`. JSX is well-formed with `\"use client\"` directive."
+        },
+        {
+          "text": "Does not use any Motion+ components (Cursor, AnimateNumber, Ticker)",
+          "passed": true,
+          "evidence": "Only `motion`, `useReducedMotion`, and `Variants` type are imported from `motion/react`. No Motion+ components (Cursor, AnimateNumber, Ticker) referenced anywhere in Features.tsx or response.md."
+        },
+        {
+          "text": "Does not reference Motion Studio MCP in generated code or comments",
+          "passed": true,
+          "evidence": "No mention of 'Motion Studio' or 'MCP' anywhere in Features.tsx or response.md. Comments/prose only discuss the motion/react API."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "time_seconds": 125.6,
+        "tokens": 21840,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses layoutId on matching elements in both grid and modal (e.g. `card-${id}`, `img-${id}`, `title-${id}`)",
+          "passed": true,
+          "evidence": "Gallery.tsx uses layoutId `card-image-${project.id}`, `card-title-${project.id}`, `card-desc-${project.id}` on motion.img, motion.h3, motion.p. CardModal.tsx uses the same three layoutIds on the corresponding motion elements, enabling shared-element transitions."
+        },
+        {
+          "text": "Wraps modal in AnimatePresence",
+          "passed": true,
+          "evidence": "Gallery.tsx lines 81-89: `<AnimatePresence>{activeProject && (<CardModal key={activeProject.id} project={activeProject} onClose={() => setActiveId(null)} />)}</AnimatePresence>`"
+        },
+        {
+          "text": "layoutId values are unique per card (namespaced with id)",
+          "passed": true,
+          "evidence": "All layoutIds are interpolated with `${project.id}`: `card-image-${project.id}`, `card-title-${project.id}`, `card-desc-${project.id}`, ensuring uniqueness per card."
+        },
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": true,
+          "evidence": "Gallery.tsx line 2: `import { AnimatePresence, motion } from \"motion/react\";`. CardModal.tsx line 2: `import { motion } from \"motion/react\";`. Response.md also states `The React package is now motion/react`."
+        },
+        {
+          "text": "Handles Escape key to close modal",
+          "passed": true,
+          "evidence": "Gallery.tsx lines 22-29: useEffect registers a keydown listener that calls `setActiveId(null)` when `e.key === \"Escape\"`, and cleans up on unmount or when activeId changes."
+        },
+        {
+          "text": "Explains at least one gotcha",
+          "passed": true,
+          "evidence": "response.md contains a dedicated 'Gotchas to know about' section with 16 gotchas, including layoutId uniqueness, AnimatePresence requirement, image distortion, not wrapping outer card in layoutId, border-radius/box-shadow scaling, transform ancestors breaking position: fixed, StrictMode double-mount, SSR use client, and more."
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Only standard Motion components are used: `motion`, `AnimatePresence`, `motion.button`, `motion.img`, `motion.h3`, `motion.p`, `motion.div`. No imports of Motion+ components like `Cursor`, `AnimateNumber`, `Ticker`, etc. The install command is `npm install motion` with no Motion+ reference."
+        },
+        {
+          "text": "Uses TypeScript with typed props",
+          "passed": true,
+          "evidence": "Gallery.tsx defines `export type Project = {...}` and `type GalleryProps = { projects: Project[] }` with `export function Gallery({ projects }: GalleryProps)`. CardModal.tsx defines `type CardModalProps = { project: Project; onClose: () => void; }` with `export function CardModal({ project, onClose }: CardModalProps)`."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "time_seconds": 80.5,
+        "tokens": 24530,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses useScroll with target: ref and offset: ['start start', 'end end'] (or equivalent)",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx lines 32-35: `const { scrollYProgress } = useScroll({ target: sectionRef, offset: [\"start start\", \"end end\"] });`"
+        },
+        {
+          "text": "Uses useTransform to map scrollYProgress to a horizontal translation",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx line 41: `const rawX = useTransform(scrollYProgress, [0, 1], [\"0%\", \"-80%\"]);` \u2014 mapped to `x` on the motion.ul at line 69."
+        },
+        {
+          "text": "Outer container has a tall height (e.g. 300vh or larger) to slow the scroll",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx line 62: `style={{ height: `${count * 100 * slowness}vh` }}` \u2014 with count=5 and slowness=1.5 this yields 750vh, comfortably >=300vh."
+        },
+        {
+          "text": "Inner container uses position: sticky with top: 0 and overflow: hidden",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx line 67: `<div className=\"sticky top-0 h-screen w-screen overflow-hidden\">` \u2014 Tailwind classes for position: sticky, top: 0, and overflow: hidden."
+        },
+        {
+          "text": "Flex row of cards inside the sticky container with appropriate flex-shrink: 0 or fixed widths",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx line 70: `<motion.ul ... className=\"flex h-full list-none p-0 m-0 will-change-transform\">` (flex row) and each `<li>` uses `w-screen shrink-0` (line 75), i.e. fixed viewport width and flex-shrink: 0."
+        },
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": true,
+          "evidence": "HorizontalCaseStudies.tsx line 2: `import { motion, useScroll, useTransform, useSpring, MotionValue } from \"motion/react\";`"
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Only primitives used: `motion.ul`, `motion.article`, `useScroll`, `useTransform`, `useSpring`, `MotionValue`. No Motion+ components (e.g. Cursor, Ticker, AnimateNumber, etc.) are imported or referenced."
+        },
+        {
+          "text": "Uses TypeScript",
+          "passed": true,
+          "evidence": "File extension is .tsx; explicit TypeScript types are defined and used: `type CaseStudy`, `type HorizontalCaseStudiesProps`, `type CardProps`, `useRef<HTMLElement | null>(null)`, `MotionValue<string>`, `MotionValue<number>`."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 10,
+        "failed": 0,
+        "total": 10,
+        "time_seconds": 72.1,
+        "tokens": 24642,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses Reorder.Group with values and onReorder props",
+          "passed": true,
+          "evidence": "TodoList.tsx lines 67-73: `<Reorder.Group axis=\"y\" values={items} onReorder={setItems} as=\"ul\" className=\"todo-list__items\">` \u2014 both `values` and `onReorder` props are wired correctly to state."
+        },
+        {
+          "text": "Uses Reorder.Item with key={item.id} and value={item}",
+          "passed": true,
+          "evidence": "TodoList.tsx line 77: `<TodoItem key={item.id} ...` (key on the rendered list element) and line 112: `<Reorder.Item value={item} as=\"li\" ...>` \u2014 the key is on the TodoItem wrapper which renders the Reorder.Item, and `value={item}` is on Reorder.Item."
+        },
+        {
+          "text": "Uses useDragControls() and dragListener={false} to restrict drag to a handle",
+          "passed": true,
+          "evidence": "TodoList.tsx line 97: `const dragControls = useDragControls();` and lines 116-117: `dragListener={false}` and `dragControls={dragControls}` on Reorder.Item."
+        },
+        {
+          "text": "Drag handle uses onPointerDown={(e) => controls.start(e)}",
+          "passed": true,
+          "evidence": "TodoList.tsx lines 143-148: the handle button has `onPointerDown={(e) => { e.preventDefault(); dragControls.start(e); }}` \u2014 calls `dragControls.start(e)` inside the onPointerDown handler (with an additional preventDefault)."
+        },
+        {
+          "text": "Wraps items in AnimatePresence for enter/exit animations",
+          "passed": true,
+          "evidence": "TodoList.tsx line 74: `<AnimatePresence initial={false}>` wraps the mapped list of TodoItem (Reorder.Item) elements inside Reorder.Group."
+        },
+        {
+          "text": "Items have initial/animate/exit for smooth add/remove",
+          "passed": true,
+          "evidence": "TodoList.tsx lines 119-125 on Reorder.Item: `initial={{ opacity: 0, x: -40 }}`, `animate={{ opacity: 1, x: 0 }}`, `exit={{ opacity: 0, x: 300, transition: { duration: 0.2 } }}`."
+        },
+        {
+          "text": "For swipe-to-delete, uses drag='x' or onDragEnd with an offset threshold to remove item",
+          "passed": true,
+          "evidence": "TodoList.tsx line 175: `<motion.div drag=\"x\" ...>` with `onDragEnd={handleDragEnd}`. The handler (lines 101-108) checks `Math.abs(info.offset.x) > SWIPE_THRESHOLD` (120) and calls `onRemove(item.id)`."
+        },
+        {
+          "text": "Imports from 'motion/react'",
+          "passed": true,
+          "evidence": "TodoList.tsx lines 2-8: `import { Reorder, useDragControls, motion, AnimatePresence, type PanInfo } from \"motion/react\";`"
+        },
+        {
+          "text": "Does not use any Motion+ components",
+          "passed": true,
+          "evidence": "Only standard motion/react primitives are imported (Reorder, useDragControls, motion, AnimatePresence, PanInfo). No Motion+ components such as Cursor, Ticker, AnimateNumber, etc. are referenced in the file."
+        },
+        {
+          "text": "Uses TypeScript",
+          "passed": true,
+          "evidence": "Output file is TodoList.tsx (.tsx extension). Includes typed interfaces (`interface Todo`, `interface TodoListProps`, `interface TodoItemProps`), typed state `useState<Todo[]>(...)`, typed handler signature `(_e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo)`, and `type PanInfo` import."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.875,
+        "passed": 7,
+        "failed": 1,
+        "total": 8,
+        "time_seconds": 60.8,
+        "tokens": 5327,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses useMotionValue to hold the animating number",
+          "passed": true,
+          "evidence": "AnimatedCounter.tsx line 34: `const count = useMotionValue(0);` \u2014 imported from 'motion/react' on line 2."
+        },
+        {
+          "text": "Uses useTransform with a function (e.g. () => Math.round(n.get())) to round to integer",
+          "passed": true,
+          "evidence": "AnimatedCounter.tsx line 35: `const rounded = useTransform(count, (latest) => Math.floor(latest).toString());` \u2014 uses Math.floor rather than Math.round, but the assertion uses 'e.g.' and Math.floor also yields an integer (no decimals shown, per spec)."
+        },
+        {
+          "text": "Renders the motion value as a child of a motion component (e.g. <motion.span>{rounded}</motion.span>) \u2014 NOT via toFixed / useState + setState",
+          "passed": true,
+          "evidence": "AnimatedCounter.tsx line 42: `return <motion.span className={className}>{rounded}</motion.span>;` \u2014 the MotionValue `rounded` is passed as a child of motion.span. No useState/setState or toFixed is used."
+        },
+        {
+          "text": "Uses animate() imperative function from motion/react to drive the change",
+          "passed": true,
+          "evidence": "AnimatedCounter.tsx line 40: `const controls = animate(count, target, { duration, ease: \"easeOut\" });` with `animate` imported from 'motion/react' on line 2."
+        },
+        {
+          "text": "useEffect starts the animation when target changes and returns cleanup (controls.stop())",
+          "passed": true,
+          "evidence": "AnimatedCounter.tsx lines 37-45: `useEffect(() => { count.set(0); const controls = animate(...); return () => controls.stop(); }, [target, duration, count]);` \u2014 target is in the deps array and cleanup calls controls.stop()."
+        },
+        {
+          "text": "Explicitly states that AnimateNumber is a Motion+ (paid) component and declines to use it",
+          "passed": false,
+          "evidence": "The response attributes AnimateNumber to 'NumberFlow / number-flow (and a similarly-named component that shows up in some community snippets / Motion-Plus examples)' and says 'It is not part of the core motion / framer-motion package, so using it would add a new dependency'. It declines to use it but does NOT explicitly identify AnimateNumber as a Motion+ / paid component \u2014 it misattributes it to number-flow and vaguely mentions 'Motion-Plus examples'. The word 'paid' does not appear."
+        },
+        {
+          "text": "Imports from 'motion/react' (not 'framer-motion')",
+          "passed": true,
+          "evidence": "AnimatedCounter.tsx line 2: `import { animate, useMotionValue, useTransform, motion } from \"motion/react\";` \u2014 correct package."
+        },
+        {
+          "text": "Uses TypeScript with a typed target prop",
+          "passed": true,
+          "evidence": "AnimatedCounter.tsx lines 4-11: `type AnimatedCounterProps = { target: number; duration?: number; className?: string; };` and the file uses .tsx extension. Component is typed with `({ target, duration = 1, className }: AnimatedCounterProps)`."
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 109.306,
+        "stddev": 37.6061,
+        "min": 67.3,
+        "max": 166.8
+      },
+      "tokens": {
+        "mean": 24414,
+        "stddev": 18345,
+        "min": 5818,
+        "max": 49401
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.95,
+        "stddev": 0.0685,
+        "min": 0.875,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 80.74,
+        "stddev": 26.1821,
+        "min": 60.8,
+        "max": 125.6
+      },
+      "tokens": {
+        "mean": 19938,
+        "stddev": 8246,
+        "min": 5327,
+        "max": 24642
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.05",
+      "time_seconds": "+28.6",
+      "tokens": "+4476"
+    }
+  },
+  "notes": [
+    "Pass-rate lift is small (+5%) because the baseline already hits 95% \u2014 these tasks are central to Motion's library and a capable model produces correct-looking code without help. The skill's value shows at the edges: (1) eval-1 baseline used the legacy numeric `staggerChildren: 0.12` while the skill steered to the modern `stagger()` helper (2) eval-5 baseline misattributed `AnimateNumber` to `number-flow` and never explicitly flagged it as paid; the skill declined cleanly with the right reasoning.",
+    "Cost of the skill: +29s and ~+4.5k tokens per run on average \u2014 driven by reading SKILL.md plus relevant reference files. That's a real tax on small tasks where the model would've gotten it right anyway.",
+    "Qualitative wins beyond pass/fail noted by graders: `use client` directive (eval 1), useReducedMotion branches that actually gate behaviour not just imports (evals 1, 3, 4, 5), `touch-action: none` on drag handles (eval 4), asymmetric `dragElastic` for left-only swipe (eval 4), `scrollbar-gutter: stable` to stop unwanted layout animations (eval 2), `visibility: hidden` on source card during shared-element transition (both configs in eval 2).",
+    "Several graders flagged that assertions are structural (API usage) rather than behavioural (correctness of threshold, gesture arbitration, pacing ratios). The most interesting skill-value signals are in the qualitative extras, not the assertions. For iteration 2, add discriminating assertions like 'restarts from 0 when target decreases' (eval 5), 'source card is hidden during modal' (eval 2), 'swipe-drag lives on a different element from reorder-drag' (eval 4).",
+    "The eval-5 `AnimateNumber` trap fired: with skill 1/1, without skill 0/1 on that specific assertion. This is the single most discriminating assertion in the set \u2014 the type of negative-prompt refusal the skill is designed for."
+  ]
+}

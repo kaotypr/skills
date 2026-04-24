@@ -1,0 +1,130 @@
+{
+  "expectations": [
+    {
+      "text": "Imports from 'motion/react' (not 'framer-motion')",
+      "passed": true,
+      "evidence": "Hero.tsx line 4-13 imports { animate, motion, stagger, useInView, useMotionValue, useReducedMotion, useTransform, type Variants } from \"motion/react\". No 'framer-motion' import appears anywhere."
+    },
+    {
+      "text": "Uses shadcn theme tokens (text-foreground, bg-background, bg-primary, bg-card, border-border, text-muted-foreground, text-primary-foreground) — NOT concrete bg-white / bg-indigo-* / text-neutral-* utilities",
+      "passed": true,
+      "evidence": "Hero.tsx uses text-foreground (line 144, 169, 192), text-muted-foreground (lines 151, 164, 173, 193), bg-card (line 190), border-border (line 190), text-card-foreground (line 190). No concrete color utilities like bg-white, bg-indigo-*, or text-neutral-* appear."
+    },
+    {
+      "text": "Feature grid uses variants + stagger() from motion/react (not legacy staggerChildren number)",
+      "passed": true,
+      "evidence": "gridContainer variant (line 51-56) uses `transition: { delayChildren: stagger(0.07) }`; stagger is imported from motion/react (line 7). The feature grid <motion.ul> uses variants={gridContainer} (line 181) with children using variants={gridItem}. No staggerChildren: 0.07 literal number is used."
+    },
+    {
+      "text": "Feature grid uses whileInView with viewport={{ once: true }} so it doesn't re-animate on scroll back",
+      "passed": false,
+      "evidence": "The feature grid does NOT use whileInView or a viewport prop. Instead it uses useInView(sectionRef, { once: true, amount: 0.25 }) on the parent section (line 127) and drives animate={state} (line 183). While this functionally achieves \"only animate once\" via once: true on the hook, the specific API called out by the assertion (whileInView + viewport={{ once: true }}) is not used. The response.md explicitly justifies this substitution: \"Why useInView + one animate={state} gate instead of whileInView?\""
+    },
+    {
+      "text": "Stat counter uses useMotionValue + animate() + useTransform rounding + motion component as child (<motion.span>{rounded}</motion.span>), NOT useState + setInterval and NOT toFixed-in-render",
+      "passed": true,
+      "evidence": "AnimatedCounter (lines 88-118) uses useMotionValue(0) (line 100), animate(count, target, {...}) (line 110), useTransform with toLocaleString rounding (line 101), and renders <motion.span className={className}>{rounded}</motion.span> (line 117). No useState, no setInterval, no toFixed."
+    },
+    {
+      "text": "Explicitly declines <AnimateNumber> as a Motion+ paid component (not 'number-flow' or 'Motion-Plus examples' or similar misattribution)",
+      "passed": true,
+      "evidence": "response.md line 5: \"<AnimateNumber> is a **Motion+ (paid)** component, and you don't need it.\" Also line 244: \"<AnimateNumber> / <Ticker> — Motion+ paid.\" Correctly attributes it to Motion+ (paid), not number-flow or similar."
+    },
+    {
+      "text": "Handles prefers-reduced-motion via useReducedMotion() or MotionConfig reducedMotion='user'",
+      "passed": true,
+      "evidence": "AnimatedCounter uses `const reduce = useReducedMotion()` (line 99) and snaps to target when reduced motion is preferred (lines 105-108). response.md also recommends <MotionConfig reducedMotion=\"user\"> at the app root (line 14)."
+    },
+    {
+      "text": "Uses shadcn Button for the CTA (imports from '@/components/ui/button' or equivalent, does not rebuild a button from scratch with motion.button and button-like classes)",
+      "passed": true,
+      "evidence": "Line 15: `import { Button } from \"@/components/ui/button\"`. Line 158: `<Button size=\"lg\">Get started</Button>` wrapped in motion.div (not motion.button). The shadcn Button component itself is used as-is."
+    },
+    {
+      "text": "Does not use any Motion+ components (Cursor, AnimateNumber, Ticker, Motion Studio MCP)",
+      "passed": true,
+      "evidence": "No imports or usages of Cursor, AnimateNumber, Ticker, or Motion Studio MCP components in Hero.tsx. response.md explicitly declines them (lines 244-245)."
+    },
+    {
+      "text": "Uses TypeScript",
+      "passed": true,
+      "evidence": "File extension is .tsx. Uses `type Variants` import (line 11), typed data (`type Stat`, `type Feature`), typed props (`{ target: number; play: boolean; duration?: number; className?: string }`), typed ref (`useRef<HTMLElement>(null)`)."
+    }
+  ],
+  "summary": {
+    "passed": 9,
+    "failed": 1,
+    "total": 10,
+    "pass_rate": 0.9
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": null,
+    "total_steps": null,
+    "errors_encountered": 0,
+    "output_chars": 17458,
+    "transcript_chars": 11594
+  },
+  "timing": {
+    "executor_duration_seconds": 106.4,
+    "total_duration_seconds": 106.4
+  },
+  "claims": [
+    {
+      "claim": "<AnimateNumber> is a Motion+ (paid) component",
+      "type": "factual",
+      "verified": true,
+      "evidence": "AnimateNumber is indeed a Motion+ paid component (part of motion.dev's paid tier), correctly attributed in response.md."
+    },
+    {
+      "claim": "Package is 'motion', not 'framer-motion'",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Motion One / Motion for React has been renamed from framer-motion to motion; `pnpm add motion` and import from 'motion/react' is the current convention. response.md line 17 and install step 1 correctly state this."
+    },
+    {
+      "claim": "Using useInView + animate={state} is equivalent to whileInView for the 'once' behavior",
+      "type": "quality",
+      "verified": true,
+      "evidence": "useInView with { once: true } will set inView to true once and never reset, so animate={state} effectively transitions hidden->visible only once. Functionally equivalent to whileInView with viewport={{ once: true }} for this scenario. The rationale given in response.md (needing to drive the counter start from the same boolean) is sound."
+    },
+    {
+      "claim": "tabular-nums keeps digits from jiggling during tick-up",
+      "type": "factual",
+      "verified": true,
+      "evidence": "tabular-nums is the standard Tailwind utility for fixed-width digits, exactly right for ticking counters."
+    },
+    {
+      "claim": "Only animates opacity + y (compositor-friendly)",
+      "type": "factual",
+      "verified": true,
+      "evidence": "All variants only animate opacity and y (translateY). No width/height/left/top. Verified in lines 26-65."
+    },
+    {
+      "claim": "Variants defined at module scope to avoid per-render churn",
+      "type": "process",
+      "verified": true,
+      "evidence": "All Variants objects (heroContainer, heroItem, statsContainer, statItem, gridContainer, gridItem) are declared at module scope (lines 19-65), outside the Hero component."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Feature grid uses whileInView with viewport={{ once: true }} so it doesn't re-animate on scroll back",
+        "reason": "This assertion prescribes a specific API (whileInView + viewport={{ once: true }}), but the actual outcome wanted is 'animates only on first entry, using a once-style viewport trigger.' The submission uses useInView(ref, { once: true }) + animate={state}, which is functionally equivalent and arguably better here (it lets the same boolean gate the counter tick-up). Consider rewording the assertion to test the outcome ('feature grid reveal is gated by viewport entry and does not replay on scroll back, using motion/react's viewport once semantics — whileInView+viewport.once OR useInView+once: true are both acceptable') so implementations that pick useInView for legitimate coordination reasons aren't penalized."
+      },
+      {
+        "reason": "No assertion verifies that stagger uses a reasonable step (e.g. 0.05–0.12s) or that items only animate physical transforms (opacity, y, x, scale) rather than expensive properties (width/height/left/top). A low-quality submission could satisfy the 'uses variants + stagger()' and 'whileInView' assertions while animating layout-thrashing properties."
+      },
+      {
+        "reason": "No assertion checks that the <AnimateNumber> decline includes a concrete alternative recipe (useMotionValue + animate + useTransform + motion child). The existing assertion about the counter implementation is separate from the 'declines <AnimateNumber>' assertion — in principle a model could decline the component but not actually provide the primitive-based replacement. Currently both pass together, but coupling them would be more discriminating."
+      }
+    ],
+    "overall": "Strong assertion set overall — discriminating on the key distinctions (motion vs framer-motion, Motion+ vs free primitives, shadcn tokens vs concrete colors, hand-rolled counter vs useState/setInterval). Main gap is the whileInView assertion being over-prescriptive about the specific API rather than the outcome; this caused a fail on a submission that correctly achieves the desired behavior via a defensible alternative."
+  }
+}

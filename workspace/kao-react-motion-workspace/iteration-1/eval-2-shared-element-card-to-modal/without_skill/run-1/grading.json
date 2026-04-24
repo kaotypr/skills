@@ -1,0 +1,120 @@
+{
+  "expectations": [
+    {
+      "text": "Uses layoutId on matching elements in both grid and modal (e.g. `card-${id}`, `img-${id}`, `title-${id}`)",
+      "passed": true,
+      "evidence": "Gallery.tsx uses layoutId `card-image-${project.id}`, `card-title-${project.id}`, `card-desc-${project.id}` on motion.img, motion.h3, motion.p. CardModal.tsx uses the same three layoutIds on the corresponding motion elements, enabling shared-element transitions."
+    },
+    {
+      "text": "Wraps modal in AnimatePresence",
+      "passed": true,
+      "evidence": "Gallery.tsx lines 81-89: `<AnimatePresence>{activeProject && (<CardModal key={activeProject.id} project={activeProject} onClose={() => setActiveId(null)} />)}</AnimatePresence>`"
+    },
+    {
+      "text": "layoutId values are unique per card (namespaced with id)",
+      "passed": true,
+      "evidence": "All layoutIds are interpolated with `${project.id}`: `card-image-${project.id}`, `card-title-${project.id}`, `card-desc-${project.id}`, ensuring uniqueness per card."
+    },
+    {
+      "text": "Imports from 'motion/react'",
+      "passed": true,
+      "evidence": "Gallery.tsx line 2: `import { AnimatePresence, motion } from \"motion/react\";`. CardModal.tsx line 2: `import { motion } from \"motion/react\";`. Response.md also states `The React package is now motion/react`."
+    },
+    {
+      "text": "Handles Escape key to close modal",
+      "passed": true,
+      "evidence": "Gallery.tsx lines 22-29: useEffect registers a keydown listener that calls `setActiveId(null)` when `e.key === \"Escape\"`, and cleans up on unmount or when activeId changes."
+    },
+    {
+      "text": "Explains at least one gotcha",
+      "passed": true,
+      "evidence": "response.md contains a dedicated 'Gotchas to know about' section with 16 gotchas, including layoutId uniqueness, AnimatePresence requirement, image distortion, not wrapping outer card in layoutId, border-radius/box-shadow scaling, transform ancestors breaking position: fixed, StrictMode double-mount, SSR use client, and more."
+    },
+    {
+      "text": "Does not use any Motion+ components",
+      "passed": true,
+      "evidence": "Only standard Motion components are used: `motion`, `AnimatePresence`, `motion.button`, `motion.img`, `motion.h3`, `motion.p`, `motion.div`. No imports of Motion+ components like `Cursor`, `AnimateNumber`, `Ticker`, etc. The install command is `npm install motion` with no Motion+ reference."
+    },
+    {
+      "text": "Uses TypeScript with typed props",
+      "passed": true,
+      "evidence": "Gallery.tsx defines `export type Project = {...}` and `type GalleryProps = { projects: Project[] }` with `export function Gallery({ projects }: GalleryProps)`. CardModal.tsx defines `type CardModalProps = { project: Project; onClose: () => void; }` with `export function CardModal({ project, onClose }: CardModalProps)`."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "total_steps": 0,
+    "errors_encountered": 0,
+    "output_chars": 21840,
+    "transcript_chars": 14142
+  },
+  "timing": {
+    "executor_duration_seconds": 125.6,
+    "total_duration_seconds": 125.6
+  },
+  "claims": [
+    {
+      "claim": "The React package for Motion is now `motion/react` (formerly `framer-motion`)",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Correct — the Motion library rebranded from `framer-motion` to `motion`, with the React entrypoint at `motion/react`."
+    },
+    {
+      "claim": "`visibility: hidden` is used to hide the source card while the modal is open to avoid layoutId collision",
+      "type": "process",
+      "verified": true,
+      "evidence": "Gallery.tsx lines 52-54: `style={{ visibility: activeId === project.id ? \"hidden\" : \"visible\" }}` confirms the claim."
+    },
+    {
+      "claim": "Motion automatically corrects for scale when `borderRadius` is on a motion element (gotcha #6)",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Motion does provide automatic border-radius correction during layout animations when borderRadius is set as a style value — this is documented Motion behavior."
+    },
+    {
+      "claim": "Body scroll is locked while the modal is open",
+      "type": "process",
+      "verified": true,
+      "evidence": "Gallery.tsx lines 32-39 implement a useEffect that sets document.body.style.overflow = 'hidden' when activeId is set and restores the previous value on cleanup."
+    },
+    {
+      "claim": "Motion can't actually morph font-size smoothly in FLIP (gotcha #7)",
+      "type": "factual",
+      "verified": true,
+      "evidence": "This is accurate — FLIP only animates position/size via transforms, not text properties like font-size. To animate font-size you must animate it as a style value, which the gotcha correctly explains."
+    },
+    {
+      "claim": "Nesting motion.img/h3/p inside motion.button works correctly for layoutId matching",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Motion.button is a motion element which can contain nested motion elements. The layoutIds are on the inner elements (img, h3, p), and these match to the corresponding elements in the modal. This pattern works, though nesting motion elements has some overhead."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Explains at least one gotcha (e.g. layout prop on children, border-radius/box-shadow via style, image distortion using layout=\"position\", or setting position: relative where needed)",
+        "reason": "The assertion is very easy to satisfy because the prompt explicitly asks for gotchas. A more discriminating check would require specific gotchas that a non-expert would miss, such as 'mentions that ancestors with CSS transform break position: fixed' or 'mentions image distortion during layout animation'. The current response happens to cover 16 gotchas, but a one-liner like 'watch out for layoutId collisions' would also technically pass."
+      },
+      {
+        "reason": "No assertion checks that the source card is visually hidden or removed while the modal is active (to prevent layoutId collisions). This is a common subtle bug where implementations render both the source card and the modal's shared element simultaneously, causing jumps. The model got this right (visibility: hidden) but nothing in the assertions verifies this critical behavior."
+      },
+      {
+        "reason": "No assertion checks that click-outside (backdrop click) closes the modal, though the prompt explicitly asks for it. The current assertions only check Escape handling."
+      }
+    ],
+    "overall": "Most assertions are solid structural checks (layoutId usage, AnimatePresence, unique namespacing, import source). The gotcha assertion is weak because the prompt itself requests gotchas, and click-outside-to-close (explicitly required in the prompt) is not asserted."
+  }
+}

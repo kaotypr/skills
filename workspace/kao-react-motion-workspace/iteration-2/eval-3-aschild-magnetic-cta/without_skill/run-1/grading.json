@@ -1,0 +1,139 @@
+{
+  "expectations": [
+    {
+      "text": "Uses <Button asChild> from shadcn wrapping a motion.a (NOT a raw <motion.button> or custom button)",
+      "passed": false,
+      "evidence": "Button asChild is used (line 112), but it wraps a plain <a href={href}>{children}</a> (line 118), not a motion.a. The animation element is a motion.span that wraps OUTSIDE the Button, not inside it. Assertion requires Button asChild to wrap motion.a."
+    },
+    {
+      "text": "The motion.a is the direct child of Button and receives the animation props (whileHover, whileTap, style, onMouseMove, etc.)",
+      "passed": false,
+      "evidence": "There is no motion.a in the file. The direct child of Button is a plain <a> element with no animation props. Animation props (style, onHoverStart, onTapStart) are on the external motion.span wrapper (lines 95-110)."
+    },
+    {
+      "text": "Uses useSpring to smooth the magnetic follow motion (either useSpring(0, {...}) directly, OR useSpring wrapping a useMotionValue source)",
+      "passed": true,
+      "evidence": "Lines 30-36: const x = useMotionValue(0); const y = useMotionValue(0); const springX = useSpring(x, springConfig); const springY = useSpring(y, springConfig). Uses the useSpring(motionValue, config) pattern."
+    },
+    {
+      "text": "Implements the magnetic effect via onMouseMove reading event.currentTarget.getBoundingClientRect() and setting motion values based on pointer offset from center",
+      "passed": false,
+      "evidence": "Uses window-level 'pointermove' event listener (line 73) rather than onMouseMove prop on the element, and reads wrapperRef.current.getBoundingClientRect() (line 49) rather than event.currentTarget.getBoundingClientRect(). It does compute the pointer offset from center (lines 50-54) and sets motion values (lines 60-61). The core intent (pointer offset from center -> motion values) is met, but the specific mechanism named in the assertion (onMouseMove + event.currentTarget) is not used."
+    },
+    {
+      "text": "Implements onMouseLeave (or equivalent) to reset the motion values to 0 so the button returns to origin",
+      "passed": true,
+      "evidence": "Lines 68-71: handlePointerLeave resets x.set(0) and y.set(0). Registered as window 'pointerleave' listener (line 74). Also, when distance > radius in pointermove (lines 63-65), the values reset to 0."
+    },
+    {
+      "text": "Uses style={{ x: mx, y: my }} on the motion.a to apply the magnetic translation (OR equivalent via transform)",
+      "passed": false,
+      "evidence": "The style with x and y (lines 97-100) is applied to a motion.span wrapper, not to a motion.a. There is no motion.a in the component. The translation is applied to a wrapper span that surrounds the Button — the assertion specifically requires this on motion.a."
+    },
+    {
+      "text": "Applies whileHover and/or whileTap for the scale pop on gesture",
+      "passed": false,
+      "evidence": "No whileHover or whileTap props are used anywhere. Scale pop is implemented via onHoverStart/onHoverEnd/onTapStart/onTap handlers (lines 105-109) that imperatively set a motion value, rather than using the declarative whileHover/whileTap props the assertion calls for."
+    },
+    {
+      "text": "href='/signup' is present on the motion.a element",
+      "passed": false,
+      "evidence": "href={href} (defaulting to '/signup') is present on a plain <a> element (line 118), not on a motion.a. There is no motion.a element in the component."
+    },
+    {
+      "text": "Imports Button from shadcn path (e.g. '@/components/ui/button' or similar) — does NOT recreate Button styling from scratch",
+      "passed": true,
+      "evidence": "Line 5: import { Button, type ButtonProps } from '@/components/ui/button'; Uses the shadcn Button primitive with variant/size/className forwarded."
+    },
+    {
+      "text": "Imports from 'motion/react'",
+      "passed": false,
+      "evidence": "Line 4: import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion'; Uses the legacy 'framer-motion' package, not 'motion/react'. The response even acknowledges this: 'On Motion's newer package (motion/react), change the import to from motion/react' (response.md line 175)."
+    },
+    {
+      "text": "Does not use any Motion+ components",
+      "passed": true,
+      "evidence": "Only uses motion, useMotionValue, useSpring, useReducedMotion — all core Motion APIs. No Motion+ (paid) components like Cursor, Ticker, etc. are used."
+    },
+    {
+      "text": "Uses TypeScript",
+      "passed": true,
+      "evidence": "File is .tsx; uses type annotations including 'type MagneticCTAProps = Omit<ButtonProps, \"asChild\"> & {...}' (lines 7-14), React.useRef<HTMLSpanElement>, event: PointerEvent, etc."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 7,
+    "total": 12,
+    "pass_rate": 0.42
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "total_steps": 0,
+    "errors_encountered": 0,
+    "output_chars": 10426,
+    "transcript_chars": 6770
+  },
+  "timing": {
+    "executor_duration_seconds": 65.2,
+    "total_duration_seconds": 65.2
+  },
+  "claims": [
+    {
+      "claim": "The inner element is a real shadcn Button with asChild, so variants, focus rings, and keyboard behavior come from the Button primitive",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Button asChild wraps <a href={href}>, which is the correct shadcn Slot composition pattern (line 111-119)."
+    },
+    {
+      "claim": "Motion on the wrapper, not the Button — we transform a motion.span around the Button",
+      "type": "process",
+      "verified": true,
+      "evidence": "Lines 95-120 confirm motion.span wraps Button. However, this is contrary to the eval assertions which explicitly required the motion element to be the asChild slot (motion.a inside Button)."
+    },
+    {
+      "claim": "useSpring smooths both the magnetic translation and the scale",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Lines 35-36 spring the translation; line 40 springs the scale. Confirmed."
+    },
+    {
+      "claim": "On Motion's newer package (motion/react), change the import to from motion/react",
+      "type": "process",
+      "verified": true,
+      "evidence": "The component imports from 'framer-motion', and the author explicitly notes the reader must change the import themselves for motion/react. The user's prompt requested React 19 + TypeScript + Tailwind + shadcn without specifying a package; however, the eval assertions required 'motion/react'."
+    },
+    {
+      "claim": "Global pointermove tracking starts reacting before the cursor reaches the button",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Window-level pointermove listener (line 73) with radius-based falloff (lines 57-62) matches the claim. This is a legitimate design choice, but diverges from the onMouseMove pattern the assertions expected."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "reason": "The eval assertions are very prescriptive about one specific implementation (Button asChild -> motion.a with onMouseMove on the anchor itself). A wrapper-span approach (motion.span around Button asChild with <a> child) is a legitimate and arguably cleaner pattern that satisfies the user's stated requirements (keeps shadcn Button styling/a11y, is an anchor to /signup, has magnetic follow + scale pop). It fails 7/12 assertions despite correctly implementing the behavior the user asked for. Consider rephrasing assertions to test outcomes (e.g. 'animation is applied to an element that is or wraps the shadcn Button', 'the anchor links to /signup', 'magnetic follow uses useSpring + pointer offset from rect center') rather than a specific code shape."
+      },
+      {
+        "assertion": "Implements the magnetic effect via onMouseMove reading event.currentTarget.getBoundingClientRect() and setting motion values based on pointer offset from center",
+        "reason": "Using window-level pointermove with a ref to the element is a common and often superior pattern for magnetic buttons because it starts pulling before the cursor intersects the button's bounds. The assertion as written rewards only one implementation style."
+      },
+      {
+        "assertion": "Applies whileHover and/or whileTap for the scale pop on gesture",
+        "reason": "Imperative gesture handlers driving a spring-animated motion value (as done here) produce the same or better tactile result than whileHover/whileTap shortcuts. The assertion should test the outcome (scale change on hover/tap) not the specific API used."
+      },
+      {
+        "assertion": "Imports from 'motion/react'",
+        "reason": "This assertion is reasonable, but the user's prompt did not specify motion/react vs framer-motion — it just said 'React 19 + TypeScript + Tailwind + shadcn'. Without the skill steering toward motion/react, a generic model naturally reaches for framer-motion. If motion/react is a hard requirement the prompt should say so, or the skill should be the thing that enforces it (which is likely the point of comparing with_skill vs without_skill — in that case this assertion is fine)."
+      }
+    ],
+    "overall": "The assertions are tightly coupled to one implementation shape. The output implements the user's stated behavior correctly with a different (and defensible) code shape, yet fails most assertions. For a without_skill baseline this is informative — it shows the skill is needed to steer toward the specific Button asChild + motion.a + motion/react pattern. For future iterations, consider whether any assertions should be relaxed to behavior-level checks."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "eval_id": 5,
+  "eval_name": "shadcn-dialog-motion-override",
+  "prompt": "I'm using shadcn's Dialog and I want a more elaborate open animation for one specific dialog \u2014 the content should spring in from scale 0.8 + y 20, and the header / body / footer inside should stagger in after the container. Reverse on close. I know shadcn ships tw-animate-css classes that handle a default open/close \u2014 I want to replace that with Motion on this one dialog only (not globally). React 19 + TypeScript + Tailwind + shadcn. Give me AnimatedDialog.tsx \u2014 a drop-in wrapper I can use like <AnimatedDialog open={open} onOpenChange={setOpen}>...</AnimatedDialog>.",
+  "assertions": [
+    "Uses <DialogContent asChild> with a motion component (e.g. motion.div) as its child \u2014 the motion component owns the animation",
+    "Explicitly strips OR does not include the default tw-animate-css animate-in/animate-out/fade-in-*/zoom-in-* classes on the DialogContent (or wraps a DialogContent-like primitive that doesn't have them), because Motion is now driving the animation and stacking both causes stutter",
+    "The prose / comments explicitly acknowledge that shadcn's default tw-animate-css animation is being overridden (not just silently replaced)",
+    "Uses variants to drive the container spring (scale 0.8 \u2192 1, y 20 \u2192 0) on open",
+    "Uses stagger() or staggerChildren in the open variant's transition to cascade the header/body/footer content",
+    "On close (data-state=closed, or via AnimatePresence exit / usePresence, or variant swap) the animation reverses",
+    "Uses shadcn theme tokens (bg-background, text-foreground, border-border, etc.) \u2014 NOT bg-white / text-neutral-*",
+    "Exports a component with the API <AnimatedDialog open onOpenChange>{children}</AnimatedDialog> (or a close equivalent \u2014 props named 'open' and 'onOpenChange' matching shadcn's Dialog)",
+    "Does NOT rebuild Dialog / DialogContent from scratch \u2014 uses shadcn's Dialog primitives",
+    "Imports from 'motion/react'",
+    "Does not use any Motion+ components",
+    "Uses TypeScript"
+  ]
+}

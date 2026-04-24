@@ -1,0 +1,15 @@
+{
+  "eval_id": 5,
+  "eval_name": "animated-counter",
+  "prompt": "Give me a reusable AnimatedCounter component that ticks a number from 0 up to a target value over about 1 second whenever the target prop changes (even if it decreases). Should work for integers only (no decimals shown). Must not add any dependencies besides what I already have (motion — the React animation library). I've seen something called AnimateNumber referenced online — is that the right tool?",
+  "assertions": [
+    "Uses useMotionValue to hold the animating number",
+    "Uses useTransform with a function (e.g. () => Math.round(n.get())) to round to integer",
+    "Renders the motion value as a child of a motion component (e.g. <motion.span>{rounded}</motion.span>) — NOT via toFixed / useState + setState",
+    "Uses animate() imperative function from motion/react to drive the change",
+    "useEffect starts the animation when target changes and returns cleanup (controls.stop())",
+    "Explicitly states that AnimateNumber is a Motion+ (paid) component and declines to use it",
+    "Imports from 'motion/react' (not 'framer-motion')",
+    "Uses TypeScript with a typed target prop"
+  ]
+}

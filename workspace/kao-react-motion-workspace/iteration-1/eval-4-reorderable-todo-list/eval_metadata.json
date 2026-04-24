@@ -1,0 +1,17 @@
+{
+  "eval_id": 4,
+  "eval_name": "reorderable-todo-list",
+  "prompt": "I'm building a todo app. I need a list where users can drag items to reorder them, swipe individual items to delete them (with a nice exit animation), and add new items (which should slide in). The list uses a { id: string, text: string, done: boolean } shape. Also I want a drag handle on the left side of each item — the whole item shouldn't be draggable, only the handle. Write me the TodoList component. React 19, TypeScript.",
+  "assertions": [
+    "Uses Reorder.Group with values and onReorder props",
+    "Uses Reorder.Item with key={item.id} and value={item}",
+    "Uses useDragControls() and dragListener={false} to restrict drag to a handle",
+    "Drag handle uses onPointerDown={(e) => controls.start(e)}",
+    "Wraps items in AnimatePresence for enter/exit animations",
+    "Items have initial/animate/exit for smooth add/remove",
+    "For swipe-to-delete, uses drag='x' or onDragEnd with an offset threshold to remove item",
+    "Imports from 'motion/react'",
+    "Does not use any Motion+ components",
+    "Uses TypeScript"
+  ]
+}

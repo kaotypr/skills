@@ -1,0 +1,19 @@
+{
+  "eval_id": 4,
+  "eval_name": "horizontal-scroll-case-studies",
+  "prompt": "Horizontal-scrolling case studies for my marketing site. As the user scrolls vertically through this section, 5 full-viewport-width cards translate horizontally. The horizontal scroll should feel slightly slower than 1:1 \u2014 so the user spends some time in the section but it doesn't feel stuck. Each card uses shadcn Card styling with shadcn theme tokens. React 19 + TypeScript + Tailwind + shadcn. The caseStudies array ({ id, title, client, summary, image }) is passed as a prop. Give me HorizontalCaseStudies.tsx.",
+  "assertions": [
+    "Uses useScroll with target: ref and offset: ['start start', 'end end'] (or equivalent 2-item offset that starts progress at 0 when section top hits viewport top)",
+    "Uses useTransform to map scrollYProgress to a horizontal x translation (percentage-based: '0%' to '-(N-1)/N * 100%' or similar, OR viewport-unit based)",
+    "Does NOT apply useSpring to the scroll-linked x motion value (scroll-linked springs lag behind the scroll and feel broken)",
+    "Outer container height is \u2265 400vh (tall enough to produce slower-than-1:1 feel for 5 cards)",
+    "The ratio of vertical scroll to horizontal travel is > 1:1 (slower than 1:1) \u2014 e.g. 500vh outer + 100vh sticky = 400vh vertical per (N-1)*100vw horizontal, giving 400/400 = 1:1 MINIMUM; should be higher for 'slightly slower'",
+    "Inner container uses position: sticky with top: 0, overflow: hidden, height: 100vh (or h-screen)",
+    "Cards have flex-shrink: 0 (or 'shrink-0' / 'flex: 0 0 ...') AND fixed width of 100vw (or 'w-screen')",
+    "Uses shadcn theme tokens (bg-background on section, bg-card / text-foreground / text-muted-foreground / border-border on cards) \u2014 NOT bg-white / text-neutral-* / bg-black",
+    "Handles prefers-reduced-motion (e.g. falls back to a vertical stack, or disables the transform)",
+    "Imports from 'motion/react'",
+    "Does not use any Motion+ components",
+    "Uses TypeScript with typed CaseStudy and props"
+  ]
+}

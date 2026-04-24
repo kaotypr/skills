@@ -1,0 +1,124 @@
+{
+  "expectations": [
+    {
+      "text": "Uses Reorder.Group with values and onReorder props",
+      "passed": true,
+      "evidence": "TodoList.tsx lines 80-85: `<Reorder.Group axis=\"y\" values={todos} onReorder={setTodos} className=\"relative flex flex-col gap-2\">`"
+    },
+    {
+      "text": "Uses Reorder.Item with key={item.id} and value={item}",
+      "passed": true,
+      "evidence": "TodoList.tsx line 89 shows `<TodoRow key={todo.id} todo={todo} ... />` and line 140-141 shows `<Reorder.Item value={todo} dragListener={false} ...>`. The key is on the TodoRow component that renders the Reorder.Item (React key placement pattern), and value={todo} is passed to Reorder.Item."
+    },
+    {
+      "text": "Uses useDragControls() and dragListener={false} to restrict drag to a handle",
+      "passed": true,
+      "evidence": "Line 112: `const dragControls = useDragControls()` and line 142: `dragListener={false}` with `dragControls={dragControls}` on line 143."
+    },
+    {
+      "text": "Drag handle uses onPointerDown={(e) => controls.start(e)}",
+      "passed": true,
+      "evidence": "Line 191: `onPointerDown={(e) => dragControls.start(e)}` on the drag handle button."
+    },
+    {
+      "text": "Wraps items in AnimatePresence for enter/exit animations",
+      "passed": true,
+      "evidence": "Line 86: `<AnimatePresence mode=\"popLayout\" initial={false}>` wraps the mapped TodoRow components inside Reorder.Group."
+    },
+    {
+      "text": "Items have initial/animate/exit for smooth add/remove",
+      "passed": true,
+      "evidence": "Lines 146-157 on Reorder.Item: `initial={reduce ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.96 }}`, `animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}`, and `exit={...}` with opacity, x, scale transitions."
+    },
+    {
+      "text": "For swipe-to-delete, uses drag='x' or onDragEnd with an offset threshold to remove item",
+      "passed": true,
+      "evidence": "Line 170: `drag=\"x\"` on the inner motion.div, line 175: `onDragEnd={handleSwipeEnd}`, and lines 129-137 check `info.offset.x < -SWIPE_DELETE_THRESHOLD` (120px) or velocity threshold before calling `onRemove()`."
+    },
+    {
+      "text": "Imports from 'motion/react'",
+      "passed": true,
+      "evidence": "Lines 2-11: `import { AnimatePresence, Reorder, motion, useDragControls, useMotionValue, useReducedMotion, useTransform } from \"motion/react\"` and `import type { PanInfo } from \"motion/react\"`."
+    },
+    {
+      "text": "Does not use any Motion+ components",
+      "passed": true,
+      "evidence": "Only core motion/react APIs used (AnimatePresence, Reorder, motion, useDragControls, useMotionValue, useReducedMotion, useTransform). No Motion+ components like Cursor, Ticker, AnimateNumber, etc. are imported or used."
+    },
+    {
+      "text": "Uses TypeScript",
+      "passed": true,
+      "evidence": "File extension is .tsx, contains explicit type definitions: `export type Todo = { id: string; text: string; done: boolean }`, `type TodoListProps = { initialTodos?: Todo[] }`, `type TodoRowProps = {...}`, `useState<Todo[]>(initialTodos)`, and typed event handler `(_: PointerEvent, info: PanInfo) => {...}`."
+    }
+  ],
+  "summary": {
+    "passed": 10,
+    "failed": 0,
+    "total": 10,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "total_steps": 0,
+    "errors_encountered": 0,
+    "output_chars": 17480,
+    "transcript_chars": 10087
+  },
+  "timing": {
+    "executor_duration_seconds": 122.5,
+    "total_duration_seconds": 122.5
+  },
+  "claims": [
+    {
+      "claim": "Spring transition values (stiffness 420, damping 32) reflect the skill's house style for physical motion",
+      "type": "process",
+      "verified": true,
+      "evidence": "Line 158: `transition={{ type: \"spring\", stiffness: 420, damping: 32 }}` — response.md explicitly cites this as 'the house style from the skill'."
+    },
+    {
+      "claim": "Reduced-motion users get opacity-only animation",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Line 108 uses `useReducedMotion()` and lines 146-157 conditionally use opacity-only variants when `reduce` is true."
+    },
+    {
+      "claim": "touch-action: none on handle prevents touch scrolling during drag",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Line 194: `style={{ touchAction: \"none\" }}` on the drag handle button, as stated in response.md."
+    },
+    {
+      "claim": "Asymmetric dragElastic prevents right-swiping",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Line 172: `dragElastic={{ left: 0.9, right: 0 }}` only allows leftward swipe as claimed."
+    },
+    {
+      "claim": "useMotionValue + useTransform animate tint per-frame without re-renders",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Lines 117-127 use useMotionValue and useTransform to drive opacity on the tint element (line 183), which is the correct pattern for non-rerendering animations."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Uses Reorder.Item with key={item.id} and value={item}",
+        "reason": "The assertion literal string `key={item.id}` only matches when Reorder.Item is the direct mapped element. In this solution, the key is placed on the wrapping TodoRow component (a valid and common pattern), not on Reorder.Item itself. A regex-based check would fail this; a structural check (key on the component returned from .map()) would pass. Consider rewording to 'Each item in the list has a stable React key derived from item.id' to avoid penalizing correct implementations that extract the row into its own component."
+      },
+      {
+        "reason": "No assertion verifies that the swipe horizontal drag and the reorder vertical drag don't conflict. This solution correctly uses an inner motion.div for swipe inside Reorder.Item with dragListener={false}, but a naive solution that puts drag='x' directly on Reorder.Item would pass all current assertions while being broken. Consider an assertion like 'swipe and reorder drag targets are separate elements so they do not conflict'."
+      },
+      {
+        "reason": "No assertion covers touch-action handling on the drag handle, which is necessary for the drag handle to work on touch devices. A solution omitting this would pass all assertions but be broken on mobile."
+      }
+    ],
+    "overall": "Assertions comprehensively cover the core Motion API usage. Two meaningful gaps: (1) no check that swipe-drag and reorder-drag are on separate elements, (2) no check for touch-action: none on the handle. Also the key={item.id} assertion is phrased in a way that may miss valid patterns where the key lives on a wrapper component."
+  }
+}

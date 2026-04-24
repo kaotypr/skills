@@ -1,0 +1,109 @@
+{
+  "expectations": [
+    {
+      "text": "Uses useMotionValue to hold the animating number",
+      "passed": true,
+      "evidence": "AnimatedCounter.tsx line 26: `const count = useMotionValue(0)` and imported from 'motion/react' on line 2."
+    },
+    {
+      "text": "Uses useTransform with a function (e.g. () => Math.round(n.get())) to round to integer",
+      "passed": true,
+      "evidence": "AnimatedCounter.tsx line 28: `const rounded = useTransform(() => Math.round(count.get()))`."
+    },
+    {
+      "text": "Renders the motion value as a child of a motion component (e.g. <motion.span>{rounded}</motion.span>) — NOT via toFixed / useState + setState",
+      "passed": true,
+      "evidence": "AnimatedCounter.tsx line 43: `return <motion.span className={className}>{rounded}</motion.span>`. No useState, setState, or toFixed is used."
+    },
+    {
+      "text": "Uses animate() imperative function from motion/react to drive the change",
+      "passed": true,
+      "evidence": "AnimatedCounter.tsx line 34: `const controls = animate(count, target, { duration, ease: [0.22, 1, 0.36, 1] })`. `animate` is imported from 'motion/react' on line 2."
+    },
+    {
+      "text": "useEffect starts the animation when target changes and returns cleanup (controls.stop())",
+      "passed": true,
+      "evidence": "AnimatedCounter.tsx lines 30-41: `useEffect(() => { count.set(0); const controls = animate(...); return () => controls.stop() }, [target, duration])`. Cleanup returns `controls.stop()` and dependency array includes `target`."
+    },
+    {
+      "text": "Explicitly states that AnimateNumber is a Motion+ (paid) component and declines to use it",
+      "passed": true,
+      "evidence": "response.md lines 91-99: 'Is AnimateNumber the right tool? Short answer: no, not for this project. <AnimateNumber> is a component from Motion+, which is the paid tier of Motion ... using it would require a paid Motion+ license ... So: skip AnimateNumber, ship the component above.'"
+    },
+    {
+      "text": "Imports from 'motion/react' (not 'framer-motion')",
+      "passed": true,
+      "evidence": "AnimatedCounter.tsx line 2: `import { animate, motion, useMotionValue, useTransform } from \"motion/react\"`. No 'framer-motion' import anywhere."
+    },
+    {
+      "text": "Uses TypeScript with a typed target prop",
+      "passed": true,
+      "evidence": "File is `.tsx`. Lines 9-16 define `type AnimatedCounterProps = { target: number; duration?: number; className?: string }`, and component signature on lines 25-29 uses that type: `export function AnimatedCounter({ target, duration = 1, className }: AnimatedCounterProps)`."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "total_tokens": 33633,
+    "output_chars": 5818,
+    "transcript_chars": 4163
+  },
+  "timing": {
+    "executor_duration_seconds": 67.3,
+    "total_duration_seconds": 67.3
+  },
+  "claims": [
+    {
+      "claim": "AnimateNumber is a Motion+ (paid-tier) component not included in the free `motion` npm package",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Matches Motion's documentation: AnimateNumber is listed as a Motion+ component alongside Cursor and Ticker and requires a Motion+ license."
+    },
+    {
+      "claim": "The component restarts from 0 whenever `target` changes, even if target decreases",
+      "type": "factual",
+      "verified": true,
+      "evidence": "AnimatedCounter.tsx line 33 explicitly calls `count.set(0)` inside the effect before each `animate()` call, satisfying the prompt requirement."
+    },
+    {
+      "claim": "Integers only (value is rounded on every frame)",
+      "type": "factual",
+      "verified": true,
+      "evidence": "`useTransform(() => Math.round(count.get()))` rounds on every frame; no decimals are rendered."
+    },
+    {
+      "claim": "No additional dependencies beyond motion are introduced",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Only imports are React's `useEffect` and `motion/react`. No new packages referenced."
+    },
+    {
+      "claim": "Rendering a MotionValue as the child of a motion.span avoids per-frame re-renders",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Consistent with Motion's documented behavior for MotionValue children on motion elements; the component does not use useState for the displayed number."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "useEffect starts the animation when target changes and returns cleanup (controls.stop())",
+        "reason": "This assertion would pass even if the effect didn't reset to 0 on each change — but the prompt explicitly requires restarting from 0 when target *decreases*. Consider adding an assertion like 'Resets the motion value to 0 on each target change (count.set(0) inside the effect)' so a solution that only animates from the previous value to the new one (and thus fails the 'even if it decreases' requirement) would be caught."
+      },
+      {
+        "assertion": "Uses useTransform with a function (e.g. () => Math.round(n.get())) to round to integer",
+        "reason": "The assertion allows either the factory-function form `useTransform(() => Math.round(count.get()))` or the mapped form `useTransform(count, v => Math.round(v))`. Both are correct — good. But it doesn't verify the rounded value is actually the one rendered; pair with the existing render-assertion is fine, but worth confirming the eval considers both signatures acceptable."
+      }
+    ],
+    "overall": "Assertions are well-targeted and discriminating — they directly encode the idiomatic motion/react counter pattern and would fail any naive useState/setInterval implementation. One gap: the 'restart from 0 when target decreases' behavior from the prompt isn't explicitly asserted."
+  }
+}

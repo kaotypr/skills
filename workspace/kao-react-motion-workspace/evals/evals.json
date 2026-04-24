@@ -1,0 +1,107 @@
+{
+  "skill_name": "kao-react-motion",
+  "evals": [
+    {
+      "id": 1,
+      "name": "landing-hero-stagger-counter",
+      "prompt": "I'm building the hero section of my SaaS landing page with Next.js 15 App Router, Tailwind v4, and shadcn/ui. The section has a headline + subheadline + a shadcn Button CTA ('Get started'), a stats row with three numbers ('1,234 users · 42% growth · 356 reviews') that should tick up from 0 when the section scrolls into view, and a grid of 6 feature cards below that stagger in on scroll. The whole thing should animate only the first time it enters the viewport, and respect prefers-reduced-motion. My app uses shadcn theme tokens throughout. Give me Hero.tsx as a single file. I've seen <AnimateNumber> referenced — is that the right tool here?",
+      "expected_output": "A single Hero.tsx using motion/react. Uses shadcn theme tokens (text-foreground, text-muted-foreground, bg-background, bg-primary, text-primary-foreground, border-border, bg-card) — NOT bg-white/text-neutral-*/bg-indigo-*. Stats row uses hand-rolled animated counter (useMotionValue + animate() + useTransform rounding + <motion.span>{rounded}</motion.span>), not AnimateNumber. Feature grid uses variants + stagger() + whileInView with viewport.once. CTA uses shadcn Button without layering Motion on it (or uses asChild if it does add Motion). Handles useReducedMotion. Declines AnimateNumber as Motion+ paid.",
+      "files": [],
+      "expectations": [
+        "Imports from 'motion/react' (not 'framer-motion')",
+        "Uses shadcn theme tokens (text-foreground, bg-background, bg-primary, bg-card, border-border, text-muted-foreground, text-primary-foreground) — NOT concrete bg-white / bg-indigo-* / text-neutral-* utilities",
+        "Feature grid uses variants + stagger() from motion/react (not legacy staggerChildren number)",
+        "Feature grid uses whileInView with viewport={{ once: true }} so it doesn't re-animate on scroll back",
+        "Stat counter uses useMotionValue + animate() + useTransform rounding + motion component as child (<motion.span>{rounded}</motion.span>), NOT useState + setInterval and NOT toFixed-in-render",
+        "Explicitly declines <AnimateNumber> as a Motion+ paid component (not 'number-flow' or 'Motion-Plus examples' or similar misattribution)",
+        "Handles prefers-reduced-motion via useReducedMotion() or MotionConfig reducedMotion='user'",
+        "Uses shadcn Button for the CTA (imports from '@/components/ui/button' or equivalent, does not rebuild a button from scratch with motion.button and button-like classes)",
+        "Does not use any Motion+ components (Cursor, AnimateNumber, Ticker, Motion Studio MCP)",
+        "Uses TypeScript"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "shared-element-portfolio-morph",
+      "prompt": "I have a portfolio page with a grid of project cards — each project is { id, title, description, image }, and I use shadcn's Card component for styling. When a user clicks a card, I want it to morph into a fullscreen view where the image, title, and description fly smoothly to their new positions, and modal-only content (a 'Close' button plus an extended description) fades in after the morph settles. Clicking outside or pressing Escape should morph back to the grid. React 19 + TypeScript + Tailwind + shadcn tokens. Give me ProjectGallery.tsx including the modal in one file. Also — I've seen subtle flicker/overlap in other shared-element demos. How do I avoid it?",
+      "expected_output": "ProjectGallery.tsx using motion/react. Uses Shape A (layoutId on img/title/description individually — NOT on the card container), OR Shape B with visibility: hidden on the source during morph. layoutId values namespaced per card. AnimatePresence outside the conditional. Escape + click-outside handlers. Uses shadcn theme tokens (bg-card, text-foreground, bg-background, border-border) — NOT concrete colours. Explains the flicker-overlap trap as 'don't put layoutId on both container AND children; or hide the source with visibility: hidden'.",
+      "files": [],
+      "expectations": [
+        "Imports from 'motion/react'",
+        "Uses matching layoutId on the image, title, and description between grid card and modal (with per-card namespace, e.g. `img-${id}` or `img-card-${id}`)",
+        "Either (a) does NOT put layoutId on the outer card container, OR (b) DOES put layoutId on the container AND hides the source with `visibility: hidden` (via style or className) when that card is active — one of these two patterns must be present",
+        "Wraps the modal in AnimatePresence, placed outside the conditional mount",
+        "Uses shadcn theme tokens (bg-card, text-foreground, bg-background, border-border, text-muted-foreground) — NOT bg-white, text-neutral-*, bg-black/*, bg-indigo-*",
+        "Handles Escape key to close the modal",
+        "Handles click-outside (backdrop click) to close the modal",
+        "Explains the flicker/overlap trap in prose: either calls out 'don't layoutId both container and children' OR 'hide the source with visibility: hidden' as the fix",
+        "Modal-only content (e.g. Close button, extended description) uses a separate initial/animate/exit with a delay so it fades in after the shared-element morph settles — NOT a layoutId",
+        "Does not use any Motion+ components",
+        "Uses TypeScript with typed Project prop"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "aschild-magnetic-cta",
+      "prompt": "I want my landing page's primary CTA to feel 'magnetic': as the user's cursor approaches the button, it subtly follows the cursor with a spring, and on hover/tap it has a small scale pop. It must be a shadcn Button (so I keep the variant styling and accessibility) — not a from-scratch button. The button should be an anchor linking to /signup. React 19 + TypeScript + Tailwind + shadcn. Give me MagneticCTA.tsx.",
+      "expected_output": "MagneticCTA.tsx wrapping shadcn's Button via asChild with a motion.a inside. Uses useSpring (or useMotionValue + useSpring chain) for the magnetic follow. onMouseMove reads getBoundingClientRect and updates the motion values; onMouseLeave resets them to 0. whileHover and/or whileTap for the scale pop. href='/signup' on the motion.a. Uses shadcn theme tokens (doesn't need many here — inherits Button's).",
+      "files": [],
+      "expectations": [
+        "Uses <Button asChild> from shadcn wrapping a motion.a (NOT a raw <motion.button> or custom button)",
+        "The motion.a is the direct child of Button and receives the animation props (whileHover, whileTap, style, onMouseMove, etc.)",
+        "Uses useSpring to smooth the magnetic follow motion (either useSpring(0, {...}) directly, OR useSpring wrapping a useMotionValue source)",
+        "Implements the magnetic effect via onMouseMove reading event.currentTarget.getBoundingClientRect() and setting motion values based on pointer offset from center",
+        "Implements onMouseLeave (or equivalent) to reset the motion values to 0 so the button returns to origin",
+        "Uses style={{ x: mx, y: my }} on the motion.a to apply the magnetic translation (OR equivalent via transform)",
+        "Applies whileHover and/or whileTap for the scale pop on gesture",
+        "href='/signup' is present on the motion.a element",
+        "Imports Button from shadcn path (e.g. '@/components/ui/button' or similar) — does NOT recreate Button styling from scratch",
+        "Imports from 'motion/react'",
+        "Does not use any Motion+ components",
+        "Uses TypeScript"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "horizontal-scroll-case-studies",
+      "prompt": "Horizontal-scrolling case studies for my marketing site. As the user scrolls vertically through this section, 5 full-viewport-width cards translate horizontally. The horizontal scroll should feel slightly slower than 1:1 — so the user spends some time in the section but it doesn't feel stuck. Each card uses shadcn Card styling with shadcn theme tokens. React 19 + TypeScript + Tailwind + shadcn. The caseStudies array ({ id, title, client, summary, image }) is passed as a prop. Give me HorizontalCaseStudies.tsx.",
+      "expected_output": "HorizontalCaseStudies.tsx using useScroll with target ref and offset: ['start start', 'end end'], useTransform mapping scrollYProgress to a horizontal x translation (percentage-based), inner sticky 100vh container with overflow: hidden, outer container height > 300vh (and ratio produces slightly-slower-than-1:1 feel, e.g. 500-600vh for 5 cards), cards flex-shrink: 0 width 100vw. Does NOT wrap x in useSpring (scroll-linked springs lag behind user input). Uses shadcn theme tokens. Handles reduced motion.",
+      "files": [],
+      "expectations": [
+        "Uses useScroll with target: ref and offset: ['start start', 'end end'] (or equivalent 2-item offset that starts progress at 0 when section top hits viewport top)",
+        "Uses useTransform to map scrollYProgress to a horizontal x translation (percentage-based: '0%' to '-(N-1)/N * 100%' or similar, OR viewport-unit based)",
+        "Does NOT apply useSpring to the scroll-linked x motion value (scroll-linked springs lag behind the scroll and feel broken)",
+        "Outer container height is ≥ 400vh (tall enough to produce slower-than-1:1 feel for 5 cards)",
+        "The ratio of vertical scroll to horizontal travel is > 1:1 (slower than 1:1) — e.g. 500vh outer + 100vh sticky = 400vh vertical per (N-1)*100vw horizontal, giving 400/400 = 1:1 MINIMUM; should be higher for 'slightly slower'",
+        "Inner container uses position: sticky with top: 0, overflow: hidden, height: 100vh (or h-screen)",
+        "Cards have flex-shrink: 0 (or 'shrink-0' / 'flex: 0 0 ...') AND fixed width of 100vw (or 'w-screen')",
+        "Uses shadcn theme tokens (bg-background on section, bg-card / text-foreground / text-muted-foreground / border-border on cards) — NOT bg-white / text-neutral-* / bg-black",
+        "Handles prefers-reduced-motion (e.g. falls back to a vertical stack, or disables the transform)",
+        "Imports from 'motion/react'",
+        "Does not use any Motion+ components",
+        "Uses TypeScript with typed CaseStudy and props"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "shadcn-dialog-motion-override",
+      "prompt": "I'm using shadcn's Dialog and I want a more elaborate open animation for one specific dialog — the content should spring in from scale 0.8 + y 20, and the header / body / footer inside should stagger in after the container. Reverse on close. I know shadcn ships tw-animate-css classes that handle a default open/close — I want to replace that with Motion on this one dialog only (not globally). React 19 + TypeScript + Tailwind + shadcn. Give me AnimatedDialog.tsx — a drop-in wrapper I can use like <AnimatedDialog open={open} onOpenChange={setOpen}>...</AnimatedDialog>.",
+      "expected_output": "AnimatedDialog.tsx wrapping shadcn Dialog. The DialogContent is used with asChild and a motion component as child. The default tw-animate-css classes (data-[state=open]:animate-in, data-[state=closed]:animate-out, fade-in-0, zoom-in-95, etc.) are stripped or replaced because Motion is now driving the animation (double-driving would cause stutter). Variants drive the spring container animation and the staggered inner content. Uses shadcn theme tokens. Explains the decision to override tw-animate-css. Exports the specified wrapper API.",
+      "files": [],
+      "expectations": [
+        "Uses <DialogContent asChild> with a motion component (e.g. motion.div) as its child — the motion component owns the animation",
+        "Explicitly strips OR does not include the default tw-animate-css animate-in/animate-out/fade-in-*/zoom-in-* classes on the DialogContent (or wraps a DialogContent-like primitive that doesn't have them), because Motion is now driving the animation and stacking both causes stutter",
+        "The prose / comments explicitly acknowledge that shadcn's default tw-animate-css animation is being overridden (not just silently replaced)",
+        "Uses variants to drive the container spring (scale 0.8 → 1, y 20 → 0) on open",
+        "Uses stagger() or staggerChildren in the open variant's transition to cascade the header/body/footer content",
+        "On close (data-state=closed, or via AnimatePresence exit / usePresence, or variant swap) the animation reverses",
+        "Uses shadcn theme tokens (bg-background, text-foreground, border-border, etc.) — NOT bg-white / text-neutral-*",
+        "Exports a component with the API <AnimatedDialog open onOpenChange>{children}</AnimatedDialog> (or a close equivalent — props named 'open' and 'onOpenChange' matching shadcn's Dialog)",
+        "Does NOT rebuild Dialog / DialogContent from scratch — uses shadcn's Dialog primitives",
+        "Imports from 'motion/react'",
+        "Does not use any Motion+ components",
+        "Uses TypeScript"
+      ]
+    }
+  ]
+}

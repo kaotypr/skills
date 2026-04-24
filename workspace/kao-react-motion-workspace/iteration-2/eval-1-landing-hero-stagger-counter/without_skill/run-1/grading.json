@@ -1,0 +1,119 @@
+{
+  "expectations": [
+    {
+      "text": "Imports from 'motion/react' (not 'framer-motion')",
+      "passed": false,
+      "evidence": "Hero.tsx line 4-12 imports from 'framer-motion': `import { motion, useInView, useMotionValue, useSpring, useReducedMotion, useTransform, type Variants, } from \"framer-motion\";`. Response.md line 31 even explicitly notes: 'If you prefer the renamed `motion` package (Framer Motion v12+), change the import to `from \"motion/react\"`' — so the author knew about motion/react but chose framer-motion."
+    },
+    {
+      "text": "Uses shadcn theme tokens (text-foreground, bg-background, bg-primary, bg-card, border-border, text-muted-foreground, text-primary-foreground) — NOT concrete bg-white / bg-indigo-* / text-neutral-* utilities",
+      "passed": true,
+      "evidence": "Hero.tsx uses only shadcn theme tokens: `bg-background text-foreground` (line 213), `text-muted-foreground` (lines 238, 254, 270, 299, 308), `border-border` (line 291), `bg-card/60` (line 291), `bg-primary/10 text-primary` (line 293). No concrete tailwind color utilities like bg-white/bg-indigo-*/text-neutral-*."
+    },
+    {
+      "text": "Feature grid uses variants + stagger() from motion/react (not legacy staggerChildren number)",
+      "passed": false,
+      "evidence": "Hero.tsx line 173 uses the legacy `staggerChildren: 0.08` number inside the featureGrid variants transition, not the modern `stagger()` helper from motion/react. Same for heroContainer (line 154)."
+    },
+    {
+      "text": "Feature grid uses whileInView with viewport={{ once: true }} so it doesn't re-animate on scroll back",
+      "passed": false,
+      "evidence": "Hero.tsx uses `useInView(featuresRef, { once: true, amount: 0.2 })` (line 203) combined with `initial=\"hidden\" animate={featuresAnimate}` (lines 283-284), not the `whileInView` prop with `viewport={{ once: true }}`. This achieves similar behavior but does not match the asserted API."
+    },
+    {
+      "text": "Stat counter uses useMotionValue + animate() + useTransform rounding + motion component as child (<motion.span>{rounded}</motion.span>), NOT useState + setInterval and NOT toFixed-in-render",
+      "passed": false,
+      "evidence": "The counter uses useMotionValue + useSpring + useTransform, but instead of rendering a motion.span child of the rounded MotionValue, it subscribes via `rounded.on('change', (v) => setDisplay(v))` (line 134) and renders plain `<span>{display}</span>` driven by useState. The assertion requires `<motion.span>{rounded}</motion.span>` form; this implementation is the useState-mirroring pattern, not the motion-component-as-child pattern."
+    },
+    {
+      "text": "Explicitly declines <AnimateNumber> as a Motion+ paid component (not 'number-flow' or 'Motion-Plus examples' or similar misattribution)",
+      "passed": false,
+      "evidence": "Response.md lines 14-18 misattributes <AnimateNumber>: 'you're likely thinking of... NumberFlow (@number-flow/react)... <AnimatedNumber> from Magic UI / Aceternity... Framer Motion itself has no built-in <AnimateNumber> component.' It does NOT identify <AnimateNumber> as a Motion+ paid component; instead it attributes it to NumberFlow or Magic UI/Aceternity, which is precisely the misattribution the assertion flags."
+    },
+    {
+      "text": "Handles prefers-reduced-motion via useReducedMotion() or MotionConfig reducedMotion='user'",
+      "passed": true,
+      "evidence": "Hero.tsx imports and uses `useReducedMotion` at lines 9, 109, 193. It gates both the variant-based animations (lines 207-209) and the counter's final value (lines 126-129) based on `shouldReduceMotion`."
+    },
+    {
+      "text": "Uses shadcn Button for the CTA (imports from '@/components/ui/button' or equivalent, does not rebuild a button from scratch with motion.button and button-like classes)",
+      "passed": true,
+      "evidence": "Hero.tsx line 22 imports `import { Button } from \"@/components/ui/button\";` and uses it at line 245: `<Button size=\"lg\" className=\"px-8\">Get started</Button>`. No rebuild with motion.button."
+    },
+    {
+      "text": "Does not use any Motion+ components (Cursor, AnimateNumber, Ticker, Motion Studio MCP)",
+      "passed": true,
+      "evidence": "Hero.tsx uses only standard framer-motion primitives (motion, useInView, useMotionValue, useSpring, useReducedMotion, useTransform, Variants). No Cursor, AnimateNumber, Ticker, or Motion Studio MCP component is imported or referenced in the final file."
+    },
+    {
+      "text": "Uses TypeScript",
+      "passed": true,
+      "evidence": "The file is named Hero.tsx with TypeScript types throughout: `type Stat = { ... }` (line 34), `type Feature = { ... }` (line 49), `type AnimatedNumberProps = { ... }` (line 92), `type Variants` import (line 11), and typed refs like `useRef<HTMLDivElement>(null)` (lines 195-197)."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 5,
+    "total": 10,
+    "pass_rate": 0.5
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "total_steps": 0,
+    "errors_encountered": 0,
+    "output_chars": 24349,
+    "transcript_chars": 14857
+  },
+  "timing": {
+    "executor_duration_seconds": 107.9,
+    "total_duration_seconds": 107.9
+  },
+  "claims": [
+    {
+      "claim": "Framer Motion has no built-in <AnimateNumber> component",
+      "type": "factual",
+      "verified": false,
+      "evidence": "Motion (the library formerly known as Framer Motion, now at motion/react) does ship an <AnimateNumber> component as part of Motion+ (its paid tier). The response incorrectly claims no such built-in exists and attributes the name to NumberFlow or Magic UI/Aceternity."
+    },
+    {
+      "claim": "<AnimatedNumber> from Magic UI / Aceternity is usually a thin wrapper around Framer Motion's useSpring + useTransform",
+      "type": "factual",
+      "verified": false,
+      "evidence": "The user asked about <AnimateNumber> (singular form, no 'd'), which is the Motion+ component name. Redirecting to Magic UI/Aceternity's <AnimatedNumber> is a misattribution — the user was referencing Motion's own naming."
+    },
+    {
+      "claim": "useInView with { once: true } provides 'animate only on first entry' semantic equivalent to whileInView + viewport={{ once: true }}",
+      "type": "process",
+      "verified": true,
+      "evidence": "Functionally equivalent; the useInView hook also triggers once when paired with { once: true }. However, the assertion in this eval explicitly required whileInView + viewport API, so the implementation choice does not satisfy it."
+    },
+    {
+      "claim": "The implementation respects prefers-reduced-motion via useReducedMotion()",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Verified — `useReducedMotion` forces the 'show' variant state and short-circuits the counter to its final value."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Feature grid uses variants + stagger() from motion/react (not legacy staggerChildren number)",
+        "reason": "This assertion couples two things: use variants, AND use the modern stagger() helper. The legacy staggerChildren number still works in motion/react v12+ and is widely taught. Consider splitting into two checks, or clarifying whether 'legacy' means deprecated vs. 'not the preferred modern API' — otherwise a functionally-correct solution fails this assertion."
+      },
+      {
+        "assertion": "Stat counter uses useMotionValue + animate() + useTransform rounding + motion component as child (<motion.span>{rounded}</motion.span>), NOT useState + setInterval and NOT toFixed-in-render",
+        "reason": "The assertion specifically requires the `<motion.span>{rounded}</motion.span>` render pattern and `animate()` (imperative), but the evaluated implementation uses useSpring + useState mirroring via .on('change', ...). Both are valid Motion patterns that avoid setInterval and toFixed-in-render, yet only one passes. Either broaden the assertion to accept useSpring-based counters, or split into two assertions (one for prohibited anti-patterns, one for the preferred pattern)."
+      },
+      {
+        "reason": "No assertion checks that the counter starts from 0 and ticks up to the target (1234/42/356) — only the implementation mechanism. A counter that passes all assertions could still have incorrect target values or start at the wrong value."
+      }
+    ],
+    "overall": "Assertions are generally discriminating and caught real issues (framer-motion vs motion/react import, <AnimateNumber> misattribution). Two assertions couple implementation pattern with correctness in ways that could fail functionally-correct solutions — consider decoupling."
+  }
+}

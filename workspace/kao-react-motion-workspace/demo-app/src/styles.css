@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/*
+ * Tailwind v4 auto-detects source files imported by the build, but the eval
+ * outputs live in a sibling directory (../iteration-*). Explicitly register
+ * them so their class usage is discovered.
+ */
+@source "../../iteration-1/**/outputs/*.{tsx,ts,jsx,js}";
+
+/* ---- App shell ---- */
+
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; padding: 0; min-height: 100vh; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+  color: #111;
+  background: #f6f7f9;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: #0b1020;
+  color: #e4e6ef;
+  padding: 20px 16px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.sidebar h1 {
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8b93a7;
+  margin: 0 0 16px 4px;
+}
+.sidebar nav button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  margin-bottom: 4px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #c7cbd9;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1.35;
+}
+.sidebar nav button:hover { background: #161d35; color: #fff; }
+.sidebar nav button.active {
+  background: #1b2448;
+  color: #fff;
+  border-color: #2a3566;
+}
+.sidebar .hint {
+  font-size: 11px;
+  color: #6b7394;
+  margin-top: 24px;
+  line-height: 1.5;
+  padding: 0 4px;
+}
+
+.main {
+  padding: 32px 40px;
+  min-width: 0;
+}
+.main h2 {
+  margin: 0 0 4px;
+  font-size: 22px;
+}
+.main .eval-desc {
+  color: #555;
+  margin: 0 0 24px;
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 760px;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 1100px) { .split { grid-template-columns: 1fr; } }
+
+.pane {
+  background: #fff;
+  border: 1px solid #e4e7ee;
+  border-radius: 12px;
+  overflow: hidden;
+  min-width: 0;
+}
+.pane-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid #eef0f5;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.pane-header.with-skill { background: #eefbf0; color: #0d6031; }
+.pane-header.without-skill { background: #fff3e6; color: #894b00; }
+.pane-body {
+  padding: 20px;
+  min-height: 200px;
+  overflow: auto;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.controls button {
+  padding: 8px 14px;
+  border: 1px solid #d6dae3;
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.controls button:hover { background: #f0f1f5; }
+
+.error-boundary {
+  padding: 16px;
+  background: #fff3f3;
+  border: 1px solid #ffcdcd;
+  border-radius: 8px;
+  color: #8a1414;
+  font-size: 13px;
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}

@@ -1,0 +1,100 @@
+{
+  "expectations": [
+    {
+      "text": "Uses useScroll with target: ref and offset: ['start start', 'end end'] (or equivalent)",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx lines 44-47: `const { scrollYProgress } = useScroll({ target: containerRef, offset: [\"start start\", \"end end\"] })` — exact match."
+    },
+    {
+      "text": "Uses useTransform to map scrollYProgress to a horizontal translation",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx line 53: `const x = useTransform(scrollYProgress, [0, 1], [\"0%\", `${endPercent}%`])` — maps scrollYProgress to the `x` motion value applied to the flex track via `style={{ x, ... }}` on motion.ol."
+    },
+    {
+      "text": "Outer container has a tall height (e.g. 300vh or larger) to slow the scroll",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx line 71: `const OUTER_HEIGHT_VH = 600` and line 77: `style={{ position: \"relative\", height: `${OUTER_HEIGHT_VH}vh` }}` — outer section is 600vh, well above the 300vh threshold."
+    },
+    {
+      "text": "Inner container uses position: sticky with top: 0 and overflow: hidden",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx lines 79-86: the inner div has `style={{ position: \"sticky\", top: 0, height: \"100vh\", overflow: \"hidden\" }}`."
+    },
+    {
+      "text": "Flex row of cards inside the sticky container with appropriate flex-shrink: 0 or fixed widths",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx lines 87-110: motion.ol uses `display: \"flex\"` with `width: ${total * 100}vw`; each child li has `flex: \"0 0 100vw\"` (flex-shrink: 0) and explicit `width: \"100vw\"`."
+    },
+    {
+      "text": "Imports from 'motion/react'",
+      "passed": true,
+      "evidence": "HorizontalCaseStudies.tsx line 2: `import { motion, useReducedMotion, useScroll, useTransform } from \"motion/react\"` — imports from motion/react, not framer-motion."
+    },
+    {
+      "text": "Does not use any Motion+ components",
+      "passed": true,
+      "evidence": "Only core Motion APIs are used: motion, useReducedMotion, useScroll, useTransform. No Motion+ components (e.g., Cursor, AnimateNumber, Ticker, etc.) are imported or referenced."
+    },
+    {
+      "text": "Uses TypeScript",
+      "passed": true,
+      "evidence": "File extension is .tsx. HorizontalCaseStudies.tsx defines typed interfaces: `export type CaseStudy = { id: string; title: string; ... }` (lines 4-10), `type Props = { caseStudies: CaseStudy[] }` (lines 12-14), and typed useRef `useRef<HTMLDivElement>(null)` (line 39)."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "total_tokens": 36783,
+    "output_chars": 11882,
+    "output_files": 2
+  },
+  "timing": {
+    "executor_duration_seconds": 94.13,
+    "total_duration_seconds": 94.13
+  },
+  "claims": [
+    {
+      "claim": "The pacing (600vh outer + 100vh sticky) yields a ~0.8 vertical:horizontal ratio that feels slightly slower than 1:1",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Math checks: while sticky is pinned, user scrolls (600 - 100) = 500vh vertically to move the track from 0% to -80% of its 500vw width (= -400vw). 400vw horizontal per 500vh vertical = 0.8 horizontal per 1.0 vertical, i.e. horizontal moves slower than the scroll — matches the user's 'a bit slower than 1:1' requirement."
+    },
+    {
+      "claim": "Uses the output property `x` so Motion can run transforms on the compositor",
+      "type": "factual",
+      "verified": true,
+      "evidence": "motion.ol uses `style={{ x, ... }}` where x is a MotionValue — this is Motion's transform shorthand that targets translateX on the compositor thread."
+    },
+    {
+      "claim": "Respects prefers-reduced-motion via a fallback branch",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Lines 40, 55-67: useReducedMotion() hook gates a vertical-stack fallback that avoids the scroll-linked transform entirely."
+    },
+    {
+      "claim": "The last card ends flush with the right edge at scroll end",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Track width is N*100vw; translate from 0% to -((N-1)/N)*100% means the track shifts by (N-1)*100vw, so the Nth card's left edge aligns with viewport left (card fills viewport since each is 100vw wide)."
+    }
+  ],
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "reason": "No assertion verifies the 'slower than 1:1' pacing the user explicitly asked for. The current height check (300vh) would pass for a 300vh outer that gives a near-1:1 feel. Consider asserting a ratio — e.g. outer height minus 100vh divided by total horizontal distance — or at minimum a specific minimum outer height that guarantees sub-1:1 pacing (e.g. ≥400vh for 5 cards of 100vw)."
+      },
+      {
+        "assertion": "Flex row of cards inside the sticky container with appropriate flex-shrink: 0 or fixed widths",
+        "reason": "Assertion allows `flex-shrink: 0` OR fixed widths, but a correct implementation really needs both to avoid shrinking in some flex contexts. The output uses `flex: 0 0 100vw` which gives both, but a wrong output with only `width: 100vw` and default `flex-shrink: 1` would still pass this assertion and break in practice."
+      },
+      {
+        "reason": "No assertion verifies there are exactly 5 case studies rendered as the user requested. The output correctly renders caseStudies.length items (driven by prop), which is arguably better, but an assertion checking either a hardcoded 5 or a data-driven render loop would catch a common failure mode (hardcoding 3 placeholders)."
+      }
+    ],
+    "overall": "Assertions cover the key Motion recipe mechanics well. The main gap is that the user's 'slower than 1:1' pacing requirement — a core part of the prompt — isn't quantitatively checked; the height threshold is a loose proxy."
+  }
+}

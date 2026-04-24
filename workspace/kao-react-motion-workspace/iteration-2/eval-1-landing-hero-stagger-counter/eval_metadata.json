@@ -1,0 +1,17 @@
+{
+  "eval_id": 1,
+  "eval_name": "landing-hero-stagger-counter",
+  "prompt": "I'm building the hero section of my SaaS landing page with Next.js 15 App Router, Tailwind v4, and shadcn/ui. The section has a headline + subheadline + a shadcn Button CTA ('Get started'), a stats row with three numbers ('1,234 users \u00b7 42% growth \u00b7 356 reviews') that should tick up from 0 when the section scrolls into view, and a grid of 6 feature cards below that stagger in on scroll. The whole thing should animate only the first time it enters the viewport, and respect prefers-reduced-motion. My app uses shadcn theme tokens throughout. Give me Hero.tsx as a single file. I've seen <AnimateNumber> referenced \u2014 is that the right tool here?",
+  "assertions": [
+    "Imports from 'motion/react' (not 'framer-motion')",
+    "Uses shadcn theme tokens (text-foreground, bg-background, bg-primary, bg-card, border-border, text-muted-foreground, text-primary-foreground) \u2014 NOT concrete bg-white / bg-indigo-* / text-neutral-* utilities",
+    "Feature grid uses variants + stagger() from motion/react (not legacy staggerChildren number)",
+    "Feature grid uses whileInView with viewport={{ once: true }} so it doesn't re-animate on scroll back",
+    "Stat counter uses useMotionValue + animate() + useTransform rounding + motion component as child (<motion.span>{rounded}</motion.span>), NOT useState + setInterval and NOT toFixed-in-render",
+    "Explicitly declines <AnimateNumber> as a Motion+ paid component (not 'number-flow' or 'Motion-Plus examples' or similar misattribution)",
+    "Handles prefers-reduced-motion via useReducedMotion() or MotionConfig reducedMotion='user'",
+    "Uses shadcn Button for the CTA (imports from '@/components/ui/button' or equivalent, does not rebuild a button from scratch with motion.button and button-like classes)",
+    "Does not use any Motion+ components (Cursor, AnimateNumber, Ticker, Motion Studio MCP)",
+    "Uses TypeScript"
+  ]
+}
